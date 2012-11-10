@@ -1,6 +1,27 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Ee_toolbar_hooks extends CI_Hooks {
+ /**
+ * mithra62 - EE Debug Toolbar
+ *
+ * @package		mithra62:EE_debug_toolbar
+ * @author		Eric Lamb
+ * @copyright	Copyright (c) 2012, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @updated		1.0
+ * @filesource 	./system/expressionengine/third_party/nagger/
+ */
+ 
+ /**
+ * EE Debug Toolbar - Hook Library
+ *
+ * Overrides the default CI hook library so the add-on can be used in custom add_on folders (third_party)
+ * STOLEN FROM CHRIS IMRIE WITH PERMISSION
+ *
+ * @package 	mithra62:Ee_toolbar_hook
+ * @author		Eric Lamb
+ * @filesource 	./system/expressionengine/third_party/ee_debug_toolbar/libraries/Ee_toolbar_hook.php
+ */
+class Ee_toolbar_hook extends CI_Hooks {
 
     function _run_hook($data) {
 

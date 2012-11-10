@@ -42,12 +42,6 @@ class Ee_debug_toolbar_ext
 	public $description	= 'Adds an unobtrusive interface for debugging output';
 	public $settings_exist	= 'n';
 	public $docs_url		= '';
-	
-	/**
-	 * The breadcrumb override
-	 * @var array
-	 */
-	protected static $_breadcrumbs = array();	
 		
 	public function __construct($settings='')
 	{
@@ -60,6 +54,8 @@ class Ee_debug_toolbar_ext
 	public function toolbar($session)
 	{	
 		$session = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $session);
+		
+		//OK, this is kind of stupid, but CI only compiles debug data if both the profiler is on and the user is Super Admin. 
 		if($this->EE->config->config['show_profiler'] != 'y' || $session->userdata('group_id') != '1')
 		{
 			return $session;
@@ -69,19 +65,16 @@ class Ee_debug_toolbar_ext
 			return $session;
 		}		
 		
-		//return;
 		global $EXT;
-		
-		//Load our modified core Hooks class
+				
+		//BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
 		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
-		
-		//STOLEN FROM CHRIS IMRIE AND REQUIREJS
 		
 		//We overwrite the CI_Hooks class with our own since the CI_Hooks class will always load
 		//hooks class files relative to APPPATH, when what we really need is to load RequireJS hook from the
 		//third_party folder, which we KNOW can always be found with PATH_THIRD. Hence we extend the class and
 		//simply redefine the _run_hook method to load relative to PATH_THIRD. Simples.
-		$EET_EXT = new Ee_toolbar_hooks();
+		$EET_EXT = new Ee_toolbar_hook();
 		
 		//Capture existing hooks just in case (although this is EE - it's unlikely)
 		$EET_EXT->hooks = $EXT->hooks;
@@ -133,14 +126,13 @@ class Ee_debug_toolbar_ext
 
 		$html = str_replace('</body>', $this->EE->load->view('toolbar', $vars, TRUE).'</body>', $html);
 
-		//Reset the final output to your modified version
+		//exiting like this can cause issues so it's temporary until new approach can be compiled
 		echo $this->EE->output->final_output = $html;
 		exit;
 	}	
 	
 	public function settings()
 	{
-		//echo $this->settings['alert_message'];
 		$settings = array();
 		$yes_no = array('no' => 'No', 'yes' => 'Yes');
 

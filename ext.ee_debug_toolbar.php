@@ -123,6 +123,7 @@ class Ee_debug_toolbar_ext
 		$vars['query_data'] = $this->EE->toolbar->setup_queries();
 		$vars['memory_usage'] = $this->EE->toolbar->filesize_format(memory_get_peak_usage());
 		$vars['template_debugging'] = (isset($this->EE->TMPL->log) ? $this->EE->TMPL->log : FALSE);
+		$vars['ext_version'] = $this->version;
 
 		$html = str_replace('</body>', $this->EE->load->view('toolbar', $vars, TRUE).'</body>', $html);
 
@@ -130,22 +131,6 @@ class Ee_debug_toolbar_ext
 		echo $this->EE->output->final_output = $html;
 		exit;
 	}	
-	
-	public function settings()
-	{
-		$settings = array();
-		$yes_no = array('no' => 'No', 'yes' => 'Yes');
-
-		// Creates a text input with a default value of "EllisLab Brand Butter"
-		$settings['enable_publish_form']   = array('s', $yes_no, $this->settings['enable_publish_form']);
-		$settings['enable_update_member_group'] = array('s', $yes_no, $this->settings['enable_update_member_group']);
-		$settings['enable_file_publish_form'] = array('s', $yes_no, $this->settings['enable_file_publish_form']);
-		$settings['enable_channel_add'] = array('s', $yes_no, $this->settings['enable_channel_add']);
-		$settings['enable_channel_edit'] = array('s', $yes_no, $this->settings['enable_channel_edit']);
-		$settings['alert_message'] = array('t', array('rows' => '5'), $this->settings['alert_message']);				
-		
-		return $settings;
-	}
 	
 	public function activate_extension()
 	{	

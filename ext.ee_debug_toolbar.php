@@ -88,7 +88,7 @@ class Ee_debug_toolbar_ext
 		}
 		
 		//Add our hook
-		$EET_EXT->hooks['post_controller'][] = array(
+		$EET_EXT->hooks['display_override'][] = array(
 				'class' => __CLASS__,
 				'function' => 'modify_output',
 				'filename' => basename(__FILE__),

@@ -44,9 +44,11 @@ class Ee_toolbar_hook extends CI_Hooks {
 
         //We're only interested in the Requirejs_ext hook, everything else,
         //treat as normal
+        /*
         if($data['class'] != "Ee_debug_toolbar_ext") {
             return parent::_run_hook($data);
         }
+        */
 
         //OK, so here we know we're only processing the RequireJS hook
         // -----------------------------------

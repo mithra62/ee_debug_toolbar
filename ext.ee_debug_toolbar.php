@@ -112,18 +112,21 @@ class Ee_debug_toolbar_ext
 	public function modify_output()
 	{
 		//Fetch the final CP Output
+		$this->EE->benchmark->mark('ee_debug_benchmark_start');
 		$html = $this->EE->output->final_output;
 		$this->EE->load->library('Toolbar');
 		$vars = array();
 		$vars['query_count'] = $this->EE->db->query_count;
 		$vars['elapsed_time'] = $this->EE->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
 		$vars['config_data'] = $this->EE->config->config;
-		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 		$vars['session_data'] = $this->EE->session->all_userdata();
 		$vars['query_data'] = $this->EE->toolbar->setup_queries();
 		$vars['memory_usage'] = $this->EE->toolbar->filesize_format(memory_get_peak_usage());
 		$vars['template_debugging'] = (isset($this->EE->TMPL->log) ? $this->EE->TMPL->log : FALSE);
 		$vars['ext_version'] = $this->version;
+		
+		$this->EE->benchmark->mark('ee_debug_benchmark_end');
+		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 
 		$html = str_replace('</body>', $this->EE->load->view('toolbar', $vars, TRUE).'</body>', $html);
 

@@ -11,6 +11,20 @@ Installation
 
 Upload to your third\_party directory inside a directory called "ee\_debug\_toolbar" and activate within your ExpressionEngine Control Panel.
 
+
+Benchmark Instructions
+====================
+To have your [benchmarks](http://codeigniter.com/user_guide/libraries/benchmark.html "benchmarks") used within the Toolbar you have to follow a couple conventions. 
+
+1. Your benchmark names should end in either the string "_start" or "_end".
+2. Ensure the names are logical enoughed to be parsed using: 
+
+	`ucwords(str_replace(array('_', '-'), ' ', $key))`
+
+## Examples #
+'debug\_toolbar\_start' and 'debug\_toolbar\_end'
+
+
 Contributors
 ====================
 Initially built by [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) but uses code from [Chris Imrie](https://github.com/ckimrie/ "Chris Imrie") (with permission) and [RequireJS for EE](https://github.com/ckimrie/RequireJS-for-EE "RequireJS for EE").

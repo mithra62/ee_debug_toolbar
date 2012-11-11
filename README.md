@@ -8,4 +8,4 @@ Adds ExpressionEngine/CodeIgniter version info, available variables, included fi
 
 Contributors
 ====================
-Initially built by Eric Lamb (mithra62) but uses code from Chris Imrie (with permission) and RequireJS. Based on ZF Debug from 
+Initially built by [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) but uses code from [Chris Imrie](https://github.com/ckimrie/ "Chris Imrie") (with permission) and [RequireJS for EE](https://github.com/ckimrie/RequireJS-for-EE "RequireJS for EE").

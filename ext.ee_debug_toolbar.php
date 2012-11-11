@@ -140,7 +140,7 @@ class Ee_debug_toolbar_ext
 				'method'    => 'toolbar',
 				'hook'      => 'sessions_end',
 				'settings'  => serialize($this->settings),
-				'priority'  => 187,
+				'priority'  => 9999999,
 				'version'   => $this->version,
 				'enabled'   => 'y'
 		);

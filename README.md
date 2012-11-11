@@ -6,6 +6,11 @@ Adds ExpressionEngine/CodeIgniter version info, available variables, included fi
 
 ![](http://mithra62.com/images/ee_debug_toolbar_default.png)
 
+Installation
+====================
+
+Upload to your third\_party directory inside a directory called "ee\_debug\_toolbar" and activate within your ExpressionEngine Control Panel.
+
 Contributors
 ====================
 Initially built by [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) but uses code from [Chris Imrie](https://github.com/ckimrie/ "Chris Imrie") (with permission) and [RequireJS for EE](https://github.com/ckimrie/RequireJS-for-EE "RequireJS for EE").

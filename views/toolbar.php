@@ -101,7 +101,7 @@ function EEDebugToggleElement(name, whenHidden, whenVisible)
 
 <div id="EEDebug_debug">
 	<div id="EEDebug_copyright" class="EEDebug_panel">
-		<h4><?php echo lang('ext_name'); ?> v<?php echo $ext_version; ?></h4>
+		<h4><?php echo lang('ee_debug_toolbar_module_name'); ?> v<?php echo $ext_version; ?></h4>
 		<p><?php echo APP_NAME.' '.APP_VER.' '.lang('build'). ' ('.APP_BUILD.')'; ?> <br />
 		CodeIgniter Version: <?php echo CI_VERSION; ?></p>
 	</div>

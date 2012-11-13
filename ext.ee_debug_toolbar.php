@@ -122,7 +122,17 @@ class Ee_debug_toolbar_ext
 		$vars['session_data'] = $this->EE->session->all_userdata();
 		$vars['query_data'] = $this->EE->toolbar->setup_queries();
 		$vars['memory_usage'] = $this->EE->toolbar->filesize_format(memory_get_peak_usage());
-		$vars['template_debugging'] = (isset($this->EE->TMPL->log) ? $this->EE->TMPL->log : FALSE);
+		$vars['template_debugging'] = (isset($this->EE->TMPL->log) ? $this->EE->TMPL->log : array());
+		
+		//the template debugging can contain HTML elements which is blamed on Stash. 'cause, Stash!?!?
+		if ( $vars['template_debugging'])
+		{
+			foreach ($vars['template_debugging'] as $key => $value)
+			{
+				$vars['template_debugging'][$key] = htmlentities($value);
+			}
+		}	
+
 		$vars['ext_version'] = $this->version;
 		
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');

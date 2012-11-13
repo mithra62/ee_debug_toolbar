@@ -131,7 +131,7 @@ class Ee_debug_toolbar_ext
 			{
 				$vars['template_debugging'][$key] = htmlentities($value);
 			}
-		}	
+		} 	
 
 		$vars['ext_version'] = $this->version;
 		

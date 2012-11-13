@@ -6,7 +6,8 @@ $lang = array(
 // -------------------------------------------
 //  Module CP
 // -------------------------------------------
-
+'ee_debug_toolbar_module_name' => 'EE Debug Toolbar',
+'ee_debug_toolbar_module_description' => 'Adds an unobtrusive interface for debugging output',
 'extensions' => 'Extensions',
 'ext_name' => 'EE Debug Toolbar',
 'no_get_vars' => 'No $_GET vars found.',

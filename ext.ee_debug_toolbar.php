@@ -32,14 +32,14 @@ class Ee_debug_toolbar_ext
 	 * The extension name
 	 * @var string
 	 */
-	public $name = 'EE Debug Toolbar';
+	public $name = '';
 
 	/**
 	 * The extension version
 	 * @var float
 	 */
 	public $version = '0.7';
-	public $description	= 'Adds an unobtrusive interface for debugging output';
+	public $description	= '';
 	public $settings_exist	= 'n';
 	public $docs_url		= '';
 
@@ -48,6 +48,8 @@ class Ee_debug_toolbar_ext
 		$this->EE =& get_instance();
 		$this->settings = (!$settings ? $this->settings : $settings);
 		$this->EE->lang->loadfile('ee_debug_toolbar');
+		$this->name = lang('ee_debug_toolbar_module_name');
+		$this->description = lang('ee_debug_toolbar_module_description');
 		$this->EE->load->add_package_path(PATH_THIRD.'ee_debug_toolbar/');
 	}
 

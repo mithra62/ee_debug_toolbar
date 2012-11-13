@@ -1,23 +1,73 @@
-<?php
-class Toolbar
-{
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	public $available_sections = array(
-			'benchmarks',
-			'get',
-			'memory_usage',
-			'post',
-			'uri_string',
-			'controller_info',
-			'queries',
-			'http_headers',
-			'session_data',
-			'config'
-	);
-	
+ /**
+ * mithra62 - EE Debug Toolbar
+ *
+ * @package		mithra62:EE_debug_toolbar
+ * @author		Eric Lamb
+ * @copyright	Copyright (c) 2012, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @updated		1.0
+ * @filesource 	./system/expressionengine/third_party/nagger/
+ */
+
+ /**
+ * Toolbar Library
+ *
+ * Extension class
+ *
+ * @package 	mithra62:EE_debug_toolbar
+ * @author		Eric Lamb
+ * @filesource 	./system/expressionengine/third_party/ee_debug_toolbar/libraries/Toolbar.php
+ */
+class Toolbar
+{	
 	public function __construct()
 	{
 		$this->EE = &get_instance();
+	}
+	
+	public function setup_files(array $files)
+	{
+		sort($files);
+		
+		$path_third = realpath(PATH_THIRD);
+		$path_ee = realpath(APPPATH);
+		$path_first_modules = realpath(PATH_MOD);
+		$bootstrap_file = FCPATH.SELF;
+		$return = array();
+		foreach($files AS $file)
+		{
+			if(strpos($file, $path_third) === 0)
+			{
+				$return['third_party_addon'][] = $file;
+				continue;
+			}
+
+			if(strpos($file, $path_first_modules) === 0)
+			{
+				$return['first_party_modules'][] = $file;
+				continue;
+			}
+
+			if(strpos($file, $bootstrap_file) === 0)
+			{
+				$return['bootstrap_file'] = $file;
+				continue;
+			}			
+
+			if(strpos($file, $path_ee) === 0)
+			{
+				$return['expressionengine_core'][] = $file;
+				continue;
+			}	
+
+			
+			$return['other_files'][] = $file;
+			
+		}
+		
+		return $return;
 	}
 	
 	public function setup_queries()

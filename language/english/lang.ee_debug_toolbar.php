@@ -43,5 +43,11 @@ $lang = array(
 'enabled' => 'Enabled',
 'query_cache_is' => 'Query cache is',
 'adapter' => 'Adaptor',
+'member_themes' => 'Member Themes',
+'bootstrap_file' => 'Bootstrap File',
+'third_party_addon' => 'Third Party Add-ons',
+'other_files' => 'Other Files',
+'expressionengine_core' => 'ExpressionEngine Core Files',
+'first_party_modules' => 'First Party Modules',
 ''=>''
 );

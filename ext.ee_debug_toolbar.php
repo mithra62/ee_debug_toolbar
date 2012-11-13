@@ -121,7 +121,7 @@ class Ee_debug_toolbar_ext
 
 		$this->EE->load->library('Toolbar');
 
-		//Fetch the final CP Output
+		//starting a benchmark to make sure we're not a problem
 		$this->EE->benchmark->mark('ee_debug_benchmark_start');
 
 		//Toolbar UI Vars
@@ -133,8 +133,9 @@ class Ee_debug_toolbar_ext
 		$vars['query_data'] = $this->EE->toolbar->setup_queries();
 		$vars['memory_usage'] = $this->EE->toolbar->filesize_format(memory_get_peak_usage());
 		$vars['template_debugging'] = (isset($this->EE->TMPL->log) ? $this->EE->TMPL->log : array());
+		$vars['included_file_data'] = $this->EE->toolbar->setup_files(get_included_files());
 		
-		//the template debugging can contain HTML elements which is blamed on Stash. 'cause, Stash!?!?
+		//the template debugging can contain HTML elements which is blamed on Stash but not really. 'cause, Stash!?!?
 		if ( $vars['template_debugging'])
 		{
 			foreach ($vars['template_debugging'] as $key => $value)

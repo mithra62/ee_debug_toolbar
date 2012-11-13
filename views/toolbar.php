@@ -196,19 +196,25 @@ function EEDebugToggleElement(name, whenHidden, whenVisible)
 		<?php echo count(get_included_files()); ?> <?php echo lang('files_included'); ?><br>
 
 		<h4><?php echo lang('system_paths'); ?></h4>
-		<?php echo lang('app'); ?>: <?php echo APPPATH ; ?><br>
-		<?php echo lang('themes'); ?>: <?php echo PATH_THEMES ; ?><br>
-		<?php echo lang('third_party'); ?>: <?php echo PATH_THIRD; ?><br>
-		<?php echo lang('third_party_themes'); ?>: <?php echo PATH_MBR_THEMES; ?><br>
+		
+		<?php echo lang('bootstrap_file'); ?>: <?php echo realpath($included_file_data['bootstrap_file']); ?><br>
+		<?php echo lang('app'); ?>: <?php echo realpath(APPPATH); ?><br>
+		<?php echo lang('themes'); ?>: <?php echo realpath(PATH_THEMES); ?><br>
+		<?php echo lang('third_party'); ?>: <?php echo realpath(PATH_THIRD); ?><br>
+		<?php echo lang('member_themes'); ?>: <?php echo realpath(PATH_MBR_THEMES); ?><br>
 		<?php if(defined('PATH_JAVASCRIPT')): ?>
-		<?php echo lang('javascript'); ?>: <?php echo PATH_JAVASCRIPT; ?><br>
+		<?php echo lang('javascript'); ?>: <?php echo realpath(PATH_JAVASCRIPT); ?><br>
 		<?php endif; ?>
 
-		<h4><?php echo lang('application_files'); ?></h4>
 		<?php 
-		foreach(get_included_files() AS $file)
+		foreach($included_file_data AS $section => $files)
 		{ 
-			echo $file.'<br />';
+			if(is_array($files) && count($files) >= '1')
+			{
+				echo '<h4>'.lang($section).' ('.count($files).')</h4>';
+				foreach($files AS $file)
+					echo $file.'<br />';
+			}
 		}
 		?>
 	</div>

@@ -211,9 +211,12 @@ function EEDebugToggleElement(name, whenHidden, whenVisible)
 		{ 
 			if(is_array($files) && count($files) >= '1')
 			{
-				echo '<h4>'.lang($section).' ('.count($files).')</h4>';
+				echo '<h4>'.lang($section).' ('.count($files).')</h4><div class="pre">';
 				foreach($files AS $file)
+				{
 					echo $file.'<br />';
+				}
+				echo '</div>';
 			}
 		}
 		?>

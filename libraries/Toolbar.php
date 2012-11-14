@@ -62,7 +62,6 @@ class Toolbar
 				continue;
 			}	
 
-			
 			$return['other_files'][] = $file;
 			
 		}

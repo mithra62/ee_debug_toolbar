@@ -164,8 +164,11 @@ class Ee_debug_toolbar_ext
 		//since we have already added the debug data to the body output. Doing it this way means
 		//we should retain 100% compatibility (I'm looking at you Stash...)
 		$this->EE->output->final_output = $html;
-		$this->EE->TMPL->debugging = FALSE;
-		$this->EE->TMPL->log = FALSE;
+		if(isset($this->EE->TMPL))
+		{
+			$this->EE->TMPL->debugging = FALSE;
+			$this->EE->TMPL->log = FALSE;
+		}
 		$this->EE->output->enable_profiler = FALSE;
 
 		//Fist pump.

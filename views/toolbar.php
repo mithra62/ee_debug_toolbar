@@ -59,7 +59,9 @@ function EEDebugPanel(name)
 		else 
 		{
 		    if (jQuery(this).attr("id") == name)
-			jQuery(this).slideDown();
+			jQuery(this).slideDown(function() {
+				jQuery(this).css({overflow: "auto"});
+			});
 		    else
 			jQuery(this).slideUp();
 		}

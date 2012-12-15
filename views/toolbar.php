@@ -20,10 +20,12 @@ if(!window.jQuery)
 	eed.type = 'text/javascript'; 
 	eed.async = true;
 	eed.src = '//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
+	eed.onload = eed.onreadystatechange = function() {
+		jQuery.noConflict();	
+	};
 	document.getElementsByTagName('head')[0].appendChild(eed);
 	})();
 
-	jQuery.noConflict();
 }
 
 var EEDebugLoad = window.onload;

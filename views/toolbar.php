@@ -73,6 +73,7 @@ function EEDebugPanel(name)
 
     if(name == "EEDebug_memory" && !window.EEDebugGraphRendered) {
     	EEDebugGraph(name);
+    	window.EEDebugGraphRendered = true;
     }
 }
 
@@ -138,13 +139,10 @@ function EEDebugGraph(nodeName)
 
 	if(data === false) {
 		wrapper.remove();
-		window.EEDebugGraphRendered = true;
 		return;
 	}
 
 	EEDebugRefreshGraph(ctx, data);
-
-	window.EEDebugGraphRendered = true;
 }
 
 function EEDebugRefreshGraph (ctx, data) {

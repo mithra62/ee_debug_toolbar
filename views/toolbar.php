@@ -135,6 +135,13 @@ function EEDebugGraph(nodeName)
 
 	//Fetch data & render
 	data = EEDebugRefreshData(nodeName);
+
+	if(data === false) {
+		wrapper.remove();
+		window.EEDebugGraphRendered = true;
+		return;
+	}
+
 	EEDebugRefreshGraph(ctx, data);
 
 	window.EEDebugGraphRendered = true;
@@ -258,6 +265,10 @@ function EEDebugRefreshData (name) {
 			"time" : Number(result[1]),
 			"memory" : Number(result[2]),
 		});
+	}
+
+	if(raw_data.length === 0) {
+		return false;
 	}
 
 	//Normalise results as x & y objects that range from 0 to 1

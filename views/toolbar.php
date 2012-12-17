@@ -10,6 +10,8 @@
 .EEDebug_panel { text-align:left; position:absolute;bottom:21px;width:600px; max-height:400px; overflow:auto; display:none; background:#E8E8E8; padding:5px; border: 1px solid #999; }
 .EEDebug_panel .pre {font: 11px/1.4em Monaco, Lucida Console, monospace; margin:0 0 0 22px}
 #EEDebug_exception { border:1px solid #CD0A0A;display: block; }
+.EEDebug_graph {background: #fff; border:1px solid #ccc; padding-top: 1px;}
+.EEDebug_graph canvas { width: 100%; height:100px;}
 </style>
 <script type="text/javascript" charset="utf-8">
 
@@ -68,6 +70,11 @@ function EEDebugPanel(name)
 			jQuery(this).slideUp();
 		}
     });
+
+    if(name == "EEDebug_memory" && !window.EEDebugGraphRendered) {
+    	EEDebugGraph(name);
+    	window.EEDebugGraphRendered = true;
+    }
 }
 
 function EEDebugSlideBar() 
@@ -100,6 +107,187 @@ function EEDebugToggleElement(name, whenHidden, whenVisible)
 		jQuery(whenHidden).show();
     }
     jQuery(name).slideToggle();
+}
+
+function EEDebugGraph(nodeName)
+{	
+		
+	var //Runtime Vars
+		ctx, height, width, data,
+		panel = jQuery("#"+nodeName),
+		wrapper = jQuery(document.createElement("div")).addClass("EEDebug_graph"),
+		canvas = document.createElement("canvas");
+
+	if(!canvas.getContext) {
+		//No convas support. We're done here
+		return;
+	}
+
+	//Build & add to DOM
+	wrapper.append(canvas).prependTo(panel);
+
+	//Canvas needs dimension attributes in order to behave properly
+	width = wrapper.width();
+	height = wrapper.height();
+	jQuery(canvas).attr("width", width);
+	jQuery(canvas).attr("height", height);
+
+	ctx = canvas.getContext('2d');
+
+	//Fetch data & render
+	data = EEDebugRefreshData(nodeName);
+
+	if(data === false) {
+		wrapper.remove();
+		return;
+	}
+
+	EEDebugRefreshGraph(ctx, data);
+}
+
+function EEDebugRefreshGraph (ctx, data) {
+	var //Config
+		inset = 13,
+		backgroundColor = "transparent",
+
+		axisColor = "#999",
+		axisLineWidth = 0.5,
+		
+		axisTickColor = "#dedede",
+		axisLineTickWidth = 0.5,
+
+		timePlotLineColor = "#142a78",
+		timePlotLineWidth = 3.0,
+
+		memoryPlotLineColor = "#b2252e",
+		memoryPlotLineWidth = timePlotLineWidth,
+
+		//Runtime Vars
+		graphOriginX, graphOriginY, graphWidth, graphHeight;
+		width = ctx.canvas.width,
+		height = ctx.canvas.height; 
+
+		
+
+	graphWidth = width - inset * 2;
+	graphHeight = height - inset * 2;
+	graphOriginX = inset;
+	graphOriginY = graphHeight + inset;
+	ctx.fillStyle = backgroundColor;
+	
+	//Background
+    ctx.fillRect (0, 0, width, height);
+
+    /**
+	 * Axes
+	 */
+    ctx.lineWidth = axisLineWidth;
+    ctx.strokeStyle = axisColor;
+
+    ctx.beginPath();
+    ctx.moveTo(inset, inset);
+    ctx.lineTo(inset, inset + graphHeight);
+    ctx.lineTo(graphWidth + inset, graphHeight + inset);
+    ctx.stroke();
+
+    //Axis ticks
+    ctx.lineWidth = axisLineTickWidth;
+    ctx.strokeStyle = axisTickColor;
+    for(var i = 0; i < 4;i++) {
+    	ctx.moveTo( inset - 5, inset + ((graphHeight / 4) * i) + 0.5);
+    	ctx.lineTo( inset + graphWidth, inset + ((graphHeight / 4) * i) +0.5);
+    	ctx.stroke();
+    }
+    for(var i = 1; i <= 10;i++) {
+    	ctx.moveTo( inset + ((graphWidth / 10) * i) + 0.5, inset + graphHeight + 5);
+    	ctx.lineTo( inset + ((graphWidth / 10) * i) + 0.5, inset);
+    	ctx.stroke();
+    }
+    
+
+    //Max memory & time indicators
+    ctx.fillStyle = timePlotLineColor;
+    ctx.font = "10px Helvetica, sans-serif";
+    ctx.fillText("Total time: " + String(data.max_time) + "s", inset, 10)
+
+    ctx.fillStyle = memoryPlotLineColor;
+    ctx.font = "10px Helvetica, sans-serif";
+    ctx.fillText("Total Memory: " + String(data.max_memory) + "MB", inset + 110, 10)
+
+    /**
+     * Data Plot
+     */
+
+    //Time
+    ctx.lineWidth = timePlotLineWidth;
+    ctx.strokeStyle = timePlotLineColor;
+    ctx.beginPath();
+    //First point
+    ctx.moveTo((data.data.time[0].x * graphWidth) + inset,  graphHeight - (data.data.time[0].y * graphHeight) + inset);
+    //Loop thorugh the rest
+    for(var i = 1; i < data.data.time.length; i++) {
+		ctx.lineTo((data.data.time[i].x * graphWidth) + inset,  graphHeight - (data.data.time[i].y * graphHeight) + inset);    	
+    }
+
+    ctx.stroke();
+
+    //Memory
+    ctx.lineWidth = memoryPlotLineWidth;
+    ctx.strokeStyle = memoryPlotLineColor;
+    ctx.beginPath();
+    //First point
+    ctx.moveTo((data.data.memory[0].x * graphWidth) + inset,  graphHeight - (data.data.memory[0].y * graphHeight) + inset);
+    //Loop thorugh the rest
+    for(var i = 1; i < data.data.memory.length; i++) {
+		ctx.lineTo((data.data.memory[i].x * graphWidth) + inset,  graphHeight - (data.data.memory[i].y * graphHeight) + inset);    	
+    }
+
+ 	ctx.stroke();
+    
+}
+
+function EEDebugRefreshData (name) {
+	var //Config
+		regex = new RegExp(/\((\d+\.\d+)\s+\/\s+(\d+\.\d+)\w{2}\)/gi),
+
+		//Runtime
+		max_time, max_memory,
+		raw_data = [],
+		data = { memory : [], time : []},
+		panel = jQuery("#" + name),
+		html_string = String(panel.html());
+
+	//Parse debug HTML into useful numerical data
+	while((result = regex.exec(html_string)) !== null) {
+		raw_data.push({
+			"time" : Number(result[1]),
+			"memory" : Number(result[2]),
+		});
+	}
+
+	if(raw_data.length === 0) {
+		return false;
+	}
+
+	//Normalise results as x & y objects that range from 0 to 1
+	max_time = raw_data[raw_data.length - 1].time;
+	max_memory = raw_data[raw_data.length - 1].memory;
+	for(var i = 0; i < raw_data.length; i++) {
+		data.time.push({
+			y : raw_data[i].time / max_time,
+			x : i / (raw_data.length-1), 
+		});
+		data.memory.push({
+			y : raw_data[i].memory / max_memory,
+			x : i / (raw_data.length-1), 
+		});
+	}
+
+	return {
+		data : data,
+		max_time: max_time,
+		max_memory: max_memory
+	};
 }
 </script>
 

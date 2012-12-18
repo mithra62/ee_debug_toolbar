@@ -14,7 +14,7 @@
 .EEDebug_graph canvas { width: 100%; height:100px;}
 </style>
 <script type="text/javascript" charset="utf-8">
-
+ 
 if(!window.jQuery)
 {
 	(function() {

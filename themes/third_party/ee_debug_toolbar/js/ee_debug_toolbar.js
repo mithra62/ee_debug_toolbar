@@ -16,7 +16,7 @@ if(!window.jQuery)
 
 }
 
-(function EEDebugCollapsed()
+(function ()
 {
     //User already opened debug panel?
     var check = getCookie("EEDebugCollapsed");

@@ -1,18 +1,4 @@
-<style type="text/css" media="screen">
-#EEDebug_debug { font: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif; position:fixed; bottom:5px; left:5px; color:#000; z-index: 100255;}
-#EEDebug_debug ol {margin:10px 0px; padding:0 25px}
-#EEDebug_debug li {margin:0 0 10px 0;}
-#EEDebug_debug h4 {margin:0; font-size: 11px; font-weight:bold; }
-#EEDebug_debug .clickable {cursor:pointer}
-#EEDebug_toggler { font-weight:bold; background:#BFBFBF; }
-.EEDebug_span { border: 1px solid #999; border-right:0px; background:#DFDFDF; padding: 5px 5px; }
-.EEDebug_last { border: 1px solid #999; }
-.EEDebug_panel { text-align:left; position:absolute;bottom:21px;width:600px; max-height:400px; overflow:auto; display:none; background:#E8E8E8; padding:5px; border: 1px solid #999; }
-.EEDebug_panel .pre {font: 11px/1.4em Monaco, Lucida Console, monospace; margin:0 0 0 22px}
-#EEDebug_exception { border:1px solid #CD0A0A;display: block; }
-.EEDebug_graph {background: #fff; border:1px solid #ccc; padding-top: 1px;}
-.EEDebug_graph canvas { width: 100%; height:100px;}
-</style>
+<link rel="stylesheet" type="text/css" href="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/css/ee_debug_toolbar.css" ?>">
 <script src="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript" charset="utf-8" async></script>
 
 <div id="EEDebug_debug">

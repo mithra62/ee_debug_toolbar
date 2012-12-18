@@ -16,19 +16,7 @@ if(!window.jQuery)
 
 }
 
-var EEDebugLoad = window.onload;
-window.onload = function()
-{
-        
-    if (EEDebugLoad)
-    {
-        EEDebugLoad();
-    }
-
-    EEDebugCollapsed();
-};
-
-function EEDebugCollapsed()
+(function EEDebugCollapsed()
 {
     var check = getCookie("EEDebugCollapsed");
     if (check == 1)
@@ -37,7 +25,7 @@ function EEDebugCollapsed()
         jQuery("#EEDebug_toggler").html("&#187;");
         return jQuery("#EEDebug_debug").css("left", "-"+parseInt(jQuery("#EEDebug_debug").outerWidth()-jQuery("#EEDebug_toggler").outerWidth()+1, 10)+"px");
     }
-}
+})();
 
 function getCookie(c_name)
 {

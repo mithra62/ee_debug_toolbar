@@ -1,5 +1,4 @@
 <link rel="stylesheet" type="text/css" href="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/css/ee_debug_toolbar.css" ?>">
-<script src="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript" charset="utf-8" async></script>
 
 <div id="EEDebug_debug">
 	<div id="EEDebug_copyright" class="EEDebug_panel">
@@ -206,3 +205,4 @@
 		<span class="EEDebug_span EEDebug_last clickable" id="EEDebug_toggler" onclick="EEDebugSlideBar()">&#171;</span>
 	</div>
 </div>
+<script src="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript" charset="utf-8" async></script>

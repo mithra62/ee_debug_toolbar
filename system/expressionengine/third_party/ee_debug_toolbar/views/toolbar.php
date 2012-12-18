@@ -211,12 +211,12 @@ function EEDebugRefreshGraph (ctx, data) {
     ctx.lineWidth = axisLineTickWidth;
     ctx.strokeStyle = axisTickColor;
     for(var i = 0; i < 4;i++) {
-    	ctx.moveTo( inset - 5, inset + ((graphHeight / 4) * i) + 0.5);
+    	ctx.moveTo( inset, inset + ((graphHeight / 4) * i) + 0.5);
     	ctx.lineTo( inset + graphWidth, inset + ((graphHeight / 4) * i) +0.5);
     	ctx.stroke();
     }
     for(var i = 1; i <= 10;i++) {
-    	ctx.moveTo( inset + ((graphWidth / 10) * i) + 0.5, inset + graphHeight + 5);
+    	ctx.moveTo( inset + ((graphWidth / 10) * i) + 0.5, inset + graphHeight);
     	ctx.lineTo( inset + ((graphWidth / 10) * i) + 0.5, inset);
     	ctx.stroke();
     }

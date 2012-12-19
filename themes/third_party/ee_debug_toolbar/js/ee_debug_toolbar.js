@@ -40,6 +40,14 @@
     });
 
 
+    /**
+     * Get Cookie
+     *
+     * @author Christopher Imrie
+     *
+     * @param  {string}    c_name Cookie name
+     * @return {string}           Cookie contents
+     */
     function getCookie(c_name)
     {
         var i, x, y,
@@ -58,6 +66,14 @@
          }
     }
 
+
+    /**
+     * Open Debug Panel
+     *
+     * @author Christopher Imrie
+     *
+     * @param  {string}    name  Panel name
+     */
     function EEDebugPanel(name)
     {
         jQuery(".EEDebug_panel").each(function(i)
@@ -87,6 +103,13 @@
         }
     }
 
+
+    /**
+     * Slide toolbar into/out of view
+     *
+     * @author Christopher Imrie
+     *
+     */
     function EEDebugSlideBar()
     {
         if (jQuery("#EEDebug_debug").position().left > 0)

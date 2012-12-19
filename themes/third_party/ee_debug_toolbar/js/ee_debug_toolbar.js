@@ -1,25 +1,25 @@
 /**
  * EE Debug Toolbar JS
  */
-if(!window.jQuery)
-{
-    (function() {
-    var eed = document.createElement('script');
-    eed.type = 'text/javascript';
-    eed.async = true;
-    eed.src = '//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
-    eed.onload = eed.onreadystatechange = function() {
-        jQuery.noConflict();
-    };
-    document.getElementsByTagName('head')[0].appendChild(eed);
-    })();
 
-}
 
 (function ()
 {
     //User already opened debug panel?
-    var check = getCookie("EEDebugCollapsed");
+    var args = arguments,
+        check = getCookie("EEDebugCollapsed");
+
+    //jQuery loaded? If not, load it and start again when it has finished
+    if(!window.jQuery) {
+        loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js', function() {
+            jQuery.noConflict();
+            args.callee();
+        }, true);
+
+        return;
+    }
+
+    //Panels open by default?
     if (check == 1)
     {
         EEDebugPanel();
@@ -291,5 +291,43 @@ if(!window.jQuery)
             max_time: max_time,
             max_memory: max_memory
         };
+    }
+
+    /**
+     * Lightweight Script Loader
+     *
+     * Even prepends the correct theme URL location to allow easy script loading
+     *
+     * @author Christopher Imrie
+     *
+     * @param  {string}    name    Script filename
+     * @param  {Function}  cb      Callback function
+     * @param  {bool}    offsite   Script being loaded is offsite? (Basically enable/disable URL_THIRD_THEMES being prepended)
+     * @return {null}
+     */
+    function loadScript (name, cb, offsite) {
+
+        var url     = String(name),
+            eed     = document.createElement('script'),
+            local   = offsite === true ? false : true;
+        
+        eed.type = 'text/javascript';
+        eed.async = true;
+
+        //If local url, we can use this scripts URL to ensure we get a correct base url
+        if (local) {
+            eed.src = String(document.getElementById("EEDebug_debug_script").src).replace("ee_debug_toolbar.js", url);
+        }
+        else
+        {
+            eed.src = url;
+        }
+        
+        eed.onload = eed.onreadystatechange = function() {
+            if(typeof cb === "function") {
+                cb();
+            }
+        };
+        document.getElementsByTagName('head')[0].appendChild(eed);
     }
 })();

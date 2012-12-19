@@ -205,4 +205,4 @@
 		<span class="EEDebug_span EEDebug_last clickable" id="EEDebug_toggler" onclick="EEDebugSlideBar()">&#171;</span>
 	</div>
 </div>
-<script src="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript" charset="utf-8" defer></script>
+<script src="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript" charset="utf-8" defer id="EEDebug_debug_script"></script>

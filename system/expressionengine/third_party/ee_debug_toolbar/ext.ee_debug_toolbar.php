@@ -70,7 +70,10 @@ class Ee_debug_toolbar_ext
 		global $EXT;
 
 		//BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
-		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
+		if(!class_exists('Ee_toolbar_hook'))
+		{
+			$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
+		}
 
 		//We overwrite the CI_Hooks class with our own since the CI_Hooks class will always load
 		//hooks class files relative to APPPATH, when what we really need is to load RequireJS hook from the

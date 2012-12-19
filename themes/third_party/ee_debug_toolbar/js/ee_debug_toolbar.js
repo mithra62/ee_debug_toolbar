@@ -127,22 +127,6 @@
         }
     }
 
-    function EEDebugToggleElement(name, whenHidden, whenVisible)
-    {
-        if(jQuery(name).css("display")=="none")
-        {
-            jQuery(whenVisible).show();
-            jQuery(whenHidden).hide();
-        }
-        else
-        {
-            jQuery(whenVisible).hide();
-            jQuery(whenHidden).show();
-        }
-        jQuery(name).slideToggle();
-    }
-
-    
 
     /**
      * Lightweight Script Loader

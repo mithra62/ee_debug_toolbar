@@ -11,8 +11,7 @@ function drawChart() {
 	data.addColumn('number', 'Times');
 	data.addColumn({type:'string', role:'tooltip'});
 	data.addRows(<?php echo count($template_debugging);?>);
-				
-	
+
 	<?php
 	$parts = array(); 
 	foreach($template_debugging AS $index => $log)
@@ -24,28 +23,34 @@ function drawChart() {
 	}
 	echo implode(',', $parts);
 	?>
-
-	var chart_width = document.getElementById("chart_div").offsetWidth+10;
-	var area_width = chart_width+20;
 	
 	var formatter = new google.visualization.NumberFormat({suffix: 'MB'});
 	formatter.format(data, 1);
-	formatter.format(data, 0);	
+	//formatter.format(data, 0);	
 							
 	var options = {
 		title: '<?php echo lang('template_debugging'); ?>',
 		backgroundColor: 'none',
 		width: 600, 
 		height: 220,
-		hAxis: {slantedText: true},
-		legend: {position: 'none'},
+		hAxis: {
+			slantedText: true
+		},
+		vAxes:[
+			{format: '#MB'}
+		],		
+		legend: {
+			position: 'none'
+		},
+		tooltip: {
+			isHtml: false
+		},
 		chartArea: {
 			width: 620, 
 			height: "160",
 			top: 10,
-			left:30
-		} 		            
-		
+			left:50
+		}
 	};
 	
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

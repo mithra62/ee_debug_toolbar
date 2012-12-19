@@ -97,12 +97,9 @@ class Toolbar
 		$count = 0;
 		$total_time = 0;
 		foreach ($dbs as $db)
-		{
-			//exit;			
+		{	
 			$count++;
 				
-			//$output .= "\n\n<table style='width:100%;{$hide_queries}' id='ci_profiler_queries_db_{$count}'>\n";
-	
 			if (count($db->queries) != 0)
 			{
 				foreach ($db->queries as $key => $val)
@@ -137,6 +134,37 @@ class Toolbar
 		
 		return $profile;		
 	}
+	
+	/**
+	 * Breaks up the template log data to create the chart
+	 * @param array $log
+	 * @return multitype:
+	 */
+	public function format_tmpl_log(array $log)
+	{
+		$return = array();
+		foreach($log AS $item)
+		{
+			$parts = explode(') ', $item, 2);
+			if(!isset($parts['0']) || !isset($parts['1']))
+			{
+				continue;
+			}
+			
+			array_map('trim', $parts);
+			$perf = str_replace('(', '', $parts['0']);
+			$tooltip = $parts['1'];
+			
+			$parts = explode(' / ', $perf);
+			$return[] = array(
+				'time' => $parts['0'],
+				'memory' => (float)$parts['1'],
+				'desc' => strip_tags(htmlentities($tooltip))
+			);
+		}
+
+		return $return;
+	}	
 	
 	/**
 	 * Format a number of bytes into a human readable format.
@@ -184,5 +212,5 @@ class Toolbar
 		}
 	
 		return round($val, $digits) . " " . $symbols[$i] . $bB;
-	}	
+	}
 }

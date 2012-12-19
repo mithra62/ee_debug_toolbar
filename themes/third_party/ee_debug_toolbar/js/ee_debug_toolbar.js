@@ -101,10 +101,15 @@
         });
 
         if(name == "EEDebug_memory" && !window.EEDebugGraphRendered) {
+        	/*
+        	 * Taken out for Google chart prototype that can't use lazy loading
+        	 * See: http://www.sitepoint.com/forums/showthread.php?773970-load-google-jsapi-within-javascript for details
+        	 * 
             loadScript("ee_debug_graph.js", function() {
                 var graph = new window.EEDebug.Graph(name);
                 window.EEDebugGraphRendered = true;
             });
+            */
         }
     }
 

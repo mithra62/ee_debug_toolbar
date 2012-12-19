@@ -29,7 +29,7 @@
     {
         EEDebugPanel();
         jQuery("#EEDebug_toggler").html("&#187;");
-        return jQuery("#EEDebug_debug").css("left", "-"+parseInt(jQuery("#EEDebug_debug").outerWidth()-jQuery("#EEDebug_toggler").outerWidth()+1, 10)+"px");
+        jQuery("#EEDebug_debug").css("left", "-"+parseInt(jQuery("#EEDebug_debug").outerWidth()-jQuery("#EEDebug_toggler").outerWidth()+1, 10)+"px");
     }
 
     //Bind panel buttons
@@ -37,6 +37,11 @@
         e.preventDefault();
         EEDebugPanel(jQuery(this).data('target'));
         return false;
+    });
+
+    //Bind toolbar slide toggle
+    jQuery("#EEDebug_toggler").click(function() {
+        EEDebugSlideBar();
     });
 
 

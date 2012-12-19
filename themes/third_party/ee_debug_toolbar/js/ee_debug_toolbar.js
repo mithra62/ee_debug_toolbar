@@ -37,14 +37,16 @@ if(!window.jQuery)
 
     function getCookie(c_name)
     {
-        var i,x,y,ARRcookies=document.cookie.split(";");
+        var i, x, y,
+            ARRcookies = document.cookie.split(";");
 
-        for (i=0;i<ARRcookies.length;i++)
+        for (i = 0; i < ARRcookies.length; i++)
         {
-            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-            x=x.replace(/^\s+|\s+$/g,"");
-            if (x==c_name)
+            x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x = x.replace(/^\s+|\s+$/g,"");
+
+            if (x == c_name)
             {
                 return unescape(y);
             }
@@ -61,12 +63,14 @@ if(!window.jQuery)
             }
             else
             {
-                if (jQuery(this).attr("id") == name)
-                jQuery(this).slideDown(function() {
-                    jQuery(this).css({overflow: "auto"});
-                });
-                else
-                jQuery(this).slideUp();
+                if (jQuery(this).attr("id") == name) {
+                    jQuery(this).slideDown(function() {
+                        jQuery(this).css({overflow: "auto"});
+                    });
+                }
+                else {
+                    jQuery(this).slideUp();
+                }
             }
         });
 
@@ -113,9 +117,9 @@ if(!window.jQuery)
             
         var //Runtime Vars
             ctx, height, width, data,
-            panel = jQuery("#"+nodeName),
+            panel   = jQuery("#"+nodeName),
             wrapper = jQuery(document.createElement("div")).addClass("EEDebug_graph"),
-            canvas = document.createElement("canvas");
+            canvas  = document.createElement("canvas");
 
         if(!canvas.getContext) {
             //No convas support. We're done here
@@ -146,17 +150,17 @@ if(!window.jQuery)
 
     function EEDebugRefreshGraph (ctx, data) {
         var //Config
-            inset = 13,
-            backgroundColor = "transparent",
+            inset               = 13,
+            backgroundColor     = "transparent",
 
-            axisColor = "#999",
-            axisLineWidth = 0.5,
+            axisColor           = "#999",
+            axisLineWidth       = 0.5,
             
-            axisTickColor = "#dedede",
-            axisLineTickWidth = 0.5,
+            axisTickColor       = "#dedede",
+            axisLineTickWidth   = 0.5,
 
-            timePlotLineColor = "#142a78",
-            timePlotLineWidth = 3.0,
+            timePlotLineColor   = "#142a78",
+            timePlotLineWidth   = 3.0,
 
             memoryPlotLineColor = "#b2252e",
             memoryPlotLineWidth = timePlotLineWidth,
@@ -251,9 +255,9 @@ if(!window.jQuery)
 
             //Runtime
             max_time, max_memory,
-            raw_data = [],
-            data = { memory : [], time : []},
-            panel = jQuery("#" + name),
+            raw_data    = [],
+            data        = { memory : [], time : []},
+            panel       = jQuery("#" + name),
             html_string = String(panel.html());
 
         //Parse debug HTML into useful numerical data

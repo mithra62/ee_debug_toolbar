@@ -153,13 +153,18 @@ class Toolbar
 			
 			array_map('trim', $parts);
 			$perf = str_replace('(', '', $parts['0']);
-			$tooltip = $parts['1'];
+			$tooltip = strip_tags(htmlentities($parts['1']));
+			
+			//now we have to fix some munged up values
+			$replace = array("&amp;nbsp;", "-&gt;");
+			$with = array(" ", "->");
+			$tooltip = str_replace($replace, $with, $tooltip);
 			
 			$parts = explode(' / ', $perf);
 			$return[] = array(
 				'time' => $parts['0'],
 				'memory' => (float)$parts['1'],
-				'desc' => strip_tags(htmlentities($tooltip))
+				'desc' => $tooltip
 			);
 		}
 

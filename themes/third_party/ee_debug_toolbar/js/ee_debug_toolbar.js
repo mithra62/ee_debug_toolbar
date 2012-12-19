@@ -19,6 +19,8 @@
         return;
     }
 
+    //Global object for new script classes & global settings
+    window.EEDebug = window.EEDebug || {};
 
 
     //Panels open by default?
@@ -78,8 +80,10 @@
         });
 
         if(name == "EEDebug_memory" && !window.EEDebugGraphRendered) {
-            EEDebugGraph(name);
-            window.EEDebugGraphRendered = true;
+            loadScript("ee_debug_graph.js", function() {
+                var graph = new window.EEDebug.Graph(name);
+                window.EEDebugGraphRendered = true;
+            });
         }
     }
 

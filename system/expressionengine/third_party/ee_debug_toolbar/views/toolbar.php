@@ -94,7 +94,7 @@
 	</div>
 	<div id="EEDebug_file" class="EEDebug_panel">
 		<h4><?php echo lang('file_information'); ?></h4>
-		<?php echo count(get_included_files()); ?> <?php echo lang('files_included'); ?><br>
+		<?php echo (count(get_included_files())+1); //faked for included graph file below ?> <?php echo lang('files_included'); ?><br>
 
 		<h4><?php echo lang('system_paths'); ?></h4>
 		

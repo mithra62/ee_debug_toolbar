@@ -86,14 +86,10 @@ class Toolbar
 		if (count($dbs) == 0)
 		{
 			return $output;
-		}
-	
+		}	
 		// Load the text helper so we can highlight the SQL
 		$this->EE->load->helper('text');
-	
-		// Key words we want bolded
-		$highlight = array('SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY', 'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN', 'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')');
-	
+
 		$count = 0;
 		$total_time = 0;
 		foreach ($dbs as $db)
@@ -156,8 +152,8 @@ class Toolbar
 			$tooltip = strip_tags(htmlentities($parts['1']));
 			
 			//now we have to fix some munged up values
-			$replace = array("&amp;nbsp;", "-&gt;");
-			$with = array(" ", "->");
+			$replace = array("&amp;nbsp;", "-&gt;", "&quot;");
+			$with = array("-", "->", "\"");
 			$tooltip = str_replace($replace, $with, $tooltip);
 			
 			$parts = explode(' / ', $perf);

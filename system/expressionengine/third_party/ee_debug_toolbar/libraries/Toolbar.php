@@ -27,6 +27,11 @@ class Toolbar
 		$this->EE = &get_instance();
 	}
 	
+	/**
+	 * Takes the included files and breaks up into mutli arrays for use in the debugger
+	 * @param array $files
+	 * @return Ambigous <multitype:unknown , unknown>
+	 */
 	public function setup_files(array $files)
 	{
 		sort($files);
@@ -185,4 +190,27 @@ class Toolbar
 	
 		return round($val, $digits) . " " . $symbols[$i] . $bB;
 	}	
+	
+	public function get_themes()
+	{
+		$path = PATH_THEMES.'/third_party/ee_debug_toolbar/themes/';
+		$d = dir($path);
+		$themes = array();
+		$bad = array('.', '..');
+		while (false !== ($entry = $d->read()))
+		{
+			if(is_dir($path.$entry) && !in_array($entry, $bad))
+			{
+				$name = ucwords(str_replace('_', ' ', $entry));
+				$themes[$entry] = $name;
+			}
+		}
+		$d->close();
+		return $themes;		
+	}
+	
+	public function create_theme_url($theme)
+	{
+		return URL_THIRD_THEMES."ee_debug_toolbar/themes/".$theme.'/';
+	}
 }

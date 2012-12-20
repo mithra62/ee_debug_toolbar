@@ -26,7 +26,9 @@ class Ee_debug_toolbar_ext
 	 * The extensions default settings
 	 * @var array
 	 */
-	public $settings = array();
+	public $settings = array(
+			'theme' => 'default'
+	);
 
 	/**
 	 * The extension name
@@ -40,7 +42,7 @@ class Ee_debug_toolbar_ext
 	 */
 	public $version = '0.7';
 	public $description	= '';
-	public $settings_exist	= 'n';
+	public $settings_exist	= 'y';
 	public $docs_url		= '';
 
 	public function __construct($settings='')
@@ -150,7 +152,8 @@ class Ee_debug_toolbar_ext
 		$vars['ext_version'] = $this->version;
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
-
+		$vars['theme_url'] = $this->EE->toolbar->create_theme_url($this->settings['theme']);
+		
 		$html = $this->EE->output->final_output;
 
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead
@@ -176,8 +179,16 @@ class Ee_debug_toolbar_ext
 
 		//Fist pump.
 		$this->EE->output->_display();
-
 	}
+	
+	public function settings()
+	{
+		$settings = array();
+		$this->EE->load->library('toolbar');
+		$themes = $this->EE->toolbar->get_themes();
+		$settings['theme']   = array('s', $themes, $this->settings['theme']);
+		return $settings;
+	}	
 
 	public function activate_extension()
 	{

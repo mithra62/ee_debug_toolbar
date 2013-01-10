@@ -122,15 +122,13 @@
 		}
 		?>
 	</div>
-	<div style="display: none;" id="EEDebug_memory" class="EEDebug_panel">		
-		<?php
-		if($template_debugging && is_array($template_debugging)):
-			echo "<h4>".lang('template_debugging')."</h4>"; 
-			$this->load->view('tmpl_graph'); 
-		else: 
-		?>
-		<h4><?php echo lang('templates_not_enabled'); ?></h4>
+	<div style="display: none;" id="EEDebug_memory" class="EEDebug_panel">
+		<?php if ($template_debugging && is_array($template_debugging)): ?>
+			<h4><?php echo lang('template_debugging');?></h4>
+		<?php else: ?>
+			<h4><?php echo lang('templates_not_enabled');?></h4>
 		<?php endif; ?>
+		<div id="EEDebug_graph"></div>
 	</div>
 	<div id="EEDebug_time" class="EEDebug_panel">
 		<h4><?php echo lang('benchmarks'); ?></h4>
@@ -201,4 +199,8 @@
 		<span class="EEDebug_span EEDebug_last clickable" id="EEDebug_toggler">&#171;</span>
 	</div>
 </div>
+<script type="text/javascript">
+	window.EEDebug = {data:{}};
+	window.EEDebug.data.tmpl_data = <?php echo $template_debugging_chart_json?>;
+</script>
 <script src="<?php echo URL_THIRD_THEMES."ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript" charset="utf-8" defer id="EEDebug_debug_script"></script>

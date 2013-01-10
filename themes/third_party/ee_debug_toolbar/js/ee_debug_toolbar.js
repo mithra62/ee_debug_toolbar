@@ -81,6 +81,8 @@
      */
     function EEDebugPanel(name)
     {
+        var scriptLoaderProxy = loadScript;
+
         jQuery(".EEDebug_panel").each(function(i)
         {
             if(jQuery(this).css("display") == "block")
@@ -101,15 +103,18 @@
         });
 
         if(name == "EEDebug_memory" && !window.EEDebugGraphRendered) {
-        	/*
-        	 * Taken out for Google chart prototype that can't use lazy loading
-        	 * See: http://www.sitepoint.com/forums/showthread.php?773970-load-google-jsapi-within-javascript for details
-        	 * 
-            loadScript("ee_debug_graph.js", function() {
-                var graph = new window.EEDebug.Graph(name);
-                window.EEDebugGraphRendered = true;
+
+	        /**
+	         * Load Google Chart Library using Google Loader
+	         *
+	         * Need to load our JS first so that we have a callback function ready to handle the callback
+	         * from the JSAPI loading.
+	         */
+            jQuery(document.body).addClass("EEDebug-chart-loading");
+            loadScript("ee_google_chart.js", function() {
+                scriptLoaderProxy("https://www.google.com/jsapi?callback=jsapi_ready", null, true);
             });
-            */
+
         }
     }
 

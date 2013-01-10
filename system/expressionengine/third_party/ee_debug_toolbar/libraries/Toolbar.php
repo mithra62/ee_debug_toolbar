@@ -165,8 +165,19 @@ class Toolbar
 		}
 
 		return $return;
-	}	
-	
+	}
+
+	/**
+	 * Returns a JSON string that can be used by the Template Chart JS
+	 * @param $log array
+	 * @return string
+	 */
+	public function format_tmpl_chart_json($data)
+	{
+		return json_encode($data);
+	}
+
+
 	/**
 	 * Format a number of bytes into a human readable format.
 	 * Optionally choose the output format and/or force a particular unit

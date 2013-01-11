@@ -63,3 +63,13 @@
     background-position: center 110px;
     background-color: #ddd;
 }
+
+a.EEDebug_graph_actions
+{
+	color:#000000;
+}
+
+a.EEDebug_graph_action_active
+{
+	color:#FF0000;
+}

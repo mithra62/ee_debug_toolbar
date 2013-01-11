@@ -118,11 +118,15 @@
             jQuery("#EEDebug_graph_display").click(function() {
             	jQuery("#EEDebug_template_list").hide();
             	jQuery("#EEDebug_graph").show();
+            	jQuery("#EEDebug_graph_display").addClass("EEDebug_graph_action_active");
+            	jQuery("#EEDebug_graph_list").removeClass("EEDebug_graph_action_active");
             }); 
             
             jQuery("#EEDebug_graph_list").click(function() {
             	jQuery("#EEDebug_graph").hide();
             	jQuery("#EEDebug_template_list").show();
+            	jQuery("#EEDebug_graph_list").addClass("EEDebug_graph_action_active");
+            	jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");
             });             
 
         }

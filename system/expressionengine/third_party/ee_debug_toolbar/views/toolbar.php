@@ -122,18 +122,19 @@
 		}
 		?>
 	</div>
+	<?php if($this->input->get("D", FALSE) != 'cp'): ?>
 	<div style="display: none;" id="EEDebug_memory" class="EEDebug_panel">
+	<?php else: ?>
+	<div style="display: none;" id="EEDebug_memory_cp" class="EEDebug_panel">
+	<?php endif; ?>
 		<?php if ($template_debugging && is_array($template_debugging)): ?>
 			<div style="float:left">
 				<h4><?php echo lang('template_debugging');?></h4>
 			</div>
 			<div style="float:right">
-				<a href="javascript:;" id="EEDebug_graph_display">Graph</a> | <a href="javascript:;" id="EEDebug_graph_list">List</a>
+				<a href="javascript:;" id="EEDebug_graph_display" class="EEDebug_graph_actions EEDebug_graph_action_active">Graph</a> | <a href="javascript:;" id="EEDebug_graph_list" class="EEDebug_graph_actions">List</a>
 			</div>
 			<br clear="all" />
-		<?php else: ?>
-			<h4><?php echo lang('templates_not_enabled');?></h4>
-		<?php endif; ?>
 		<div id="EEDebug_graph"></div>
 		<div id="EEDebug_template_list" style="display:none">
 		<?php
@@ -142,7 +143,10 @@
 			echo '('.$log['time'].'/'.$log['memory'].') - '.$log['desc'].'<br />';
 		}		
 		?>
-		</div> 
+		</div> 			
+		<?php else: ?>
+			<h4><?php echo lang('templates_not_enabled');?></h4>
+		<?php endif; ?>
 	</div>
 	<div id="EEDebug_time" class="EEDebug_panel">
 		<h4><?php echo lang('benchmarks'); ?></h4>
@@ -198,7 +202,12 @@
 		<span class="EEDebug_span clickable" data-target="EEDebug_file">
 			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADPSURBVCjPdZFNCsIwEEZHPYdSz1DaHsMzuPM6RRcewSO4caPQ3sBDKCK02p+08DmZtGkKlQ+GhHm8MBmiFQUU2ng0B7khClTdQqdBiX1Ma1qMgbDlxh0XnJHiit2JNq5HgAo3KEx7BFAM/PMI0CDB2KNvh1gjHZBi8OR448GnAkeNDEDvKZDh2Xl4cBcwtcKXkZdYLJBYwCCFPDRpMEjNyKcDPC4RbXuPiWKkNABPOuNhItegz0pGFkD+y3p0s48DDB43dU7+eLWes3gdn5Y/LD9Y6skuWXcAAAAASUVORK5CYII=" style="vertical-align:middle" alt="<?php echo lang('files'); ?>" title="<?php echo lang('files'); ?>"> <?php echo count(get_included_files()); ?> <?php echo lang('files'); ?>
 		</span>
+
+		<?php if($this->input->get("D", FALSE) != 'cp'): ?>		
 		<span class="EEDebug_span clickable" data-target="EEDebug_memory">
+		<?php else: ?>
+		<span class="EEDebug_span clickable" data-target="EEDebug_memory_cp">
+		<?php endif; ?>
 			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGvSURBVDjLpZO7alZREEbXiSdqJJDKYJNCkPBXYq12prHwBezSCpaidnY+graCYO0DpLRTQcR3EFLl8p+9525xgkRIJJApB2bN+gZmqCouU+NZzVef9isyUYeIRD0RTz482xouBBBNHi5u4JlkgUfx+evhxQ2aJRrJ/oFjUWysXeG45cUBy+aoJ90Sj0LGFY6anw2o1y/mK2ZS5pQ50+2XiBbdCvPk+mpw2OM/Bo92IJMhgiGCox+JeNEksIC11eLwvAhlzuAO37+BG9y9x3FTuiWTzhH61QFvdg5AdAZIB3Mw50AKsaRJYlGsX0tymTzf2y1TR9WwbogYY3ZhxR26gBmocrxMuhZNE435FtmSx1tP8QgiHEvj45d3jNlONouAKrjjzWaDv4CkmmNu/Pz9CzVh++Yd2rIz5tTnwdZmAzNymXT9F5AtMFeaTogJYkJfdsaaGpyO4E62pJ0yUCtKQFxo0hAT1JU2CWNOJ5vvP4AIcKeao17c2ljFE8SKEkVdWWxu42GYK9KE4c3O20pzSpyyoCx4v/6ECkCTCqccKorNxR5uSXgQnmQkw2Xf+Q+0iqQ9Ap64TwAAAABJRU5ErkJggg==" style="vertical-align:middle" alt="<?php echo lang('memory'); ?>" title="<?php echo lang('memory'); ?>"> <?php echo $memory_usage; ?> of <?php echo ini_get('memory_limit'); ?>
 		</span>
 		<span class="EEDebug_span clickable" data-target="EEDebug_time">

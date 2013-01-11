@@ -114,6 +114,16 @@
             loadScript("ee_google_chart.js", function() {
                 scriptLoaderProxy("https://www.google.com/jsapi?callback=jsapi_ready", null, true);
             });
+            
+            jQuery("#EEDebug_graph_display").click(function() {
+            	jQuery("#EEDebug_template_list").hide();
+            	jQuery("#EEDebug_graph").show();
+            }); 
+            
+            jQuery("#EEDebug_graph_list").click(function() {
+            	jQuery("#EEDebug_graph").hide();
+            	jQuery("#EEDebug_template_list").show();
+            });             
 
         }
     }

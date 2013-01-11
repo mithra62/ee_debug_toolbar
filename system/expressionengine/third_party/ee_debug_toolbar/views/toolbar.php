@@ -124,11 +124,25 @@
 	</div>
 	<div style="display: none;" id="EEDebug_memory" class="EEDebug_panel">
 		<?php if ($template_debugging && is_array($template_debugging)): ?>
-			<h4><?php echo lang('template_debugging');?></h4>
+			<div style="float:left">
+				<h4><?php echo lang('template_debugging');?></h4>
+			</div>
+			<div style="float:right">
+				<a href="javascript:;" id="EEDebug_graph_display">Graph</a> | <a href="javascript:;" id="EEDebug_graph_list">List</a>
+			</div>
+			<br clear="all" />
 		<?php else: ?>
 			<h4><?php echo lang('templates_not_enabled');?></h4>
 		<?php endif; ?>
 		<div id="EEDebug_graph"></div>
+		<div id="EEDebug_template_list" style="display:none">
+		<?php
+		foreach($template_debugging AS $log)
+		{
+			echo '('.$log['time'].'/'.$log['memory'].') - '.$log['desc'].'<br />';
+		}		
+		?>
+		</div> 
 	</div>
 	<div id="EEDebug_time" class="EEDebug_panel">
 		<h4><?php echo lang('benchmarks'); ?></h4>

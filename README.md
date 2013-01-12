@@ -27,4 +27,4 @@ To have your [benchmarks](http://codeigniter.com/user_guide/libraries/benchmark.
 
 Contributors
 ====================
-EE Debug Toolbar is a collaboration between [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) and [Chris Imrie](https://github.com/ckimrie/ "Chris Imrie").
+EE Debug Toolbar is a collaboration between [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) and [Christopher Imrie](https://github.com/ckimrie/ "Christopher Imrie").

@@ -93,7 +93,13 @@
 			}
 		});
 
-		if (name == "EEDebug_memory" && !window.EEDebugGraphRendered) {
+		/**
+		 * Only initialise the memory chart if:
+		 * 	- The EEDebugMemory tab is clicked
+		 * 	- The graph has not been rendered yet
+		 * 	- Template debugging is enabled
+		 */
+		if (name == "EEDebug_memory" && !window.EEDebugGraphRendered && window.EEDebug.config.template_debugging_enabled) {
 
 			/**
 			 * Load Google Chart Library using Google Loader

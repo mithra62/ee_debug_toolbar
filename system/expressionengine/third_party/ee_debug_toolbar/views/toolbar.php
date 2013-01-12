@@ -115,7 +115,7 @@
 	<?php else: ?>
 	<div style="display: none;" id="EEDebug_memory_cp" class="EEDebug_panel">
 	<?php endif; ?>
-<?php if ($template_debugging && is_array($template_debugging)): ?>
+<?php if ($template_debugging_enabled): ?>
 	<div style="float:left">
 		<h4><?php echo lang('template_debugging');?></h4>
 	</div>
@@ -224,7 +224,8 @@
 	</div>
 </div>
 <script type="text/javascript">
-	window.EEDebug = {data:{}};
+	window.EEDebug = {data:{}, config:{}};
+	window.EEDebug.config.template_debugging_enabled = <?php if($template_debugging_enabled){ echo "true"; }else{ echo "false";}?>;
 	window.EEDebug.data.tmpl_data = <?php echo $template_debugging_chart_json?>;
 </script>
 <script src="<?php echo URL_THIRD_THEMES . "ee_debug_toolbar/js/ee_debug_toolbar.js" ?>" type="text/javascript"

@@ -136,8 +136,9 @@ class Ee_debug_toolbar_ext
 		$vars['session_data']                  = $this->EE->session->all_userdata();
 		$vars['query_data']                    = $this->EE->toolbar->setup_queries();
 		$vars['memory_usage']                  = $this->EE->toolbar->filesize_format(memory_get_peak_usage());
-		$vars['template_debugging']            = (isset($this->EE->TMPL->log) ? $this->EE->toolbar->format_tmpl_log($this->EE->TMPL->log) : array());
-		$vars['template_debugging_chart_json'] = (isset($this->EE->TMPL->log) ? $this->EE->toolbar->format_tmpl_chart_json($vars['template_debugging']) : array());
+		$vars['template_debugging_enabled']    = isset($this->EE->TMPL->log) && is_array($this->EE->TMPL->log) && count($this->EE->TMPL->log) > 0;
+		$vars['template_debugging']            = ($vars['template_debugging_enabled'] ? $this->EE->toolbar->format_tmpl_log($this->EE->TMPL->log) : array());
+		$vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->EE->toolbar->format_tmpl_chart_json($vars['template_debugging']) : array());
 		$vars['included_file_data']            = $this->EE->toolbar->setup_files(get_included_files());
 
 		$vars['ext_version'] = $this->version;

@@ -27,4 +27,4 @@ To have your [benchmarks](http://codeigniter.com/user_guide/libraries/benchmark.
 
 Contributors
 ====================
-Initially built by [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) but uses code from [Chris Imrie](https://github.com/ckimrie/ "Chris Imrie") (with permission) and [RequireJS for EE](https://github.com/ckimrie/RequireJS-for-EE "RequireJS for EE").
+EE Debug Toolbar is a collaboration between [Eric Lamb](http://blog.ericlamb.net/ "Eric Lamb") ([mithra62](http://mithra62.com/index "mithra62")) and [Christopher Imrie](https://github.com/ckimrie/ "Christopher Imrie").

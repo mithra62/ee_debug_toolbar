@@ -7,6 +7,7 @@ Adds ExpressionEngine/CodeIgniter version info, available variables, included fi
 ![](http://mithra62.com/images/ee_debug_toolbar_default.png)
 
 Graph:
+
 ![](http://mithra62.com/images/ee_debug_toolbar_graph.png)
 
 Installation

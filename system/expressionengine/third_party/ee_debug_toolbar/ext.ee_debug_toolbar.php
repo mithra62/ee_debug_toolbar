@@ -45,7 +45,7 @@ class Ee_debug_toolbar_ext
 	 */
 	public $version = '0.8';
 	public $description = '';
-	public $settings_exist = 'n';
+	public $settings_exist = 'y';
 	public $docs_url = '';
 
 

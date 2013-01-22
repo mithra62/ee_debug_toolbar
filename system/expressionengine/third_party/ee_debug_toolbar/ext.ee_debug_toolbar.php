@@ -32,6 +32,14 @@ class Ee_debug_toolbar_ext
 	);
 
 	/**
+	 * Persistent storage to hold settings across the
+	 * multiple class initialisations by EE and then CI
+	 * 
+	 * @var array
+	 */
+	static $persistent_settings = array();
+
+	/**
 	 * The extension name
 	 *
 	 * @var string
@@ -52,7 +60,25 @@ class Ee_debug_toolbar_ext
 	public function __construct($settings = '')
 	{
 		$this->EE       =& get_instance();
-		$this->settings = (!$settings ? $this->settings : $settings);
+
+		/**
+		 * Due to the CodeIgniter Hooks technique used to grab the final output,
+		 * this class is initialised twice: once by EE on the session_end EE hook
+		 * and then once again by CI on the display_override CI hook.  The settings
+		 * for this extension are only provided on the first initialisation by EE.
+		 * We need to store them for the second load since thats where our business
+		 * logic lies...
+		 */
+		// #1 Session_end EE Hook...
+		if($settings && !Ee_debug_toolbar_ext::$persistent_settings) {
+			$this->settings = $settings;
+			Ee_debug_toolbar_ext::$persistent_settings = $settings;
+		}
+		// #2 Display_override CI Hook...
+		if(!$settings && Ee_debug_toolbar_ext::$persistent_settings) {
+			$this->settings = Ee_debug_toolbar_ext::$persistent_settings;
+		}
+
 		$this->EE->lang->loadfile('ee_debug_toolbar');
 		$this->name        = lang('ee_debug_toolbar_module_name');
 		$this->description = lang('ee_debug_toolbar_module_description');
@@ -148,7 +174,7 @@ class Ee_debug_toolbar_ext
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 		$vars['theme_url'] = $this->EE->toolbar->create_theme_url($this->settings['theme']);
-		
+
 		$html = $this->EE->output->final_output;
 
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead

@@ -11,21 +11,21 @@
 <div id="EEDebug_variables" class="EEDebug_panel">
 	<h4><?php echo lang('headers'); ?></h4>
 
-	<div id="ZFDebug_headers">
-		<div class="pre">
-			<?php
+	<div id="EEDebug_headers">
+		<pre>
+<?php
 			foreach (array('HTTP_ACCEPT', 'HTTP_USER_AGENT', 'HTTP_CONNECTION', 'SERVER_PORT', 'SERVER_NAME', 'REMOTE_ADDR', 'SERVER_SOFTWARE', 'HTTP_ACCEPT_LANGUAGE', 'SCRIPT_NAME', 'REQUEST_METHOD', ' HTTP_HOST', 'REMOTE_HOST', 'CONTENT_TYPE', 'SERVER_PROTOCOL', 'QUERY_STRING', 'HTTP_ACCEPT_ENCODING', 'HTTP_X_FORWARDED_FOR') as $header) {
 				$val = (isset($_SERVER[$header])) ? $_SERVER[$header] : '';
 				echo $header . ' =&gt; ' . $val . '<br />';
 			}
 			?>
-		</div>
+		</pre>
 	</div>
 	<h4>$_COOKIE</h4>
 
-	<div id="ZFDebug_cookie">
-		<div class="pre">
-			<?php
+	<div id="EEDebug_cookie">
+		<pre>
+<?php
 			if (count($_COOKIE) == '0') {
 				echo lang('no_cookie_vars');
 			} else {
@@ -34,13 +34,13 @@
 				}
 			}
 			?>
-		</div>
+		</pre>
 	</div>
 	<h4>$_GET</h4>
 
-	<div id="ZFDebug_get">
-		<div class="pre">
-			<?php
+	<div id="EEDebug_get">
+		<pre>
+<?php
 			if (count($_GET) == '0') {
 				echo lang('no_get_vars');
 			} else {
@@ -49,13 +49,13 @@
 				}
 			}
 			?>
-		</div>
+		</pre>
 	</div>
 	<h4>$_POST</h4>
 
-	<div id="ZFDebug_post">
-		<div class="pre">
-			<?php
+	<div id="EEDebug_post">
+		<pre>
+<?php
 			if (count($_POST) == '0') {
 				echo lang('no_post_vars');
 			} else {
@@ -64,13 +64,13 @@
 				}
 			}
 			?>
-		</div>
+		</pre>
 	</div>
 	<h4><?php echo lang('ee_session'); ?></h4>
 
-	<div id="ZFDebug_ee_session">
-		<div class="pre">
-			<?php
+	<div id="EEDebug_ee_session">
+		<pre>
+<?php
 			if (count($session_data) == '0') {
 				echo lang('no_session_vars');
 			} else {
@@ -79,7 +79,7 @@
 				}
 			}
 			?>
-		</div>
+		</pre>
 	</div>
 </div>
 <div id="EEDebug_file" class="EEDebug_panel">
@@ -89,23 +89,23 @@
 
 	<h4><?php echo lang('system_paths'); ?></h4>
 
-	<?php echo lang('bootstrap_file'); ?>: <?php echo realpath($included_file_data['bootstrap_file']); ?><br>
-	<?php echo lang('app'); ?>: <?php echo realpath(APPPATH); ?><br>
-	<?php echo lang('themes'); ?>: <?php echo realpath(PATH_THEMES); ?><br>
-	<?php echo lang('third_party'); ?>: <?php echo realpath(PATH_THIRD); ?><br>
-	<?php echo lang('member_themes'); ?>: <?php echo realpath(PATH_MBR_THEMES); ?><br>
+	<span class="label"><?php echo lang('bootstrap_file'); ?>:</span> <code><?php echo realpath($included_file_data['bootstrap_file']); ?></code><br>
+	<span class="label"><?php echo lang('app'); ?>:</span> <code><?php echo realpath(APPPATH); ?></code><br>
+	<span class="label"><?php echo lang('themes'); ?>:</span> <code><?php echo realpath(PATH_THEMES); ?></code><br>
+	<span class="label"><?php echo lang('third_party'); ?>:</span> <code><?php echo realpath(PATH_THIRD); ?></code><br>
+	<span class="label"><?php echo lang('member_themes'); ?>:</span> <code><?php echo realpath(PATH_MBR_THEMES); ?></code><br>
 	<?php if (defined('PATH_JAVASCRIPT')): ?>
-	<?php echo lang('javascript'); ?>: <?php echo realpath(PATH_JAVASCRIPT); ?><br>
+	<span class="label"><?php echo lang('javascript'); ?>:</span> <code><?php echo realpath(PATH_JAVASCRIPT); ?></code><br>
 	<?php endif; ?>
 
 	<?php
 	foreach ($included_file_data AS $section => $files) {
 		if (is_array($files) && count($files) >= '1') {
-			echo '<h4>' . lang($section) . ' (' . count($files) . ')</h4><div class="pre">';
+			echo '<h4>' . lang($section) . ' (' . count($files) . ')</h4><pre>';
 			foreach ($files AS $file) {
 				echo $file . '<br />';
 			}
-			echo '</div>';
+			echo '</pre>';
 		}
 	}
 	?>
@@ -148,22 +148,22 @@
 	<div id="EEDebug_registry" class="EEDebug_panel">
 		<h4><?php echo lang('configuration'); ?></h4>
 
-		<div class="pre">
+		<pre>
 			<?php
 			foreach ($config_data AS $key => $value) {
 				if (!is_array($value)) {
 					echo $key . ' =&gt; ' . $value . ' <br />';
 
 				} else {
-					echo '<div class="pre">' . $key . '=&gt;';
+					echo '<pre>' . $key . '=&gt;';
 					foreach ($value AS $_k => $_v) {
 						echo $_k . ' =&gt; ' . print_r($_v, TRUE) . ' <br />';
 					}
-					echo '</div>';
+					echo '</pre>';
 				}
 			}
 			?>
-		</div>
+		</pre>
 	</div>
 	<div id="EEDebug_database" class="EEDebug_panel">
 		<h4><?php echo lang('database_queries'); ?></h4>

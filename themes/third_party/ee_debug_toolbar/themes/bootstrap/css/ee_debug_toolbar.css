@@ -11,7 +11,11 @@
 	text-rendering: optimizelegibility;
 }
 #EEDebug_toolbar.animate {
-    -webkit-transition:left 0.3s;
+	-webkit-transition: left 0.3s;
+	-moz-transition: left 0.3s;
+	-o-transition: left 0.3s;
+	-ms-transition: left 0.3s;
+	transition: left 0.3s;
 }
 #EEDebug_debug.toolbar-open {
     left:0;

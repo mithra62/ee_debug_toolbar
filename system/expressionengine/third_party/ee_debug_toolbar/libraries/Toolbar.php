@@ -31,7 +31,8 @@ class Toolbar
 	{
 		if (!isset($this->EE->session->cache['ee_debug_toolbar']['settings']))
 		{
-			$this->EE->session->cache['ee_debug_toolbar']['settings'] = $this->EE->export_it_settings->get_settings();
+			$this->EE->load->model('ee_debug_settings_model', 'debug_settings');
+			$this->EE->session->cache['ee_debug_toolbar']['settings'] = $this->EE->debug_settings->get_settings();
 		}
 	
 		return $this->EE->session->cache['ee_debug_toolbar']['settings'];

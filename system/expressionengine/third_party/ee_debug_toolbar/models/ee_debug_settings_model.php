@@ -56,6 +56,7 @@ class Ee_debug_settings_model extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
+		$this->_table = $this->settings_table;
 	}
 	
 	/**
@@ -86,9 +87,9 @@ class Ee_debug_settings_model extends CI_Model
 		foreach ($this->_defaults as $key => $value)
 		{
 			//setup the override check
-			if(isset($this->config->config['ct_admin'][$key]))
+			if(isset($this->config->config['ee_debug_toolbar'][$key]))
 			{
-				$settings[$key] = $this->config->config['ct_admin'][$key];
+				$settings[$key] = $this->config->config['ee_debug_toolbar'][$key];
 			}
 			
 			//normal default check				

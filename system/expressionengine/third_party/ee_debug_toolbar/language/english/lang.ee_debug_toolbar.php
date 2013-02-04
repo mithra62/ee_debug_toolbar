@@ -49,5 +49,7 @@ $lang = array(
 	'other_files'                         => 'Other Files',
 	'expressionengine_core'               => 'ExpressionEngine Core Files',
 	'first_party_modules'                 => 'First Party Modules',
+	'theme'                 			  => 'Theme',
+	'theme_instructions'                  => 'Select the theme you want the Toolbar to use.',
 	''                                    => ''
 );

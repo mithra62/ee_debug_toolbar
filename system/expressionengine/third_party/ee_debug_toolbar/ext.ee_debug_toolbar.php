@@ -78,25 +78,6 @@ class Ee_debug_toolbar_ext
 	public function __construct($settings = '')
 	{
 		$this->EE       =& get_instance();
-
-		/**
-		 * Due to the CodeIgniter Hooks technique used to grab the final output,
-		 * this class is initialised twice: once by EE on the session_end EE hook
-		 * and then once again by CI on the display_override CI hook.  The settings
-		 * for this extension are only provided on the first initialisation by EE.
-		 * We need to store them for the second load since thats where our business
-		 * logic lies...
-		 */
-		// #1 Session_end EE Hook...
-		if($settings && !Ee_debug_toolbar_ext::$persistent_settings) {
-			$this->settings = $settings;
-			Ee_debug_toolbar_ext::$persistent_settings = $settings;
-		}
-		// #2 Display_override CI Hook...
-		if(!$settings && Ee_debug_toolbar_ext::$persistent_settings) {
-			$this->settings = Ee_debug_toolbar_ext::$persistent_settings;
-		}
-
 		$this->EE->lang->loadfile('ee_debug_toolbar');
 		$this->name        = lang('ee_debug_toolbar_module_name');
 		$this->description = lang('ee_debug_toolbar_module_description');
@@ -191,6 +172,7 @@ class Ee_debug_toolbar_ext
 		$vars['ext_version'] = $this->version;
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
+		$this->settings = $this->EE->toolbar->get_settings();
 		$vars['theme_url'] = $this->EE->toolbar->create_theme_url($this->settings['theme']);
 
 		$html = $this->EE->output->final_output;
@@ -219,14 +201,41 @@ class Ee_debug_toolbar_ext
 		$this->EE->output->_display();
 	}
 	
-	public function settings()
+	public function settings_form()
 	{
-		$settings = array();
 		$this->EE->load->library('toolbar');
-		$themes = $this->EE->toolbar->get_themes();
-		$settings['theme']   = array('s', $themes, $this->settings['theme']);
-		return $settings;
+		$this->settings = $this->EE->toolbar->get_settings();
+		
+		$vars = array();
+		$vars['settings'] = $this->settings;
+		$vars['available_themes'] = $this->EE->toolbar->get_themes();
+		$vars['settings_disable'] = FALSE;
+		if(isset($this->EE->config->config['ee_debug_toolbar']))
+		{
+			$vars['settings_disable'] = 'disabled="disabled"';
+		}		
+		
+		return $this->EE->load->view('settings', $vars, TRUE);
 	}	
+	
+	public function save_settings()
+	{
+		$this->EE->load->library('toolbar');
+		$this->settings = $this->EE->toolbar->get_settings();
+		if($this->EE->debug_settings->update_settings($_POST))
+		{
+			$this->EE->logger->log_action($this->EE->lang->line('log_settings_updated'));
+			$this->EE->session->set_flashdata('message_success', $this->EE->lang->line('settings_updated'));
+			$this->EE->functions->redirect('?D=cp&C=addons_extensions');
+			exit;
+		}
+		else
+		{
+			$this->EE->session->set_flashdata('message_failure', $this->EE->lang->line('settings_update_fail'));
+			$this->EE->functions->redirect('?D=cp&C=addons_extensions');
+			exit;
+		}		
+	}
 
 	public function activate_extension()
 	{

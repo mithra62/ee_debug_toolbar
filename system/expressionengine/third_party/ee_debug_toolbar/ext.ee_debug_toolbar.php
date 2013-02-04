@@ -21,7 +21,7 @@
  * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/ext.ee_debug_toolbar.php
  */
 class Ee_debug_toolbar_ext
-{
+{		
 	/**
 	 * The extensions default settings
 	 *
@@ -44,7 +44,7 @@ class Ee_debug_toolbar_ext
 	 *
 	 * @var string
 	 */
-	public $name = '';
+	public $name = '';	
 
 	/**
 	 * The extension version
@@ -52,8 +52,26 @@ class Ee_debug_toolbar_ext
 	 * @var float
 	 */
 	public $version = '0.9';
+	
+	/**
+	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)
+	 * 
+	 * @var string
+	 */
 	public $description = '';
+	
+	/**
+	 * We're doing our own settings now so set this to off.
+	 * 
+	 * @var string
+	 */
 	public $settings_exist = 'y';
+	
+	/**
+	 * Where to get help (nowhere for now)
+	 * 
+	 * @var string
+	 */
 	public $docs_url = '';
 
 
@@ -212,20 +230,8 @@ class Ee_debug_toolbar_ext
 
 	public function activate_extension()
 	{
-		$this->settings['alert_message'] = lang('default_alert_message');
-		$data                            = array(
-			'class'    => __CLASS__,
-			'method'   => 'toolbar',
-			'hook'     => 'sessions_end',
-			'settings' => serialize($this->settings),
-			'priority' => 9999999,
-			'version'  => $this->version,
-			'enabled'  => 'y'
-		);
-
-		$this->EE->db->insert('extensions', $data);
-
-		return true;
+		$this->EE->load->library('ee_toolbar_install', null, 'install');
+		$this->EE->install->install(__CLASS__, $this->version);
 	}
 
 	public function update_extension($current = '')
@@ -234,17 +240,14 @@ class Ee_debug_toolbar_ext
 			return false;
 		}
 
-		$this->EE->db->where('class', __CLASS__);
-		$this->EE->db->update(
-			'extensions',
-			array('version' => $this->version)
-		);
+		$this->EE->load->library('ee_toolbar_install', null, 'install');
+		$this->EE->install->update(__CLASS__, $this->version);
 	}
 
 	public function disable_extension()
 	{
-		$this->EE->db->where('class', __CLASS__);
-		$this->EE->db->delete('extensions');
+		$this->EE->load->library('ee_toolbar_install', null, 'install');
+		$this->EE->install->remove(__CLASS__);		
 	}
 
 }

@@ -27,6 +27,16 @@ class Toolbar
 		$this->EE = & get_instance();
 	}
 	
+	public function get_settings()
+	{
+		if (!isset($this->EE->session->cache['ee_debug_toolbar']['settings']))
+		{
+			$this->EE->session->cache['ee_debug_toolbar']['settings'] = $this->EE->export_it_settings->get_settings();
+		}
+	
+		return $this->EE->session->cache['ee_debug_toolbar']['settings'];
+	}	
+	
 	/**
 	 * Takes the included files and breaks up into mutli arrays for use in the debugger
 	 * @param array $files

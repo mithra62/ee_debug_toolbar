@@ -79,10 +79,25 @@
 	background-color: #ddd;
 }
 
+#EEDebug_memory {
+	overflow:hidden;
+}
 a.EEDebug_graph_actions {
 	color: #000000;
 }
 
 a.EEDebug_graph_action_active, .EEDebug_tmpl_log_active {
 	color: #FF0000;
+}
+
+#EEDebug_template_list { 
+	overflow:scroll; 
+	height:370px;
+	/* Legacy */
+	overflow: scroll;
+	
+	/* Modern Browsers */
+	overflow-x:hidden;
+	overflow-y:scroll;
+
 }

@@ -127,8 +127,12 @@
 	<div id="EEDebug_graph"></div>
 	<div id="EEDebug_template_list" style="display:none">
 		<?php
+		$total = 1;
 		foreach ($template_debugging AS $log) {
+			echo "\n<div id='EEDebug_hash_$total'>";
 			echo '(' . $log['time'] . '/' . $log['memory'] . ') - ' . $log['desc'] . '<br />';
+			echo "</div>";
+			$total++;
 		}
 		?>
 	</div>
@@ -147,10 +151,9 @@
 	</div>
 	<div id="EEDebug_registry" class="EEDebug_panel">
 		<h4><?php echo lang('configuration'); ?></h4>
-
-		<pre>
-			<?php
+		<pre><?php
 			foreach ($config_data AS $key => $value) {
+			
 				if (!is_array($value)) {
 					echo $key . ' =&gt; ' . $value . ' <br />';
 

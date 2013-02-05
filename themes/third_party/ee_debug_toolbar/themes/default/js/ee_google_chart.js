@@ -68,6 +68,19 @@ window.EEDebug.Graph = function (data, node) {
 
 	chart = new google.visualization.LineChart(node);
 	chart.draw(datatable, options);
+	
+	//setup the click to list function
+    google.visualization.events.addListener(chart, 'select', function() {
+        var selection = chart.getSelection();
+        var row = "#EEDebug_hash_"+selection[0].row;
+        var col = selection[0].column;
+		jQuery("#EEDebug_graph").hide();
+		jQuery("#EEDebug_template_list").show();
+		jQuery("#EEDebug_graph_list").addClass("EEDebug_graph_action_active");
+		jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");		
+		$(row)[0].scrollIntoView();
+      });
+    //end click to list
 
 	//Some indicators that the chart is ready
 	jQuery(document.body).removeClass("EEDebug-chart-loading");

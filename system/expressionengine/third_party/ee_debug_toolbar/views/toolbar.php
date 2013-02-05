@@ -111,7 +111,7 @@
 	?>
 </div>
 <?php if ($this->input->get("D", FALSE) != 'cp'): ?>
-	<div style="display: none;" id="EEDebug_memory" class="EEDebug_panel">
+	<div style="display: none; overflow:hidden;" id="EEDebug_memory" class="EEDebug_panel">
 	<?php else: ?>
 	<div style="display: none;" id="EEDebug_memory_cp" class="EEDebug_panel">
 	<?php endif; ?>

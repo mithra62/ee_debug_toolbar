@@ -30,7 +30,7 @@ window.EEDebug.Graph = function (data, node) {
 		options = {
 			//title:'<?php echo lang('template_debugging'); ?>',
 			backgroundColor:'none',
-			width:600,
+			width:640,
 			height:220,
 			hAxis:{
 				slantedText:true
@@ -45,7 +45,7 @@ window.EEDebug.Graph = function (data, node) {
 				isHtml:false
 			},
 			chartArea:{
-				width:620,
+				width:660,
 				height:"160",
 				top:10,
 				left:50

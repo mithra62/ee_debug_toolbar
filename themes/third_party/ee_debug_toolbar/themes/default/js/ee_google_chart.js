@@ -68,7 +68,7 @@ window.EEDebug.Graph = function (data, node) {
 
 	chart = new google.visualization.LineChart(node);
 	chart.draw(datatable, options);
-	
+
 	//setup the click to list function
     google.visualization.events.addListener(chart, 'select', function() {
         var selection = chart.getSelection();

@@ -4,21 +4,22 @@
 #EEDebug_debug {
 	font: 11px/1.4em "Helvetica Neue", Helvetica, Arial, sans-serif;
 	position: fixed;
-	bottom: 12px;
-	left: -675px;
+	top: 12px;
+	right: -672px;
 	color: #000;
 	z-index: 100255;
 	text-rendering: optimizelegibility;
+	padding-left: 22px;
 }
-#EEDebug_toolbar.animate {
-	-webkit-transition: left 0.3s;
-	-moz-transition: left 0.3s;
-	-o-transition: left 0.3s;
-	-ms-transition: left 0.3s;
-	transition: left 0.3s;
+#EEDebug_debug.animate {
+	-webkit-transition: right 0.3s;
+	-moz-transition: right 0.3s;
+	-o-transition: right 0.3s;
+	-ms-transition: right 0.3s;
+	transition: right 0.3s;
 }
 #EEDebug_debug.toolbar-open {
-    left:0;
+    right:0;
 }
 
 #EEDebug_debug ol {
@@ -86,7 +87,6 @@
 #EEDebug_toggler, .EEDebug_span {
 
 	background: #BFBFBF;
-
 	padding: 10px 9px 9px;
     color: #333333;
 
@@ -136,9 +136,13 @@
 
 #EEDebug_toggler {
     border-bottom-color: #a2a2a2;
-    -webkit-border-radius: 0 4px 4px 0;
-    -moz-border-radius: 0 4px 4px 0;
-    border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+	position: absolute;
+	left:0;
+	top: -10px;
+	padding: 8px;
 }
 .EEDebug_span {
 	border-right: 0px;
@@ -152,15 +156,25 @@
 .EEDebug_panel {
 	text-align: left;
 	position: absolute;
-	bottom: 25px;
-	width: 93.7%;
+	top: 23px;
+	width: 94.1%;
+	height:0;
 	max-height: 400px;
-	overflow: auto;
+	overflow: hidden;
 	display: none;
 	background: #fff;
 	padding: 7px 9px;
-	border: 1px solid #e6e6e6;
-	border-top: 4px solid #ddd;
+	border-left: 1px solid #e6e6e6;
+	border-bottom: 4px solid #aaa;
+	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
+}
+.EEDebug_panel.active {
+	height:auto;
+	max-height: 500px;
+	display: block;
+	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 .EEDebug_span img{
     position: relative;
@@ -219,6 +233,15 @@
 	display: block;
 }
 
+#EEDebug_graph,
+#EEDebug_template_list{
+	display: none;
+}
+
+.show_graph #EEDebug_graph,
+.show_template_list #EEDebug_template_list {
+	display: block;
+}
 #EEDebug_graph {
 	height: 220px;
 }
@@ -234,7 +257,8 @@ a.EEDebug_graph_actions {
 	color: #000000;
 }
 
-a.EEDebug_graph_action_active, .EEDebug_tmpl_log_active {
+.show_graph #EEDebug_graph_display, .show_template_list #EEDebug_graph_list,
+.EEDebug_tmpl_log_active{
 	color: #FF0000;
 }
 

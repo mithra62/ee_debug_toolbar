@@ -111,9 +111,9 @@
 	?>
 </div>
 <?php if ($this->input->get("D", FALSE) != 'cp'): ?>
-	<div style="display: none;" id="EEDebug_memory" class="EEDebug_panel">
+	<div style="" id="EEDebug_memory" class="EEDebug_panel show_graph">
 	<?php else: ?>
-	<div style="display: none;" id="EEDebug_memory_cp" class="EEDebug_panel">
+	<div style="" id="EEDebug_memory_cp" class="EEDebug_panel show_graph">
 	<?php endif; ?>
 <?php if ($template_debugging_enabled): ?>
 	<div style="float:left">
@@ -125,7 +125,7 @@
 	</div>
 	<br clear="all"/>
 	<div id="EEDebug_graph"></div>
-	<div id="EEDebug_template_list" style="display:none;">
+	<div id="EEDebug_template_list" style="">
 		<?php
 		$total = 0;
 		foreach ($template_debugging AS $log) {

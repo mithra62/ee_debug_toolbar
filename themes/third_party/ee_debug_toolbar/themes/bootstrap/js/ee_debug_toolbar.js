@@ -32,12 +32,20 @@
 		jQuery("#EEDebug_toggler").html("&#187;");
 	}
 
+
+	//After 300 ms add the animation class so we get sliding animation
+	setTimeout(function(){
+		jQuery("#EEDebug_debug").addClass("animate");
+	}, 300);
+
+
 	//Bind panel buttons
 	jQuery("#EEDebug_info").find(".clickable").click(function (e) {
 		e.preventDefault();
 		EEDebugPanel(jQuery(this).data('target'));
 		return false;
 	});
+
 
 	//Bind toolbar slide toggle
 	jQuery("#EEDebug_toggler").click(function () {
@@ -75,21 +83,8 @@
 	function EEDebugPanel(name) {
 		var scriptLoaderProxy = loadScript;
 
-		jQuery(".EEDebug_panel").each(function (i) {
-			if (jQuery(this).css("display") == "block") {
-				jQuery(this).slideUp();
-			}
-			else {
-				if (jQuery(this).attr("id") == name) {
-					jQuery(this).slideDown(function () {
-						jQuery(this).css({overflow:"auto"});
-					});
-				}
-				else {
-					jQuery(this).slideUp();
-				}
-			}
-		});
+		jQuery(".EEDebug_panel").removeClass("active");
+		jQuery(document.getElementById(name)).addClass("active");
 
 		/**
 		 * Only initialise the memory chart if:
@@ -111,17 +106,11 @@
 			});
 
 			jQuery("#EEDebug_graph_display").click(function () {
-				jQuery("#EEDebug_template_list").hide();
-				jQuery("#EEDebug_graph").show();
-				jQuery("#EEDebug_graph_display").addClass("EEDebug_graph_action_active");
-				jQuery("#EEDebug_graph_list").removeClass("EEDebug_graph_action_active");
+				jQuery("#EEDebug_memory").removeClass("show_template_list").addClass("show_graph");
 			});
 
 			jQuery("#EEDebug_graph_list").click(function () {
-				jQuery("#EEDebug_graph").hide();
-				jQuery("#EEDebug_template_list").show();
-				jQuery("#EEDebug_graph_list").addClass("EEDebug_graph_action_active");
-				jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");
+				jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
 			});
 
 		}

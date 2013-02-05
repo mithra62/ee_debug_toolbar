@@ -74,10 +74,8 @@ window.EEDebug.Graph = function (data, node) {
         var selection = chart.getSelection();
         var row = "#EEDebug_hash_"+selection[0].row;
         var col = selection[0].column;
-		jQuery("#EEDebug_graph").hide();
-		jQuery("#EEDebug_template_list").show();
-		jQuery("#EEDebug_graph_list").addClass("EEDebug_graph_action_active");
-		jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");
+
+		jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
 		jQuery("#EEDebug_template_list div").removeClass("EEDebug_tmpl_log_active");
 		jQuery(row)[0].scrollIntoView();
 		jQuery(row).addClass("EEDebug_tmpl_log_active");

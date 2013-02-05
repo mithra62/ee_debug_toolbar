@@ -156,26 +156,42 @@
 .EEDebug_panel {
 	text-align: left;
 	position: absolute;
-	top: 23px;
+	top:23px;
 	width: 94.1%;
 	height:0;
-	max-height: 400px;
+	max-height: 500px;
 	overflow: hidden;
-	display: none;
 	background: #fff;
-	padding: 7px 9px;
-	border-left: 1px solid #e6e6e6;
-	border-bottom: 4px solid #aaa;
-	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
+	padding: 0 9px;
+	-webkit-transition: height 0.2s linear;
+	-moz-transition: height 0.2s linear;
+	-o-transition: height 0.2s linear;
+	transition: height 0.2s linear;
 }
 .EEDebug_panel.active {
-	height:auto;
-	max-height: 500px;
+	padding: 7px 9px;
+	height:500px;
 	display: block;
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	border-left: 1px solid #e6e6e6;
+	border-bottom: 4px solid #aaa;
+	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
 }
+
+#EEDebug_copyright.active {
+	height:70px;
+}
+#EEDebug_time.active {
+	height:90px
+}
+#EEDebug_memory.active {
+	height:250px;
+	overflow: hidden;
+}
+
+
 .EEDebug_span img{
     position: relative;
     top:-1px;
@@ -274,7 +290,7 @@ a.EEDebug_graph_actions {
 
 #EEDebug_template_list { 
 	overflow:scroll; 
-	height:370px;
+	height:232px;
 	/* Legacy */
 	overflow: scroll;
 	

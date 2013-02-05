@@ -83,6 +83,6 @@ a.EEDebug_graph_actions {
 	color: #000000;
 }
 
-a.EEDebug_graph_action_active {
+a.EEDebug_graph_action_active, .EEDebug_tmpl_log_active {
 	color: #FF0000;
 }

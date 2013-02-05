@@ -77,8 +77,10 @@ window.EEDebug.Graph = function (data, node) {
 		jQuery("#EEDebug_graph").hide();
 		jQuery("#EEDebug_template_list").show();
 		jQuery("#EEDebug_graph_list").addClass("EEDebug_graph_action_active");
-		jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");		
-		$(row)[0].scrollIntoView();
+		jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");
+		jQuery("#EEDebug_template_list div").removeClass("EEDebug_tmpl_log_active");
+		jQuery(row)[0].scrollIntoView();
+		jQuery(row).addClass("EEDebug_tmpl_log_active");
       });
     //end click to list	
 

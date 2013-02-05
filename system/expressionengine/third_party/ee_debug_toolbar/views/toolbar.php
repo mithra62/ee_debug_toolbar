@@ -127,10 +127,10 @@
 	<div id="EEDebug_graph"></div>
 	<div id="EEDebug_template_list" style="display:none">
 		<?php
-		$total = 1;
+		$total = 0;
 		foreach ($template_debugging AS $log) {
 			echo "\n<div id='EEDebug_hash_$total'>";
-			echo '(' . $log['time'] . '/' . $log['memory'] . ') - ' . $log['desc'] . '<br />';
+			echo '(' . $log['time'] . '/' . $log['memory'] . 'MB) - ' . $log['desc'] . '<br />';
 			echo "</div>";
 			$total++;
 		}

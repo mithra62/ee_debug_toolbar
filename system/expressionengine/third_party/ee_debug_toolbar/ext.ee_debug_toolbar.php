@@ -250,7 +250,7 @@ class Ee_debug_toolbar_ext
 		}
 
 		$this->EE->load->library('ee_toolbar_install', null, 'install');
-		$this->EE->install->update(__CLASS__, $this->version);
+		$this->EE->install->update(__CLASS__, $this->version, $current);
 	}
 
 	public function disable_extension()

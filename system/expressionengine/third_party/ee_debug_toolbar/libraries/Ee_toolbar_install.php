@@ -8,7 +8,7 @@
  * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/nagger/
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
  */
 
 /**
@@ -26,6 +26,15 @@ class Ee_toolbar_install
 		$this->EE->load->model('ee_debug_settings_model', 'debug_settings');
 	}
 	
+	/**
+	 * Wrapper to install the toolbar
+	 * 
+	 * Abstraction's for pussies
+	 * 
+	 * @param str $extension
+	 * @param int $version
+	 * @return boolean
+	 */
 	public function install($extension, $version)
 	{
 		$data                            = array(
@@ -44,15 +53,29 @@ class Ee_toolbar_install
 		return TRUE;
 	}
 	
-	public function update($class, $version)
+	/**
+	 * Wrapper to handle updates
+	 * @param str $class
+	 * @param int $version
+	 */
+	public function update($class, $version, $current)
 	{
 		$this->EE->db->where('class', $class);
 		$this->EE->db->update(
 				'extensions',
 				array('version' => $version)
 		);
+		
+		if (version_compare($current, "0.9", '<'))
+		{
+			$this->add_settings_table();
+		}
 	}
 	
+	/**
+	 * Wrapper to remove the extension
+	 * @param str $extension
+	 */
 	public function remove($extension)
 	{
 		$this->EE->load->dbforge();

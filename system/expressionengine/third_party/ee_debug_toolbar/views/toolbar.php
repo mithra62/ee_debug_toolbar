@@ -125,7 +125,7 @@
 	</div>
 	<br clear="all"/>
 	<div id="EEDebug_graph"></div>
-	<div id="EEDebug_template_list" style="display:none">
+	<div id="EEDebug_template_list" style="display:none; overflow:scroll; height:370px;">
 		<?php
 		$total = 0;
 		foreach ($template_debugging AS $log) {

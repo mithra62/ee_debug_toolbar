@@ -163,6 +163,8 @@
 	overflow: hidden;
 	background: #fff;
 	padding: 0 9px;
+	border-left: 1px solid #e6e6e6;
+	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
 	-webkit-transition: height 0.2s linear;
 	-moz-transition: height 0.2s linear;
 	-o-transition: height 0.2s linear;
@@ -175,9 +177,7 @@
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	border-left: 1px solid #e6e6e6;
 	border-bottom: 4px solid #aaa;
-	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
 }
 
 #EEDebug_copyright.active {

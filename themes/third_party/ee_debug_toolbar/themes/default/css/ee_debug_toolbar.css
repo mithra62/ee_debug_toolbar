@@ -64,7 +64,7 @@
 	max-height: 400px;
 	overflow: hidden;
 	background: #E8E8E8;
-	padding: 0px;
+	padding: 0 5px;
 	-webkit-transition: height 0.2s linear;
 	-moz-transition: height 0.2s linear;
 	-o-transition: height 0.2s linear;

@@ -83,8 +83,13 @@
 	function EEDebugPanel(name) {
 		var scriptLoaderProxy = loadScript;
 
-		jQuery(".EEDebug_panel").removeClass("active");
-		jQuery(document.getElementById(name)).addClass("active");
+		//Toggle panel open
+		if(jQuery(document.getElementById(name)).hasClass("active")){
+			jQuery(".EEDebug_panel").removeClass("active");
+		} else {
+			jQuery(".EEDebug_panel").removeClass("active");
+			jQuery(document.getElementById(name)).addClass("active");
+		}
 
 		/**
 		 * Only initialise the memory chart if:

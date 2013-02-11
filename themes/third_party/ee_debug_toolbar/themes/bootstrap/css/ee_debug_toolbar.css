@@ -1,0 +1,305 @@
+/**
+ * EE Debug Toolbar CSS
+ */
+#EEDebug_debug {
+	font: 11px/1.4em "Helvetica Neue", Helvetica, Arial, sans-serif;
+	position: fixed;
+	top: 12px;
+	right: -672px;
+	color: #000;
+	z-index: 100255;
+	text-rendering: optimizelegibility;
+	padding-left: 22px;
+}
+#EEDebug_debug.animate {
+	-webkit-transition: right 0.3s;
+	-moz-transition: right 0.3s;
+	-o-transition: right 0.3s;
+	-ms-transition: right 0.3s;
+	transition: right 0.3s;
+}
+#EEDebug_debug.toolbar-open {
+    right:0;
+}
+
+#EEDebug_debug ol {
+	margin: 10px 0px;
+	background-color: #f7f7f7;
+	overflow:scroll;
+	overflow-x:scroll;
+	overflow-y:hidden;
+
+    counter-reset:li; /* Initiate a counter */
+    margin-left:0px; /* Remove the default left margin */
+    padding-left:0; /* Remove the default left padding */
+
+}
+
+#EEDebug_debug li {
+	position:relative;
+    margin:0 0 0px 4em;
+    padding:4px 8px 4px 0; 
+    list-style:none; 
+    border-top:1px solid #f6f6f6;
+}
+#EEDebug_debug li:hover {
+    border-top:1px solid #eee;
+}
+#EEDebug_debug ol > li:before {
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    content:counter(li);
+    counter-increment:li;
+
+    position:absolute;
+  	color: #aaa;
+    top:0px;
+    left:-4em;
+    bottom:0px;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    margin-right:8px;
+    width:3em;
+    padding:5 5px 0 0;
+    background-color:#eee;
+    text-align:right;
+}
+#EEDebug_debug ol > li:hover:before {
+    color:#000;
+    background-color:#eee;
+}
+
+#EEDebug_debug h4 {
+	font-size: 12px;
+	font-weight: bold;
+	border-bottom: 1px solid #efefef;
+	padding-bottom: 4px;
+	margin: 8px 0 5px;
+}
+#EEDebug_debug h4:first-child {
+    margin-top:0;
+}
+
+#EEDebug_debug .clickable {
+	cursor: pointer
+}
+
+#EEDebug_toggler, .EEDebug_span {
+
+	background: #BFBFBF;
+	padding: 10px 9px 9px;
+    color: #333333;
+
+    cursor: pointer;
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+    border: 1px solid #bbbbbb;
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-bottom-color: #a2a2a2;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+#EEDebug_toggler:hover,
+.EEDebug_span:hover {
+    color: #333333;
+    background-color: #e6e6e6;
+    text-decoration: none;
+    background-position: 0 -15px;
+    -webkit-transition: background-position 0.1s linear;
+    -moz-transition: background-position 0.1s linear;
+    -o-transition: background-position 0.1s linear;
+    transition: background-position 0.1s linear;
+}
+#EEDebug_toggler:active,
+.EEDebug_span:active {
+    background-image: none;
+    outline: 0;
+    color: #333333;
+    background-color: #e6e6e6;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+
+}
+
+#EEDebug_toggler {
+    border-bottom-color: #a2a2a2;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+	position: absolute;
+	left:0;
+	top: -10px;
+	padding: 8px;
+}
+.EEDebug_span {
+	border-right: 0px;
+}
+
+
+.EEDebug_last {
+	border: 1px solid #999;
+}
+
+.EEDebug_panel {
+	text-align: left;
+	position: absolute;
+	top:23px;
+	width: 94.1%;
+	height:0;
+	max-height: 500px;
+	overflow: hidden;
+	background: #fff;
+	padding: 0 9px;
+	border-left: 1px solid #e6e6e6;
+	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
+	-webkit-transition: height 0.2s linear;
+	-moz-transition: height 0.2s linear;
+	-o-transition: height 0.2s linear;
+	transition: height 0.2s linear;
+}
+.EEDebug_panel.active {
+	padding: 7px 9px;
+	height:500px;
+	display: block;
+	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border-bottom: 4px solid #aaa;
+}
+
+#EEDebug_copyright.active {
+	height:70px;
+}
+#EEDebug_time.active {
+	height:90px
+}
+#EEDebug_memory.active {
+	height:250px;
+	overflow: hidden;
+}
+
+#EEDebug_memory_cp.active {
+	height:20px;
+	overflow: hidden;
+}
+
+.EEDebug_span img{
+    position: relative;
+    top:-1px;
+}
+.EEDebug_panel span.label {
+    display:inline-block;
+    width:100px
+}
+.EEDebug_panel code {
+    padding: 2px 4px;
+    color: #d14;
+    white-space: nowrap;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    display:inline-block;
+    padding: 0 3px 2px;
+    margin: 1px 0;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.EEDebug_panel pre {
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    color: #333333;
+    display: block;
+
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 20px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: pre-wrap;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.EEDebug_panel pre pre{
+    border-left-width: 4px;
+    border-top-width: 4px;
+}
+#EEDebug_exception {
+	border: 1px solid #CD0A0A;
+	display: block;
+}
+
+#EEDebug_graph,
+#EEDebug_template_list{
+	display: none;
+}
+
+.show_graph #EEDebug_graph,
+.show_template_list #EEDebug_template_list {
+	display: block;
+}
+#EEDebug_graph {
+	height: 220px;
+}
+
+.EEDebug-chart-loading #EEDebug_memory {
+	background-image: url(data:image/gif;base64,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);
+	background-repeat: no-repeat;
+	background-position: center 110px;
+	background-color: #fff;
+}
+
+a.EEDebug_graph_actions {
+	color: #000000;
+}
+
+.show_graph #EEDebug_graph_display, .show_template_list #EEDebug_graph_list,
+.EEDebug_tmpl_log_active{
+	color: #FF0000;
+}
+
+#EEDebug_database code {
+    display:inline;
+    border:none;
+    font-size: 10px;
+}
+
+#EEDebug_memory {
+	overflow:hidden;
+}
+
+#EEDebug_template_list { 
+	overflow:scroll; 
+	height:232px;
+	/* Legacy */
+	overflow: scroll;
+	
+	/* Modern Browsers */
+	overflow-x:hidden;
+	overflow-y:scroll;
+
+}

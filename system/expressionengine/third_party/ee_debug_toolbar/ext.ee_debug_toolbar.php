@@ -21,35 +21,63 @@
  * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/ext.ee_debug_toolbar.php
  */
 class Ee_debug_toolbar_ext
-{
+{		
 	/**
 	 * The extensions default settings
 	 *
 	 * @var array
 	 */
-	public $settings = array();
+	public $settings = array(
+			'theme' => 'default'
+	);
+
+	/**
+	 * Persistent storage to hold settings across the
+	 * multiple class initialisations by EE and then CI
+	 * 
+	 * @var array
+	 */
+	static $persistent_settings = array();
 
 	/**
 	 * The extension name
 	 *
 	 * @var string
 	 */
-	public $name = '';
+	public $name = '';	
 
 	/**
 	 * The extension version
 	 *
 	 * @var float
 	 */
-	public $version = '0.8';
+	public $version = '0.9';
+	
+	/**
+	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)
+	 * 
+	 * @var string
+	 */
 	public $description = '';
-	public $settings_exist = 'n';
+	
+	/**
+	 * We're doing our own settings now so set this to off.
+	 * 
+	 * @var string
+	 */
+	public $settings_exist = 'y';
+	
+	/**
+	 * Where to get help (nowhere for now)
+	 * 
+	 * @var string
+	 */
 	public $docs_url = '';
+
 
 	public function __construct($settings = '')
 	{
 		$this->EE       =& get_instance();
-		$this->settings = (!$settings ? $this->settings : $settings);
 		$this->EE->lang->loadfile('ee_debug_toolbar');
 		$this->name        = lang('ee_debug_toolbar_module_name');
 		$this->description = lang('ee_debug_toolbar_module_description');
@@ -144,6 +172,10 @@ class Ee_debug_toolbar_ext
 		$vars['ext_version'] = $this->version;
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
+		$this->settings = $this->EE->toolbar->get_settings();
+		$vars['theme_img_url'] = $this->EE->toolbar->create_theme_img_url($this->settings['theme']);
+		$vars['theme_js_url'] = $this->EE->toolbar->create_theme_js_url($this->settings['theme']);
+		$vars['theme_css_url'] = $this->EE->toolbar->create_theme_css_url($this->settings['theme']);
 
 		$html = $this->EE->output->final_output;
 
@@ -169,25 +201,48 @@ class Ee_debug_toolbar_ext
 
 		//Fist pump.
 		$this->EE->output->_display();
-
+	}
+	
+	public function settings_form()
+	{
+		$this->EE->load->library('toolbar');
+		$this->settings = $this->EE->toolbar->get_settings();
+		
+		$vars = array();
+		$vars['settings'] = $this->settings;
+		$vars['available_themes'] = $this->EE->toolbar->get_themes();
+		$vars['settings_disable'] = FALSE;
+		if(isset($this->EE->config->config['ee_debug_toolbar']))
+		{
+			$vars['settings_disable'] = 'disabled="disabled"';
+		}		
+		
+		return $this->EE->load->view('settings', $vars, TRUE);
+	}	
+	
+	public function save_settings()
+	{
+		$this->EE->load->library('toolbar');
+		$this->settings = $this->EE->toolbar->get_settings();
+		if($this->EE->debug_settings->update_settings($_POST))
+		{
+			$this->EE->logger->log_action($this->EE->lang->line('log_settings_updated'));
+			$this->EE->session->set_flashdata('message_success', $this->EE->lang->line('settings_updated'));
+			$this->EE->functions->redirect('?D=cp&C=addons_extensions');
+			exit;
+		}
+		else
+		{
+			$this->EE->session->set_flashdata('message_failure', $this->EE->lang->line('settings_update_fail'));
+			$this->EE->functions->redirect('?D=cp&C=addons_extensions');
+			exit;
+		}		
 	}
 
 	public function activate_extension()
 	{
-		$this->settings['alert_message'] = lang('default_alert_message');
-		$data                            = array(
-			'class'    => __CLASS__,
-			'method'   => 'toolbar',
-			'hook'     => 'sessions_end',
-			'settings' => serialize($this->settings),
-			'priority' => 9999999,
-			'version'  => $this->version,
-			'enabled'  => 'y'
-		);
-
-		$this->EE->db->insert('extensions', $data);
-
-		return true;
+		$this->EE->load->library('ee_toolbar_install', null, 'install');
+		$this->EE->install->install(__CLASS__, $this->version);
 	}
 
 	public function update_extension($current = '')
@@ -196,17 +251,14 @@ class Ee_debug_toolbar_ext
 			return false;
 		}
 
-		$this->EE->db->where('class', __CLASS__);
-		$this->EE->db->update(
-			'extensions',
-			array('version' => $this->version)
-		);
+		$this->EE->load->library('ee_toolbar_install', null, 'install');
+		$this->EE->install->update(__CLASS__, $this->version, $current);
 	}
 
 	public function disable_extension()
 	{
-		$this->EE->db->where('class', __CLASS__);
-		$this->EE->db->delete('extensions');
+		$this->EE->load->library('ee_toolbar_install', null, 'install');
+		$this->EE->install->remove(__CLASS__);		
 	}
 
 }

@@ -30,7 +30,7 @@ window.EEDebug.Graph = function (data, node) {
 		options = {
 			//title:'<?php echo lang('template_debugging'); ?>',
 			backgroundColor:'none',
-			width:600,
+			width:640,
 			height:220,
 			hAxis:{
 				slantedText:true
@@ -45,7 +45,7 @@ window.EEDebug.Graph = function (data, node) {
 				isHtml:false
 			},
 			chartArea:{
-				width:620,
+				width:660,
 				height:"160",
 				top:10,
 				left:50
@@ -68,6 +68,19 @@ window.EEDebug.Graph = function (data, node) {
 
 	chart = new google.visualization.LineChart(node);
 	chart.draw(datatable, options);
+
+	//setup the click to list function
+	google.visualization.events.addListener(chart, 'select', function() {
+		var selection = chart.getSelection();
+		var row = "#EEDebug_hash_"+selection[0].row;
+		var col = selection[0].column;
+
+		jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
+		jQuery("#EEDebug_template_list div").removeClass("EEDebug_tmpl_log_active");
+		jQuery(row)[0].scrollIntoView();
+		jQuery(row).addClass("EEDebug_tmpl_log_active");
+	});
+	//end click to list
 
 	//Some indicators that the chart is ready
 	jQuery(document.body).removeClass("EEDebug-chart-loading");

@@ -24,11 +24,20 @@
 
 	//Panels open by default?
 	check = getCookie("EEDebugCollapsed");
-	if (check == 1) {
+	if (check != 1) {
 		EEDebugPanel();
+		jQuery("#EEDebug_toggler").html("&#171;");
+		jQuery("#EEDebug_debug").addClass("toolbar-open");
+	} else {
 		jQuery("#EEDebug_toggler").html("&#187;");
-		jQuery("#EEDebug_debug").css("left", "-" + parseInt(jQuery("#EEDebug_debug").outerWidth() - jQuery("#EEDebug_toggler").outerWidth() + 1, 10) + "px");
 	}
+
+
+	//After 300 ms add the animation class so we get sliding animation
+	setTimeout(function(){
+		jQuery("#EEDebug_debug").addClass("animate");
+	}, 300);
+
 
 	//Bind panel buttons
 	jQuery("#EEDebug_info").find(".clickable").click(function (e) {
@@ -36,6 +45,7 @@
 		EEDebugPanel(jQuery(this).data('target'));
 		return false;
 	});
+
 
 	//Bind toolbar slide toggle
 	jQuery("#EEDebug_toggler").click(function () {
@@ -45,8 +55,6 @@
 
 	/**
 	 * Get Cookie
-	 *
-	 * @author Christopher Imrie
 	 *
 	 * @param  {string}    c_name Cookie name
 	 * @return {string}           Cookie contents
@@ -70,28 +78,18 @@
 	/**
 	 * Open Debug Panel
 	 *
-	 * @author Christopher Imrie
-	 *
 	 * @param  {string}    name  Panel name
 	 */
 	function EEDebugPanel(name) {
 		var scriptLoaderProxy = loadScript;
 
-		jQuery(".EEDebug_panel").each(function (i) {
-			if (jQuery(this).css("display") == "block") {
-				jQuery(this).slideUp();
-			}
-			else {
-				if (jQuery(this).attr("id") == name) {
-					jQuery(this).slideDown(function () {
-						jQuery(this).css({overflow:"auto"});
-					});
-				}
-				else {
-					jQuery(this).slideUp();
-				}
-			}
-		});
+		//Toggle panel open
+		if(jQuery(document.getElementById(name)).hasClass("active")){
+			jQuery(".EEDebug_panel").removeClass("active");
+		} else {
+			jQuery(".EEDebug_panel").removeClass("active");
+			jQuery(document.getElementById(name)).addClass("active");
+		}
 
 		/**
 		 * Only initialise the memory chart if:
@@ -113,17 +111,11 @@
 			});
 
 			jQuery("#EEDebug_graph_display").click(function () {
-				jQuery("#EEDebug_template_list").hide();
-				jQuery("#EEDebug_graph").show();
-				jQuery("#EEDebug_graph_display").addClass("EEDebug_graph_action_active");
-				jQuery("#EEDebug_graph_list").removeClass("EEDebug_graph_action_active");
+				jQuery("#EEDebug_memory").removeClass("show_template_list").addClass("show_graph");
 			});
 
 			jQuery("#EEDebug_graph_list").click(function () {
-				jQuery("#EEDebug_graph").hide();
-				jQuery("#EEDebug_template_list").show();
-				jQuery("#EEDebug_graph_list").addClass("EEDebug_graph_action_active");
-				jQuery("#EEDebug_graph_display").removeClass("EEDebug_graph_action_active");
+				jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
 			});
 
 		}
@@ -132,21 +124,18 @@
 
 	/**
 	 * Slide toolbar into/out of view
-	 *
-	 * @author Christopher Imrie
-	 *
 	 */
 	function EEDebugSlideBar() {
-		if (jQuery("#EEDebug_debug").position().left > 0) {
+		if (jQuery("#EEDebug_debug").hasClass("toolbar-open")) {
 			document.cookie = "EEDebugCollapsed=1;expires=;path=/";
 			EEDebugPanel();
-			jQuery("#EEDebug_toggler").html("&#187;");
-			return jQuery("#EEDebug_debug").animate({left:"-" + parseInt(jQuery("#EEDebug_debug").outerWidth() - jQuery("#EEDebug_toggler").outerWidth() + 1, 10) + "px"}, "normal", "swing");
+			jQuery("#EEDebug_toggler").html("&#187;")
+			jQuery("#EEDebug_debug").removeClass("toolbar-open");
 		}
 		else {
 			document.cookie = "EEDebugCollapsed=0;expires=;path=/";
 			jQuery("#EEDebug_toggler").html("&#171;");
-			return jQuery("#EEDebug_debug").animate({left:"5px"}, "normal", "swing");
+			jQuery("#EEDebug_debug").addClass("toolbar-open");
 		}
 	}
 
@@ -156,11 +145,9 @@
 	 *
 	 * Even prepends the correct theme URL location to allow easy script loading
 	 *
-	 * @author Christopher Imrie
-	 *
 	 * @param  {string}    name    Script filename
 	 * @param  {Function}  cb      Callback function
-	 * @param  {bool}    offsite   Script being loaded is offsite? (Basically enable/disable URL_THIRD_THEMES being prepended)
+	 * @param  {Boolean}    offsite   Script being loaded is offsite? (Basically enable/disable URL_THIRD_THEMES being prepended)
 	 * @return {null}
 	 */
 	function loadScript(name, cb, offsite) {

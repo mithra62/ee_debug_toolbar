@@ -22,11 +22,30 @@
  */
 class Toolbar
 {
+
+	var $default_theme = "default";
+
 	public function __construct()
 	{
 		$this->EE = & get_instance();
 	}
-
+	
+	public function get_settings()
+	{
+		if (!isset($this->EE->session->cache['ee_debug_toolbar']['settings']))
+		{
+			$this->EE->load->model('ee_debug_settings_model', 'debug_settings');
+			$this->EE->session->cache['ee_debug_toolbar']['settings'] = $this->EE->debug_settings->get_settings();
+		}
+	
+		return $this->EE->session->cache['ee_debug_toolbar']['settings'];
+	}	
+	
+	/**
+	 * Takes the included files and breaks up into mutli arrays for use in the debugger
+	 * @param array $files
+	 * @return Ambigous <multitype:unknown , unknown>
+	 */
 	public function setup_files(array $files)
 	{
 		sort($files);
@@ -212,5 +231,76 @@ class Toolbar
 		}
 
 		return round($val, $digits) . " " . $symbols[$i] . $bB;
+	}	
+	
+	public function get_themes()
+	{
+		$path = PATH_THEMES.'/third_party/ee_debug_toolbar/themes/';
+		$d = dir($path);
+		$themes = array();
+		$bad = array('.', '..');
+		while (false !== ($entry = $d->read()))
+		{
+			if(is_dir($path.$entry) && !in_array($entry, $bad))
+			{
+				$name = ucwords(str_replace('_', ' ', $entry));
+				$themes[$entry] = $name;
+			}
+		}
+		$d->close();
+		return $themes;		
+	}
+
+	/**
+	 * Create Theme Base URL
+	 *
+	 * @param $theme
+	 * @return string
+	 */
+	public function create_theme_url($theme)
+	{
+		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . '/';
+	}
+
+	/**
+	 * Create Theme JS URL
+	 *
+	 * @param string $theme
+	 * @return string
+	 */
+	public function create_theme_js_url($theme)
+	{
+		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/js/")) {
+			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/js/";
+		}
+		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/js/";
+	}
+
+	/**
+	 * Create Theme CSS URL
+	 *
+	 * @param string $theme
+	 * @return string
+	 */
+	public function create_theme_css_url($theme)
+	{
+		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/css/")) {
+			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/css/";
+		}
+		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/css/";
+	}
+
+	/**
+	 * Create Theme Image URL
+	 *
+	 * @param string $theme
+	 * @return string
+	 */
+	public function create_theme_img_url($theme)
+	{
+		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/images/")) {
+			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/images/";
+		}
+		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/images/";
 	}
 }

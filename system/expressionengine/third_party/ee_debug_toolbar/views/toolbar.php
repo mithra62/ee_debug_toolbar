@@ -6,7 +6,8 @@
 	<h4><?php echo lang('ee_debug_toolbar_module_name'); ?> v<?php echo $ext_version; ?></h4>
 
 	<p><?php echo APP_NAME . ' ' . APP_VER . ' ' . lang('build') . ' (' . APP_BUILD . ')'; ?> <br/>
-		CodeIgniter Version: <?php echo CI_VERSION; ?></p>
+		CodeIgniter <?php echo ucfirst(lang('version')); ?>: <?php echo CI_VERSION; ?><br />
+		<?php echo lang('contributors'); ?> <?php echo lang('contributor_list'); ?></p>
 </div>
 <div id="EEDebug_variables" class="EEDebug_panel">
 	<h4><?php echo lang('headers'); ?></h4>
@@ -169,7 +170,7 @@
 		</pre>
 	</div>
 	<div id="EEDebug_database" class="EEDebug_panel">
-		<h4><?php echo lang('database_queries'); ?></h4>
+		<h4><?php echo count($query_data['queries']).' '.lang('database_queries'); ?></h4>
 		<?php echo lang('query_cache_is'); ?> <?php echo ($config_data['enable_db_caching'] == 'y' ? lang('enabled') : lang('disabled')); ?>
 		<h4><?php echo lang('adapter'); ?> 0</h4>
 		<ol>

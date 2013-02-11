@@ -9,6 +9,13 @@
 	color: #000;
 	z-index: 100255;
 }
+
+@-moz-document url-prefix() {
+    #EEDebug_debug {
+       left: -685px;
+    }
+}
+
 #EEDebug_debug.animate {
 	-webkit-transition: left 0.3s;
 	-moz-transition: left 0.3s;
@@ -23,10 +30,12 @@
 #EEDebug_debug ol {
 	margin: 10px 0px;
 	padding: 0 25px;
+	list-style-type:lower-alpha;
 }
 
 #EEDebug_debug li {
 	margin: 0 0 10px 0;
+	list-style-type:decimal;
 }
 
 #EEDebug_debug h4 {
@@ -82,20 +91,21 @@
 
 #EEDebug_copyright.active {
 	height:70px;
+	overflow:hidden;
 }
 #EEDebug_time.active {
-	height:90px
+	height:90px;
+	overflow:auto;
 }
 #EEDebug_memory.active {
 	height:230px;
 	overflow: hidden;
 }
 
-.EEDebug_panel .pre {
-	font: 11px/1.4em Monaco, Lucida Console, monospace;
-	margin: 0 0 0 22px
+#EEDebug_memory_cp.active {
+	height:20px;
+	overflow: hidden;
 }
-
 
 #EEDebug_exception {
 	border: 1px solid #CD0A0A;
@@ -104,6 +114,7 @@
 
 #EEDebug_graph {
 	height: 220px;
+	width: 700px;
 }
 #EEDebug_graph,
 #EEDebug_template_list{
@@ -133,7 +144,6 @@ a.EEDebug_graph_actions {
 
 
 #EEDebug_template_list { 
-	overflow:scroll; 
 	height:200px;
 	/* Legacy */
 	overflow: scroll;
@@ -142,4 +152,26 @@ a.EEDebug_graph_actions {
 	overflow-x:hidden;
 	overflow-y:scroll;
 
+}
+
+#EEDebug_database code {
+    display:inline;
+    border:none;
+    font-size: 10px;
+}
+
+.EEDebug_panel code {
+    background-color: #E8E8E8;
+	padding:0;
+	margin:0;
+	border: 0;
+    display:inline-block;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 11px;
+}
+
+.EEDebug_panel pre {
+	font: 11px/1.4em Monaco, Lucida Console, monospace;
+	margin: 0 0 0 22px;
+	word-wrap: break-word;
 }

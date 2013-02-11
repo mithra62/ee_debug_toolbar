@@ -191,6 +191,10 @@
 	overflow: hidden;
 }
 
+#EEDebug_memory_cp.active {
+	height:20px;
+	overflow: hidden;
+}
 
 .EEDebug_span img{
     position: relative;

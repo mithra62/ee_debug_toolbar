@@ -51,5 +51,7 @@ $lang = array(
 	'first_party_modules'                 => 'First Party Modules',
 	'theme'                 			  => 'Theme',
 	'theme_instructions'                  => 'Select the theme you want the Toolbar to use.',
-	''                                    => ''
+	'contributor_list'                    => '<a href="http://blog.ericlamb.net/" title="Eric Lamb">Eric Lamb</a> (<a href="http://mithra62.com/index" title="mithra62">mithra62</a>) & <a href="https://github.com/ckimrie/" title="Christopher Imrie">Christopher Imrie</a>',
+	'contributors'                        => 'Contributors',
+	''                                    => ''		
 );

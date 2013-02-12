@@ -51,7 +51,7 @@ class Ee_debug_toolbar_ext
 	 *
 	 * @var float
 	 */
-	public $version = '0.9';
+	public $version = '0.9.1';
 	
 	/**
 	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)

@@ -235,7 +235,7 @@ class Toolbar
 	
 	public function get_themes()
 	{
-		$path = PATH_THEMES.'/third_party/ee_debug_toolbar/themes/';
+		$path = (defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES : PATH_THEMES).'/third_party/ee_debug_toolbar/themes/';
 		$d = dir($path);
 		$themes = array();
 		$bad = array('.', '..');

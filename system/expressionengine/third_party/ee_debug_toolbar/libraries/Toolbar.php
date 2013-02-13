@@ -235,7 +235,7 @@ class Toolbar
 	
 	public function get_themes()
 	{
-		$path = (defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES : PATH_THEMES).'/third_party/ee_debug_toolbar/themes/';
+		$path = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->item('theme_folder_path'), '/')).'/ee_debug_toolbar/themes/';
 		$d = dir($path);
 		$themes = array();
 		$bad = array('.', '..');
@@ -250,57 +250,18 @@ class Toolbar
 		$d->close();
 		return $themes;		
 	}
-
-	/**
-	 * Create Theme Base URL
-	 *
-	 * @param $theme
-	 * @return string
-	 */
-	public function create_theme_url($theme)
-	{
-		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . '/';
-	}
-
-	/**
-	 * Create Theme JS URL
-	 *
-	 * @param string $theme
-	 * @return string
-	 */
-	public function create_theme_js_url($theme)
-	{
-		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/js/")) {
-			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/js/";
-		}
-		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/js/";
-	}
-
+	
 	/**
 	 * Create Theme CSS URL
 	 *
 	 * @param string $theme
 	 * @return string
 	 */
-	public function create_theme_css_url($theme)
+	public function create_theme_url($theme, $sub_dir = '')
 	{
-		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/css/")) {
-			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/css/";
+		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/")) {
+			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
 		}
-		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/css/";
-	}
-
-	/**
-	 * Create Theme Image URL
-	 *
-	 * @param string $theme
-	 * @return string
-	 */
-	public function create_theme_img_url($theme)
-	{
-		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/images/")) {
-			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/images/";
-		}
-		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/images/";
-	}
+		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/$sub_dir/";
+	}	
 }

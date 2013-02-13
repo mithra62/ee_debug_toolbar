@@ -173,9 +173,9 @@ class Ee_debug_toolbar_ext
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 		$this->settings = $this->EE->toolbar->get_settings();
-		$vars['theme_img_url'] = $this->EE->toolbar->create_theme_img_url($this->settings['theme']);
-		$vars['theme_js_url'] = $this->EE->toolbar->create_theme_js_url($this->settings['theme']);
-		$vars['theme_css_url'] = $this->EE->toolbar->create_theme_css_url($this->settings['theme']);
+		$vars['theme_img_url'] = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'images');
+		$vars['theme_js_url'] = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'js');
+		$vars['theme_css_url'] = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'css');
 
 		$html = $this->EE->output->final_output;
 

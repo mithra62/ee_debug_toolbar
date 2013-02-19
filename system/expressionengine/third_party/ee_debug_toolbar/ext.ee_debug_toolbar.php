@@ -155,6 +155,9 @@ class Ee_debug_toolbar_ext
 
 		//starting a benchmark to make sure we're not a problem
 		$this->EE->benchmark->mark('ee_debug_benchmark_start');
+		
+		$report_data = array();
+		
 
 		//Toolbar UI Vars
 		$vars                                  = array();

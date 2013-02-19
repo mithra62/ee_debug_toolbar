@@ -4,7 +4,7 @@
 	<h4><?php echo lang('adapter'); ?> 0</h4>
 	<ol>
 		<?php foreach ($query_data['queries'] AS $query): ?>
-		<li>fdafds<strong>[<?php echo $query['time']; ?> s]</strong> <?php echo $query['query']; ?></li>
+		<li><strong>[<?php echo $query['time']; ?> s]</strong> <?php echo $query['query']; ?></li>
 		<?php endforeach; ?>
 	</ol>
 </div>

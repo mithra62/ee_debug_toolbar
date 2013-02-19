@@ -12,7 +12,7 @@
 	
 	<div id="EEDebug_info">
 		<?php foreach($panel_data AS $key => $value): ?>
-		<span class="EEDebug_span clickable" data-target="<?php echo $value['data_target']; ?>">
+		<span class="EEDebug_span clickable <?php echo $value['class']; ?>" data-target="<?php echo $value['data_target']; ?>">
 			<img src="<?php echo $value['image']; ?>"
 				 style="vertical-align:middle" alt="<?php echo $value['title']; ?>"
 				 title="<?php echo $value['title']; ?>">  <?php echo $value['title']; ?>

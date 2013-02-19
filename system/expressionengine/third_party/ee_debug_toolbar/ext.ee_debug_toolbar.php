@@ -182,36 +182,43 @@ class Ee_debug_toolbar_ext
 		$report_info['panel_data']['copyright']['image']       = $vars['theme_img_url'].'logo.png';
 		$report_info['panel_data']['copyright']['title']       = 'v'.APP_VER.' '.phpversion();
 		$report_info['panel_data']['copyright']['data_target'] = 'EEDebug_copyright';
+		$report_info['panel_data']['copyright']['class'] = '';
 		
 		$report_info['panel_data']['variables']['view_script'] = 'partials/variables';
 		$report_info['panel_data']['variables']['image']       = $vars['theme_img_url'].'variables.png';
 		$report_info['panel_data']['variables']['title']       = lang('variables');
-		$report_info['panel_data']['variables']['data_target'] = 'EEDebug_variables';	
+		$report_info['panel_data']['variables']['data_target'] = 'EEDebug_variables';
+		$report_info['panel_data']['variables']['class'] = '';
 
 		$report_info['panel_data']['files']['view_script'] = 'partials/files';
 		$report_info['panel_data']['files']['image']       = $vars['theme_img_url'].'files.png';
 		$report_info['panel_data']['files']['title']       = count(get_included_files()).' '.lang('files');
 		$report_info['panel_data']['files']['data_target'] = 'EEDebug_file';
+		$report_info['panel_data']['files']['class'] = '';
 		
 		$report_info['panel_data']['memory']['view_script'] = 'partials/memory';
 		$report_info['panel_data']['memory']['image']       = $vars['theme_img_url'].'memory.png';
 		$report_info['panel_data']['memory']['title']       = $vars['memory_usage'].' '.ini_get('memory_limit');
 		$report_info['panel_data']['memory']['data_target'] = ($this->EE->input->get("D", FALSE) != 'cp' ? 'EEDebug_memory' : 'EEDebug_memory_cp');	
-				
+		$report_info['panel_data']['memory']['class'] = '';
+		
 		$report_info['panel_data']['time']['view_script'] = 'partials/time';
 		$report_info['panel_data']['time']['image']       = $vars['theme_img_url'].'time.png';
 		$report_info['panel_data']['time']['title']       = $vars['elapsed_time'].'s';
 		$report_info['panel_data']['time']['data_target'] = 'EEDebug_time';	
+		$report_info['panel_data']['time']['class'] = '';
 
 		$report_info['panel_data']['config']['view_script'] = 'partials/config';
 		$report_info['panel_data']['config']['image']       = $vars['theme_img_url'].'config.png';
 		$report_info['panel_data']['config']['title']       = lang('config').' ('.count($vars['config_data']).')';
 		$report_info['panel_data']['config']['data_target'] = 'EEDebug_registry';
+		$report_info['panel_data']['config']['class'] = '';
 
 		$report_info['panel_data']['db']['view_script'] = 'partials/db';
 		$report_info['panel_data']['db']['image']       = $vars['theme_img_url'].'db.png';
 		$report_info['panel_data']['db']['title']       = $vars['query_count'].' '.lang('in').' '.$vars['query_data']['total_time'].'s';
-		$report_info['panel_data']['db']['data_target'] = 'EEDebug_database';		
+		$report_info['panel_data']['db']['data_target'] = 'EEDebug_database';
+		$report_info['panel_data']['db']['class'] = '';
 		
 		$vars = array_merge($vars, $report_info);
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
@@ -221,7 +228,7 @@ class Ee_debug_toolbar_ext
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $vars);
-			if ($this->EE->extensions->end_script === TRUE) return array('vars' => $vars, 'html' => $html);
+			if ($this->EE->extensions->end_script === TRUE) return array('vars' => $vars, 'html' => $this->EE->output->final_output);
 		}
 				
 		$html = $this->EE->output->final_output;

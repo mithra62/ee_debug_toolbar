@@ -221,7 +221,7 @@ class Ee_debug_toolbar_ext
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $vars);
-			if ($this->EE->extensions->end_script === TRUE) return $vars;
+			if ($this->EE->extensions->end_script === TRUE) return array('vars' => $vars, 'html' => $html);
 		}
 				
 		$html = $this->EE->output->final_output;

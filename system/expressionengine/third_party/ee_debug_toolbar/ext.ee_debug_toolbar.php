@@ -196,8 +196,8 @@ class Ee_debug_toolbar_ext
 		$report_info['panel_data']['memory']['view_script'] = 'partials/memory';
 		$report_info['panel_data']['memory']['image']       = $vars['theme_img_url'].'memory.png';
 		$report_info['panel_data']['memory']['title']       = $vars['memory_usage'].' '.ini_get('memory_limit');
-		$report_info['panel_data']['memory']['data_target'] = ($this->EE->input->get("D", FALSE) != 'cp' ? 'EEDebug_memory' : 'EEDebug_memory_cp');		
-		
+		$report_info['panel_data']['memory']['data_target'] = ($this->EE->input->get("D", FALSE) != 'cp' ? 'EEDebug_memory' : 'EEDebug_memory_cp');	
+				
 		$report_info['panel_data']['time']['view_script'] = 'partials/time';
 		$report_info['panel_data']['time']['image']       = $vars['theme_img_url'].'time.png';
 		$report_info['panel_data']['time']['title']       = $vars['elapsed_time'].'s';
@@ -206,22 +206,23 @@ class Ee_debug_toolbar_ext
 		$report_info['panel_data']['config']['view_script'] = 'partials/config';
 		$report_info['panel_data']['config']['image']       = $vars['theme_img_url'].'config.png';
 		$report_info['panel_data']['config']['title']       = lang('config').' ('.count($vars['config_data']).')';
-		$report_info['panel_data']['config']['data_target'] = 'EEDebug_registry';	
+		$report_info['panel_data']['config']['data_target'] = 'EEDebug_registry';
 
 		$report_info['panel_data']['db']['view_script'] = 'partials/db';
 		$report_info['panel_data']['db']['image']       = $vars['theme_img_url'].'db.png';
 		$report_info['panel_data']['db']['title']       = $vars['query_count'].' '.lang('in').' '.$vars['query_data']['total_time'].'s';
 		$report_info['panel_data']['db']['data_target'] = 'EEDebug_database';		
 		
-		/*
-		$report_info['panel_data']['time']['view_script']      = 'partials/time';
-		$report_info['panel_data']['config']['view_script']    = 'partials/config';
-		$report_info['panel_data']['db']['view_script']        = 'partials/db';
-		*/		
 		$vars = array_merge($vars, $report_info);
-
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
+
+		//allow for full override of everything
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
+		{
+			$vars = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $vars);
+			if ($this->EE->extensions->end_script === TRUE) return $vars;
+		}
 				
 		$html = $this->EE->output->final_output;
 
@@ -229,9 +230,9 @@ class Ee_debug_toolbar_ext
 		//of inserting. We may be able to get away with simply always appending, but this seems cleaner
 		//even if more expensive.
 		if (strpos($html, "</body>") === false) {
-			$html .= $this->EE->load->view($report_info['master_view_script'], $vars, true);
+			$html .= $this->EE->load->view($vars['master_view_script'], $vars, true);
 		} else {
-			$html = str_replace('</body>', $this->EE->load->view($report_info['master_view_script'], $vars, true) . '</body>', $html);
+			$html = str_replace('</body>', $this->EE->load->view($vars['master_view_script'], $vars, true) . '</body>', $html);
 		}
 
 
@@ -240,10 +241,10 @@ class Ee_debug_toolbar_ext
 		//we should retain 100% compatibility (I'm looking at you Stash...)
 		$this->EE->output->final_output = $html;
 		if (isset($this->EE->TMPL)) {
-			$this->EE->TMPL->debugging = false;
-			$this->EE->TMPL->log       = false;
+			$this->EE->TMPL->debugging = FALSE;
+			$this->EE->TMPL->log       = FALSE;
 		}
-		$this->EE->output->enable_profiler = false;
+		$this->EE->output->enable_profiler = FALSE;
 
 		//Fist pump.
 		$this->EE->output->_display();

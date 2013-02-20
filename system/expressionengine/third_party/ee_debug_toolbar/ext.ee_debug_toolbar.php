@@ -8,7 +8,7 @@
  * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/nagger/
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
  */
 
 /**
@@ -174,6 +174,7 @@ class Ee_debug_toolbar_ext
 		$vars['theme_img_url']                 = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'images');
 		$vars['theme_js_url']                  = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'js');
 		$vars['theme_css_url']                 = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'css');
+		$vars['extra_html']                    = ''; //used by extension to add extra script/css files
 		
 		//Setup the panel UI meta details
 		$report_info = array();

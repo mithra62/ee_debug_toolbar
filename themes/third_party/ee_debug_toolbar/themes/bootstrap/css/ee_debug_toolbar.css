@@ -278,7 +278,7 @@ a.EEDebug_graph_actions {
 }
 
 .show_graph #EEDebug_graph_display, .show_template_list #EEDebug_graph_list,
-.EEDebug_tmpl_log_active{
+.EEDebug_tmpl_log_active, .flash{
 	color: #FF0000;
 }
 

@@ -222,8 +222,6 @@ class Ee_debug_toolbar_ext
 		$report_info['panel_data']['db']['class'] = '';
 		
 		$vars = array_merge($vars, $report_info);
-		$this->EE->benchmark->mark('ee_debug_benchmark_end');
-		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 
 		//allow for full override of everything
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
@@ -233,6 +231,9 @@ class Ee_debug_toolbar_ext
 		}
 				
 		$html = $this->EE->output->final_output;
+		
+		$this->EE->benchmark->mark('ee_debug_benchmark_end');
+		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();		
 
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead
 		//of inserting. We may be able to get away with simply always appending, but this seems cleaner

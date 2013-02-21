@@ -6,7 +6,14 @@
 	//first let's write out our panels
 	foreach($panel_data AS $key => $value)
 	{
-		$this->load->view($value['view_script']); 
+		if(!empty($value['view_script']))
+		{
+			$this->load->view($value['view_script']); 
+		}
+		elseif(!empty($value['view_html']))
+		{
+			echo $value['view_html'];
+		}
 	}
 	?>
 	

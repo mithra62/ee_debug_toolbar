@@ -8,19 +8,19 @@
  * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/eedt_perf_alerts/
+ * @filesource     ./system/expressionengine/third_party/eedt_memory_history/
  */
 
 /**
- * EE Debug Toolbar - Performance Alerts Extension
+ * EE Debug Toolbar - Memory History Extension
  *
  * Extension class
  *
  * @package        mithra62:EE_debug_toolbar
  * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/eedt_perf_alerts/ext.eedt_perf_alerts.php
+ * @filesource     ./system/expressionengine/third_party/eedt_memory_history/ext.eedt_memory_history.php
  */
-class Eedt_perf_alerts_ext
+class Eedt_memory_history_ext
 {
 	/**
 	 * The extension name
@@ -56,71 +56,35 @@ class Eedt_perf_alerts_ext
 	 * @var string
 	 */
 	public $docs_url = '';
-	
-	/**
-	 * The maximum length the combined SQL execution should take
-	 * @var float
-	 */
-	public $max_sql_time = 0.1;
-	
-	/**
-	 * The maximum number of queries acceptable
-	 * @var int
-	 */
-	public $max_queries = 100;
-	
-	/**
-	 * How many MBs of memory that's acceptable
-	 * @var float
-	 */
-	public $max_memory = 10;
-	
-	/**
-	 * How many seconds are acceptable for page execution
-	 * @var float
-	 */
-	public $max_time = 0.5;
 
 	public function __construct($settings = '')
 	{
 		$this->EE       =& get_instance();
-		$this->EE->lang->loadfile('eedt_perf_alerts');
-		$this->name        = lang('eedt_perf_alerts_module_name');
-		$this->description = lang('eedt_perf_alerts_module_description');
+		$this->EE->lang->loadfile('eedt_memory_history');
+		$this->name        = lang('eedt_memory_history_module_name');
+		$this->description = lang('eedt_memory_history_module_description');
 		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_perf_alerts/');
+		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_memory_history/');
 	}
 	
 	public function ee_debug_toolbar_modify_output($view)
 	{
-		$this->EE->benchmark->mark('eedt_performance_alerts_start');
+		$this->EE->benchmark->mark('eedt_memory_history_start');
 		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
 		
-		//check total time
-		if($view['elapsed_time'] > $this->max_time)
-		{
-			$view['panel_data']['time']['class'] = 'flash';
-		}
-		
-		//make sure we're not running too many queries
-		if($view['query_count'] > $this->max_queries)
-		{
-			$view['panel_data']['db']['class'] = 'flash';
-		}
-		
-		//and how long did those queries take?
-		if($view['query_data']['total_time'] > $this->max_sql_time)
-		{
-			$view['panel_data']['db']['class'] = 'flash';
-		}
-		
-		//is memory usage bad?
-		if($view['memory_usage'] > $this->max_memory)
-		{
-			$view['panel_data']['memory']['class'] = 'flash';
-		}
-		
-		$this->EE->benchmark->mark('eedt_performance_alerts_end');
+		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_memory_history/images/';
+		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_memory_history/js/';
+		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_memory_history/css/';
+				
+		//$view['panel_data']['memory_history']['view_script'] = 'memory_history';
+		$view['panel_data']['memory_history']['image'] = $vars['theme_img_url'].'memory_history.png';
+		$view['panel_data']['memory_history']['title'] = lang('memory_history');
+		$view['panel_data']['memory_history']['data_target'] = 'EEDebug_memory_history';
+		$view['panel_data']['memory_history']['class'] = '';
+		$view['panel_data']['memory_history']['view_html'] = $this->EE->load->view('memory_history', $vars, TRUE);
+
+		//unset($view['panel_data']['files']);
+		$this->EE->benchmark->mark('eedt_memory_history_end');
 		return $view;
 	}
 
@@ -131,7 +95,7 @@ class Eedt_perf_alerts_ext
 				'method'    => 'ee_debug_toolbar_modify_output',
 				'hook'      => 'ee_debug_toolbar_modify_output',
 				'settings'  => '',
-				'priority'  => 1,
+				'priority'  => 49,
 				'version'   => $this->version,
 				'enabled'   => 'y'
 		);

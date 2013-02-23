@@ -10,7 +10,11 @@ $this->table->set_empty("&nbsp;");
 	<?php 
 	$this->table->set_heading(lang('settings'),' ');
 	$this->table->add_row('<label for="theme">'.lang('theme').'</label><div class="subtext">'.lang('theme_instructions').'</div>', form_dropdown('theme', $available_themes, $settings['theme'], 'id="theme"'. $settings_disable));
-	
+	if ($this->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE)
+	{
+		$vars = $this->extensions->call('ee_debug_toolbar_settings_form');
+	}
+		
 	echo $this->table->generate();
 	$this->table->clear();	
 	?>

@@ -123,6 +123,12 @@ class Eedt_perf_alerts_ext
 		$this->EE->benchmark->mark('eedt_performance_alerts_end');
 		return $view;
 	}
+	
+	public function ee_debug_toolbar_settings_form()
+	{
+		
+		//$this->EE->table->add_row('<label for="theme">'.lang('theme').'</label><div class="subtext">'.lang('theme_instructions').'</div>', form_input('theme',  $settings['theme'], 'id="theme"'. $settings_disable));
+	}
 
 	public function activate_extension()
 	{			
@@ -130,6 +136,18 @@ class Eedt_perf_alerts_ext
 				'class'     => __CLASS__,
 				'method'    => 'ee_debug_toolbar_modify_output',
 				'hook'      => 'ee_debug_toolbar_modify_output',
+				'settings'  => '',
+				'priority'  => 1,
+				'version'   => $this->version,
+				'enabled'   => 'y'
+		);
+		
+		$this->EE->db->insert('extensions', $data);	
+
+		$data = array(
+				'class'     => __CLASS__,
+				'method'    => 'ee_debug_toolbar_settings_form',
+				'hook'      => 'ee_debug_toolbar_settings_form',
 				'settings'  => '',
 				'priority'  => 1,
 				'version'   => $this->version,

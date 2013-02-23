@@ -17,6 +17,9 @@
 
 		return;
 	}
+	
+	
+	//$("#accessoryTabs a.devot-ee").parent().hide();
 
 	//Global object for new script classes & global settings
 	window.EEDebug = window.EEDebug || {};

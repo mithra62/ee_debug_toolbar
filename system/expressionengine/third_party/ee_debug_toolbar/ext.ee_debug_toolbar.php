@@ -175,6 +175,7 @@ class Ee_debug_toolbar_ext
 		$vars['theme_js_url']                  = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'js');
 		$vars['theme_css_url']                 = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'css');
 		$vars['extra_html']                    = ''; //used by extension to add extra script/css files
+		$vars['eedt_theme_path']               = PATH_THIRD_THEMES.'/ee_debug_toolbar/themes/'.$this->settings['theme'];
 		
 		//Setup the panel UI meta details
 		$report_info = array();
@@ -243,7 +244,6 @@ class Ee_debug_toolbar_ext
 		} else {
 			$html = str_replace('</body>', $this->EE->load->view($vars['master_view_script'], $vars, true) . '</body>', $html);
 		}
-
 
 		//Get CI to do its usual thing and build the final output, but we'll switch off the debugging
 		//since we have already added the debug data to the body output. Doing it this way means

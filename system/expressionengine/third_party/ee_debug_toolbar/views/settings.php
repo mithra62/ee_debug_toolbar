@@ -1,4 +1,22 @@
 <?php 
+
+$tmpl = array (
+		'table_open'          => '<table class="mainTable" border="0" cellspacing="0" cellpadding="0">',
+
+		'row_start'           => '<tr class="even">',
+		'row_end'             => '</tr>',
+		'cell_start'          => '<td style="width:50%;">',
+		'cell_end'            => '</td>',
+
+		'row_alt_start'       => '<tr class="odd">',
+		'row_alt_end'         => '</tr>',
+		'cell_alt_start'      => '<td>',
+		'cell_alt_end'        => '</td>',
+
+		'table_close'         => '</table>'
+);
+
+$this->table->set_template($tmpl);
 $this->table->set_empty("&nbsp;");
 ?>
 <div class="clear_left shun"></div>

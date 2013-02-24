@@ -72,6 +72,14 @@ class Ee_debug_settings_model extends CI_Model
 		return $this->db->insert($this->_table, $data); 
 	}	
 	
+	public function set_defaults(array $new_defaults = array())
+	{
+		foreach($new_defaults AS $key => $value)
+		{
+			$this->_defaults[$key] = $value;
+		}
+	}
+	
 	public function get_settings()
 	{
 		$this->db->select('setting_key, setting_value, `serialized`');
@@ -81,7 +89,7 @@ class Ee_debug_settings_model extends CI_Model
 		foreach($_settings AS $setting)
 		{
 			$settings[$setting['setting_key']] = ($setting['serialized'] == '1' ? unserialize($setting['setting_value']) : $setting['setting_value']);
-		}
+		}	
 		
 		//now check to make sure they're all there and set default values if not
 		foreach ($this->_defaults as $key => $value)
@@ -97,7 +105,10 @@ class Ee_debug_settings_model extends CI_Model
 			{
 				$settings[$key] = $value;
 			}
-		}		
+		}	
+
+		//print_r($settings);
+		//exit;
 
 		return $settings;
 	}

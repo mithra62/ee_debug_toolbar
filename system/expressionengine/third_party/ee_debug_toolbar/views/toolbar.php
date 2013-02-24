@@ -36,3 +36,4 @@
 </script>
 <script src="<?php echo $theme_js_url . "ee_debug_toolbar.js" ?>" type="text/javascript"
 		charset="utf-8" defer id="EEDebug_debug_script"></script>
+<?php echo $extra_html; ?>

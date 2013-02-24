@@ -8,8 +8,8 @@
 		<h4><?php echo lang('template_debugging');?></h4>
 	</div>
 	<div style="float:right">
-		<a href="javascript:;" id="EEDebug_graph_display" class="EEDebug_graph_actions EEDebug_graph_action_active">Graph</a>
-		| <a href="javascript:;" id="EEDebug_graph_list" class="EEDebug_graph_actions">List</a>
+		<a href="javascript:;" id="EEDebug_graph_display" class="EEDebug_actions EEDebug_graph_action_active">Graph</a>
+		| <a href="javascript:;" id="EEDebug_graph_list" class="EEDebug_actions">List</a>
 	</div>
 	<br clear="all"/>
 	<div id="EEDebug_graph"></div>

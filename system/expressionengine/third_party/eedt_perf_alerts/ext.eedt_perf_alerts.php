@@ -128,6 +128,13 @@ class Eedt_perf_alerts_ext
 			$view['panel_data']['memory']['class'] = 'flash';
 		}
 		
+		$view['perf_theme_img_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/images/';
+		$view['perf_theme_js_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/js/';
+		$view['perf_theme_css_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/css/';		
+		
+		$view['panel_data']['db']['view_html'] = $this->EE->load->view('db', $view, TRUE);
+		$view['panel_data']['db']['view_script'] = FALSE;
+		
 		$this->EE->benchmark->mark('eedt_performance_alerts_end');
 		return $view;
 	}

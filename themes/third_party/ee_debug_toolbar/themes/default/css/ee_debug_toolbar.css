@@ -9,6 +9,9 @@
 	color: #000;
 	z-index: 100255;
 }
+#EEDebug_debug .EEDebug_info {
+	width: 1200px;
+}
 
 @-moz-document url-prefix() {
     #EEDebug_debug {
@@ -45,12 +48,17 @@
 }
 
 #EEDebug_debug .clickable {
-	cursor: pointer
+	cursor: pointer;
+	width:109px;
+	float:left;
+	display: block;
 }
 
 #EEDebug_toggler {
 	font-weight: bold;
 	background: #BFBFBF;
+	width: 8px !important;
+	height: 17px;
 }
 
 .EEDebug_span {
@@ -67,7 +75,7 @@
 .EEDebug_panel {
 	text-align: left;
 	position: absolute;
-	bottom: 21px;
+	bottom: 28px;
 	width: 600px;
 	height:0;
 	max-height: 400px;
@@ -82,28 +90,35 @@
 .EEDebug_panel.active {
 	border: 1px solid #999;
 	padding: 5px;
-	height: 400px;
+	height: 75px;
 	display: block;
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
+.EEDebug_panel.active.height-2x{
+	height: 150px
+}
+.EEDebug_panel.active.height-4x{
+	height: 300px
+}
+.EEDebug_panel.active.height-6x{
+	height: 600px
+}
 
 #EEDebug_copyright.active {
-	height:70px;
 	overflow:hidden;
 }
 #EEDebug_time.active {
-	height:90px;
 	overflow:auto;
 }
 #EEDebug_memory.active {
-	height:230px;
 	overflow: hidden;
+	width: 660px;
+	height: 240px;
 }
 
 #EEDebug_memory_cp.active {
-	height:20px;
 	overflow: hidden;
 }
 
@@ -113,7 +128,6 @@
 }
 
 #EEDebug_graph {
-	height: 220px;
 	width: 700px;
 }
 #EEDebug_graph,
@@ -143,8 +157,7 @@ a.EEDebug_actions {
 }
 
 
-#EEDebug_template_list { 
-	height:200px;
+#EEDebug_template_list {
 	/* Legacy */
 	overflow: scroll;
 	

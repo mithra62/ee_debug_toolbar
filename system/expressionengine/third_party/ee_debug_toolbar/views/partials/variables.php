@@ -1,4 +1,4 @@
-<div id="EEDebug_variables" class="EEDebug_panel">
+<div id="EEDebug_variables" class="EEDebug_panel height-6x">
 	<h4><?php echo lang('headers'); ?></h4>
 
 	<div id="EEDebug_headers">

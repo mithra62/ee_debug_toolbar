@@ -1,7 +1,7 @@
 <?php if ($this->input->get("D", FALSE) != 'cp'): ?>
-	<div style="" id="EEDebug_memory" class="EEDebug_panel show_graph">
+	<div style="" id="EEDebug_memory" class="EEDebug_panel show_graph height-4x">
 	<?php else: ?>
-	<div style="" id="EEDebug_memory_cp" class="EEDebug_panel show_graph">
+	<div style="" id="EEDebug_memory_cp" class="EEDebug_panel show_graph height-4x">
 	<?php endif; ?>
 <?php if ($template_debugging_enabled): ?>
 	<div style="float:left">

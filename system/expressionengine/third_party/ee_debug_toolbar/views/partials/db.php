@@ -1,4 +1,4 @@
-<div id="EEDebug_database" class="EEDebug_panel">
+<div id="EEDebug_database" class="EEDebug_panel height-6x">
 	<h4><?php echo count($query_data['queries']).' '.lang('database_queries'); ?></h4>
 	<?php echo lang('query_cache_is'); ?> <?php echo ($config_data['enable_db_caching'] == 'y' ? lang('enabled') : lang('disabled')); ?>
 	<h4><?php echo lang('adapter'); ?> 0</h4>

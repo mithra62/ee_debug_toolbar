@@ -11,6 +11,9 @@
 	text-rendering: optimizelegibility;
 	padding-left: 22px;
 }
+#EEDebug_debug .EEDebug_info {
+	width: 1200px;
+}
 #EEDebug_debug.animate {
 	-webkit-transition: right 0.3s;
 	-moz-transition: right 0.3s;
@@ -81,7 +84,10 @@
 }
 
 #EEDebug_debug .clickable {
-	cursor: pointer
+	cursor: pointer;
+	width: 109px;
+	display: block;
+	float: left;
 }
 
 #EEDebug_toggler, .EEDebug_span {
@@ -143,6 +149,8 @@
 	left:0;
 	top: -10px;
 	padding: 8px;
+	width: 8px;
+	height: 17px;
 }
 .EEDebug_span {
 	border-right: 0px;

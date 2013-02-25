@@ -56,6 +56,8 @@ class Eedt_log_viewer_ext
 	 * @var string
 	 */
 	public $docs_url = '';
+	
+	public $required_by = array('module');
 
 	public function __construct($settings = '')
 	{
@@ -84,6 +86,7 @@ class Eedt_log_viewer_ext
 			$vars['log_dir_writable'] = TRUE;
 		}
 		
+		$vars['ajax_action_url'] = $this->EE->toolbar->get_action_url('Eedt_log_viewer', 'get_panel_logs');
 		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_log_viewer/images/';
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
 		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_log_viewer/css/';
@@ -99,39 +102,18 @@ class Eedt_log_viewer_ext
 	}
 
 	public function activate_extension()
-	{			
-		$data = array(
-				'class'     => __CLASS__,
-				'method'    => 'ee_debug_toolbar_modify_output',
-				'hook'      => 'ee_debug_toolbar_modify_output',
-				'settings'  => '',
-				'priority'  => 500,
-				'version'   => $this->version,
-				'enabled'   => 'y'
-		);
-		
-		$this->EE->db->insert('extensions', $data);		
+	{	
 		return TRUE;
 	}
 	
 	public function update_extension($current = '')
 	{
-	    if ($current == '' OR $current == $this->version)
-	    {
-	        return FALSE;
-	    }
-	
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->update(
-	                'extensions',
-	                array('version' => $this->version)
-	    );
+		return TRUE;
 	}
 	
 	public function disable_extension()
 	{
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->delete('extensions');
+		return TRUE;
 	}
 
 }

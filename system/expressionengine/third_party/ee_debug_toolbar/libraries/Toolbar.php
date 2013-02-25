@@ -23,13 +23,20 @@
 class Toolbar
 {
 
-	var $default_theme = "default";
+	/**
+	 * The theme to use if no other theme is set
+	 * @var string
+	 */
+	public $default_theme = "default";
 
 	public function __construct()
 	{
 		$this->EE = & get_instance();
 	}
 	
+	/**
+	 * Wrapper to setup and return the toolbar settings
+	 */
 	public function get_settings()
 	{
 		if (!isset($this->EE->session->cache['ee_debug_toolbar']['settings']))
@@ -269,5 +276,29 @@ class Toolbar
 			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
 		}
 		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/$sub_dir/";
-	}	
+	}
+
+	/**
+	 * Returns the ACT for the given params
+	 * @param string $class
+	 * @param string $method
+	 */
+	public function fetch_action_id($class, $method)
+	{
+		$this->EE->load->dbforge();
+		$this->EE->db->select('action_id');
+		$query = $this->EE->db->get_where('actions', array('class' => $class, 'method' => $method));
+		return $query->row('action_id');		
+	}
+	
+	/**
+	 * Returns the action URL for the given params
+	 * @param string $class
+	 * @param string $method
+	 */	
+	public function get_action_url($class, $method)
+	{
+		$url = $this->EE->config->config['site_url'];
+		return $url.'?ACT='.$this->fetch_action_id($class, $method);
+	}
 }

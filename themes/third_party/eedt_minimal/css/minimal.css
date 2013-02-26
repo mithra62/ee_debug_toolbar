@@ -1,0 +1,13 @@
+#EEDebug_debug {
+	left: -252px;
+}
+
+@-moz-document url-prefix() {
+    #EEDebug_debug {
+       left: -245px;
+    }
+}
+
+#EEDebug_debug .clickable {
+	width:20px;
+}

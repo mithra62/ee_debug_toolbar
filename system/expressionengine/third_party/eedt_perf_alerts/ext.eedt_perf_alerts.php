@@ -57,30 +57,6 @@ class Eedt_perf_alerts_ext
 	 */
 	public $docs_url = '';
 	
-	/**
-	 * The maximum length the combined SQL execution should take
-	 * @var float
-	 */
-	public $max_sql_time = 0.1;
-	
-	/**
-	 * The maximum number of queries acceptable
-	 * @var int
-	 */
-	public $max_queries = 100;
-	
-	/**
-	 * How many MBs of memory that's acceptable
-	 * @var float
-	 */
-	public $max_memory = 10;
-	
-	/**
-	 * How many seconds are acceptable for page execution
-	 * @var float
-	 */
-	public $max_time = 0.5;
-	
 	public $default_settings = array(
 			'max_exec_time' => 0.5,
 			'max_memory' => 10,

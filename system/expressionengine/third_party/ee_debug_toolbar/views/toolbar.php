@@ -21,8 +21,8 @@
 		<?php foreach($panel_data AS $key => $value): ?>
 		<span class="EEDebug_span clickable <?php echo $value['class']; ?>" data-target="<?php echo $value['data_target']; ?>">
 			<img src="<?php echo $value['image']; ?>"
-				 style="vertical-align:middle" alt="<?php echo $value['title']; ?>"
-				 title="<?php echo $value['title']; ?>">  <?php echo $value['title']; ?>
+				 style="vertical-align:middle" alt="<?php echo (!empty($value['alt_title']) ? $value['alt_title'] : $value['title']); ?>"
+				 title="<?php echo (!empty($value['alt_title']) ? $value['alt_title'] : $value['title']); ?>">  <?php echo $value['title']; ?>
 		</span>
 		<?php endforeach; ?>
 		<span class="EEDebug_span EEDebug_last clickable" id="EEDebug_toggler">&#171;</span>

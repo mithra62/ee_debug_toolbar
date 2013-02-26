@@ -182,7 +182,7 @@ class Ee_debug_toolbar_ext
 		$report_info['master_view_script']                     = 'toolbar';
 		$report_info['panel_data']['copyright']['view_script'] = 'partials/copyright';
 		$report_info['panel_data']['copyright']['image']       = $vars['theme_img_url'].'logo.png';
-		$report_info['panel_data']['copyright']['title']       = 'v'.APP_VER.' '.phpversion();
+		$report_info['panel_data']['copyright']['title']       = 'v'.APP_VER.' / '.phpversion();
 		$report_info['panel_data']['copyright']['data_target'] = 'EEDebug_copyright';
 		$report_info['panel_data']['copyright']['class'] = '';
 		

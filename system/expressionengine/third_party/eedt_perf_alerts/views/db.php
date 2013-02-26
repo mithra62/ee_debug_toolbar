@@ -1,4 +1,4 @@
-<div id="EEDebug_database" class="EEDebug_panel">
+<div id="EEDebug_database" class="EEDebug_panel height-6x">
 	<div style="float:left">
 		<h4><?php echo count($query_data['queries']).' '.lang('database_queries'); ?></h4>
 	</div>

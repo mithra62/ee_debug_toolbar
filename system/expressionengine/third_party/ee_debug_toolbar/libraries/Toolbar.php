@@ -272,10 +272,13 @@ class Toolbar
 	 */
 	public function create_theme_url($theme, $sub_dir = '')
 	{
-		if (is_dir(PATH_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/")) {
-			return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
+		$path = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_path'], '/') .'/third_party/');
+		$url = (defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_url'], '/') .'/third_party/');
+		if (is_dir($path . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/")) 
+		{
+			return $url . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
 		}
-		return URL_THIRD_THEMES . "ee_debug_toolbar/themes/" . $this->default_theme . "/$sub_dir/";
+		return $url . "ee_debug_toolbar/themes/" . $this->default_theme . "/$sub_dir/";
 	}
 
 	/**

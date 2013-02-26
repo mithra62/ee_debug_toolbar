@@ -175,7 +175,7 @@ class Ee_debug_toolbar_ext
 		$vars['theme_js_url']                  = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'js');
 		$vars['theme_css_url']                 = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'css');
 		$vars['extra_html']                    = ''; //used by extension to add extra script/css files
-		$vars['eedt_theme_path']               = PATH_THIRD_THEMES.'/ee_debug_toolbar/themes/'.$this->settings['theme'];
+		$vars['eedt_theme_path']               = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_path'], '/third_party/') .'/').'ee_debug_toolbar/themes/'.$this->settings['theme'];
 		
 		//Setup the panel UI meta details
 		$report_info = array();

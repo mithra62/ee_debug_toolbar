@@ -5,7 +5,7 @@
  *
  * @package        mithra62:EE_debug_toolbar
  * @author         Eric Lamb
- * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
+ * @copyright      Copyright (c) 2013, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
  * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
@@ -73,6 +73,12 @@ class Ee_debug_toolbar_ext
 	 * @var string
 	 */
 	public $docs_url = '';
+	
+	/**
+	 * Flag to have module files handle updatting
+	 * @var unknown_type
+	 */
+	public $required_by = array('module');
 
 
 	public function __construct($settings = '')
@@ -98,6 +104,8 @@ class Ee_debug_toolbar_ext
 		}
 
 		global $EXT;
+
+		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/upd.ee_debug_toolbar.php");
 
 		//BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
 		if (!class_exists('Ee_toolbar_hook')) {
@@ -297,24 +305,17 @@ class Ee_debug_toolbar_ext
 
 	public function activate_extension()
 	{
-		$this->EE->load->library('ee_toolbar_install', null, 'install');
-		$this->EE->install->install(__CLASS__, $this->version);
+		return TRUE;
 	}
 
 	public function update_extension($current = '')
 	{
-		if ($current == '' OR $current == $this->version) {
-			return false;
-		}
-
-		$this->EE->load->library('ee_toolbar_install', null, 'install');
-		$this->EE->install->update(__CLASS__, $this->version, $current);
+		return TRUE;
 	}
 
 	public function disable_extension()
 	{
-		$this->EE->load->library('ee_toolbar_install', null, 'install');
-		$this->EE->install->remove(__CLASS__);		
+		return TRUE;	
 	}
 
 }

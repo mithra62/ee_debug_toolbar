@@ -1,0 +1,60 @@
+<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * mithra62 - EE Debug Toolbar
+ *
+ * @package        mithra62:EE_debug_toolbar
+ * @author         Eric Lamb
+ * @copyright      Copyright (c) 2013, mithra62, Eric Lamb.
+ * @link           http://mithra62.com/
+ * @updated        1.0
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
+ */
+
+/**
+ * EE Debug Toolbar - Module Class
+ *
+ * Module class
+ *
+ * @package        mithra62:EE_debug_toolbar
+ * @author         Eric Lamb
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/mod.ee_debug_toolbar.php
+ */
+class Ee_debug_toolbar 
+{
+	/**
+	 * The data to return from the module
+	 * @var stirng
+	 */
+	public $return_data	= '';
+	
+	public function __construct()
+	{
+		// Make a local reference to the ExpressionEngine super object
+		$this->EE =& get_instance();
+		$path = dirname(realpath(__FILE__));
+		include $path.'/config'.EXT;
+		$this->class = $config['class_name'];
+		$this->version = $config['version'];
+		
+		$this->EE->lang->loadfile('ee_debug_toolbar');
+		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');	
+	}
+	
+	public function action_test()
+	{
+		
+	}
+	
+	public function tag_test()
+	{
+		$data = array();
+		if(count($data) == '0')
+		{
+			return $this->EE->TMPL->no_results();
+		}
+				
+		$output = $this->prep_output($data);
+		return $output;		
+	}
+}

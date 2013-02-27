@@ -53,5 +53,7 @@ $lang = array(
 	'theme_instructions'                  => 'Select the theme you want the Toolbar to use.',
 	'contributor_list'                    => '<a href="http://blog.ericlamb.net/" title="Eric Lamb">Eric Lamb</a> (<a href="http://mithra62.com/index" title="mithra62">mithra62</a>) & <a href="https://github.com/ckimrie/" title="Christopher Imrie">Christopher Imrie</a>',
 	'contributors'                        => 'Contributors',
+	'toolbar_position'                    => 'Toolbar Position',
+	'toolbar_position_instructions'       => 'Where do you want the toolbar to appear on the page?',
 	''                                    => ''		
 );

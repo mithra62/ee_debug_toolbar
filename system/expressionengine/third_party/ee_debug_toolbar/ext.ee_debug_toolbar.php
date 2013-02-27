@@ -275,6 +275,7 @@ class Ee_debug_toolbar_ext
 		$vars = array();
 		$vars['settings'] = $this->settings;
 		$vars['available_themes'] = $this->EE->toolbar->get_themes();
+		$vars['toolbar_positions'] = $this->EE->toolbar->toolbar_positions;
 		$vars['settings_disable'] = FALSE;
 		if(isset($this->EE->config->config['ee_debug_toolbar']))
 		{

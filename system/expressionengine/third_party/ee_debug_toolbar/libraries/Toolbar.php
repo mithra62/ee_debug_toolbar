@@ -28,6 +28,13 @@ class Toolbar
 	 * @var string
 	 */
 	public $default_theme = "default";
+	
+	public $toolbar_positions = array(
+			'bottom-left',
+			'top-left',
+			'bottom-right',
+			'top-right'
+	);
 
 	public function __construct()
 	{

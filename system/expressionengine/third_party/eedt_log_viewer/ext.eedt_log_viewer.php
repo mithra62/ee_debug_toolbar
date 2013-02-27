@@ -57,7 +57,7 @@ class Eedt_log_viewer_ext
 	 */
 	public $docs_url = '';
 	
-	public $required_by = array('module');
+	public $eedt_act = array('get_panel_logs');
 
 	public function __construct($settings = '')
 	{
@@ -86,7 +86,7 @@ class Eedt_log_viewer_ext
 			$vars['log_dir_writable'] = TRUE;
 		}
 		
-		$vars['ajax_action_url'] = $this->EE->toolbar->get_action_url('Eedt_log_viewer', 'get_panel_logs');
+		$vars['ajax_action_url'] = $this->EE->toolbar->create_act_url('get_panel_logs', __CLASS__);
 		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_log_viewer/images/';
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
 		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_log_viewer/css/';
@@ -100,20 +100,100 @@ class Eedt_log_viewer_ext
 		$this->EE->benchmark->mark('eedt_log_viewer_end');
 		return $view;
 	}
+	
+	public function get_panel_logs()
+	{
+	
+		$log_path = $this->EE->config->config['log_path'];
+		if(!is_readable($log_path))
+		{
+			echo lang('log_dir_not_readable');
+			exit;
+		}
+	
+		//get the log files
+		$d = dir($log_path);
+		$log_files = array();
+		while (false !== ($entry = $d->read()))
+		{
+			if($entry == '.' || $entry == '..')
+			{
+				continue;
+			}
+				
+			$log_files[$entry] = $entry;
+		}
+		$d->close();
+	
+		if(count($log_files) == '0')
+		{
+			echo lang('no_log_files');
+			exit;
+		}
+	
+		//we only want the latest log file
+		$latest_log = $log_path.end($log_files);
+		$f = fopen($latest_log, 'r');
+		$lineNo = 0;
+		//$startLine = 3;
+		//$endLine = 6;
+		echo '<div>';
+		while ($line = fgets($f)) {
+			$lineNo++;
+				
+			if($lineNo != '1')
+			{
+				echo $line.'<br />';
+			}
+				
+			if($lineNo == '1000')
+			{
+				break;
+			}
+				
+			/*
+				if ($lineNo >= $startLine) {
+			echo $line;
+			}
+			if ($lineNo == $endLine) {
+			break;
+			}
+			*/
+		}
+		fclose($f);
+	
+		echo '<div>';
+		exit;
+	}	
 
 	public function activate_extension()
-	{	
-		return TRUE;
-	}
-	
-	public function update_extension($current = '')
 	{
-		return TRUE;
+		$data = array();
+		
+		$data[] = array(
+				'class'     => __CLASS__,
+				'method'    => 'ee_debug_toolbar_modify_output',
+				'hook'      => 'ee_debug_toolbar_modify_output',
+				'settings'  => '',
+				'priority'  => 500,
+				'version'   => $this->version,
+				'enabled'   => 'y'
+		);
+	
+		foreach($data AS $ex)
+		{
+			$this->EE->db->insert('extensions', $ex);	
+		}		
 	}
 	
 	public function disable_extension()
 	{
+		$this->EE->db->where('class', __CLASS__);
+		$this->EE->db->delete('extensions');
+	}
+		
+	public function update_extension($current = '')
+	{
 		return TRUE;
 	}
-
 }

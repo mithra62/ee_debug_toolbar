@@ -41,9 +41,36 @@ class Ee_debug_toolbar
 		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');	
 	}
 	
-	public function action_test()
+	public function act()
 	{
+		$class = $this->EE->input->get_post('class');
+		$method = $this->EE->input->get_post('method');
 		
+		//clean up the file so we know what package we're to include
+		$package = strtolower(str_replace(array('_ext'), '', $class));
+		
+		$errors = TRUE; //let's just assume the worst to keep us honest
+		$file_path = PATH_THIRD . $package.'/ext.'.$package.'.php';
+		if(file_exists($file_path))
+		{
+			include $file_path;
+			if(class_exists($class))
+			{
+				$this->$class = new $class;
+				if(is_callable(array($this->$class, $method)))
+				{
+					$errors = FALSE;
+					$this->$class->$method(); //paranoid but at least shit won't break. 			
+				}			
+			}		
+		}
+		
+		if($errors)
+		{
+			//what do we do with calls that aren't good?
+			echo 'Ya dun goofed...';
+			exit;
+		}
 	}
 	
 	public function tag_test()

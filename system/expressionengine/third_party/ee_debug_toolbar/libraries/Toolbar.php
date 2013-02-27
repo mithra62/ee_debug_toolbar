@@ -303,12 +303,17 @@ class Toolbar
 	
 	/**
 	 * Returns the action URL for the given params
-	 * @param string $class
 	 * @param string $method
+	 * @param string $class
 	 */	
-	public function get_action_url($class, $method)
+	public function get_action_url($method, $class = 'Ee_debug_toolbar')
 	{
 		$url = $this->EE->config->config['site_url'];
 		return $url.'?ACT='.$this->fetch_action_id($class, $method);
+	}
+	
+	public function create_act_url($act_method, $act_class)
+	{
+		return $url = $this->get_action_url('act').AMP.'class='.$act_class.AMP.'method='.$act_method;
 	}
 }

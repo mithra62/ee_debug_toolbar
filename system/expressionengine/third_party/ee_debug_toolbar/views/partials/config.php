@@ -1,4 +1,4 @@
-	<div id="EEDebug_registry" class="EEDebug_panel height-6x">
+	<div id="EEDebug_config" class="EEDebug_panel height-6x">
 		<h4><?php echo lang('configuration'); ?></h4>
 		<pre><?php
 			foreach ($config_data AS $key => $value) {

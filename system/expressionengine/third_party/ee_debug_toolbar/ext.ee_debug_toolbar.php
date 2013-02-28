@@ -154,6 +154,8 @@ class Ee_debug_toolbar_ext
 	 */
 	public function modify_output()
 	{
+		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_view_model.php");
+
 		//If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
 		if (AJAX_REQUEST || (property_exists($this->EE, "TMPL") && $this->EE->TMPL->template_type == 'js')) {
 			return $this->EE->output->_display();
@@ -184,11 +186,11 @@ class Ee_debug_toolbar_ext
 		$vars['theme_css_url']                 = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'css');
 		$vars['extra_html']                    = ''; //used by extension to add extra script/css files
 		$vars['eedt_theme_path']               = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_path'], '/third_party/') .'/').'ee_debug_toolbar/themes/'.$this->settings['theme'];
-		
+
 		//Setup the panel UI meta details
 		$report_info = array();
 		$report_info['master_view_script']                     = 'toolbar';
-		$report_info['panel_data']['copyright']['view_script'] = 'partials/copyright';
+		/*$report_info['panel_data']['copyright']['view_script'] = 'partials/copyright';
 		$report_info['panel_data']['copyright']['image']       = $vars['theme_img_url'].'logo.png';
 		$report_info['panel_data']['copyright']['title']       = 'v'.APP_VER.' / '.phpversion();
 		$report_info['panel_data']['copyright']['data_target'] = 'EEDebug_copyright';
@@ -229,20 +231,31 @@ class Ee_debug_toolbar_ext
 		$report_info['panel_data']['db']['title']       = $vars['query_count'].' '.lang('in').' '.$vars['query_data']['total_time'].'s';
 		$report_info['panel_data']['db']['data_target'] = 'EEDebug_database';
 		$report_info['panel_data']['db']['class'] = '';
-		
+		*/
 		$vars = array_merge($vars, $report_info);
 
 		//allow for full override of everything
-		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
+		/*if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $vars);
 			if ($this->EE->extensions->end_script === TRUE) return array('vars' => $vars, 'html' => $this->EE->output->final_output);
-		}
+		}*/
 				
 		$html = $this->EE->output->final_output;
 		
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
-		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();		
+		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
+
+		$this->EE->load->vars($vars);
+
+		//Load Panels
+		$panels = $this->load_panels();
+
+		$vars['panels'] = array();
+
+		foreach($panels as $panel) {
+			$vars['panels'][] = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
+		}
 
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead
 		//of inserting. We may be able to get away with simply always appending, but this seems cleaner
@@ -317,6 +330,31 @@ class Ee_debug_toolbar_ext
 	public function disable_extension()
 	{
 		return TRUE;	
+	}
+
+	/**
+	 * Loads Native EEDT Panel Extensions
+	 *
+	 * @return Eedt_base_panel[] Array of panel extension instances
+	 */
+	private function load_panels()
+	{
+		$instances = array();
+
+		$this->EE->load->helper("file");
+		$files = get_filenames(PATH_THIRD."ee_debug_toolbar/panels/");
+
+		foreach($files as $file){
+			$this->EE->load->file(PATH_THIRD."ee_debug_toolbar/panels/" . $file);
+
+			$class = str_replace(".php", "", $file);
+
+			if(class_exists($class)){
+				$instances[] = new $class();
+			}
+		}
+
+		return $instances;
 	}
 
 }

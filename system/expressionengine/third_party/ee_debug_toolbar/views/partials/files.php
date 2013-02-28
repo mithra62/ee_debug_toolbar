@@ -1,4 +1,4 @@
-<div id="EEDebug_file" class="EEDebug_panel height-6x">
+<div id="EEDebug_files" class="EEDebug_panel height-6x">
 	<h4><?php echo lang('file_information'); ?></h4>
 	<?php echo (count(get_included_files()) + 1); //faked for included graph file below ?> <?php echo lang('files_included'); ?>
 	<br>

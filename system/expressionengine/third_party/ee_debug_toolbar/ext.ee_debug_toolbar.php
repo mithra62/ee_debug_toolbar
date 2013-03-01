@@ -134,6 +134,12 @@ class Ee_debug_toolbar_ext
 		if ($this->EE->input->get("C") == "javascript") {
 			return $session;
 		}
+		
+		//override to disable the toolbar from even starting
+		if($this->EE->input->get('disable_toolbar') == 'yes')
+		{		
+			return $session;
+		}
 
 		global $EXT;
 
@@ -282,7 +288,29 @@ class Ee_debug_toolbar_ext
 	
 	public function get_panel_data()
 	{
-		echo 'Here I am!';
+		$this->EE->TMPL->debugging = FALSE;
+		$this->EE->TMPL->log       = FALSE;
+		$this->EE->output->enable_profiler = FALSE;	
+		
+		$panel = $this->EE->input->get('panel', FALSE);
+		if(!$panel)
+		{
+			return;
+		}
+
+		//the cache file is just an XML so we check for existance, node, and display. easy
+		$this->EE->load->library('toolbar');
+		$file = $this->cache_dir.$this->EE->toolbar->make_cache_filename();
+		if(file_exists($file) && is_readable($file))
+		{
+			$xml = simplexml_load_file($file);
+			$panel_node = $panel.'_panel';
+			if(isset($xml->panels->$panel_node->output) && $xml->panels->$panel_node->output != '')
+			{
+				echo $xml->panels->$panel_node->output;
+			}
+			exit;
+		}
 	}
 
 	/**

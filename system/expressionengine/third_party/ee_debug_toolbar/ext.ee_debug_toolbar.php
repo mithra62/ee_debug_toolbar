@@ -105,8 +105,6 @@ class Ee_debug_toolbar_ext
 
 		global $EXT;
 
-		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/upd.ee_debug_toolbar.php");
-
 		//BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
 		if (!class_exists('Ee_toolbar_hook')) {
 			$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
@@ -202,7 +200,6 @@ class Ee_debug_toolbar_ext
 			$vars['panels'][] = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
 		}
 
-
 		//Load third party panels
 		/**
 		 * TODO
@@ -216,6 +213,9 @@ class Ee_debug_toolbar_ext
 			$vars['panels'][] = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $toolbar_html);
 		}*/
 
+		//setup the XML storage data for use by the panels on open
+		$this->EE->toolbar->cache_panels($vars['panels'], APPPATH.'cache/');
+		
 		//Render toolbar
 		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);
 

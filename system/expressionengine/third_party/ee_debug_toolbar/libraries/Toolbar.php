@@ -312,8 +312,44 @@ class Toolbar
 		return $url.'?ACT='.$this->fetch_action_id($class, $method);
 	}
 	
+	/**
+	 * Creates the internal ACT URL for use by extensions
+	 * @param string $act_method
+	 * @param string $act_class
+	 * @return string
+	 */
 	public function create_act_url($act_method, $act_class)
 	{
 		return $url = $this->get_action_url('act').AMP.'class='.$act_class.AMP.'method='.$act_method;
+	}
+	
+	/**
+	 * Takes the panel data and writes them to $path
+	 * @param array $panels
+	 * @param string $path
+	 */
+	public function cache_panels($panels, $path)
+	{
+		$this->EE->load->library('xml_writer');
+	    $this->EE->xml_writer->setRootName('EEDT');
+		$this->EE->xml_writer->initiate();
+		$this->EE->xml_writer->startBranch('panels');
+		foreach($panels AS $panel)
+		{
+			$this->EE->xml_writer->startBranch($panel->getName().'_panel');
+			$this->EE->xml_writer->addNode('name', $panel->getName(), array(), TRUE);
+			$this->EE->xml_writer->addNode('data_target', $panel->getTarget(), array(), TRUE);
+			$this->EE->xml_writer->addNode('button_icon', $panel->getButtonIcon(), array(), TRUE);
+			$this->EE->xml_writer->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), array(), TRUE);
+			$this->EE->xml_writer->addNode('button_label', $panel->getButtonlabel(), array(), TRUE);
+			$this->EE->xml_writer->addNode('output', $panel->getOutput(), array(), TRUE);
+			$this->EE->xml_writer->endBranch();
+		}
+		
+		$this->EE->xml_writer->endBranch();
+		$xml = $this->EE->xml_writer->getXml(false);
+				
+		$filename = $path.'.'.$this->EE->session->userdata['session_id'].'.eedt';
+		write_file($filename, $xml);
 	}
 }

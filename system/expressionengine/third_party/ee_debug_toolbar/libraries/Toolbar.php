@@ -349,7 +349,12 @@ class Toolbar
 		$this->EE->xml_writer->endBranch();
 		$xml = $this->EE->xml_writer->getXml(false);
 				
-		$filename = $path.'.'.$this->EE->session->userdata['session_id'].'.eedt';
+		$filename = $path.$this->make_cache_filename();
 		write_file($filename, $xml);
+	}
+	
+	public function make_cache_filename()
+	{
+		return '.'.$this->EE->session->userdata['session_id'].'.eedt';
 	}
 }

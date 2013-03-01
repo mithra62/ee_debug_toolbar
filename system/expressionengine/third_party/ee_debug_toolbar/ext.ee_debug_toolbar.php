@@ -81,6 +81,20 @@ class Ee_debug_toolbar_ext
 	public $cache_dir = '';
 	
 	/**
+	 * The order the default panels appear in
+	 * @var array
+	 */
+	public $panel_order = array(
+			'copyright', 
+			'variables', 
+			'files', 
+			'memory', 
+			'time', 
+			'config',
+			'database'
+	);
+	
+	/**
 	 * Flag to have module files handle updatting
 	 * @var unknown_type
 	 */
@@ -207,7 +221,7 @@ class Ee_debug_toolbar_ext
 		$this->EE->load->vars($vars);
 
 		//Load Panels & load view model data
-		$panels = $this->load_panels();
+		$panels = $this->load_panels();		
 		foreach($panels as $panel) {
 			$vars['panels'][] = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
 		}
@@ -259,26 +273,6 @@ class Ee_debug_toolbar_ext
 		//Fist pump.
 		$this->EE->output->_display();
 	}
-	
-	public function settings()
-	{
-		$this->EE->functions->redirect(BASE.AMP.'C=addons_modules&M=show_module_cp&module=ee_debug_toolbar&method=settings');
-	}
-
-	public function activate_extension()
-	{
-		return TRUE;
-	}
-
-	public function update_extension($current = '')
-	{
-		return TRUE;
-	}
-
-	public function disable_extension()
-	{
-		return TRUE;	
-	}
 
 	/**
 	 * Loads Native EEDT Panel Extensions
@@ -291,18 +285,50 @@ class Ee_debug_toolbar_ext
 
 		$this->EE->load->helper("file");
 		$files = get_filenames(PATH_THIRD."ee_debug_toolbar/panels/");
-
-		foreach($files as $file){
+		
+		//setup the array in the order we want the panels to appear
+		$sorted_files = array();
+		foreach($this->panel_order AS $panel)
+		{
+			$name = 'Eedt_'.$panel.'_panel.php';
+			if(in_array($name, $files))
+			{
+				$sorted_files[] = $name;
+			}
+		}
+		
+		//each panel is an object so set them up 
+		foreach($sorted_files as $file){
 			$this->EE->load->file(PATH_THIRD."ee_debug_toolbar/panels/" . $file);
 
 			$class = str_replace(".php", "", $file);
 
 			if(class_exists($class)){
-				$instances[] = new $class();
+				$instances[$class] = new $class();
 			}
 		}
 
 		return $instances;
 	}
+	
+	public function settings()
+	{
+		$this->EE->functions->redirect(BASE.AMP.'C=addons_modules&M=show_module_cp&module=ee_debug_toolbar&method=settings');
+	}
+	
+	public function activate_extension()
+	{
+		return TRUE;
+	}
+	
+	public function update_extension($current = '')
+	{
+		return TRUE;
+	}
+	
+	public function disable_extension()
+	{
+		return TRUE;
+	}	
 
 }

@@ -75,6 +75,12 @@ class Ee_debug_toolbar_ext
 	public $docs_url = '';
 	
 	/**
+	 * The full path to store the cached debug output
+	 * @var string
+	 */
+	public $cache_dir = '';
+	
+	/**
 	 * Flag to have module files handle updatting
 	 * @var unknown_type
 	 */
@@ -88,6 +94,12 @@ class Ee_debug_toolbar_ext
 		$this->name        = lang('ee_debug_toolbar_module_name');
 		$this->description = lang('ee_debug_toolbar_module_description');
 		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+		
+		$this->cache_dir = APPPATH.'cache/eedt/';
+		if(!is_dir($this->cache_dir))
+		{
+			mkdir($this->cache_dir, 0777, TRUE);
+		}
 	}
 
 	public function toolbar($session)
@@ -214,7 +226,7 @@ class Ee_debug_toolbar_ext
 		}*/
 
 		//setup the XML storage data for use by the panels on open
-		$this->EE->toolbar->cache_panels($vars['panels'], APPPATH.'cache/');
+		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);
 		
 		//Render toolbar
 		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);

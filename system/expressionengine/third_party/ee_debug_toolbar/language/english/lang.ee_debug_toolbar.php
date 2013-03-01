@@ -55,5 +55,6 @@ $lang = array(
 	'contributors'                        => 'Contributors',
 	'toolbar_position'                    => 'Toolbar Position',
 	'toolbar_position_instructions'       => 'Where do you want the toolbar to appear on the page?',
+	'eedt_in'                             => 'in',
 	''                                    => ''		
 );

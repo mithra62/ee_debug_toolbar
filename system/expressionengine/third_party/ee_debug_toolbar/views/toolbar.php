@@ -3,6 +3,7 @@
 
 <div id="EEDebug_debug">
 	<?php foreach($panels AS $key => $panel): ?>
+		<?php echo $panel->getAjaxUrl(); ?><br />
 		<?php echo $panel->getOutput(); ?>
 	<?php endforeach; ?>
 	<div id="EEDebug_info">

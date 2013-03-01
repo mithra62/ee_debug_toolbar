@@ -318,7 +318,7 @@ class Toolbar
 	 * @param string $act_class
 	 * @return string
 	 */
-	public function create_act_url($act_method, $act_class)
+	public function create_act_url($act_method, $act_class = 'Ee_debug_toolbar_ext')
 	{
 		return $url = $this->get_action_url('act').AMP.'class='.$act_class.AMP.'method='.$act_method;
 	}

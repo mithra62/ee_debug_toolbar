@@ -99,6 +99,12 @@ class Ee_debug_toolbar_ext
 	 * @var unknown_type
 	 */
 	public $required_by = array('module');
+	
+	/**
+	 * List of methods available for use with EEDT ACT
+	 * @var array
+	 */
+	public $eedt_act = array('get_panel_data');
 
 
 	public function __construct($settings = '')
@@ -272,6 +278,11 @@ class Ee_debug_toolbar_ext
 
 		//Fist pump.
 		$this->EE->output->_display();
+	}
+	
+	public function get_panel_data()
+	{
+		echo 'Here I am!';
 	}
 
 	/**

@@ -182,6 +182,16 @@ class Eedt_view_model
 	{
 		return $this->output;
 	}
+	
+	public function setAjaxUrl($url)
+	{
+		$this->ajax_url = $url;
+	}
+	
+	public function getAjaxUrl()
+	{
+		return $this->ajax_url;
+	}
 
 	/**
 	 * @param $filename

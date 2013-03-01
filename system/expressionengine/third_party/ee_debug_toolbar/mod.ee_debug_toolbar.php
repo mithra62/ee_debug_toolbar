@@ -53,14 +53,22 @@ class Ee_debug_toolbar
 		$file_path = PATH_THIRD . $package.'/ext.'.$package.'.php';
 		if(file_exists($file_path))
 		{
-			include $file_path;
-			if(class_exists($class))
+			if(!class_exists($class))
 			{
+				include $file_path;
+			}
+			
+			if(class_exists($class))
+			{				
 				$this->$class = new $class;
 				if(is_callable(array($this->$class, $method)))
-				{
-					$errors = FALSE;
-					$this->$class->$method(); //paranoid but at least shit won't break. 			
+				{					
+					//now let's make sure the passed method is allowed for use as an ACT
+					if(!empty($this->$class->eedt_act) && is_array($this->$class->eedt_act) && in_array($method, $this->$class->eedt_act))
+					{
+						$errors = FALSE;
+						$this->$class->$method(); //paranoid but at least shit won't break. 
+					}			
 				}			
 			}		
 		}

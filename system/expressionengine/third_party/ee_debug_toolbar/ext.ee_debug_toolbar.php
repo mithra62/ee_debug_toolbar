@@ -155,6 +155,7 @@ class Ee_debug_toolbar_ext
 	public function modify_output()
 	{
 		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_view_model.php");
+		$html = $this->EE->output->final_output;
 
 		//If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
 		if (AJAX_REQUEST || (property_exists($this->EE, "TMPL") && $this->EE->TMPL->template_type == 'js')) {
@@ -186,84 +187,51 @@ class Ee_debug_toolbar_ext
 		$vars['theme_css_url']                 = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'css');
 		$vars['extra_html']                    = ''; //used by extension to add extra script/css files
 		$vars['eedt_theme_path']               = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_path'], '/third_party/') .'/').'ee_debug_toolbar/themes/'.$this->settings['theme'];
-
-		//Setup the panel UI meta details
-		$report_info = array();
-		$report_info['master_view_script']                     = 'toolbar';
-		/*$report_info['panel_data']['copyright']['view_script'] = 'partials/copyright';
-		$report_info['panel_data']['copyright']['image']       = $vars['theme_img_url'].'logo.png';
-		$report_info['panel_data']['copyright']['title']       = 'v'.APP_VER.' / '.phpversion();
-		$report_info['panel_data']['copyright']['data_target'] = 'EEDebug_copyright';
-		$report_info['panel_data']['copyright']['class'] = '';
-		
-		$report_info['panel_data']['variables']['view_script'] = 'partials/variables';
-		$report_info['panel_data']['variables']['image']       = $vars['theme_img_url'].'variables.png';
-		$report_info['panel_data']['variables']['title']       = lang('variables');
-		$report_info['panel_data']['variables']['data_target'] = 'EEDebug_variables';
-		$report_info['panel_data']['variables']['class'] = '';
-
-		$report_info['panel_data']['files']['view_script'] = 'partials/files';
-		$report_info['panel_data']['files']['image']       = $vars['theme_img_url'].'files.png';
-		$report_info['panel_data']['files']['title']       = count(get_included_files()).' '.lang('files');
-		$report_info['panel_data']['files']['data_target'] = 'EEDebug_file';
-		$report_info['panel_data']['files']['class'] = '';
-		
-		$report_info['panel_data']['memory']['view_script'] = 'partials/memory';
-		$report_info['panel_data']['memory']['image']       = $vars['theme_img_url'].'memory.png';
-		$report_info['panel_data']['memory']['title']       = $vars['memory_usage'].' '.ini_get('memory_limit');
-		$report_info['panel_data']['memory']['data_target'] = ($this->EE->input->get("D", FALSE) != 'cp' ? 'EEDebug_memory' : 'EEDebug_memory_cp');	
-		$report_info['panel_data']['memory']['class'] = '';
-		
-		$report_info['panel_data']['time']['view_script'] = 'partials/time';
-		$report_info['panel_data']['time']['image']       = $vars['theme_img_url'].'time.png';
-		$report_info['panel_data']['time']['title']       = $vars['elapsed_time'].'s';
-		$report_info['panel_data']['time']['data_target'] = 'EEDebug_time';	
-		$report_info['panel_data']['time']['class'] = '';
-
-		$report_info['panel_data']['config']['view_script'] = 'partials/config';
-		$report_info['panel_data']['config']['image']       = $vars['theme_img_url'].'config.png';
-		$report_info['panel_data']['config']['title']       = lang('config').' ('.count($vars['config_data']).')';
-		$report_info['panel_data']['config']['data_target'] = 'EEDebug_registry';
-		$report_info['panel_data']['config']['class'] = '';
-
-		$report_info['panel_data']['db']['view_script'] = 'partials/db';
-		$report_info['panel_data']['db']['image']       = $vars['theme_img_url'].'db.png';
-		$report_info['panel_data']['db']['title']       = $vars['query_count'].' '.lang('in').' '.$vars['query_data']['total_time'].'s';
-		$report_info['panel_data']['db']['data_target'] = 'EEDebug_database';
-		$report_info['panel_data']['db']['class'] = '';
-		*/
-		$vars = array_merge($vars, $report_info);
-
-		//allow for full override of everything
-		/*if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
-		{
-			$vars = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $vars);
-			if ($this->EE->extensions->end_script === TRUE) return array('vars' => $vars, 'html' => $this->EE->output->final_output);
-		}*/
-				
-		$html = $this->EE->output->final_output;
+		$vars['master_view_script']            = "toolbar";
+		$vars['panels']                        = array();
 		
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 
+		//Load variables so that they are present in all view partials
 		$this->EE->load->vars($vars);
 
-		//Load Panels
+		//Load Panels & load view model data
 		$panels = $this->load_panels();
-
-		$vars['panels'] = array();
-
 		foreach($panels as $panel) {
 			$vars['panels'][] = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
+		}
+
+
+		//Load third party panels
+		/**
+		 * TODO
+		 * Woah, problem here. We need to call each extension and pass it a brand new Eedt_view_model object.
+		 * This might be tricky
+		 *
+		 * Might look something like this (although this code wont work):
+		 *
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === TRUE)
+		{
+			$vars['panels'][] = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $toolbar_html);
+		}*/
+
+		//Render toolbar
+		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);
+
+		//Allow modification of final toolbar HTML output
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
+		{
+			$toolbar_html = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $toolbar_html);
 		}
 
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead
 		//of inserting. We may be able to get away with simply always appending, but this seems cleaner
 		//even if more expensive.
 		if (strpos($html, "</body>") === false) {
-			$html .= $this->EE->load->view($vars['master_view_script'], $vars, true);
+			$html .= $toolbar_html;
 		} else {
-			$html = str_replace('</body>', $this->EE->load->view($vars['master_view_script'], $vars, true) . '</body>', $html);
+			$html = str_replace('</body>', $toolbar_html . '</body>', $html);
 		}
 
 		//Get CI to do its usual thing and build the final output, but we'll switch off the debugging

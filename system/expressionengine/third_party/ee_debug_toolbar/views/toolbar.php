@@ -2,27 +2,15 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $theme_css_url."ee_debug_toolbar.css" ?>">
 
 <div id="EEDebug_debug">
-	<?php 
-	//first let's write out our panels
-	foreach($panel_data AS $key => $value)
-	{
-		if(!empty($value['view_script']))
-		{
-			$this->load->view($value['view_script']); 
-		}
-		elseif(!empty($value['view_html']))
-		{
-			echo $value['view_html'];
-		}
-	}
-	?>
-	
+	<?php foreach($panels AS $key => $panel): ?>
+		<?php echo $panel->getOutput(); ?>
+	<?php endforeach; ?>
 	<div id="EEDebug_info">
-		<?php foreach($panel_data AS $key => $value): ?>
-		<span class="EEDebug_span clickable <?php echo $value['class']; ?>" data-target="<?php echo $value['data_target']; ?>">
-			<img src="<?php echo $value['image']; ?>"
-				 style="vertical-align:middle" alt="<?php echo (!empty($value['alt_title']) ? $value['alt_title'] : $value['title']); ?>"
-				 title="<?php echo (!empty($value['alt_title']) ? $value['alt_title'] : $value['title']); ?>">  <?php echo $value['title']; ?>
+		<?php foreach($panels AS $key => $panel): ?>
+		<span class="EEDebug_span clickable <?php echo $panel->getName(); ?>" data-target="<?php echo $panel->getTarget(); ?>">
+			<img src="<?php echo $theme_img_url . $panel->getButtonIcon(); ?>" style="vertical-align:middle"
+				 alt="<?php echo $panel->getButtonIconAltText(); ?>" title="<?php echo $panel->getButtonlabel(); ?>">
+				<?php echo $panel->getButtonLabel(); ?>
 		</span>
 		<?php endforeach; ?>
 		<span class="EEDebug_span EEDebug_last clickable" id="EEDebug_toggler">&#171;</span>

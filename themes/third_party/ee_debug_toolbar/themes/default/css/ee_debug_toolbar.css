@@ -49,9 +49,7 @@
 
 #EEDebug_debug .clickable {
 	cursor: pointer;
-	width:109px;
 	float:left;
-	display: block;
 }
 
 #EEDebug_toggler {

@@ -21,7 +21,7 @@ $this->table->set_empty("&nbsp;");
 ?>
 <div class="clear_left shun"></div>
 
-<?php echo form_open('C=addons_extensions'.AMP.'M=save_extension_settings'.AMP.'file=ee_debug_toolbar', array('id'=>'my_accordion'))?>
+<?php echo form_open($query_base.'settings', array('id'=>'my_accordion'))?>
 <input type="hidden" value="yes" name="go_settings" />
 
 <div>

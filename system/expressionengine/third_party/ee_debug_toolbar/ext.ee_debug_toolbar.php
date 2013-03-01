@@ -248,41 +248,9 @@ class Ee_debug_toolbar_ext
 		$this->EE->output->_display();
 	}
 	
-	public function settings_form()
+	public function settings()
 	{
-		$this->EE->load->library('toolbar');
-		$this->settings = $this->EE->toolbar->get_settings();
-		
-		$vars = array();
-		$vars['settings'] = $this->settings;
-		$vars['available_themes'] = $this->EE->toolbar->get_themes();
-		$vars['toolbar_positions'] = $this->EE->toolbar->toolbar_positions;
-		$vars['settings_disable'] = FALSE;
-		if(isset($this->EE->config->config['ee_debug_toolbar']))
-		{
-			$vars['settings_disable'] = 'disabled="disabled"';
-		}		
-		
-		return $this->EE->load->view('settings', $vars, TRUE);
-	}	
-	
-	public function save_settings()
-	{
-		$this->EE->load->library('toolbar');
-		$this->settings = $this->EE->toolbar->get_settings();
-		if($this->EE->debug_settings->update_settings($_POST))
-		{
-			$this->EE->logger->log_action($this->EE->lang->line('log_settings_updated'));
-			$this->EE->session->set_flashdata('message_success', $this->EE->lang->line('settings_updated'));
-			$this->EE->functions->redirect('?D=cp&C=addons_extensions');
-			exit;
-		}
-		else
-		{
-			$this->EE->session->set_flashdata('message_failure', $this->EE->lang->line('settings_update_fail'));
-			$this->EE->functions->redirect('?D=cp&C=addons_extensions');
-			exit;
-		}		
+		$this->EE->functions->redirect(BASE.AMP.'C=addons_modules&M=show_module_cp&module=ee_debug_toolbar&method=settings');
 	}
 
 	public function activate_extension()

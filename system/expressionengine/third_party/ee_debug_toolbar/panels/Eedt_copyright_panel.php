@@ -13,6 +13,6 @@ class Eedt_copyright_panel extends Eedt_base_panel
 	public function __construct()
 	{
 		parent::__construct();
-		$this->button_label = 'v'.APP_VER.' '.phpversion();
+		$this->button_label = 'v'.APP_VER.' / '.phpversion();
 	}
 }

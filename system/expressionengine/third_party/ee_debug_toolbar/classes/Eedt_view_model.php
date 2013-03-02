@@ -222,6 +222,11 @@ class Eedt_view_model
 	{
 		$this->js[] = $filename;
 	}
+	
+	public function getJs()
+	{
+		return $this->js;
+	}	
 
 	/**
 	 * @param $filename
@@ -229,6 +234,11 @@ class Eedt_view_model
 	function addCss($filename)
 	{
 		$this->css[] = $filename;
+	}
+	
+	public function getCss()
+	{
+		return $this->css;
 	}
 
 	/**

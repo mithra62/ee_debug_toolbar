@@ -1,6 +1,10 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $theme_css_url."ee_debug_toolbar.css" ?>">
-
+<?php foreach($panels AS $key => $panel): ?>
+	<?php foreach($panel->getCss() AS $css): ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
+	<?php endforeach; ?>
+<?php endforeach; ?>
 <div id="EEDebug_debug">
 	<?php foreach($panels AS $key => $panel): ?>
 		<input type="hidden" id="EEDebug_panel_ajax_url_<?php echo $panel->getName(); ?>" name="EEDebug_panel_ajax_url_<?php echo $panel->getName(); ?>" value="<?php echo $panel->getAjaxUrl(); ?>" /><br />
@@ -25,4 +29,9 @@
 </script>
 <script src="<?php echo $theme_js_url . "ee_debug_toolbar.js" ?>" type="text/javascript"
 		charset="utf-8" defer id="EEDebug_debug_script"></script>
+<?php foreach($panels AS $key => $panel): ?>
+	<?php foreach($panel->getJs() AS $js): ?>
+	<script src="<?php echo $js; ?>" type="text/javascript" charset="utf-8" defer id="EEDebug_debug_script"></script>
+	<?php endforeach; ?>
+<?php endforeach; ?>		
 <?php echo $extra_html; ?>

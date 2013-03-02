@@ -95,7 +95,9 @@ class Eedt_log_viewer_ext
 		$view['panels']['log_viewer']->setName('log_viewer');
 		$view['panels']['log_viewer']->setButtonIcon($vars['theme_img_url'].'logs.png');
 		$view['panels']['log_viewer']->setButtonLabel(lang('log_viewer'));
-		$view['panels']['log_viewer']->setOuput($this->EE->load->view('log_viewer', $vars, TRUE));	
+		$view['panels']['log_viewer']->setOuput($this->EE->load->view('log_viewer', $vars, TRUE));
+		$view['panels']['log_viewer']->addJs($vars['theme_js_url'] . 'log_viewer.js');
+		$view['panels']['log_viewer']->addCss($vars['theme_css_url'] . 'log_viewer.css');
 		
 		$this->EE->benchmark->mark('eedt_log_viewer_end');
 		return $view;

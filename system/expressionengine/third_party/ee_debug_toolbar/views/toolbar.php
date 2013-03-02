@@ -3,12 +3,12 @@
 
 <div id="EEDebug_debug">
 	<?php foreach($panels AS $key => $panel): ?>
-		<?php echo $panel->getAjaxUrl(); ?><br />
+		<input type="hidden" id="EEDebug_panel_ajax_url_<?php echo $panel->getName(); ?>" name="EEDebug_panel_ajax_url_<?php echo $panel->getName(); ?>" value="<?php echo $panel->getAjaxUrl(); ?>" /><br />
 		<?php echo $panel->getOutput(); ?>
 	<?php endforeach; ?>
 	<div id="EEDebug_info">
 		<?php foreach($panels AS $key => $panel): ?>
-		<span class="EEDebug_span clickable <?php echo $panel->getName(); ?>" data-target="<?php echo $panel->getTarget(); ?>">
+		<span class="EEDebug_span clickable <?php echo $panel->getPanelCss(); ?>" data-target="<?php echo $panel->getTarget(); ?>">
 			<img src="<?php echo $theme_img_url . $panel->getButtonIcon(); ?>" style="vertical-align:middle"
 				 alt="<?php echo $panel->getButtonIconAltText(); ?>" title="<?php echo $panel->getButtonlabel(); ?>">
 				<?php echo $panel->getButtonLabel(); ?>

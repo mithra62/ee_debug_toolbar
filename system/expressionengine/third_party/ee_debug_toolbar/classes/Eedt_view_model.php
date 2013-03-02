@@ -82,6 +82,18 @@ class Eedt_view_model
 	 * @var array CSS resources needed by this toolbar view
 	 */
 	private $css = array();
+	
+	/**
+	 * @var string URL endpoint for Ajax requests
+	 */
+	private $ajax_url = '';
+	
+	/**
+	 * @var container of panel info
+	 */
+	private $panels = array();
+	
+	private $panel_css = FALSE;
 
 
 	/*
@@ -192,6 +204,16 @@ class Eedt_view_model
 	{
 		return $this->ajax_url;
 	}
+	
+	public function setPanelCss($css)
+	{
+		$this->panel_css = $css;
+	}
+	
+	public function getPanelCss()
+	{
+		return $this->panel_css;
+	}	
 
 	/**
 	 * @param $filename

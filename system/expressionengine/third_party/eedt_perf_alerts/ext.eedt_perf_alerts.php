@@ -74,45 +74,46 @@ class Eedt_perf_alerts_ext
 		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_perf_alerts/');
 	}
 	
-	public function ee_debug_toolbar_modify_output($view)
-	{
+	public function ee_debug_toolbar_add_panel($vars)
+	{		
 		$this->EE->benchmark->mark('eedt_performance_alerts_start');
-		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
+		$vars = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $vars);
 		$settings = $this->EE->toolbar->get_settings();
 		
 		//check total time
-		if($view['elapsed_time'] > $settings['max_exec_time'])
+		if($vars['elapsed_time'] > $settings['max_exec_time'])
 		{
-			$view['panel_data']['time']['class'] = 'flash';
+			$vars['panels']['time']->setPanelCss('flash');
 		}
 		
 		//make sure we're not running too many queries
-		if($view['query_count'] > $settings['max_queries'])
+		if($vars['query_count'] > $settings['max_queries'])
 		{
-			$view['panel_data']['db']['class'] = 'flash';
+			$vars['panels']['database']->setPanelCss('flash');
 		}
 		
 		//and how long did those queries take?
-		if($view['query_data']['total_time'] > $settings['max_sql_time'])
+		if($vars['query_data']['total_time'] > $settings['max_sql_time'])
 		{
-			$view['panel_data']['db']['class'] = 'flash';
+			$vars['panels']['database']->setPanelCss('flash');
 		}
 		
 		//is memory usage bad?
-		if($view['memory_usage'] > $settings['max_memory'])
+		if($vars['memory_usage'] > $settings['max_memory'])
 		{
-			$view['panel_data']['memory']['class'] = 'flash';
+			$vars['panels']['memory']->setPanelCss('flash');
 		}
 		
-		$view['perf_theme_img_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/images/';
-		$view['perf_theme_js_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/js/';
-		$view['perf_theme_css_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/css/';		
+		$vars['perf_theme_img_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/images/';
+		$vars['perf_theme_js_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/js/';
+		$vars['perf_theme_css_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/css/';		
 		
-		$view['panel_data']['db']['view_html'] = $this->EE->load->view('db', $view, TRUE);
-		$view['panel_data']['db']['view_script'] = FALSE;
+		$vars['panels']['database']->setOuput( $this->EE->load->view('db', $vars, TRUE) ) ;
+		//$vars['panel_data']['db']['view_script'] = FALSE;
 		
 		$this->EE->benchmark->mark('eedt_performance_alerts_end');
-		return $view;
+		
+		return $vars;
 	}
 	
 	public function ee_debug_toolbar_init_settings($default_settings)
@@ -140,8 +141,8 @@ class Eedt_perf_alerts_ext
 	{			
 		$data = array(
 				'class'     => __CLASS__,
-				'method'    => 'ee_debug_toolbar_modify_output',
-				'hook'      => 'ee_debug_toolbar_modify_output',
+				'method'    => 'ee_debug_toolbar_add_panel',
+				'hook'      => 'ee_debug_toolbar_add_panel',
 				'settings'  => '',
 				'priority'  => 1,
 				'version'   => $this->version,

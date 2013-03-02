@@ -235,7 +235,8 @@ class Ee_debug_toolbar_ext
 		//Load Panels & load view model data
 		$panels = $this->load_panels();		
 		foreach($panels as $panel) {
-			$vars['panels'][] = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
+			$p = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
+			$vars['panels'][$p->getName()] = $p;
 		}
 
 		//Load third party panels
@@ -245,11 +246,12 @@ class Ee_debug_toolbar_ext
 		 * This might be tricky
 		 *
 		 * Might look something like this (although this code wont work):
-		 *
+		 **/
+		
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === TRUE)
 		{
-			$vars['panels'][] = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $toolbar_html);
-		}*/
+			$vars = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $vars);
+		}
 
 		//setup the XML storage data for use by the panels on open
 		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);

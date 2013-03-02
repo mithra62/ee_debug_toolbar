@@ -67,16 +67,17 @@ class Eedt_minimal_ext
 		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_minimal/');
 	}
 	
-	public function ee_debug_toolbar_modify_output($view)
+	public function ee_debug_toolbar_add_panel($view)
 	{
 		$this->EE->benchmark->mark('eedt_minimal_start');
+		
 		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
 		$settings = $this->EE->toolbar->get_settings();
 		
-		foreach($view['panel_data'] AS $key => $value)
+		foreach($view['panels'] AS $key => $value)
 		{
-			$view['panel_data'][$key]['alt_title'] = $view['panel_data'][$key]['title'];
-			$view['panel_data'][$key]['title'] = '';
+			$view['panels'][$key]->setButtonIconAltText($view['panels'][$key]->getName());
+			$view['panels'][$key]->setButtonLabel('');
 		}
 
 		$theme_css_url = URL_THIRD_THEMES.'eedt_minimal/css/';
@@ -92,8 +93,8 @@ class Eedt_minimal_ext
 	{			
 		$data = array(
 				'class'     => __CLASS__,
-				'method'    => 'ee_debug_toolbar_modify_output',
-				'hook'      => 'ee_debug_toolbar_modify_output',
+				'method'    => 'ee_debug_toolbar_add_panel',
+				'hook'      => 'ee_debug_toolbar_add_panel',
 				'settings'  => '',
 				'priority'  => 99999999,
 				'version'   => $this->version,

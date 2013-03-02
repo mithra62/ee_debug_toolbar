@@ -9,7 +9,7 @@
 	<div id="EEDebug_info">
 		<?php foreach($panels AS $key => $panel): ?>
 		<span class="EEDebug_span clickable <?php echo $panel->getPanelCss(); ?>" data-target="<?php echo $panel->getTarget(); ?>">
-			<img src="<?php echo $theme_img_url . $panel->getButtonIcon(); ?>" style="vertical-align:middle"
+			<img src="<?php echo $panel->getButtonIcon(); ?>" style="vertical-align:middle"
 				 alt="<?php echo $panel->getButtonIconAltText(); ?>" title="<?php echo $panel->getButtonlabel(); ?>">
 				<?php echo $panel->getButtonLabel(); ?>
 		</span>

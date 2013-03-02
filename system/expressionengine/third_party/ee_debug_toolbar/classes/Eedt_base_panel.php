@@ -62,13 +62,15 @@ class Eedt_base_panel
 	{
 		$this->EE =& get_instance();
 		$this->EE->load->helper("url");
+		$this->settings = $this->EE->toolbar->get_settings();
 
 		if (!$this->button_label) {
 			$this->button_label = ucfirst(str_replace(array("_", "-"), " ", $this->name));
 		}
 
 		if (!$this->button_icon_uri) {
-			$this->button_icon_uri = $this->name . $this->button_icon_extension;
+			$this->button_icon_uri = $this->EE->toolbar->create_theme_url($this->settings['theme'], 'images').$this->name . $this->button_icon_extension;
+			
 		}
 	}
 

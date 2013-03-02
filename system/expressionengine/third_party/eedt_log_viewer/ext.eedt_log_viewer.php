@@ -69,7 +69,7 @@ class Eedt_log_viewer_ext
 		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_log_viewer/');
 	}
 	
-	public function ee_debug_toolbar_modify_output($view)
+	public function ee_debug_toolbar_add_panel($view)
 	{
 		$this->EE->benchmark->mark('eedt_log_viewer_start');
 		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
@@ -91,11 +91,11 @@ class Eedt_log_viewer_ext
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
 		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_log_viewer/css/';
 		
-		$view['panel_data']['log_viewer']['image'] = $vars['theme_img_url'].'logs.png';
-		$view['panel_data']['log_viewer']['title'] = lang('log_viewer');
-		$view['panel_data']['log_viewer']['data_target'] = 'EEDebug_log_viewer';
-		$view['panel_data']['log_viewer']['class'] = '';
-		$view['panel_data']['log_viewer']['view_html'] = $this->EE->load->view('log_viewer', $vars, TRUE);		
+		$view['panels']['log_viewer'] = new Eedt_view_model();
+		$view['panels']['log_viewer']->setName('log_viewer');
+		$view['panels']['log_viewer']->setButtonIcon($vars['theme_img_url'].'logs.png');
+		$view['panels']['log_viewer']->setButtonLabel(lang('log_viewer'));
+		$view['panels']['log_viewer']->setOuput($this->EE->load->view('log_viewer', $vars, TRUE));	
 		
 		$this->EE->benchmark->mark('eedt_log_viewer_end');
 		return $view;
@@ -172,8 +172,8 @@ class Eedt_log_viewer_ext
 		
 		$data[] = array(
 				'class'     => __CLASS__,
-				'method'    => 'ee_debug_toolbar_modify_output',
-				'hook'      => 'ee_debug_toolbar_modify_output',
+				'method'    => 'ee_debug_toolbar_add_panel',
+				'hook'      => 'ee_debug_toolbar_add_panel',
 				'settings'  => '',
 				'priority'  => 500,
 				'version'   => $this->version,

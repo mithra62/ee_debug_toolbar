@@ -14,5 +14,21 @@ class Eedt_memory_panel extends Eedt_base_panel
 	{
 		parent::__construct();
 		$this->button_label = $this->EE->toolbar->filesize_format(memory_get_peak_usage()).' '.ini_get('memory_limit');
+	}
+
+	public function ee_debug_toolbar_add_panel($view)
+	{
+		if ($this->EE->input->get("D", FALSE) == 'cp')
+		{
+			$this->name = $this->name.'_cp';
+		}
+		
+		$view->setName($this->name);
+		$view->setButtonLabel($this->button_label);
+		$view->setButtonIcon($this->button_icon_uri);
+		$view->setOuput($this->view());
+		$view->setAjaxUrl(FALSE);
+	
+		return $view;
 	}	
 }

@@ -1,4 +1,3 @@
-<div id="EEDebug_database" class="EEDebug_panel height-6x">
 	<div style="float:left">
 		<h4><?php echo count($query_data['queries']).' '.lang('database_queries'); ?></h4>
 	</div>
@@ -17,4 +16,3 @@
 	</ol>
 	<script src="<?php echo $perf_theme_js_url . "perf_alerts.js" ?>" type="text/javascript"
 			charset="utf-8" defer id="EEDebug_debug_perf_alerts_script"></script>	
-</div>

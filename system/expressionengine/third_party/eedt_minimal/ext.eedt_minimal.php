@@ -81,9 +81,7 @@ class Eedt_minimal_ext
 		}
 
 		$theme_css_url = URL_THIRD_THEMES.'eedt_minimal/css/';
-		
-		//$view['extra_html'] .= '<link rel="stylesheet" type="text/css" href="'.$theme_css_url.'minimal.css">';
-		
+		$view['panels'][$key]->addCss($theme_css_url.'minimal.css');		
 		
 		$this->EE->benchmark->mark('eedt_minimal_end');
 		return $view;

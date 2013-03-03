@@ -1,14 +1,25 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $theme_css_url."ee_debug_toolbar.css" ?>">
+
 <?php foreach($panels AS $key => $panel): ?>
 	<?php foreach($panel->getCss() AS $css): ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
 	<?php endforeach; ?>
 <?php endforeach; ?>
+
 <div id="EEDebug_debug">
 	<?php foreach($panels AS $key => $panel): ?>
-		<input type="hidden" id="EEDebug_panel_ajax_url_<?php echo $panel->getName(); ?>" name="EEDebug_panel_ajax_url_<?php echo $panel->getName(); ?>" value="<?php echo $panel->getAjaxUrl(); ?>" /><br />
-		<?php echo $panel->getOutput(); ?>
+		<br />
+		<?php if($panel->getAjaxUrl() != ''): ?>
+		<div id="<?php echo $panel->getTarget(); ?>" class="EEDebug_panel height-6x">
+			<?php //echo $panel->getAjaxUrl(); ?>
+			EEDebug_<?php echo $panel->getName(); ?>_canvas
+			<input type="hidden" id="EEDebug_<?php echo $panel->getName(); ?>_panel_url" name="EEDebug_<?php echo $panel->getName(); ?>_panel_url" value="<?php echo $panel->getAjaxUrl(); ?>" />
+			<div id="EEDebug_<?php echo $panel->getName(); ?>_canvas"></div>
+		</div>
+		<?php else: ?>
+			<?php echo $panel->getOutput(); ?>
+		<?php endif; ?>
 	<?php endforeach; ?>
 	<div id="EEDebug_info">
 		<?php foreach($panels AS $key => $panel): ?>

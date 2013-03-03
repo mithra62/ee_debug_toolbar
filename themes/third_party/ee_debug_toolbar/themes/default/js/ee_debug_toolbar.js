@@ -7,6 +7,8 @@
 	//User already opened debug panel?
 	var args = arguments,
 		check;
+	
+	var panels = [];
 
 	//jQuery loaded? If not, load it and start again when it has finished
 	if (!window.jQuery) {
@@ -121,6 +123,35 @@
 				jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
 			});
 
+		}
+		
+		/**
+		 * Setup the other panels to pull in the panel data through AJAX :)
+		 */
+		if(name != "EEDebug_memory" && name != "EEDebug_memory_cp" && String(name) != 'undefined' && jQuery.inArray(name, panels) === -1)
+		{
+			//jQuery(document.body).addClass("EEDebug-chart-loading");
+			var id = "#"+ name + "_panel_url";
+			var canvas = "#" + name + "_canvas";
+			var url = jQuery(id).val();
+			
+			jQuery.ajax({
+			    type: 'GET',
+			    url: url,
+			    data: {
+			        LANG: "ENG"
+			    },
+			    dataType: 'html',
+			    success: function (data, textStatus) {
+			    	jQuery(canvas).html(data); 
+			    	jQuery(canvas).removeClass('EEDebug-log-loading');
+			    },
+			    error: function (xhr, err, e) {
+			        //alert("Error: " + err);
+			    }
+			});				
+			
+			panels.push(name);
 		}
 	}
 

@@ -232,22 +232,14 @@ class Ee_debug_toolbar_ext
 		//Load variables so that they are present in all view partials
 		$this->EE->load->vars($vars);
 
-		//Load Panels & load view model data
+		//Load Internal Panels & load view model data
 		$panels = $this->load_panels();		
 		foreach($panels as $panel) {
 			$p = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
 			$vars['panels'][$p->getName()] = $p;
 		}
 
-		//Load third party panels
-		/**
-		 * TODO
-		 * Woah, problem here. We need to call each extension and pass it a brand new Eedt_view_model object.
-		 * This might be tricky
-		 *
-		 * Might look something like this (although this code wont work):
-		 **/
-		
+		//Load third party panels and custom mods
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === TRUE)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $vars);

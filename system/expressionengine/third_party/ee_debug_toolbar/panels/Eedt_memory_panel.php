@@ -18,15 +18,10 @@ class Eedt_memory_panel extends Eedt_base_panel
 
 	public function ee_debug_toolbar_add_panel($view)
 	{
-		if ($this->EE->input->get("D", FALSE) == 'cp')
-		{
-			$this->name = $this->name.'_cp';
-		}
-		
 		$view->setName($this->name);
 		$view->setButtonLabel($this->button_label);
 		$view->setButtonIcon($this->button_icon_uri);
-		$view->setOuput($this->view());
+		$view->setOuput($this->EE->load->view('partials/memory', array(), TRUE));
 		$view->setAjaxUrl(FALSE);
 	
 		return $view;

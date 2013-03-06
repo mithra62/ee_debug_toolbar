@@ -77,8 +77,8 @@ class Eedt_base_panel
 	/**
 	 * Add Panel to Toolbar
 	 *
-	 * @param Eedt_view $view EEDT view object representing our panel and button
-	 * @return Eedt_view
+	 * @param Eedt_view_model $view EEDT view object representing our panel and button
+	 * @return Eedt_view_model
 	 */
 	public function ee_debug_toolbar_add_panel($view)
 	{

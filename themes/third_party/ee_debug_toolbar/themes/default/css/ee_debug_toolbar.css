@@ -8,6 +8,7 @@
 	left: 3px;
 	color: #000;
 	z-index: 100255;
+	display: none;
 }
 
 @-moz-document url-prefix() {

@@ -54,6 +54,9 @@
 	});
 
 
+	//And lastly show the toolbar!
+	toolbar.show();
+
 
 
 	/**

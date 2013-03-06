@@ -14,5 +14,13 @@ class Eedt_time_panel extends Eedt_base_panel
 	{
 		parent::__construct();
 		$this->button_label = $this->EE->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end').'s';
-	}	
+	}
+
+	public function ee_debug_toolbar_add_panel($view)
+	{
+		$view = parent::ee_debug_toolbar_add_panel($view);
+		$view->addCss( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_time.css');
+
+		return $view;
+	}
 }

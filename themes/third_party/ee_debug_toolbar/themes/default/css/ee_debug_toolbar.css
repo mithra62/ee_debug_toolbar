@@ -98,17 +98,10 @@
 }
 
 
-#EEDebug_time.active {
-	overflow:auto;
-}
-
-
 #EEDebug_exception {
 	border: 1px solid #CD0A0A;
 	display: block;
 }
-
-
 
 
 #EEDebug_template_list {

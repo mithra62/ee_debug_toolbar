@@ -15,5 +15,13 @@ class Eedt_database_panel extends Eedt_base_panel
 		parent::__construct();
 		$query_data = $this->EE->toolbar->setup_queries();
 		$this->button_label = $this->EE->db->query_count.' '.lang('eedt_in').' '.$query_data['total_time'].'s';
-	}	
+	}
+
+	public function ee_debug_toolbar_add_panel($view)
+	{
+		$view = parent::ee_debug_toolbar_add_panel($view);
+		$view->addCss( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_database.css');
+
+		return $view;
+	}
 }

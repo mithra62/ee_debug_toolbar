@@ -104,22 +104,6 @@
 }
 
 
-#EEDebug_template_list {
-	/* Legacy */
-	overflow: scroll;
-	
-	/* Modern Browsers */
-	overflow-x:hidden;
-	overflow-y:scroll;
-
-}
-
-#EEDebug_database code {
-    display:inline;
-    border:none;
-    font-size: 10px;
-}
-
 .EEDebug_panel code {
     background-color: #E8E8E8;
 	padding:0;

@@ -1,7 +1,8 @@
 /**
  * Bind to Panel Init
  */
-eedt.on("memory", "init", function(){
+eedt.on("memory", "init", function(node, panel){
+	panel.loading(true);
 	eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready");
 });
 
@@ -87,8 +88,6 @@ function jsapi_ready() {
 		//end click to list
 
 		//Some indicators that the chart is ready
-		jQuery(document.body).removeClass("EEDebug-chart-loading");
-		jQuery(document.body).addClass("EEDebug-chart-ready");
 
 		jQuery("#EEDebug_graph_display").click(function () {
 			jQuery("#Eedt_debug_memory_panel").removeClass("show_template_list").addClass("show_graph");
@@ -99,6 +98,8 @@ function jsapi_ready() {
 		});
 
 		jQuery("#EEDebug_graph_display").trigger("click");
+
+		eedt.panel("memory").loading(false);
 	};
 }
 

@@ -407,6 +407,8 @@
 		 * This is fired on toolbar button click, after resources have been loaded
 		 */
 		this.init = function() {
+			here.loading(false);
+
 			deferreds.init.resolve(this.panelNode, this);
 
 			initialLoad = false;
@@ -423,6 +425,9 @@
 
 			eedt.closePanels();
 			this.panelNode.addClass("active");
+
+			here.loading(false);
+
 			this.panelNode.trigger("open");
 			panelOpen = true;
 		}
@@ -451,6 +456,23 @@
 				this.close();
 			} else {
 				this.open();
+			}
+		}
+
+
+		/**
+		 * Show panel loading indicator
+		 * @param showLoading
+		 */
+		this.loading = function(showLoading) {
+			if(showLoading === undefined) {
+				showLoading = true;
+			}
+
+			if(showLoading) {
+				this.panelNode.addClass("Eedt_debug_panel_loading");
+			} else {
+				this.panelNode.removeClass("Eedt_debug_panel_loading");
 			}
 		}
 
@@ -572,9 +594,8 @@
 			var da = [],
 				def = new jQuery.Deferred();
 
-			here.panelNode.addClass('EEDebug-loading');
-
 			if(initialLoad){
+				here.loading(true);
 				da.push(jQuery.proxy(here.loadPanelHtml(), here));
 				da.push(jQuery.proxy(here.loadPanelJs(), here));
 				da.push(jQuery.proxy(here.loadPanelCss(), here));

@@ -77,7 +77,9 @@
 	width: 600px;
 	height:0;
 	max-height: 400px;
-	overflow: hidden;
+	overflow: scroll;
+	overflow-x:hidden;
+	overflow-y:scroll;
 	background: #E8E8E8;
 	padding: 0 5px;
 	-webkit-transition: height 0.2s linear;
@@ -88,16 +90,14 @@
 .EEDebug_panel.active {
 	border: 1px solid #999;
 	padding: 5px;
-	height: 75px;
+	height:600px;
 	display: block;
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
-#EEDebug_copyright.active {
-	overflow:hidden;
-}
+
 #EEDebug_time.active {
 	overflow:auto;
 }

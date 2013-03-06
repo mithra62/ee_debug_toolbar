@@ -1,0 +1,6 @@
+#EEDebug_copyright {
+	overflow:hidden;
+}
+#EEDebug_copyright.active {
+	height: 80px;
+}

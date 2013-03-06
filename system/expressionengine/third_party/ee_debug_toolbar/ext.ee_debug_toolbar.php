@@ -81,7 +81,8 @@ class Ee_debug_toolbar_ext
 	public $cache_dir = '';
 	
 	/**
-	 * The order the default panels appear in
+	 * The order the default panels appear in.
+	 * Also used to differentiate the native panels from third party panels
 	 * @var array
 	 */
 	public $panel_order = array(
@@ -104,7 +105,7 @@ class Ee_debug_toolbar_ext
 	 * List of methods available for use with EEDT ACT
 	 * @var array
 	 */
-	public $eedt_act = array('get_panel_data');
+	public $eedt_act = array('get_panel_data', 'panel_ajax');
 
 
 	public function __construct($settings = '')
@@ -245,6 +246,8 @@ class Ee_debug_toolbar_ext
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $vars);
 		}
 
+		$vars['js_config'] = $this->EE->toolbar->js_config($vars);
+
 		//setup the XML storage data for use by the panels on open
 		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);
 		
@@ -304,6 +307,51 @@ class Ee_debug_toolbar_ext
 				echo $xml->panels->$panel_node->output;
 			}
 			exit;
+		}
+	}
+
+	/**
+	 * Allows JS to communicate directly with a panel extension
+	 */
+	public function panel_ajax()
+	{
+		$data = array();
+		$panel = $this->EE->input->get("panel", FALSE);
+		$method = $this->EE->input->get("method", FALSE);
+
+		if(!$panel || $method)
+		{
+			return;
+		}
+
+		if(in_array($panel, $this->panel_order)){
+			//Native Panel
+			$this->EE->load->file(PATH_THIRD.'ee_debug_toolbar/panels/Eedt_'.$panel.'_panel.php');
+			$class = 'Eedt_'.$panel.'_panel';
+
+			if(class_exists($class)){
+
+				$instance = new $class();
+
+				if(method_exists($instance, $method)){
+					$data = $instance->$method();
+				}
+			}
+
+
+		} else {
+			//Third Party panel
+
+			/**
+			 * TODO
+			 * I realise now that we need to somehow specify the path to the class since
+			 * the panel name will not necessarily match up with the extension name, so we cant
+			 * make that assumption.
+			 */
+		}
+
+		if($data) {
+			$this->EE->output->send_ajax_response($data);
 		}
 	}
 

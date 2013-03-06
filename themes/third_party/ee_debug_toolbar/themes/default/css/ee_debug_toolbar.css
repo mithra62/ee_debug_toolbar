@@ -1,16 +1,13 @@
 /**
  * EE Debug Toolbar CSS
  */
-#EEDebug_debug {
+#Eedt_debug_toolbar {
 	font: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif;
 	position: fixed;
 	bottom: 5px;
-	left: -672px;
+	left: 3px;
 	color: #000;
 	z-index: 100255;
-}
-#EEDebug_debug .EEDebug_info {
-	width: 1200px;
 }
 
 @-moz-document url-prefix() {
@@ -19,58 +16,55 @@
     }
 }
 
-#EEDebug_debug.animate {
-	-webkit-transition: left 0.3s;
-	-moz-transition: left 0.3s;
-	-o-transition: left 0.3s;
-	-ms-transition: left 0.3s;
-	transition: left 0.3s;
+/* Toolbar open/close */
+#Eedt_debug_toolbar .Eedt_debug_toolbar_buttons_wrap {
+	display: none;
 }
-#EEDebug_debug.toolbar-open {
-	left:3px;
+#Eedt_debug_toolbar.toolbar-open .Eedt_debug_toolbar_buttons_wrap {
+	display: inline;
 }
 
-#EEDebug_debug ol {
+#Eedt_debug_toolbar ol {
 	margin: 10px 0px;
 	padding: 0 25px;
 	list-style-type:lower-alpha;
 }
 
-#EEDebug_debug li {
+#Eedt_debug_toolbar li {
 	margin: 0 0 10px 0;
 	list-style-type:decimal;
 }
 
-#EEDebug_debug h4 {
+#Eedt_debug_toolbar h4 {
 	margin: 0;
 	font-size: 11px;
 	font-weight: bold;
 }
 
-#EEDebug_debug .clickable {
+#Eedt_debug_toolbar .clickable {
 	cursor: pointer;
 	float:left;
 }
 
-#EEDebug_toggler {
+#Eedt_debug_toolbar_toggle_btn {
 	font-weight: bold;
 	background: #BFBFBF;
 	width: 8px !important;
 	height: 17px;
 }
 
-.EEDebug_span {
+.Eedt_debug_toolbar_button {
 	border: 1px solid #999;
 	border-right: 0px;
 	background: #DFDFDF;
 	padding: 5px 5px;
 }
 
-.EEDebug_last {
+.Eedt_debug_toolbar_button_last {
 	border: 1px solid #999;
 }
 
-.EEDebug_panel {
+.Eedt_debug_panel {
 	text-align: left;
 	position: absolute;
 	bottom: 28px;
@@ -87,7 +81,7 @@
 	-o-transition: height 0.2s linear;
 	transition: height 0.2s linear;
 }
-.EEDebug_panel.active {
+.Eedt_debug_panel.active {
 	border: 1px solid #999;
 	padding: 5px;
 	height:600px;
@@ -104,7 +98,7 @@
 }
 
 
-.EEDebug_panel code {
+.Eedt_debug_panel code {
     background-color: #E8E8E8;
 	padding:0;
 	margin:0;
@@ -114,13 +108,13 @@
     font-size: 11px;
 }
 
-.EEDebug_panel pre {
+.Eedt_debug_panel pre {
 	font: 11px/1.4em Monaco, Lucida Console, monospace;
 	margin: 0 0 0 22px;
 	word-wrap: break-word;
 }
 
-.EEDebug_panel h4 {
+.Eedt_debug_panel h4 {
     font-size: 11px;
     font-weight: bold;
     margin: 0;

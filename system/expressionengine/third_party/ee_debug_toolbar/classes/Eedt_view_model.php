@@ -26,7 +26,9 @@ class Eedt_view_model
 	/**
 	 * @var string
 	 */
-	private $target_prefix = "EEDebug_";
+	private $target_prefix = "Eedt_debug_";
+
+	private $target_suffix = "_panel";
 
 	/*
 	|--------------------------------------------------------------------------
@@ -124,7 +126,7 @@ class Eedt_view_model
 	 */
 	function getTarget()
 	{
-		return $this->target_prefix . $this->getName();
+		return $this->target_prefix . $this->getName() . $this->target_suffix;
 	}
 
 	/**

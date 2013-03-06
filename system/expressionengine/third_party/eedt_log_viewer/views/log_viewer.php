@@ -1,4 +1,4 @@
-<div id="EEDebug_log_viewer" class="EEDebug_panel">
+<div id="EEDebug_log_viewer" class="Eedt_debug_panel">
 
 	<?php if(!$log_dir_writable): ?>
 		<p><?php echo lang('log_dir_not_writable'); ?></p>

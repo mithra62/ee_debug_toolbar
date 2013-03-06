@@ -1,6 +1,6 @@
-#EEDebug_copyright {
+#Eedt_debug_copyright_panel {
 	overflow:hidden;
 }
-#EEDebug_copyright.active {
+#Eedt_debug_copyright_panel.active {
 	height: 80px;
 }

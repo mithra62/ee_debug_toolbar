@@ -79,7 +79,7 @@ function jsapi_ready() {
 			var row = "#EEDebug_hash_"+selection[0].row;
 			var col = selection[0].column;
 
-			jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
+			jQuery("#Eedt_debug_memory_panel").addClass("show_template_list").removeClass("show_graph");
 			jQuery("#EEDebug_template_list div").removeClass("EEDebug_tmpl_log_active");
 			jQuery(row)[0].scrollIntoView();
 			jQuery(row).addClass("EEDebug_tmpl_log_active");
@@ -91,11 +91,11 @@ function jsapi_ready() {
 		jQuery(document.body).addClass("EEDebug-chart-ready");
 
 		jQuery("#EEDebug_graph_display").click(function () {
-			jQuery("#EEDebug_memory").removeClass("show_template_list").addClass("show_graph");
+			jQuery("#Eedt_debug_memory_panel").removeClass("show_template_list").addClass("show_graph");
 		});
 
 		jQuery("#EEDebug_graph_list").click(function () {
-			jQuery("#EEDebug_memory").addClass("show_template_list").removeClass("show_graph");
+			jQuery("#Eedt_debug_memory_panel").addClass("show_template_list").removeClass("show_graph");
 		});
 
 		jQuery("#EEDebug_graph_display").trigger("click");

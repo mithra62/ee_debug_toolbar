@@ -1,6 +1,6 @@
-#EEDebug_time {
+#Eedt_debug_time_panel {
 	overflow:auto;
 }
-#EEDebug_time.active {
+#Eedt_debug_time_panel.active {
 	height:80px;
 }

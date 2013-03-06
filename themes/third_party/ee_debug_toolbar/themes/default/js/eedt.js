@@ -1,6 +1,7 @@
 (function () {
 	var args = arguments,
 		toolbar,
+		toolbarToggleBtn,
 		panels,
 		config;
 
@@ -28,14 +29,16 @@
 	 */
 	bindToolbar();
 	bindPanels();
+	bindButtons();
+
 
 	//Panels open by default?
 	check = getCookie("EEDebugCollapsed");
 	if (check != 1) {
-		jQuery("#EEDebug_toggler").html("&#171;");
+		toolbarToggleBtn.html("&#171;");
 		toolbar.addClass("toolbar-open");
 	} else {
-		jQuery("#EEDebug_toggler").html("&#187;");
+		toolbarToggleBtn.html("&#187;");
 	}
 
 
@@ -46,7 +49,7 @@
 
 
 	//Bind toolbar slide toggle
-	jQuery("#EEDebug_toggler").click(function () {
+	toolbarToggleBtn.click(function () {
 		toggleToolbar();
 	});
 
@@ -106,7 +109,7 @@
 	 * Bind Toolbar Node
 	 */
 	function bindToolbar() {
-		toolbar = jQuery("#EEDebug_debug");
+		toolbar = jQuery("#Eedt_debug_toolbar");
 	}
 
 
@@ -122,13 +125,17 @@
 	}
 
 
+	function bindButtons(){
+		toolbarToggleBtn = jQuery("#Eedt_debug_toolbar_toggle_btn");
+	}
+
 
 	/**
 	 * Open Toolbar
 	 */
 	function openToolbar(){
 		document.cookie = "EEDebugCollapsed=0;expires=;path=/";
-		jQuery("#EEDebug_toggler").html("&#171;");
+		toolbarToggleBtn.html("&#171;");
 		toolbar.addClass("toolbar-open");
 	}
 
@@ -139,7 +146,7 @@
 	 */
 	function closeToolbar(){
 		document.cookie = "EEDebugCollapsed=1;expires=;path=/";
-		jQuery("#EEDebug_toggler").html("&#187;")
+		toolbarToggleBtn.html("&#187;")
 		toolbar.removeClass("toolbar-open");
 
 		closeAllPanels();
@@ -381,8 +388,8 @@
 
 		this.name = panelConfig.name;
 		this.config = panelConfig;
-		this.panelNode = jQuery(document.getElementById("EEDebug_" + panelConfig.name));
-		this.buttonNode = jQuery(document.getElementById("EEDebug_" + panelConfig.name + "_btn"));
+		this.panelNode = jQuery(document.getElementById("Eedt_debug_" + panelConfig.name + "_panel"));
+		this.buttonNode = jQuery(document.getElementById("Eedt_debug_" + panelConfig.name + "_btn"));
 
 
 		/**

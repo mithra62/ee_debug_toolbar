@@ -1,8 +1,4 @@
-<?php if ($this->input->get("D", FALSE) != 'cp'): ?>
-	<div style="" id="EEDebug_memory" class="EEDebug_panel show_graph height-4x">
-	<?php else: ?>
-	<div style="" id="EEDebug_memory_cp" class="EEDebug_panel show_graph height-4x">
-	<?php endif; ?>
+
 <?php if ($template_debugging_enabled): ?>
 	<div style="float:left">
 		<h4><?php echo lang('template_debugging');?></h4>
@@ -27,4 +23,7 @@
 	<?php else: ?>
 	<h4><?php echo lang('templates_not_enabled');?></h4>
 	<?php endif; ?>
-</div>
+
+<script type="text/javascript">
+	eedt.data.tmpl_data = <?php echo $template_debugging_chart_json?>;
+</script>

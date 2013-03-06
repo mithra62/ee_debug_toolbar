@@ -16,6 +16,7 @@ class Eedt_memory_panel extends Eedt_base_panel
 		$this->button_label = $this->EE->toolbar->filesize_format(memory_get_peak_usage()).' '.ini_get('memory_limit');
 	}
 
+
 	public function ee_debug_toolbar_add_panel($view)
 	{
 		$view->setName($this->name);
@@ -23,6 +24,8 @@ class Eedt_memory_panel extends Eedt_base_panel
 		$view->setButtonIcon($this->button_icon_uri);
 		$view->setOuput($this->EE->load->view('partials/memory', array(), TRUE));
 		$view->setAjaxUrl(FALSE);
+		$view->addCss( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_memory.css');
+		$view->addJs( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/js/ee_debug_panel_memory.js');
 	
 		return $view;
 	}	

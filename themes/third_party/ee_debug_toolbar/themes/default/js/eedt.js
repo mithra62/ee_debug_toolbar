@@ -7,7 +7,8 @@
 	//Ensure config is present, or bail out
 	config = window._eedtConfig;
 	if (!config) {
-		console.error("ExpressionEngine developer toolbar config not defined.")
+		console.error("ExpressionEngine developer toolbar config not defined.");
+		return;
 	}
 
 	//jQuery loaded? If not, load it and start again when it has finished
@@ -20,13 +21,14 @@
 	}
 
 
-	/*
+	/**
 	 |--------------------------------------------------------------------------
 	 | Initialise the Panel
 	 |--------------------------------------------------------------------------
 	 */
 	bindToolbar();
 	bindPanels();
+
 	//Panels open by default?
 	check = getCookie("EEDebugCollapsed");
 	if (check != 1) {
@@ -42,6 +44,11 @@
 		toolbar.addClass("animate");
 	}, 300);
 
+
+	//Bind toolbar slide toggle
+	jQuery("#EEDebug_toggler").click(function () {
+		toggleToolbar();
+	});
 
 
 
@@ -70,6 +77,8 @@
 		;
 	}
 
+
+
 	/**
 	 * Bind to toolbar event
 	 *
@@ -92,12 +101,15 @@
 	}
 
 
+
 	/**
 	 * Bind Toolbar Node
 	 */
 	function bindToolbar() {
 		toolbar = jQuery("#EEDebug_debug");
 	}
+
+
 
 	/**
 	 * Instantiate panels
@@ -108,6 +120,57 @@
 			panels[config.panels[i].name] = new Eedt_panel(config.panels[i]);
 		}
 	}
+
+
+
+	/**
+	 * Open Toolbar
+	 */
+	function openToolbar(){
+		document.cookie = "EEDebugCollapsed=0;expires=;path=/";
+		jQuery("#EEDebug_toggler").html("&#171;");
+		toolbar.addClass("toolbar-open");
+	}
+
+
+
+	/**
+	 * Close toolbar
+	 */
+	function closeToolbar(){
+		document.cookie = "EEDebugCollapsed=1;expires=;path=/";
+		jQuery("#EEDebug_toggler").html("&#187;")
+		toolbar.removeClass("toolbar-open");
+
+		closeAllPanels();
+	}
+
+
+
+	/**
+	 * Toggle toolbar visibility
+	 */
+	function toggleToolbar(){
+		console.log('click')
+		if (toolbar.hasClass("toolbar-open")) {
+			closeToolbar();
+		}
+		else {
+			openToolbar();
+		}
+	}
+
+
+
+	/**
+	 * Close all Panels
+	 */
+	function closeAllPanels(){
+		jQuery.each(panels, function(i, panel){
+			panel.close();
+		})
+	}
+
 
 
 	/**
@@ -123,6 +186,7 @@
 
 		return panels[panelName];
 	}
+
 
 
 	/**
@@ -145,6 +209,7 @@
 			}
 		}
 	}
+
 
 
 	function ajax(panelName, methodName, callback){
@@ -179,6 +244,7 @@
 
 		return def;
 	}
+
 
 
 	/**
@@ -234,6 +300,7 @@
 	}
 
 
+
 	/**
 	 * Lightweight CSS Loader
 	 *
@@ -279,6 +346,14 @@
 	}
 
 
+
+	/**
+	|--------------------------------------------------------------------------
+	| EEDT PANEL
+	|--------------------------------------------------------------------------
+	*/
+
+
 	/**
 	 * EEDT Panel Class
 	 * @param {string} name Panel short name
@@ -286,6 +361,7 @@
 	 */
 	function Eedt_panel(panelConfig, toolbar) {
 		var here = this,
+			panelOpen = false,
 			initialLoad = true,
 			deferreds = {
 				init: new jQuery.Deferred()
@@ -310,23 +386,32 @@
 		}
 
 
+
 		/**
 		 * Open Panel
 		 */
 		this.open = function() {
-			jQuery(".EEDebug_panel").removeClass("active");
+			if(panelOpen) return;
+
+			eedt.closePanels();
 			this.panelNode.addClass("active");
 			this.panelNode.trigger("open");
+			panelOpen = true;
 		}
+
 
 
 		/**
 		 * Close Panel
 		 */
 		this.close = function(){
-			jQuery(".EEDebug_panel").removeClass("active");
+			if(!panelOpen) return;
+
+			this.panelNode.removeClass("active");
 			this.panelNode.trigger("close");
+			panelOpen = false;
 		}
+
 
 
 		/**
@@ -371,6 +456,8 @@
 			}
 		}
 
+
+
 		/**
 		 * Load Panel HTML
 		 * @return {jQuery.Deferred}
@@ -401,6 +488,7 @@
 		}
 
 
+
 		/**
 		 * Load Panel JS
 		 * @return {jQuery.Deferred}
@@ -422,6 +510,7 @@
 
 			return jQuery.when.apply(jQuery, da);
 		}
+
 
 
 		/**
@@ -447,6 +536,7 @@
 		}
 
 
+
 		/**
 		 * Setup Panel on button click
 		 */
@@ -467,8 +557,8 @@
 
 			jQuery.when.apply(jQuery, da).then(jQuery.proxy(here.init, here));
 		})
-
 	}
+
 
 
 	/**
@@ -482,7 +572,8 @@
 		loadCss:loadCss,
 		on:onPanelEvent,
 		panel:getPanel,
-		ajax: ajax
+		ajax: ajax,
+		closePanels: closeAllPanels
 	};
 
 })();

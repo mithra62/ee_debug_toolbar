@@ -23,12 +23,13 @@ a.EEDebug_actions {
 .EEDebug_tmpl_log_active, .flash {
 	color: #FF0000;
 }
-
+#EEDebug_memory {
+	width: 660px;
+}
 #EEDebug_memory.active {
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	width: 660px;
 	height: 240px;
 }
 

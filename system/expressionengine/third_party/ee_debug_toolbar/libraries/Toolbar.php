@@ -357,4 +357,36 @@ class Toolbar
 	{
 		return '.'.$this->EE->session->userdata['session_id'].'.eedt';
 	}
+
+	/**
+	 * Builds the JS Config to be output as JSON
+	 *
+	 * @param array $vars
+	 */
+	public function js_config($vars = array())
+	{
+		$config = array();
+
+		$config['template_debugging_enabled'] = $vars['template_debugging_enabled'];
+
+		//Panels
+		$config['panels'] = array();
+		$config['base_css_url'] = $vars['theme_css_url'];
+		$config['base_js_url'] = $vars['theme_js_url'];
+		$config['panel_data_url'] = str_replace("&amp;", "&", $this->create_act_url("get_panel_data")) . "&panel=";
+		$config['panel_ajax_url'] = str_replace("&amp;", "&", $this->create_act_url("panel_ajax")) . "&panel=";
+
+		/**
+		 * @var Eedt_view_model $panel
+		 */
+		foreach ($vars['panels'] as $panel) {
+			$config['panels'][] = array(
+				'name' => $panel->getName(),
+				'js'  => $panel->getJs(),
+				'css' => $panel->getCss()
+			);
+		}
+
+		return $config;
+	}
 }

@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $theme_css_url."ee_debug_toolbar.css" ?>">
 
-<div id="Eedt_debug_toolbar">
+<div id="Eedt_debug_toolbar" class="<?php echo $toolbar_position ?>">
 	<?php foreach($panels AS $key => $panel): ?>
 		<div id="<?php echo $panel->getTarget(); ?>" class="Eedt_debug_panel"></div>
 	<?php endforeach; ?>

@@ -1,6 +1,8 @@
 (function () {
 	var args = arguments,
 		toolbar,
+		leftToggleArrow = "&#187;",
+		rightToggleArrow = "&#171;",
 		toolbarToggleBtn,
 		panels,
 		config;
@@ -31,14 +33,18 @@
 	bindPanels();
 	bindButtons();
 
+	if(toolbar.hasClass("right")) {
+		rightToggleArrow = "&#187;";
+		leftToggleArrow = "&#171;";
+	}
 
 	//Panels open by default?
 	check = getCookie("EEDebugCollapsed");
 	if (check != 1) {
-		toolbarToggleBtn.html("&#171;");
+		toolbarToggleBtn.html(rightToggleArrow);
 		toolbar.addClass("toolbar-open");
 	} else {
-		toolbarToggleBtn.html("&#187;");
+		toolbarToggleBtn.html(leftToggleArrow);
 	}
 
 
@@ -138,7 +144,7 @@
 	 */
 	function openToolbar(){
 		document.cookie = "EEDebugCollapsed=0;expires=;path=/";
-		toolbarToggleBtn.html("&#171;");
+		toolbarToggleBtn.html(rightToggleArrow);
 		toolbar.addClass("toolbar-open");
 	}
 
@@ -149,7 +155,7 @@
 	 */
 	function closeToolbar(){
 		document.cookie = "EEDebugCollapsed=1;expires=;path=/";
-		toolbarToggleBtn.html("&#187;")
+		toolbarToggleBtn.html(leftToggleArrow)
 		toolbar.removeClass("toolbar-open");
 
 		closeAllPanels();

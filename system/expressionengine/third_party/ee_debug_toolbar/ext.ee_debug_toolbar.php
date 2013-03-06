@@ -226,6 +226,7 @@ class Ee_debug_toolbar_ext
 		$vars['eedt_theme_path']               = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_path'], '/third_party/') .'/').'ee_debug_toolbar/themes/'.$this->settings['theme'];
 		$vars['master_view_script']            = "toolbar";
 		$vars['panels']                        = array();
+		$vars['toolbar_position']              = $this->determine_toolbar_position_class();
 		
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
@@ -390,6 +391,34 @@ class Ee_debug_toolbar_ext
 		}
 
 		return $instances;
+	}
+
+	/**
+	 * Determine the toolbar position classes to be added to the toolbar root node
+	 * @return string
+	 */
+	private function determine_toolbar_position_class()
+	{
+		if(!array_key_exists("toolbar_position", $this->settings)){
+			$this->settings['toolbar_position'] = 0;
+		}
+
+		switch ($this->settings['toolbar_position']) {
+			case 1:
+				$position = "top left";
+				break;
+			case 2:
+				$position = "bottom right";
+				break;
+			case 3:
+				$position = "top right";
+				break;
+			default:
+				$position = "bottom left";
+				break;
+		}
+
+		return $position;
 	}
 	
 	public function settings()

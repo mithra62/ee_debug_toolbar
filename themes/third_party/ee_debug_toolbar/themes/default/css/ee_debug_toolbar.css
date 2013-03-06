@@ -5,25 +5,37 @@
 	font: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif;
 	position: fixed;
 	bottom: 5px;
-	left: 3px;
+	left: 0px;
 	color: #000;
-	z-index: 100255;
+	z-index: 1000;
 	display: none;
 }
 
-@-moz-document url-prefix() {
-    #EEDebug_debug {
-       left: -665px;
-    }
+#Eedt_debug_toolbar.top {
+	bottom: auto;
+	top: 5px;
+}
+
+#Eedt_debug_toolbar.right {
+	left: auto;
+	right: 0px;
 }
 
 /* Toolbar open/close */
 #Eedt_debug_toolbar .Eedt_debug_toolbar_buttons_wrap {
 	display: none;
 }
+#Eedt_debug_toolbar.toolbar-open {
+	left: 5px;
+}
+#Eedt_debug_toolbar.right.toolbar-open {
+	right: 5px;
+}
 #Eedt_debug_toolbar.toolbar-open .Eedt_debug_toolbar_buttons_wrap {
 	display: inline;
 }
+
+
 
 #Eedt_debug_toolbar ol {
 	margin: 10px 0px;
@@ -42,16 +54,13 @@
 	font-weight: bold;
 }
 
-#Eedt_debug_toolbar .clickable {
-	cursor: pointer;
-	float:left;
-}
-
 #Eedt_debug_toolbar_toggle_btn {
 	font-weight: bold;
 	background: #BFBFBF;
 	width: 8px !important;
 	height: 17px;
+	cursor: pointer;
+	float:left;
 }
 
 .Eedt_debug_toolbar_button {
@@ -59,9 +68,20 @@
 	border-right: 0px;
 	background: #DFDFDF;
 	padding: 5px 5px;
+	cursor: pointer;
+	float:left;
+	position: relative;
+	z-index: 2000;
+}
+#Eedt_debug_toolbar.right .Eedt_debug_toolbar_button {
+	float: right;
+	border: 1px solid #999;
+	border-left: 0px;
 }
 
-.Eedt_debug_toolbar_button_last {
+
+#Eedt_debug_toolbar.left .Eedt_debug_toolbar_button_last,
+#Eedt_debug_toolbar.right .Eedt_debug_toolbar_button_last {
 	border: 1px solid #999;
 }
 
@@ -81,7 +101,17 @@
 	-moz-transition: height 0.2s linear;
 	-o-transition: height 0.2s linear;
 	transition: height 0.2s linear;
+	z-index: 1000;
 }
+
+#Eedt_debug_toolbar.top .Eedt_debug_panel{
+	bottom: auto;
+	top:28px;
+}
+#Eedt_debug_toolbar.right .Eedt_debug_panel{
+	right:0;
+}
+
 .Eedt_debug_panel.active {
 	border: 1px solid #999;
 	padding: 5px;

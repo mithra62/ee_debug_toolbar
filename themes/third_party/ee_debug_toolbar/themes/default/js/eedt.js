@@ -13,7 +13,7 @@
 
 	//jQuery loaded? If not, load it and start again when it has finished
 	if (!window.jQuery) {
-		loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js', true, function () {
+		loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js', function () {
 			jQuery.noConflict();
 			args.callee();
 		});
@@ -253,22 +253,20 @@
 	 * Even prepends the correct theme URL location to allow easy script loading
 	 *
 	 * @param  {string}    name        Script filename
-	 * @param  {Boolean}   offsite     Script being loaded is offsite? (Basically enable/disable URL_THIRD_THEMES being prepended)
 	 * @param  {Function}  cb          Callback function
 	 */
-	function loadScript(name, offsite, cb) {
+	function loadScript(name, cb) {
 
 		var def,
 			loaded = false,
 			url = String(name),
-			eed = document.createElement('script'),
-			local = offsite === true ? false : true;
+			eed = document.createElement('script');
 
 		eed.type = 'text/javascript';
 		eed.async = true;
 
 		//If local url, we can use this scripts URL to ensure we get a correct base url
-		if (local) {
+		if (urlIsLocal(name)) {
 			eed.src = String(config.base_js_url + url);
 		}
 		else {
@@ -307,22 +305,20 @@
 	 * Even prepends the correct theme URL location to allow easy script loading
 	 *
 	 * @param  {string}    name        CSS filename
-	 * @param  {Boolean}   offsite     CSS being loaded is offsite? (Basically enable/disable URL_THIRD_THEMES being prepended)
 	 * @param  {Function}  cb          Callback function
 	 * @return {Deferred}
 	 */
-	function loadCss(name, offsite, cb) {
+	function loadCss(name, cb) {
 
 		var def = new jQuery.Deferred(),
 			url = String(name),
-			eed = document.createElement('link'),
-			local = offsite === true ? false : true;
+			eed = document.createElement('link');
 
 		eed.type = 'text/css';
 		eed.rel = 'stylesheet';
 
 		//If local url, we can use this scripts URL to ensure we get a correct base url
-		if (local) {
+		if (urlIsLocal(name)) {
 			eed.href = String(config.base_css_url + url);
 		}
 		else {
@@ -343,6 +339,22 @@
 		document.getElementsByTagName('head')[0].appendChild(eed);
 
 		return def;
+	}
+
+
+	/**
+	 * Detects whether the supplied URL is local or not
+	 * @param uri
+	 * @return {Boolean}
+	 */
+	function urlIsLocal(uri) {
+		var local = true;
+
+		if(String(uri).match(/^(https?:)?\/\//gi)) {
+			local = false;
+		}
+
+		return local;
 	}
 
 
@@ -498,7 +510,7 @@
 				def = new jQuery.Deferred();
 
 			for (var i = 0; i < this.config.js.length; i++) {
-				da.push(loadScript(this.config.js, true));
+				da.push(loadScript(this.config.js));
 			}
 
 			//If no items
@@ -522,7 +534,7 @@
 				def = new jQuery.Deferred();
 
 			for (var i = 0; i < this.config.css.length; i++) {
-				da.push(loadCss(this.config.css, true));
+				da.push(loadCss(this.config.css));
 			}
 
 			//If no items

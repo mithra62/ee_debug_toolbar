@@ -2,7 +2,7 @@
  * Bind to Panel Init
  */
 eedt.on("memory", "init", function(){
-	eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready", true, null);
+	eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready");
 });
 
 

@@ -3,7 +3,7 @@
 
 <div id="EEDebug_debug">
 	<?php foreach($panels AS $key => $panel): ?>
-		<div id="<?php echo $panel->getTarget(); ?>" class="EEDebug_panel height-6x"></div>
+		<div id="<?php echo $panel->getTarget(); ?>" class="EEDebug_panel"></div>
 	<?php endforeach; ?>
 
 	<div id="EEDebug_info">

@@ -94,15 +94,6 @@
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
-.EEDebug_panel.active.height-2x{
-	height: 150px
-}
-.EEDebug_panel.active.height-4x{
-	height: 300px
-}
-.EEDebug_panel.active.height-6x{
-	height: 600px
-}
 
 #EEDebug_copyright.active {
 	overflow:hidden;

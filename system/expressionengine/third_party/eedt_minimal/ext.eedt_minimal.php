@@ -72,7 +72,7 @@ class Eedt_minimal_ext
 	 * @param array $panels
 	 * @return array
 	 */
-	public function ee_debug_toolbar_mod_panel(array $panels)
+	public function ee_debug_toolbar_mod_panel(array $panels, array $view = array())
 	{
 		$this->EE->benchmark->mark('eedt_minimal_start');
 		

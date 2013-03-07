@@ -228,8 +228,7 @@ class Ee_debug_toolbar_ext
 		$vars['panels']                        = array();
 		$vars['toolbar_position']              = $this->determine_toolbar_position_class();
 		
-		$this->EE->benchmark->mark('ee_debug_benchmark_end');
-		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
+		$vars['benchmark_data'] = array(); //we have to fake this for now 
 
 		//Load variables so that they are present in all view partials
 		$this->EE->load->vars($vars);
@@ -255,9 +254,18 @@ class Ee_debug_toolbar_ext
 		}
 		
 		$vars['panels'] = $panel_data;
-
 		$vars['js_config'] = $this->EE->toolbar->js_config($vars);
+		
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_view_end') === TRUE)
+		{
+			$vars = $this->EE->extensions->call('ee_debug_toolbar_mod_view', $vars);
+		}		
 
+		//we have to "redo" the benchmark panel so we have all the internal benchmarks
+		$this->EE->benchmark->mark('ee_debug_benchmark_end');
+		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
+		$vars['panels']['time']->setOutput($this->EE->load->view("partials/time", $vars, TRUE));
+		
 		//setup the XML storage data for use by the panels on open
 		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);
 		

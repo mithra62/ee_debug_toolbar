@@ -184,7 +184,7 @@ class Eedt_view_model
 	/**
 	 * @param string $html
 	 */
-	function setOuput($html = "")
+	function setOutput($html = "")
 	{
 		$this->output = $html;
 	}

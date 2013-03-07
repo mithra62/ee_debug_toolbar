@@ -85,7 +85,7 @@ class Eedt_base_panel
 		$view->setName($this->name);
 		$view->setButtonLabel($this->button_label);
 		$view->setButtonIcon($this->button_icon_uri);
-		$view->setOuput($this->view());
+		$view->setOutput($this->view());
 		$view->setAjaxUrl($this->EE->toolbar->create_act_url('get_panel_data').AMP.'panel='.$this->name);
 
 		return $view;

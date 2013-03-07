@@ -243,28 +243,48 @@ class Ee_debug_toolbar_ext
 		}
 
 		//Load third party panels and custom mods
+		//yes, you can technically create panels in mod_panel but using 
+		//add_panel will help future proof things
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === TRUE)
 		{
 			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $panel_data, $vars);
 		}
 		
+		//do... stuff... to panels... eventually...
+		
+		//apply custom modifications to toolbar
+		//again, yes, you could create panels using mod_panel but you probably shouldn't ;)
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_panel') === TRUE)
 		{
 			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_mod_panel', $panel_data, $vars);
 		}
 		
+		//have to verify the panels are good after letting the users have a go...
+		foreach($panel_data AS $key => $panel)
+		{
+			if(!($panel instanceof Eedt_view_model))
+			{
+				unset($panel_data[$key]);
+			}
+		}
+		
 		$vars['panels'] = $panel_data;
 		$vars['js_config'] = $this->EE->toolbar->js_config($vars);
 		
-		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_view_end') === TRUE)
+		//apply any customizations to the global view data 
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_view') === TRUE)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_mod_view', $vars);
 		}		
 
 		//we have to "redo" the benchmark panel so we have all the internal benchmarks
+		//COULD WREAK HAVOC ON BENCHMARK OVERRIDES!!!
 		$this->EE->benchmark->mark('ee_debug_benchmark_end');
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
-		$vars['panels']['time']->setOutput($this->EE->load->view("partials/time", $vars, TRUE));
+		if(!empty($vars['panels']['time']))
+		{
+			$vars['panels']['time']->setOutput($this->EE->load->view("partials/time", $vars, TRUE));
+		}
 		
 		//setup the XML storage data for use by the panels on open
 		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);

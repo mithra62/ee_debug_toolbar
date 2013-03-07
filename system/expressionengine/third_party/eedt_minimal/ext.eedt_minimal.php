@@ -67,32 +67,37 @@ class Eedt_minimal_ext
 		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_minimal/');
 	}
 	
-	public function ee_debug_toolbar_add_panel($view)
+	/**
+	 * Takes the $panels data and converts it into an icon only display
+	 * @param array $panels
+	 * @return array
+	 */
+	public function ee_debug_toolbar_mod_panel(array $panels)
 	{
 		$this->EE->benchmark->mark('eedt_minimal_start');
 		
-		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
+		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
 		$settings = $this->EE->toolbar->get_settings();
 		
-		foreach($view['panels'] AS $key => $value)
+		foreach($panels AS $key => $value)
 		{
-			$view['panels'][$key]->setButtonIconAltText($view['panels'][$key]->getName());
-			$view['panels'][$key]->setButtonLabel('');
+			$panels[$key]->setButtonIconAltText($panels[$key]->getName());
+			$panels[$key]->setButtonLabel('');
 		}
 
 		$theme_css_url = URL_THIRD_THEMES.'eedt_minimal/css/';
-		$view['panels'][$key]->addCss($theme_css_url.'minimal.css');		
+		$panels[$key]->addCss($theme_css_url.'minimal.css');		
 		
 		$this->EE->benchmark->mark('eedt_minimal_end');
-		return $view;
+		return $panels;
 	}
 
 	public function activate_extension()
 	{			
 		$data = array(
 				'class'     => __CLASS__,
-				'method'    => 'ee_debug_toolbar_add_panel',
-				'hook'      => 'ee_debug_toolbar_add_panel',
+				'method'    => 'ee_debug_toolbar_mod_panel',
+				'hook'      => 'ee_debug_toolbar_mod_panel',
 				'settings'  => '',
 				'priority'  => 99999999,
 				'version'   => $this->version,

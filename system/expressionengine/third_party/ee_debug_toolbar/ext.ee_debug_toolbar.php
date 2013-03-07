@@ -235,17 +235,26 @@ class Ee_debug_toolbar_ext
 		$this->EE->load->vars($vars);
 
 		//Load Internal Panels & load view model data
-		$panels = $this->load_panels();		
-		foreach($panels as $panel) {
+		$panels = $this->load_panels();	
+		$panel_data = array();	
+		foreach($panels as $panel) 
+		{
 			$p = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
-			$vars['panels'][$p->getName()] = $p;
+			$panel_data[$p->getName()] = $p;
 		}
 
 		//Load third party panels and custom mods
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === TRUE)
 		{
-			$vars = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $vars);
+			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $panel_data, $vars);
 		}
+		
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_panel') === TRUE)
+		{
+			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_mod_panel', $panel_data, $vars);
+		}
+		
+		$vars['panels'] = $panel_data;
 
 		$vars['js_config'] = $this->EE->toolbar->js_config($vars);
 
@@ -264,9 +273,12 @@ class Ee_debug_toolbar_ext
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead
 		//of inserting. We may be able to get away with simply always appending, but this seems cleaner
 		//even if more expensive.
-		if (strpos($html, "</body>") === false) {
+		if (strpos($html, "</body>") === false) 
+		{
 			$html .= $toolbar_html;
-		} else {
+		}
+		else 
+		{
 			$html = str_replace('</body>', $toolbar_html . '</body>', $html);
 		}
 
@@ -274,10 +286,12 @@ class Ee_debug_toolbar_ext
 		//since we have already added the debug data to the body output. Doing it this way means
 		//we should retain 100% compatibility (I'm looking at you Stash...)
 		$this->EE->output->final_output = $html;
-		if (isset($this->EE->TMPL)) {
+		if (isset($this->EE->TMPL)) 
+		{
 			$this->EE->TMPL->debugging = FALSE;
 			$this->EE->TMPL->log       = FALSE;
 		}
+		
 		$this->EE->output->enable_profiler = FALSE;
 
 		//Fist pump.

@@ -19,7 +19,7 @@ class Eedt_copyright_panel extends Eedt_base_panel
 	public function ee_debug_toolbar_add_panel($view)
 	{
 		$view = parent::ee_debug_toolbar_add_panel($view);
-		$view->addCss( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_copyright.css');
+		$view->add_css( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_copyright.css');
 
 		return $view;
 	}

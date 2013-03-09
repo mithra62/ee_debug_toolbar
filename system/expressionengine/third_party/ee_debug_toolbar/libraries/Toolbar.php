@@ -336,13 +336,13 @@ class Toolbar
 		$this->EE->xml_writer->startBranch('panels');
 		foreach($panels AS $panel)
 		{
-			$this->EE->xml_writer->startBranch($panel->getName().'_panel');
-			$this->EE->xml_writer->addNode('name', $panel->getName(), array(), TRUE);
-			$this->EE->xml_writer->addNode('data_target', $panel->getTarget(), array(), TRUE);
-			$this->EE->xml_writer->addNode('button_icon', $panel->getButtonIcon(), array(), TRUE);
-			$this->EE->xml_writer->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), array(), TRUE);
-			$this->EE->xml_writer->addNode('button_label', $panel->getButtonlabel(), array(), TRUE);
-			$this->EE->xml_writer->addNode('output', $panel->getOutput(), array(), TRUE);
+			$this->EE->xml_writer->startBranch($panel->get_name().'_panel');
+			$this->EE->xml_writer->addNode('name', $panel->get_name(), array(), TRUE);
+			$this->EE->xml_writer->addNode('data_target', $panel->get_target(), array(), TRUE);
+			$this->EE->xml_writer->addNode('button_icon', $panel->get_button_icon(), array(), TRUE);
+			$this->EE->xml_writer->addNode('button_icon_alt_text', $panel->get_button_icon_alt_text(), array(), TRUE);
+			$this->EE->xml_writer->addNode('button_label', $panel->get_button_label(), array(), TRUE);
+			$this->EE->xml_writer->addNode('output', $panel->get_output(), array(), TRUE);
 			$this->EE->xml_writer->endBranch();
 		}
 		
@@ -381,9 +381,9 @@ class Toolbar
 		 */
 		foreach ($vars['panels'] as $panel) {
 			$config['panels'][] = array(
-				'name' => $panel->getName(),
-				'js'  => $panel->getJs(),
-				'css' => $panel->getCss()
+				'name' => $panel->get_name(),
+				'js'  => $panel->get_js(),
+				'css' => $panel->get_css()
 			);
 		}
 

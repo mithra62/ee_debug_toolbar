@@ -4,7 +4,7 @@
  *
  * @author Christopher Imrie
  */
-class Eedt_view_model
+class Eedt_panel_model
 {
 
 	/*
@@ -14,9 +14,9 @@ class Eedt_view_model
 	*/
 
 	/**
-	 * @var Eedt_view_model::PANEL_POSITION|Eedt_view_model::BEFORE_TOOLBAR_POSITION|Eedt_view_model::AFTER_TOOLBAR_POSITION Panel view injection point relative to the toolbar
+	 * @var Eedt_panel_model::PANEL_POSITION|Eedt_panel_model::BEFORE_TOOLBAR_POSITION|Eedt_panel_model::AFTER_TOOLBAR_POSITION Panel view injection point relative to the toolbar
 	 */
-	private $injection_point = Eedt_view_model::PANEL_POSITION;
+	private $injection_point = Eedt_panel_model::PANEL_POSITION;
 
 	/**
 	 * @var bool
@@ -97,18 +97,10 @@ class Eedt_view_model
 	
 	private $panel_css = FALSE;
 
-
-	/*
-	|--------------------------------------------------------------------------
-	| Methods
-	|--------------------------------------------------------------------------
-	*/
-
-
 	/**
 	 * @param string $name
 	 */
-	function setName($name)
+	public function set_name($name)
 	{
 		$this->name = $name;
 	}
@@ -116,7 +108,7 @@ class Eedt_view_model
 	/**
 	 * @return string
 	 */
-	function getName()
+	public function get_name()
 	{
 		return $this->name;
 	}
@@ -124,15 +116,15 @@ class Eedt_view_model
 	/**
 	 * @return string
 	 */
-	function getTarget()
+	public function get_target()
 	{
-		return $this->target_prefix . $this->getName() . $this->target_suffix;
+		return $this->target_prefix . $this->get_name() . $this->target_suffix;
 	}
 
 	/**
 	 * @param string $label
 	 */
-	function setButtonLabel($label)
+	function set_button_label($label)
 	{
 		$this->button_label = $label;
 	}
@@ -140,7 +132,7 @@ class Eedt_view_model
 	/**
 	 * @return string
 	 */
-	public function getButtonLabel()
+	public function get_button_label()
 	{
 		return $this->button_label;
 	}
@@ -148,7 +140,7 @@ class Eedt_view_model
 	/**
 	 * @param string $filename
 	 */
-	function setButtonIcon($filename)
+	function set_button_icon($filename)
 	{
 		$this->button_icon = $filename;
 	}
@@ -156,7 +148,7 @@ class Eedt_view_model
 	/**
 	 * @return string
 	 */
-	public function getButtonIcon()
+	public function get_button_icon()
 	{
 		return $this->button_icon;
 	}
@@ -164,7 +156,7 @@ class Eedt_view_model
 	/**
 	 * @param string $text
 	 */
-	public function setButtonIconAltText($text="")
+	public function set_button_icon_alt_text($text="")
 	{
 		$this->button_icon_alt_title = $text;
 	}
@@ -172,19 +164,19 @@ class Eedt_view_model
 	/**
 	 * @return string
 	 */
-	public function getButtonIconAltText()
+	public function get_button_icon_alt_text()
 	{
 		if($this->button_icon_alt_title){
 			return $this->button_icon_alt_title;
 		}
 
-		return $this->getButtonLabel();
+		return $this->get_button_label();
 	}
 
 	/**
 	 * @param string $html
 	 */
-	function setOutput($html = "")
+	function set_output($html = "")
 	{
 		$this->output = $html;
 	}
@@ -192,27 +184,27 @@ class Eedt_view_model
 	/**
 	 * @return string
 	 */
-	function getOutput()
+	function get_output()
 	{
 		return $this->output;
 	}
 	
-	public function setAjaxUrl($url)
+	public function set_ajax_url($url)
 	{
 		$this->ajax_url = $url;
 	}
 	
-	public function getAjaxUrl()
+	public function get_ajax_url()
 	{
 		return $this->ajax_url;
 	}
 	
-	public function setPanelCss($css)
+	public function set_panel_css($css)
 	{
 		$this->panel_css = $css;
 	}
 	
-	public function getPanelCss()
+	public function get_panel_css()
 	{
 		return $this->panel_css;
 	}	
@@ -220,12 +212,12 @@ class Eedt_view_model
 	/**
 	 * @param $filename
 	 */
-	function addJs($filename)
+	function add_js($filename)
 	{
 		$this->js[] = $filename;
 	}
 	
-	public function getJs()
+	public function get_js()
 	{
 		return $this->js;
 	}	
@@ -233,20 +225,20 @@ class Eedt_view_model
 	/**
 	 * @param $filename
 	 */
-	function addCss($filename)
+	function add_css($filename)
 	{
 		$this->css[] = $filename;
 	}
 	
-	public function getCss()
+	public function get_css()
 	{
 		return $this->css;
 	}
 
 	/**
-	 * @param Eedt_view_model::PANEL_POSITION|Eedt_view_model::BEFORE_TOOLBAR_POSITION|Eedt_view_model::AFTER_TOOLBAR_POSITION $injection_point
+	 * @param Eedt_panel_model::PANEL_POSITION|Eedt_panel_model::BEFORE_TOOLBAR_POSITION|Eedt_panel_model::AFTER_TOOLBAR_POSITION $injection_point
 	 */
-	function setInjectionPoint($injection_point = Eedt_view::PANEL_POSITION)
+	function set_injection_point($injection_point = Eedt_panel_model::PANEL_POSITION)
 	{
 		$this->injection_point = $injection_point;
 	}
@@ -254,7 +246,7 @@ class Eedt_view_model
 	/**
 	 * @param bool $enabled
 	 */
-	function setButtonDisplay($enabled = true)
+	function set_button_display($enabled = true)
 	{
 		$this->show_button = $enabled;
 	}

@@ -83,32 +83,32 @@ class Eedt_perf_alerts_ext
 		//check total time
 		if($view['elapsed_time'] > $settings['max_exec_time'])
 		{
-			$panels['time']->setPanelCss('flash');
+			$panels['time']->set_panel_css('flash');
 		}
 		
 		//make sure we're not running too many queries
 		if($view['query_count'] > $settings['max_queries'])
 		{
-			$panels['database']->setPanelCss('flash');
+			$panels['database']->set_panel_css('flash');
 		}
 		
 		//and how long did those queries take?
 		if($view['query_data']['total_time'] > $settings['max_sql_time'])
 		{
-			$panels['database']->setPanelCss('flash');
+			$panels['database']->set_panel_css('flash');
 		}
 		
 		//is memory usage bad?
 		if($view['memory_usage'] > $settings['max_memory'])
 		{
-			$panels['memory']->setPanelCss('flash');
+			$panels['memory']->set_panel_css('flash');
 		}
 		
 		$view['perf_theme_img_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/images/';
 		$view['perf_theme_js_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/js/';
 		$view['perf_theme_css_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/css/';		
 		
-		$panels['database']->setOutput( $this->EE->load->view('db', $view, TRUE) ) ;
+		$panels['database']->set_output( $this->EE->load->view('db', $view, TRUE) ) ;
 		//$vars['panel_data']['db']['view_script'] = FALSE;
 		
 		$this->EE->benchmark->mark('eedt_performance_alerts_end');

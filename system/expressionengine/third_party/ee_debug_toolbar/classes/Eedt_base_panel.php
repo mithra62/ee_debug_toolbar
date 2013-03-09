@@ -82,11 +82,11 @@ class Eedt_base_panel
 	 */
 	public function ee_debug_toolbar_add_panel($view)
 	{
-		$view->setName($this->name);
-		$view->setButtonLabel($this->button_label);
-		$view->setButtonIcon($this->button_icon_uri);
-		$view->setOutput($this->view());
-		$view->setAjaxUrl($this->EE->toolbar->create_act_url('get_panel_data').AMP.'panel='.$this->name);
+		$view->set_name($this->name);
+		$view->set_button_label($this->button_label);
+		$view->set_button_icon($this->button_icon_uri);
+		$view->set_output($this->view());
+		$view->set_ajax_url($this->EE->toolbar->create_act_url('get_panel_data').AMP.'panel='.$this->name);
 
 		return $view;
 	}

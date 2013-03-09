@@ -19,7 +19,7 @@ class Eedt_time_panel extends Eedt_base_panel
 	public function ee_debug_toolbar_add_panel($view)
 	{
 		$view = parent::ee_debug_toolbar_add_panel($view);
-		$view->addCss( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_time.css');
+		$view->add_css( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_time.css');
 
 		return $view;
 	}

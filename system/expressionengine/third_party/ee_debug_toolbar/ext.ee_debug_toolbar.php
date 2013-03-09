@@ -191,7 +191,7 @@ class Ee_debug_toolbar_ext
 	 */
 	public function modify_output()
 	{
-		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_view_model.php");
+		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_panel_model.php");
 		$html = $this->EE->output->final_output;
 
 		//If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
@@ -238,8 +238,8 @@ class Ee_debug_toolbar_ext
 		$panel_data = array();	
 		foreach($panels as $panel) 
 		{
-			$p = $panel->ee_debug_toolbar_add_panel(new Eedt_view_model());
-			$panel_data[$p->getName()] = $p;
+			$p = $panel->ee_debug_toolbar_add_panel(new Eedt_panel_model());
+			$panel_data[$p->get_name()] = $p;
 		}
 
 		//Load third party panels and custom mods
@@ -262,7 +262,7 @@ class Ee_debug_toolbar_ext
 		//have to verify the panels are good after letting the users have a go...
 		foreach($panel_data AS $key => $panel)
 		{
-			if(!($panel instanceof Eedt_view_model))
+			if(!($panel instanceof Eedt_panel_model))
 			{
 				unset($panel_data[$key]);
 			}
@@ -283,7 +283,7 @@ class Ee_debug_toolbar_ext
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 		if(!empty($vars['panels']['time']))
 		{
-			$vars['panels']['time']->setOutput($this->EE->load->view("partials/time", $vars, TRUE));
+			$vars['panels']['time']->set_output($this->EE->load->view("partials/time", $vars, TRUE));
 		}
 		
 		//setup the XML storage data for use by the panels on open

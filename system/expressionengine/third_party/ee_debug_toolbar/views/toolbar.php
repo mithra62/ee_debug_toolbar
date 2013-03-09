@@ -3,16 +3,16 @@
 
 <div id="Eedt_debug_toolbar" class="<?php echo $toolbar_position ?>">
 	<?php foreach($panels AS $key => $panel): ?>
-		<div id="<?php echo $panel->getTarget(); ?>" class="Eedt_debug_panel"></div>
+		<div id="<?php echo $panel->get_target(); ?>" class="Eedt_debug_panel"></div>
 	<?php endforeach; ?>
 
 	<div id="Eedt_debug_toolbar_buttons">
 		<span class="Eedt_debug_toolbar_buttons_wrap">
 			<?php foreach($panels AS $key => $panel): ?>
-				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->getPanelCss(); ?>" data-target="<?php echo $panel->getTarget(); ?>"  id="Eedt_debug_<?php echo $panel->getName(); ?>_btn">
-					<img src="<?php echo $panel->getButtonIcon(); ?>" style="vertical-align:middle"
-						 alt="<?php echo $panel->getButtonIconAltText(); ?>" title="<?php echo $panel->getButtonlabel(); ?>">
-						<?php echo $panel->getButtonLabel(); ?>
+				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->get_panel_css(); ?>" data-target="<?php echo $panel->get_target(); ?>"  id="Eedt_debug_<?php echo $panel->get_name(); ?>_btn">
+					<img src="<?php echo $panel->get_button_icon(); ?>" style="vertical-align:middle"
+						 alt="<?php echo $panel->get_button_icon_alt_text(); ?>" title="<?php echo $panel->get_button_label(); ?>">
+						<?php echo $panel->get_button_label(); ?>
 				</span>
 			<?php endforeach; ?>
 		</span>

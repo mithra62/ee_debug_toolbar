@@ -69,10 +69,10 @@ class Eedt_log_viewer_ext
 		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_log_viewer/');
 	}
 	
-	public function ee_debug_toolbar_add_panel($view)
+	public function ee_debug_toolbar_add_panel(array $panels, array $view)
 	{
 		$this->EE->benchmark->mark('eedt_log_viewer_start');
-		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
+		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
 		
 		$vars['logs_enabled'] = FALSE;
 		if($this->EE->config->config['log_threshold'] >= 1)
@@ -91,16 +91,17 @@ class Eedt_log_viewer_ext
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
 		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_log_viewer/css/';
 		
-		$view['panels']['log_viewer'] = new Eedt_view_model();
-		$view['panels']['log_viewer']->setName('log_viewer');
-		$view['panels']['log_viewer']->setButtonIcon($vars['theme_img_url'].'logs.png');
-		$view['panels']['log_viewer']->setButtonLabel(lang('log_viewer'));
-		$view['panels']['log_viewer']->setOuput($this->EE->load->view('log_viewer', $vars, TRUE));
-		$view['panels']['log_viewer']->addJs($vars['theme_js_url'] . 'log_viewer.js');
-		$view['panels']['log_viewer']->addCss($vars['theme_css_url'] . 'log_viewer.css');
+		$panels['log_viewer'] = new Eedt_panel_model();
+		$panels['log_viewer']->set_name('log_viewer');
+		$panels['log_viewer']->set_button_icon($vars['theme_img_url'].'logs.png');
+		$panels['log_viewer']->set_button_label(lang('log_viewer'));
+		$panels['log_viewer']->set_output($this->EE->load->view('log_viewer', $vars, TRUE));
+		//$panels['log_viewer']->addJs($vars['theme_js_url'] . 'log_viewer.js');
+		//$panels['log_viewer']->addCss($vars['theme_css_url'] . 'log_viewer.css');
+		$panels['log_viewer']->set_ajax_url($vars['ajax_action_url']);
 		
 		$this->EE->benchmark->mark('eedt_log_viewer_end');
-		return $view;
+		return $panels;
 	}
 	
 	public function get_panel_logs()

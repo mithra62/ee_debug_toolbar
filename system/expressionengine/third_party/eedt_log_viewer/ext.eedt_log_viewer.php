@@ -86,7 +86,7 @@ class Eedt_log_viewer_ext
 			$vars['log_dir_writable'] = TRUE;
 		}
 		
-		$vars['ajax_action_url'] = $this->EE->toolbar->create_act_url('get_panel_logs', __CLASS__);
+		$vars['panel_fetch_url'] = $this->EE->toolbar->create_act_url('get_panel_logs', __CLASS__);
 		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_log_viewer/images/';
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
 		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_log_viewer/css/';
@@ -96,9 +96,7 @@ class Eedt_log_viewer_ext
 		$panels['log_viewer']->set_button_icon($vars['theme_img_url'].'logs.png');
 		$panels['log_viewer']->set_button_label(lang('log_viewer'));
 		$panels['log_viewer']->set_output($this->EE->load->view('log_viewer', $vars, TRUE));
-		//$panels['log_viewer']->addJs($vars['theme_js_url'] . 'log_viewer.js');
-		//$panels['log_viewer']->addCss($vars['theme_css_url'] . 'log_viewer.css');
-		$panels['log_viewer']->set_ajax_url($vars['ajax_action_url']);
+		$panels['log_viewer']->set_panel_fetch_url($vars['panel_fetch_url']);
 		
 		$this->EE->benchmark->mark('eedt_log_viewer_end');
 		return $panels;
@@ -106,8 +104,7 @@ class Eedt_log_viewer_ext
 	
 	public function get_panel_logs()
 	{
-	
-		$log_path = $this->EE->config->config['log_path'];
+		$log_path = $this->EE->config->item('log_path') ? $this->EE->config->item('log_path') : APPPATH . "logs/";
 		if(!is_readable($log_path))
 		{
 			echo lang('log_dir_not_readable');

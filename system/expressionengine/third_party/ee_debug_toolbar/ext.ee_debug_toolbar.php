@@ -294,6 +294,26 @@ class Ee_debug_toolbar_ext
 		
 		//setup the XML storage data for use by the panels on open
 		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);
+
+		//Break up the panels into the various injection points
+		$vars['panels_before_toolbar'] = array();
+		$vars['panels_in_toolbar'] = array();
+		$vars['panels_after_toolbar'] = array();
+
+		foreach($vars['panels'] as $panel) {
+			switch ($panel->get_injection_point()) {
+				case Eedt_panel_model::PANEL_BEFORE_TOOLBAR:
+					$vars['panels_before_toolbar'][] = $panel;
+					break;
+				case Eedt_panel_model::PANEL_IN_TOOLBAR:
+					$vars['panels_in_toolbar'][] = $panel;
+					break;
+				case Eedt_panel_model::PANEL_AFTER_TOOLBAR:
+					$vars['panels_after_toolbar'][] = $panel;
+					break;
+			}
+		}
+		unset($vars['panels']);
 		
 		//Render toolbar
 		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);

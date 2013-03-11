@@ -14,9 +14,9 @@ class Eedt_panel_model
 	*/
 
 	/**
-	 * @var Eedt_panel_model::PANEL_POSITION|Eedt_panel_model::BEFORE_TOOLBAR_POSITION|Eedt_panel_model::AFTER_TOOLBAR_POSITION Panel view injection point relative to the toolbar
+	 * @var Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR Panel view injection point relative to the toolbar
 	 */
-	private $injection_point = Eedt_panel_model::PANEL_POSITION;
+	private $injection_point = Eedt_panel_model::PANEL_IN_TOOLBAR;
 
 	/**
 	 * @var bool
@@ -39,9 +39,9 @@ class Eedt_panel_model
 	/**
 	 * Injection Point Positions
 	 */
-	const PANEL_POSITION = 1;
-	const BEFORE_TOOLBAR_POSITION = 2;
-	const AFTER_TOOLBAR_POSITION = 3;
+	const PANEL_IN_TOOLBAR = 1;
+	const PANEL_BEFORE_TOOLBAR = 2;
+	const PANEL_AFTER_TOOLBAR = 3;
 
 
 	/*
@@ -272,19 +272,35 @@ class Eedt_panel_model
 	}
 
 	/**
-	 * @param Eedt_panel_model::PANEL_POSITION|Eedt_panel_model::BEFORE_TOOLBAR_POSITION|Eedt_panel_model::AFTER_TOOLBAR_POSITION $injection_point
+	 * @param Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR $injection_point
 	 */
-	function set_injection_point($injection_point = Eedt_panel_model::PANEL_POSITION)
+	function set_injection_point($injection_point = Eedt_panel_model::PANEL_IN_TOOLBAR)
 	{
 		$this->injection_point = $injection_point;
 	}
 
 	/**
+	 * @return Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR $injection_point
+	 */
+	function get_injection_point()
+	{
+		return $this->injection_point;
+	}
+
+	/**
 	 * @param bool $enabled
 	 */
-	function set_button_display($enabled = true)
+	function set_show_button($enabled = true)
 	{
 		$this->show_button = $enabled;
+	}
+
+	/**
+	 * @return bool
+	 */
+	function show_button()
+	{
+		return $this->show_button;
 	}
 
 	/**

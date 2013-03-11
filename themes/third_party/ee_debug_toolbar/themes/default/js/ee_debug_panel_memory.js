@@ -3,6 +3,12 @@
  */
 eedt.on("memory", "init", function(node, panel){
 	panel.loading(true);
+
+	if(!eedt.config('template_debugging_enabled')) {
+		panel.loading(false);
+		return;
+	}
+
 	eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready");
 });
 

@@ -331,7 +331,11 @@ class Ee_debug_toolbar_ext
 		//Fist pump.
 		$this->EE->output->_display();
 	}
-	
+
+
+	/**
+	 * Fetches cached panel HTML output
+	 */
 	public function get_panel_data()
 	{
 		$this->EE->TMPL->debugging = FALSE;

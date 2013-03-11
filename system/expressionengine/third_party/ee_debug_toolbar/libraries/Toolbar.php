@@ -373,17 +373,18 @@ class Toolbar
 		$config['panels'] = array();
 		$config['base_css_url'] = $vars['theme_css_url'];
 		$config['base_js_url'] = $vars['theme_js_url'];
-		$config['panel_data_url'] = str_replace("&amp;", "&", $this->create_act_url("get_panel_data")) . "&panel=";
 		$config['panel_ajax_url'] = str_replace("&amp;", "&", $this->create_act_url("panel_ajax")) . "&panel=";
 
 		/**
-		 * @var Eedt_view_model $panel
+		 * @var Eedt_panel_model $panel
 		 */
 		foreach ($vars['panels'] as $panel) {
 			$config['panels'][] = array(
-				'name' => $panel->get_name(),
-				'js'  => $panel->get_js(),
-				'css' => $panel->get_css()
+				'name'            => $panel->get_name(),
+				'js'              => $panel->get_js(),
+				'css'             => $panel->get_css(),
+				'panel_fetch_url' => $panel->get_panel_fetch_url() ? $panel->get_panel_fetch_url() :
+					str_replace("&amp;", "&", $this->create_act_url("get_panel_data")) . "&panel=" . $panel->get_name()
 			);
 		}
 

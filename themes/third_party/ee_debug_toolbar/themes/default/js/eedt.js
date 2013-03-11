@@ -513,12 +513,11 @@
 		 */
 		this.loadPanelHtml = function () {
 			var here = this,
-				url = config.panel_data_url + this.name,
 				def = new jQuery.Deferred();
 
 			jQuery.ajax({
 				type:'GET',
-				url:url,
+				url:this.config.panel_fetch_url,
 				data:{
 					LANG:"ENG"
 				},

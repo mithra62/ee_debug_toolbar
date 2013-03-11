@@ -101,6 +101,11 @@ class Eedt_panel_model
 	private $ajax_url = '';
 
 	/**
+	 * @var string The URL endpoint for fetching panel HTML content when toolbar button is clicked
+	 */
+	private $panel_fetch_url = '';
+
+	/**
 	 * @var string
 	 */
 	private $panel_css_class = '';
@@ -289,5 +294,21 @@ class Eedt_panel_model
 	function set_button_display($enabled = true)
 	{
 		$this->show_button = $enabled;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_panel_fetch_url()
+	{
+		return $this->panel_fetch_url;
+	}
+
+	/**
+	 * @param string $panel_fetch_url
+	 */
+	public function set_panel_fetch_url($panel_fetch_url)
+	{
+		$this->panel_fetch_url = $panel_fetch_url;
 	}
 }

@@ -309,6 +309,6 @@ class Eedt_panel_model
 	 */
 	public function set_panel_fetch_url($panel_fetch_url)
 	{
-		$this->panel_fetch_url = $panel_fetch_url;
+		$this->panel_fetch_url = str_replace("&amp;", "&", $panel_fetch_url);
 	}
 }

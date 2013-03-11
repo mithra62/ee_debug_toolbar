@@ -1,5 +1,6 @@
-
-<link rel="stylesheet" type="text/css" href="<?php echo $theme_css_url."ee_debug_toolbar.css" ?>">
+<?php foreach($css as $css_url): ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $css_url ?>">
+<?php endforeach; ?>
 
 <div id="Eedt_debug_toolbar" class="<?php echo $toolbar_position ?>">
 	<?php foreach($panels AS $key => $panel): ?>
@@ -23,5 +24,6 @@
 <script type="text/javascript">
 	window._eedtConfig = <?php echo json_encode($js_config); ?>
 </script>
-<script src="<?php echo $theme_js_url . "eedt.js" ?>" type="text/javascript"
-		charset="utf-8" defer id="EEDebug_debug_script"></script>
+<?php foreach($js as $js_url): ?>
+	<script src="<?php echo $js_url ?>" type="text/javascript" charset="utf-8" defer id="EEDebug_debug_script"></script>
+<?php endforeach; ?>

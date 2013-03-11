@@ -227,8 +227,9 @@ class Ee_debug_toolbar_ext
 		$vars['master_view_script']            = "toolbar";
 		$vars['panels']                        = array();
 		$vars['toolbar_position']              = $this->determine_toolbar_position_class();
-		
-		$vars['benchmark_data'] = array(); //we have to fake this for now 
+		$vars['js']                            = array($vars['theme_js_url'] . "eedt.js");
+		$vars['css']                           = array($vars['theme_css_url']."ee_debug_toolbar.css");
+		$vars['benchmark_data']                = array(); //we have to fake this for now
 
 		//Load variables so that they are present in all view partials
 		$this->EE->load->vars($vars);
@@ -265,7 +266,12 @@ class Ee_debug_toolbar_ext
 			if(!($panel instanceof Eedt_panel_model))
 			{
 				unset($panel_data[$key]);
+				continue;
 			}
+
+			//If any panels have specified JS & CSS to be inserted on page load, collect them here
+			$vars['css'] = array_merge($vars['css'], $panel->get_page_load_css());
+			$vars['js'] = array_merge($vars['js'], $panel->get_page_load_js());
 		}
 		
 		$vars['panels'] = $panel_data;

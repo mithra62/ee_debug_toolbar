@@ -81,9 +81,19 @@ class Eedt_panel_model
 	private $js = array();
 
 	/**
+	 * @var array JS resources needed by this toolbar view, to be loaded on page load
+	 */
+	private $page_load_js = array();
+
+	/**
 	 * @var array CSS resources needed by this toolbar view
 	 */
 	private $css = array();
+
+	/**
+	 * @var array CSS resources needed by this toolbar view, to be loaded on page load
+	 */
+	private $page_load_css = array();
 	
 	/**
 	 * @var string URL endpoint for Ajax requests
@@ -210,29 +220,61 @@ class Eedt_panel_model
 	}	
 
 	/**
-	 * @param $filename
+	 * @param string $filename
+	 * @param boolean $page_load
 	 */
-	function add_js($filename)
+	function add_js($filename, $page_load = FALSE)
 	{
+		if($page_load) {
+			$this->page_load_js[] = $filename;
+			return;
+		}
 		$this->js[] = $filename;
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	public function get_js()
 	{
 		return $this->js;
-	}	
+	}
 
 	/**
-	 * @param $filename
+	 * @return array
 	 */
-	function add_css($filename)
+	public function get_page_load_js()
 	{
+		return $this->page_load_js;
+	}
+
+	/**
+	 * @param string $filename
+	 * @param boolean $page_load
+	 */
+	function add_css($filename, $page_load = FALSE)
+	{
+		if($page_load) {
+			$this->page_load_css[] = $filename;
+			return;
+		}
 		$this->css[] = $filename;
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	public function get_css()
 	{
 		return $this->css;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_page_load_css()
+	{
+		return $this->page_load_css;
 	}
 
 	/**

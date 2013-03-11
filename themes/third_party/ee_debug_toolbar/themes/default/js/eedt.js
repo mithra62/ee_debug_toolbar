@@ -226,6 +226,15 @@
 	}
 
 
+	/**
+	 * Get config item
+	 *
+	 * @param {string} key Config item name
+	 * @return {*}
+	 */
+	function configuration(key) {
+		return config[key];
+	}
 
 	function ajax(className, methodName, callback){
 		var here = this,
@@ -615,7 +624,8 @@
 		on:onPanelEvent,
 		panel:getPanel,
 		ajax: ajax,
-		closePanels: closeAllPanels
+		closePanels: closeAllPanels,
+		config: configuration
 	};
 
 })();

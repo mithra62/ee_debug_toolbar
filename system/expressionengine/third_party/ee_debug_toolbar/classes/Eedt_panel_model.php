@@ -101,10 +101,8 @@ class Eedt_panel_model
 	private $ajax_url = '';
 
 	/**
-	 * @var container of panel info
+	 * @var string
 	 */
-	private $panels = array();
-
 	private $panel_css_class = '';
 
 	/**

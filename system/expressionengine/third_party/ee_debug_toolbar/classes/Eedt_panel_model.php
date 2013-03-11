@@ -99,13 +99,13 @@ class Eedt_panel_model
 	 * @var string URL endpoint for Ajax requests
 	 */
 	private $ajax_url = '';
-	
+
 	/**
 	 * @var container of panel info
 	 */
 	private $panels = array();
-	
-	private $panel_css = FALSE;
+
+	private $panel_css_class = '';
 
 	/**
 	 * @param string $name
@@ -208,16 +208,16 @@ class Eedt_panel_model
 	{
 		return $this->ajax_url;
 	}
-	
-	public function set_panel_css($css)
+
+	public function set_panel_css_class($css)
 	{
 		$this->panel_css = $css;
 	}
-	
-	public function get_panel_css()
+
+	public function get_panel_css_class()
 	{
-		return $this->panel_css;
-	}	
+		return $this->panel_css_class;
+	}
 
 	/**
 	 * @param string $filename

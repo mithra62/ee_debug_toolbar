@@ -10,7 +10,7 @@
 	<div id="Eedt_debug_toolbar_buttons">
 		<span class="Eedt_debug_toolbar_buttons_wrap">
 			<?php foreach($panels AS $key => $panel): ?>
-				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->get_panel_css(); ?>" data-target="<?php echo $panel->get_target(); ?>"  id="Eedt_debug_<?php echo $panel->get_name(); ?>_btn">
+				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->get_panel_css_class(); ?>" data-target="<?php echo $panel->get_target(); ?>"  id="Eedt_debug_<?php echo $panel->get_name(); ?>_btn">
 					<img src="<?php echo $panel->get_button_icon(); ?>" style="vertical-align:middle"
 						 alt="<?php echo $panel->get_button_icon_alt_text(); ?>" title="<?php echo $panel->get_button_label(); ?>">
 						<?php echo $panel->get_button_label(); ?>

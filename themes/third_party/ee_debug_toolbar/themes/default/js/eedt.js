@@ -167,7 +167,6 @@
 	 * Toggle toolbar visibility
 	 */
 	function toggleToolbar(){
-		console.log('click')
 		if (toolbar.hasClass("toolbar-open")) {
 			closeToolbar();
 		}

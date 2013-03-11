@@ -86,7 +86,6 @@ class Eedt_base_panel
 		$view->set_button_label($this->button_label);
 		$view->set_button_icon($this->button_icon_uri);
 		$view->set_output($this->view());
-		$view->set_ajax_url($this->EE->toolbar->create_act_url('get_panel_data').AMP.'panel='.$this->name);
 
 		return $view;
 	}

@@ -373,7 +373,7 @@ class Toolbar
 		$config['panels'] = array();
 		$config['base_css_url'] = $vars['theme_css_url'];
 		$config['base_js_url'] = $vars['theme_js_url'];
-		$config['panel_ajax_url'] = str_replace("&amp;", "&", $this->create_act_url("panel_ajax")) . "&panel=";
+		$config['panel_ajax_url'] = str_replace("&amp;", "&", $this->get_action_url('act').AMP);
 
 		/**
 		 * @var Eedt_panel_model $panel

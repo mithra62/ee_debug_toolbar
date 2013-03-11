@@ -227,19 +227,14 @@
 
 
 
-	function ajax(panelName, methodName, callback){
+	function ajax(className, methodName, callback){
 		var here = this,
-			url = config.panel_data_url + this.name,
+			url = config.panel_ajax_url + "class=" + className + "&method=" + methodName + "&LANG=ENG",
 			def = new jQuery.Deferred();
 
 		jQuery.ajax({
 			type:'GET',
 			url:url,
-			data:{
-				LANG:"ENG",
-				panel: panelName,
-				method: methodName
-			},
 			dataType:'html',
 			success:function (data, textStatus) {
 				def.resolve(data);

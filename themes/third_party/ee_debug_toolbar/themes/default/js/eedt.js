@@ -1,6 +1,8 @@
 (function () {
 	var args = arguments,
 		toolbar,
+		readyDeferred,
+		readyQueue = window._eedtConfig.readyQueue || [],
 		leftToggleArrow = "&#187;",
 		rightToggleArrow = "&#171;",
 		toolbarToggleBtn,
@@ -14,9 +16,17 @@
 		return;
 	}
 
+	//Expose ready method to allow third party scripts to be notified when eedt.js is ready (but before DOMReady)
+	//This is jsut in case jQuery needs to be loaded, in which we end up with async script execution
+	window.eedt = {
+		ready: preDeferredReady
+	}
+
 	//jQuery loaded? If not, load it and start again when it has finished
 	if (!window.jQuery) {
 		loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js', function () {
+			//Preserve eedt.ready() callbacks for next method call
+			window._eedtConfig.readyQueue = readyQueue;
 			jQuery.noConflict();
 			args.callee();
 		});
@@ -32,6 +42,7 @@
 	bindToolbar();
 	bindPanels();
 	bindButtons();
+	prepOnReadyQueue();
 
 	if(toolbar.hasClass("right")) {
 		rightToggleArrow = "&#187;";
@@ -63,6 +74,45 @@
 	//And lastly show the toolbar!
 	toolbar.show();
 
+
+	/**
+	 * Register callback for when eedt.js is ready
+	 *
+	 * This method is intended to be called very early in execution,
+	 * way before jQuery is guaranteed to be on the page (hence no Deferred)
+	 *
+	 * @param cb Callback function
+	 */
+	function preDeferredReady(cb) {
+		if(typeof cb === 'function'){
+			readyQueue.push(cb);
+		}
+	}
+
+	/**
+	 * Register a callback for when eedt.js is ready
+	 *
+	 * This method is exposed via the eedt.ready() API later in the lifecycle
+	 * after jQuery.Deferred is guaranteed to be on the page
+	 *
+	 * @param cb Callback function
+	 */
+	function postDeferredReady(cb) {
+		if(typeof cb === 'function'){
+			readyDeferred.done(cb);
+		}
+	}
+
+	/**
+	 * Takes all eedt.ready() calls and registers them against a Deferred object
+	 */
+	function prepOnReadyQueue(){
+		readyDeferred = new jQuery.Deferred();
+
+		for(var i = 0; i < readyQueue.length; i++) {
+			readyDeferred.done(readyQueue[i]);
+		}
+	}
 
 
 	/**
@@ -625,7 +675,11 @@
 		panel:getPanel,
 		ajax: ajax,
 		closePanels: closeAllPanels,
-		config: configuration
+		config: configuration,
+		ready: postDeferredReady
 	};
+
+	//Resolve eedt deferred object
+	readyDeferred.resolve(jQuery, window.eedt);
 
 })();

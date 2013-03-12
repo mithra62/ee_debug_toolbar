@@ -77,16 +77,15 @@ class Eedt_minimal_ext
 		$this->EE->benchmark->mark('eedt_minimal_start');
 		
 		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
-		$settings = $this->EE->toolbar->get_settings();
-		
+
 		foreach($panels AS $key => $value)
 		{
-			$panels[$key]->setButtonIconAltText($panels[$key]->getName());
-			$panels[$key]->setButtonLabel('');
+			$panels[$key]->set_button_icon_alt_text($panels[$key]->get_name());
+			$panels[$key]->set_button_label('');
 		}
 
 		$theme_css_url = URL_THIRD_THEMES.'eedt_minimal/css/';
-		$panels[$key]->addCss($theme_css_url.'minimal.css');		
+		$panels[$key]->add_css($theme_css_url.'minimal.css');
 		
 		$this->EE->benchmark->mark('eedt_minimal_end');
 		return $panels;

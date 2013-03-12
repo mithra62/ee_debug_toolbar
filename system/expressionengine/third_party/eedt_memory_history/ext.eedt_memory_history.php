@@ -67,33 +67,32 @@ class Eedt_memory_history_ext
 		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_memory_history/');
 	}
 	
-	public function ee_debug_toolbar_modify_output($view)
+	public function ee_debug_toolbar_add_panel($panels)
 	{
 		$this->EE->benchmark->mark('eedt_memory_history_start');
-		$view = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
-		
+		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $view);
+
 		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_memory_history/images/';
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_memory_history/js/';
 		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_memory_history/css/';
-				
-		//$view['panel_data']['memory_history']['view_script'] = 'memory_history';
-		$view['panel_data']['memory_history']['image'] = $vars['theme_img_url'].'memory_history.png';
-		$view['panel_data']['memory_history']['title'] = lang('memory_history');
-		$view['panel_data']['memory_history']['data_target'] = 'EEDebug_memory_history';
-		$view['panel_data']['memory_history']['class'] = '';
-		$view['panel_data']['memory_history']['view_html'] = $this->EE->load->view('memory_history', $vars, TRUE);
 
-		//unset($view['panel_data']['files']);
+		$panels['memory_history'] = new Eedt_panel_model();
+		$panels['memory_history']->set_name("memory_history");
+		$panels['memory_history']->set_button_label(lang('memory_history'));
+		$panels['memory_history']->set_button_icon($vars['theme_img_url'].'memory_history.png');
+		$panels['memory_history']->set_output($this->EE->load->view('memory_history', $vars, TRUE));
+		$panels['memory_history']->add_css($vars['theme_css_url']."memory_history.css");
+
 		$this->EE->benchmark->mark('eedt_memory_history_end');
-		return $view;
+		return $panels;
 	}
 
 	public function activate_extension()
 	{			
 		$data = array(
 				'class'     => __CLASS__,
-				'method'    => 'ee_debug_toolbar_modify_output',
-				'hook'      => 'ee_debug_toolbar_modify_output',
+				'method'    => 'ee_debug_toolbar_add_panel',
+				'hook'      => 'ee_debug_toolbar_add_panel',
 				'settings'  => '',
 				'priority'  => 49,
 				'version'   => $this->version,

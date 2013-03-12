@@ -161,3 +161,6 @@
 #Eedt_debug_toolbar .Eedt_debug_panel.Eedt_debug_panel_loading * {
 	display: none !important;
 }
+#Eedt_debug_toolbar .flash {
+	color: #FF0000;
+}

@@ -308,3 +308,6 @@ a.EEDebug_actions {
     margin: 0;
 	color: #000;
 }
+#Eedt_debug_toolbar .flash {
+	color: #FF0000;
+}

@@ -74,18 +74,6 @@ class Eedt_log_viewer_ext
 		$this->EE->benchmark->mark('eedt_log_viewer_start');
 		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
 		
-		$vars['logs_enabled'] = FALSE;
-		if($this->EE->config->config['log_threshold'] >= 1)
-		{
-			$vars['logs_enabled'] = TRUE;
-		}
-		
-		$vars['log_dir_writable'] = FALSE;
-		if(is_writable($this->EE->config->config['log_path']))
-		{
-			$vars['log_dir_writable'] = TRUE;
-		}
-		
 		$vars['panel_fetch_url'] = $this->EE->toolbar->create_act_url('get_panel_logs', __CLASS__);
 		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_log_viewer/images/';
 		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
@@ -105,64 +93,48 @@ class Eedt_log_viewer_ext
 	public function get_panel_logs()
 	{
 		$log_path = $this->EE->config->item('log_path') ? $this->EE->config->item('log_path') : APPPATH . "logs/";
+		
+		$vars['logs_enabled'] = FALSE;
+		if($this->EE->config->config['log_threshold'] >= 1)
+		{
+			$vars['logs_enabled'] = TRUE;
+		}
+		
+		$vars['log_dir_writable'] = FALSE;
+		if(is_writable($this->EE->config->config['log_path']))
+		{
+			$vars['log_dir_writable'] = TRUE;
+		}
+				
 		if(!is_readable($log_path))
 		{
 			echo lang('log_dir_not_readable');
 			exit;
 		}
-	
-		//get the log files
-		$d = dir($log_path);
-		$log_files = array();
-		while (false !== ($entry = $d->read()))
+		else
 		{
-			if($entry == '.' || $entry == '..')
+			$d = dir($log_path);
+			$log_files = array();
+			while (false !== ($entry = $d->read()))
 			{
-				continue;
+				if($entry == '.' || $entry == '..')
+				{
+					continue;
+				}
+					
+				$log_files[$entry] = $entry;
 			}
-				
-			$log_files[$entry] = $entry;
-		}
-		$d->close();
-	
-		if(count($log_files) == '0')
-		{
-			echo lang('no_log_files');
-			exit;
-		}
-	
-		//we only want the latest log file
-		$latest_log = $log_path.end($log_files);
-		$f = fopen($latest_log, 'r');
-		$lineNo = 0;
-		//$startLine = 3;
-		//$endLine = 6;
-		echo '<div>';
-		while ($line = fgets($f)) {
-			$lineNo++;
-				
-			if($lineNo != '1')
+			$d->close();
+			if(count($log_files) == '0')
 			{
-				echo $line.'<br />';
+				echo lang('no_log_files');
+				exit;
 			}
-				
-			if($lineNo == '1000')
-			{
-				break;
-			}
-				
-			/*
-				if ($lineNo >= $startLine) {
-			echo $line;
-			}
-			if ($lineNo == $endLine) {
-			break;
-			}
-			*/
 		}
-		fclose($f);
-	
-		echo '<div>';
+		
+		$vars['latest_log'] = $log_path.end($log_files);
+		$vars['log_files'] = $log_files;
+		echo $this->EE->load->view('log_viewer', $vars, TRUE);
 		exit;
 	}	
 

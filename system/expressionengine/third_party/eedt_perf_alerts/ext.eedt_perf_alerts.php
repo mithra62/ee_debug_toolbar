@@ -83,25 +83,25 @@ class Eedt_perf_alerts_ext
 		//check total time
 		if($view['elapsed_time'] > $settings['max_exec_time'])
 		{
-			$panels['time']->set_panel_css('flash');
+			$panels['time']->set_panel_css_class('flash');
 		}
 		
 		//make sure we're not running too many queries
 		if($view['query_count'] > $settings['max_queries'])
 		{
-			$panels['database']->set_panel_css('flash');
+			$panels['database']->set_panel_css_class('flash');
 		}
 		
 		//and how long did those queries take?
 		if($view['query_data']['total_time'] > $settings['max_sql_time'])
 		{
-			$panels['database']->set_panel_css('flash');
+			$panels['database']->set_panel_css_class('flash');
 		}
 		
 		//is memory usage bad?
 		if($view['memory_usage'] > $settings['max_memory'])
 		{
-			$panels['memory']->set_panel_css('flash');
+			$panels['memory']->set_panel_css_class('flash');
 		}
 		
 		$view['perf_theme_img_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/images/';

@@ -202,7 +202,7 @@ class Eedt_panel_model
 	 */
 	public function set_panel_css_class($css)
 	{
-		$this->panel_css = $css;
+		$this->panel_css_class = $css;
 	}
 
 	/**

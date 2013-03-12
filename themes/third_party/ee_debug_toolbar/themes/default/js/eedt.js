@@ -294,7 +294,6 @@
 		jQuery.ajax({
 			type:'GET',
 			url:url,
-			dataType:'html',
 			success:function (data, textStatus) {
 				def.resolve(data);
 			},

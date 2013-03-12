@@ -4,9 +4,9 @@
 <?php endforeach; ?>
 
 <!--PANELS BEFORE TOOLBAR -->
-<?php foreach($panels_before_toolbar AS $key => $panel): ?>
-<div id="<?php echo $panel->get_target(); ?>" class="Eedt_debug_panel"></div>
-<?php endforeach; ?>
+<?php foreach($panels_before_toolbar AS $key => $panel):
+	echo $panel->get_output();
+endforeach; ?>
 
 <!--EE DEBUG TOOLBAR-->
 <div id="Eedt_debug_toolbar" class="<?php echo $toolbar_position ?>">
@@ -32,9 +32,9 @@
 </div>
 
 <!--PANELS AFTER TOOLBAR-->
-<?php foreach($panels_after_toolbar AS $key => $panel): ?>
-<div id="<?php echo $panel->get_target(); ?>" class="Eedt_debug_panel"></div>
-<?php endforeach; ?>
+<?php foreach($panels_after_toolbar AS $key => $panel):
+	echo $panel->get_output();
+endforeach; ?>
 
 <!--EEDT.JS CONFIG-->
 <script type="text/javascript">

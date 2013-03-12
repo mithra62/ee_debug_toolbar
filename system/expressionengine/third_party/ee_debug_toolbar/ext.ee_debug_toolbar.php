@@ -291,9 +291,6 @@ class Ee_debug_toolbar_ext
 		{
 			$vars['panels']['time']->set_output($this->EE->load->view("partials/time", $vars, TRUE));
 		}
-		
-		//setup the XML storage data for use by the panels on open
-		$this->EE->toolbar->cache_panels($vars['panels'], $this->cache_dir);
 
 		//Break up the panels into the various injection points
 		$vars['panels_before_toolbar'] = array();
@@ -314,6 +311,9 @@ class Ee_debug_toolbar_ext
 			}
 		}
 		unset($vars['panels']);
+
+		//setup the XML storage data for use by the panels on open
+		$this->EE->toolbar->cache_panels($vars['panels_in_toolbar'], $this->cache_dir);
 		
 		//Render toolbar
 		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);

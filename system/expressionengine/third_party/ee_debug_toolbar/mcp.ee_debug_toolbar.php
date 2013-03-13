@@ -53,6 +53,9 @@ class Ee_debug_toolbar_mcp
 		$this->url_base = BASE.AMP.$this->query_base;		
 		
 		$this->EE->cp->set_breadcrumb(BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module='.$this->mod_name, $this->EE->lang->line('ee_debug_toolbar_module_name'));		
+		
+		$this->add_breadcrumb(BASE.AMP.'C=addons', lang('add_ons'));
+		$this->add_breadcrumb(BASE.AMP.'C=addons_extensions', lang('extensions'));
 		$this->add_breadcrumb($this->url_base.'index', lang('ee_debug_toolbar_module_name'));
 	}
 	

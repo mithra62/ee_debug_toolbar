@@ -29,6 +29,10 @@ class Toolbar
 	 */
 	public $default_theme = "default";
 	
+	/**
+	 * The available positions for the toolbar to live
+	 * @var array
+	 */
 	public $toolbar_positions = array(
 			'bottom-left',
 			'top-left',
@@ -203,7 +207,6 @@ class Toolbar
 		return json_encode($data);
 	}
 
-
 	/**
 	 * Format a number of bytes into a human readable format.
 	 * Optionally choose the output format and/or force a particular unit
@@ -350,7 +353,7 @@ class Toolbar
 		$xml = $this->EE->xml_writer->getXml(false);
 				
 		$filename = $path.$this->make_cache_filename();
-		write_file($filename, $xml);
+		write_file($filename, utf8_encode($xml));
 	}
 	
 	public function make_cache_filename()

@@ -1,7 +1,9 @@
 <h4><?php echo lang('file_information'); ?></h4>
 <?php echo (count(get_included_files()) + 1); //faked for included graph file below ?> <?php echo lang('files_included'); ?>
 <br>
-
+<h4><?php echo lang('requested_url'); ?></h4>
+<?php echo $_SERVER['REQUEST_URI']; ?>
+<br>
 <h4><?php echo lang('system_paths'); ?></h4>
 
 <span class="label"><?php echo lang('bootstrap_file'); ?>:</span> <code><?php echo realpath($included_file_data['bootstrap_file']); ?></code><br>

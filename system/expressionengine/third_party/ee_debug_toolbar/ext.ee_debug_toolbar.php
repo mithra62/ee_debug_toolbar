@@ -128,11 +128,15 @@ class Ee_debug_toolbar_ext
 		$session = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $session);
 
 		//OK, this is kind of stupid, but CI only compiles debug data if both the profiler is on and the user is Super Admin.
-		if ($this->EE->config->config['show_profiler'] != 'y' || $session->userdata('group_id') != '1') {
+		if ($this->EE->config->config['show_profiler'] != 'y' || $session->userdata('group_id') != '1') 
+		{
 			return $session;
 		}
 
-		if ($this->EE->input->get("C") == "javascript") {
+		//we don't want to compile Toolbar data on certain requests
+		$ignore_controllers = array('javascript', 'css');
+		if (in_array($this->EE->input->get("C"), $ignore_controllers)) 
+		{
 			return $session;
 		}
 		
@@ -145,7 +149,8 @@ class Ee_debug_toolbar_ext
 		global $EXT;
 
 		//BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
-		if (!class_exists('Ee_toolbar_hook')) {
+		if (!class_exists('Ee_toolbar_hook')) 
+		{
 			$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
 		}
 

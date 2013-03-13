@@ -1,5 +1,20 @@
 /**
- * EE Debug Toolbar CSS
+ * Core Overrides
+ */
+#Eedt_debug_toolbar, #Eedt_debug_toolbar * {
+	box-sizing: content-box !important;
+	margin: 0;
+	padding:0;
+	font-family: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif;
+}
+#Eedt_debug_toolbar img {
+	width: auto;
+	height: auto;
+	display: inline;
+}
+
+/**
+ * EEDT Bootstrap Theme
  */
 #Eedt_debug_toolbar {
 	font: 11px/1.4em "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -98,7 +113,8 @@
 	float: left;
 }
 
-#Eedt_debug_toolbar_toggle_btn, .Eedt_debug_toolbar_button {
+#Eedt_debug_toolbar #Eedt_debug_toolbar_toggle_btn,
+#Eedt_debug_toolbar .Eedt_debug_toolbar_button {
 
 	background: #BFBFBF;
 	padding: 10px 9px 9px;
@@ -125,8 +141,8 @@
     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-#Eedt_debug_toolbar_toggle_btn:hover,
-.Eedt_debug_toolbar_button:hover {
+#Eedt_debug_toolbar #Eedt_debug_toolbar_toggle_btn:hover,
+#Eedt_debug_toolbar .Eedt_debug_toolbar_button:hover {
     color: #333333;
     background-color: #e6e6e6;
     text-decoration: none;
@@ -136,8 +152,8 @@
     -o-transition: background-position 0.1s linear;
     transition: background-position 0.1s linear;
 }
-#Eedt_debug_toolbar_toggle_btn:active,
-.Eedt_debug_toolbar_button:active {
+#Eedt_debug_toolbar #Eedt_debug_toolbar_toggle_btn:active,
+#Eedt_debug_toolbar .Eedt_debug_toolbar_button:active {
     background-image: none;
     outline: 0;
     color: #333333;
@@ -148,7 +164,7 @@
 
 }
 
-#Eedt_debug_toolbar_toggle_btn {
+#Eedt_debug_toolbar #Eedt_debug_toolbar_toggle_btn {
     border-bottom-color: #a2a2a2;
     -webkit-border-radius: 4px 0 0 4px;
     -moz-border-radius: 4px 0 0 4px;
@@ -159,7 +175,7 @@
 	cursor: pointer;
 	float:left;
 }
-.Eedt_debug_toolbar_button {
+#Eedt_debug_toolbar .Eedt_debug_toolbar_button {
 	border-right: 0px;
 	float:left;
 	position: relative;
@@ -177,11 +193,11 @@
 }
 
 
-.EEDebug_last {
+#Eedt_debug_toolbar  .EEDebug_last {
 	border: 1px solid #999;
 }
 
-.Eedt_debug_panel {
+#Eedt_debug_toolbar  .Eedt_debug_panel {
 	text-align: left;
 	position: absolute;
 	bottom:37px;
@@ -206,7 +222,7 @@
 	right:0;
 }
 
-.Eedt_debug_panel.active {
+#Eedt_debug_toolbar  .Eedt_debug_panel.active {
 	padding: 7px 9px;
 	height:500px;
 	display: block;
@@ -221,15 +237,15 @@
 	border-bottom: 4px solid #aaa;
 }
 
-.Eedt_debug_toolbar_button img{
+#Eedt_debug_toolbar .Eedt_debug_toolbar_button img{
     position: relative;
     top:-1px;
 }
-.Eedt_debug_panel span.label {
+#Eedt_debug_toolbar .Eedt_debug_panel span.label {
     display:inline-block;
     width:100px
 }
-.Eedt_debug_panel code {
+#Eedt_debug_toolbar .Eedt_debug_panel code {
     padding: 2px 4px;
     color: #d14;
     white-space: nowrap;
@@ -245,7 +261,7 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
-.Eedt_debug_panel pre {
+#Eedt_debug_toolbar .Eedt_debug_panel pre {
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
     color: #333333;
     display: block;
@@ -269,28 +285,28 @@
     overflow-y: hidden;
     white-space: nowrap;
 }
-.Eedt_debug_panel pre pre{
+#Eedt_debug_toolbar .Eedt_debug_panel pre pre{
     border-left-width: 4px;
     border-top-width: 4px;
 }
-#EEDebug_exception {
+#Eedt_debug_toolbar #EEDebug_exception {
 	border: 1px solid #CD0A0A;
 	display: block;
 }
 
 
 
-a.EEDebug_actions {
+#Eedt_debug_toolbar a.EEDebug_actions {
 	color: #000000;
 }
 
-#EEDebug_database code {
+#Eedt_debug_toolbar #EEDebug_database code {
     display:inline;
     border:none;
     font-size: 10px;
 }
 
-#EEDebug_template_list { 
+#Eedt_debug_toolbar #EEDebug_template_list {
 	overflow:scroll; 
 	height:232px;
 	/* Legacy */
@@ -299,15 +315,14 @@ a.EEDebug_actions {
 	/* Modern Browsers */
 	overflow-x:hidden;
 	overflow-y:scroll;
-
 }
 
-.Eedt_debug_panel h4 {
+#Eedt_debug_toolbar .Eedt_debug_panel h4 {
     font-size: 11px;
     font-weight: bold;
     margin: 0;
 	color: #000;
 }
-#Eedt_debug_toolbar .flash {
+#Eedt_debug_toolbar #Eedt_debug_toolbar .flash {
 	color: #FF0000;
 }

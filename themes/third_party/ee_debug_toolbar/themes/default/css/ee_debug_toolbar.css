@@ -1,8 +1,23 @@
 /**
- * EE Debug Toolbar CSS
+ * Core Overrides
+ */
+#Eedt_debug_toolbar, #Eedt_debug_toolbar * {
+	box-sizing: content-box !important;
+	margin: 0;
+	padding:0;
+	font-family: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif;
+}
+#Eedt_debug_toolbar img {
+	width: auto;
+	height: auto;
+	display: inline;
+}
+
+/**
+ * EEDT Default Theme
  */
 #Eedt_debug_toolbar {
-	font: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif;
+
 	position: fixed;
 	bottom: 5px;
 	left: 0px;
@@ -63,7 +78,7 @@
 	float:left;
 }
 
-.Eedt_debug_toolbar_button {
+#Eedt_debug_toolbar .Eedt_debug_toolbar_button {
 	border: 1px solid #999;
 	border-right: 0px;
 	background: #DFDFDF;
@@ -85,7 +100,7 @@
 	border: 1px solid #999;
 }
 
-.Eedt_debug_panel {
+#Eedt_debug_toolbar .Eedt_debug_panel {
 	text-align: left;
 	position: absolute;
 	bottom: 28px;
@@ -112,7 +127,7 @@
 	right:0;
 }
 
-.Eedt_debug_panel.active {
+#Eedt_debug_toolbar .Eedt_debug_panel.active {
 	border: 1px solid #999;
 	padding: 5px;
 	height:600px;
@@ -129,7 +144,7 @@
 }
 
 
-.Eedt_debug_panel code {
+#Eedt_debug_toolbar .Eedt_debug_panel code {
     background-color: #E8E8E8;
 	padding:0;
 	margin:0;
@@ -139,13 +154,13 @@
     font-size: 11px;
 }
 
-.Eedt_debug_panel pre {
+#Eedt_debug_toolbar .Eedt_debug_panel pre {
 	font: 11px/1.4em Monaco, Lucida Console, monospace;
 	margin: 0 0 0 22px;
 	word-wrap: break-word;
 }
 
-.Eedt_debug_panel h4 {
+#Eedt_debug_toolbar .Eedt_debug_panel h4 {
     font-size: 11px;
     font-weight: bold;
     margin: 0;

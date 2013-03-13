@@ -1,38 +1,40 @@
 /* EEDebug_memory */
 
 
-#EEDebug_graph {
+#Eedt_debug_toolbar #EEDebug_graph {
 	width: 700px;
 }
-#EEDebug_graph,
-#EEDebug_template_list{
+#Eedt_debug_toolbar #EEDebug_graph,
+#Eedt_debug_toolbar #EEDebug_template_list{
 	display: none;
 }
 
-.show_graph #EEDebug_graph,
-.show_template_list #EEDebug_template_list {
+#Eedt_debug_toolbar .show_graph #EEDebug_graph,
+#Eedt_debug_toolbar .show_template_list #EEDebug_template_list {
 	display: block;
 }
 
 
-a.EEDebug_actions {
+#Eedt_debug_toolbar a.EEDebug_actions {
 	color: #000000;
 }
 
-.show_graph #EEDebug_graph_display, .show_template_list #EEDebug_graph_list,
-.EEDebug_tmpl_log_active, .flash {
+#Eedt_debug_toolbar .show_graph #EEDebug_graph_display,
+#Eedt_debug_toolbar .show_template_list #EEDebug_graph_list,
+#Eedt_debug_toolbar .EEDebug_tmpl_log_active,
+#Eedt_debug_toolbar .flash {
 	color: #FF0000;
 }
-#Eedt_debug_memory_panel {
+#Eedt_debug_toolbar #Eedt_debug_memory_panel {
 	width: 660px;
 }
-#Eedt_debug_memory_panel.active {
+#Eedt_debug_toolbar #Eedt_debug_memory_panel.active {
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	height: 240px;
 }
 
-#EEDebug_memory_cp.active {
+#Eedt_debug_toolbar #EEDebug_memory_cp.active {
 	overflow: hidden;
 }

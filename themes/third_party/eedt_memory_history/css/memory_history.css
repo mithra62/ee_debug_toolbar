@@ -1,19 +1,17 @@
-#Eedt_debug_toolbar {
-	font: 11px/1.4em Lucida Grande, Lucida Sans Unicode, sans-serif;
+#Eedt_memory_history {
 	position: fixed;
-	bottom: 5px;
-	left: -722px;
-	color: #000;
-	z-index: 100255;
+	top:5px;
+	right:5px;
+	height:110px;
+	width:260px;
+	background: #032f4f;
+	border:1px solid #000;
 }
-
-@-moz-document url-prefix() {
-    #EEDebug_debug {
-       left: -780px;
-    }
-}
-
-#EEDebug_memory_history.active {
-	height:20px;
-	overflow:hidden;
+#Eedt_memory_history #Eedt_memory_history_chart {
+	position: absolute;
+	top:5px;
+	bottom:5px;
+	right:5px;
+	left:5px;
+	background: #032f4f;
 }

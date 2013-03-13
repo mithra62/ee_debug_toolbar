@@ -38,7 +38,11 @@ class Ee_debug_toolbar
 		$this->version = $config['version'];
 		
 		$this->EE->lang->loadfile('ee_debug_toolbar');
-		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');	
+		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+
+		//run the garbage collection against the cache
+		$this->EE->load->library('ee_toolbar_gc', null, 'garbage_collection');
+		$this->EE->garbage_collection->run();
 	}
 	
 	public function act()

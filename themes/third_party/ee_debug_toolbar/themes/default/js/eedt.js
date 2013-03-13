@@ -275,6 +275,28 @@
 		}
 	}
 
+	function deferredCollection(deferreds){
+		var def = new jQuery.Deferred(),
+			completed = 0,
+			total = deferreds.length;
+
+		for(var i = 0; i < total; i++){
+			deferreds[i].done(function(){
+				completed++;
+
+				if(completed === total){
+					def.resolve();
+				}
+			});
+		}
+
+		if(total === 0) {
+			def.resolve();
+		}
+
+		return def;
+	}
+
 
 	/**
 	 * Get config item
@@ -577,6 +599,7 @@
 				dataType:'html',
 				success:function (data, textStatus) {
 					here.panelNode.html(data);
+					def.resolve();
 				},
 				error:function (xhr, err, e) {
 					console.error("Error encountered while fetching HTML contents for '" + here.name + "' panel", xhr, err, e);
@@ -609,7 +632,7 @@
 				}, 20);
 			}
 
-			return jQuery.when.apply(jQuery, da);
+			return deferredCollection(da);
 		}
 
 
@@ -633,7 +656,7 @@
 				}, 20);
 			}
 
-			return jQuery.when.apply(jQuery, da);
+			return deferredCollection(da);
 		}
 
 
@@ -647,15 +670,15 @@
 
 			if(initialLoad){
 				here.loading(true);
-				da.push(jQuery.proxy(here.loadPanelHtml(), here));
-				da.push(jQuery.proxy(here.loadPanelJs(), here));
-				da.push(jQuery.proxy(here.loadPanelCss(), here));
+				da.push(here.loadPanelHtml());
+				da.push(here.loadPanelJs());
+				da.push(here.loadPanelCss());
 			} else {
 				here.toggle();
 				return;
 			}
 
-			jQuery.when.apply(jQuery, da).then(jQuery.proxy(here.init, here));
+			deferredCollection(da).done(jQuery.proxy(here.init, here))
 		})
 	}
 

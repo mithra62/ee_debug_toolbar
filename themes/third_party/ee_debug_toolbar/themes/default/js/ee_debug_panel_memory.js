@@ -8,8 +8,11 @@ eedt.on("memory", "init", function(node, panel){
 		panel.loading(false);
 		return;
 	}
-
-	eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready");
+	if(!google.load){
+		eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready");
+	} else {
+		jsapi_ready();
+	}
 });
 
 

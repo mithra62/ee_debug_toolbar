@@ -204,6 +204,12 @@ class Toolbar
 	 */
 	public function format_tmpl_chart_json($data)
 	{
+		//a little sanity for UTF-8
+		foreach($data AS $key => $value)
+		{
+			$data[$key]['desc']	= utf8_encode($data[$key]['desc']);
+		}
+		
 		return json_encode($data);
 	}
 

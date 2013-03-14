@@ -196,6 +196,9 @@ class Ee_debug_toolbar_ext
 	 */
 	public function modify_output()
 	{
+		//Attempt to patch the weird unfinished Active record chain (issue #18)
+		$this->EE->db->limit(1)->get("channel_titles");
+
 		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_panel_model.php");
 		$html = $this->EE->output->final_output;
 

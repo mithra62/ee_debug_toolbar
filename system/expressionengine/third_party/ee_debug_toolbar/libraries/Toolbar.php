@@ -353,7 +353,13 @@ class Toolbar
 		$xml = $this->EE->xml_writer->getXml(false);
 				
 		$filename = $path.$this->make_cache_filename();
-		write_file($filename, utf8_encode($xml));
+		
+		$string = utf8_encode($xml);
+		$gz = gzopen($filename.'.gz','w9');
+		gzwrite($gz, $string);
+		gzclose($gz);
+				
+		//write_file($filename, utf8_encode($xml));
 	}
 	
 	public function make_cache_filename()

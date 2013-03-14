@@ -393,10 +393,12 @@ class Ee_debug_toolbar_ext
 
 		//the cache file is just an XML so we check for existance, node, and display. easy
 		$this->EE->load->library('toolbar');
-		$file = $this->cache_dir.$this->EE->toolbar->make_cache_filename();
+		$file = $this->cache_dir.$this->EE->toolbar->make_cache_filename().'.gz';
 		if(file_exists($file) && is_readable($file))
 		{
-			$xml = simplexml_load_file($file);
+			$gz = gzfile($file);
+			$gz = implode("", $gz);
+			$xml = simplexml_load_string($gz);
 			$panel_node = $panel.'_panel';
 			if(isset($xml->panels->$panel_node->output) && $xml->panels->$panel_node->output != '')
 			{

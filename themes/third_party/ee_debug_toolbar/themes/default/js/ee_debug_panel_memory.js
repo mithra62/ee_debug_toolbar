@@ -8,7 +8,7 @@ eedt.on("memory", "init", function(node, panel){
 		panel.loading(false);
 		return;
 	}
-	if(!google.load){
+	if(!window.google){
 		eedt.loadScript("https://www.google.com/jsapi?callback=jsapi_ready");
 	} else {
 		jsapi_ready();

@@ -315,7 +315,7 @@ class Ee_debug_toolbar_ext
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 		if(!empty($vars['panels']['time']))
 		{
-			$vars['panels']['time']->set_output($this->EE->load->view("partials/time", $vars, TRUE));
+			$vars['panels']['time']->set_panel_contents($this->EE->load->view("partials/time", $vars, TRUE));
 		}
 
 		//Break up the panels into the various injection points

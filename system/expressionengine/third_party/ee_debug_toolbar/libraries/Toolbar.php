@@ -351,7 +351,7 @@ class Toolbar
 			$this->EE->xml_writer->addNode('button_icon', $panel->get_button_icon(), array(), TRUE);
 			$this->EE->xml_writer->addNode('button_icon_alt_text', $panel->get_button_icon_alt_text(), array(), TRUE);
 			$this->EE->xml_writer->addNode('button_label', $panel->get_button_label(), array(), TRUE);
-			$this->EE->xml_writer->addNode('output', $panel->get_output(), array(), TRUE);
+			$this->EE->xml_writer->addNode('output', $panel->get_panel_contents(), array(), TRUE);
 			$this->EE->xml_writer->endBranch();
 		}
 		

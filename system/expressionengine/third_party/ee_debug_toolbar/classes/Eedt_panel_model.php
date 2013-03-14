@@ -184,7 +184,7 @@ class Eedt_panel_model
 	/**
 	 * @param string $html
 	 */
-	function set_output($html = "")
+	function set_panel_contents($html = "")
 	{
 		$this->output = $html;
 	}
@@ -192,7 +192,7 @@ class Eedt_panel_model
 	/**
 	 * @return string
 	 */
-	function get_output()
+	function get_panel_contents()
 	{
 		return $this->output;
 	}

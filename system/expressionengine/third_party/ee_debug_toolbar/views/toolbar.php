@@ -5,7 +5,7 @@
 
 <!--PANELS BEFORE TOOLBAR -->
 <?php foreach($panels_before_toolbar AS $key => $panel):
-	echo $panel->get_output();
+	echo $panel->get_panel_contents();
 endforeach; ?>
 
 <!--EE DEBUG TOOLBAR-->
@@ -33,7 +33,7 @@ endforeach; ?>
 
 <!--PANELS AFTER TOOLBAR-->
 <?php foreach($panels_after_toolbar AS $key => $panel):
-	echo $panel->get_output();
+	echo $panel->get_panel_contents();
 endforeach; ?>
 
 <!--EEDT.JS CONFIG-->

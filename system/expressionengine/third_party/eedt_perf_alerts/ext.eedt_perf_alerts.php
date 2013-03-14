@@ -108,7 +108,7 @@ class Eedt_perf_alerts_ext
 		$view['perf_theme_js_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/js/';
 		$view['perf_theme_css_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/css/';		
 		
-		$panels['database']->set_output( $this->EE->load->view('db', $view, TRUE) ) ;
+		$panels['database']->set_panel_contents( $this->EE->load->view('db', $view, TRUE) ) ;
 		//$vars['panel_data']['db']['view_script'] = FALSE;
 		
 		$this->EE->benchmark->mark('eedt_performance_alerts_end');

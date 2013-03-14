@@ -83,7 +83,7 @@ class Eedt_log_viewer_ext
 		$panels['log_viewer']->set_name('log_viewer');
 		$panels['log_viewer']->set_button_icon($vars['theme_img_url'].'logs.png');
 		$panels['log_viewer']->set_button_label(lang('log_viewer'));
-		$panels['log_viewer']->set_output($this->EE->load->view('log_viewer', $vars, TRUE));
+		$panels['log_viewer']->set_panel_contents($this->EE->load->view('log_viewer', $vars, TRUE));
 		$panels['log_viewer']->set_panel_fetch_url($vars['panel_fetch_url']);
 		
 		$this->EE->benchmark->mark('eedt_log_viewer_end');

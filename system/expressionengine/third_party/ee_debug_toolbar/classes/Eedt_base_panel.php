@@ -85,7 +85,7 @@ class Eedt_base_panel
 		$view->set_name($this->name);
 		$view->set_button_label($this->button_label);
 		$view->set_button_icon($this->button_icon_uri);
-		$view->set_output($this->view());
+		$view->set_panel_contents($this->view());
 
 		return $view;
 	}

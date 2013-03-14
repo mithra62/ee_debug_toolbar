@@ -88,7 +88,7 @@ class Eedt_memory_history_ext
 
 		$panels['memory_history'] = new Eedt_panel_model();
 		$panels['memory_history']->set_name("memory_history");
-		$panels['memory_history']->set_output($this->EE->load->view('memory_history', array(), true));
+		$panels['memory_history']->set_panel_contents($this->EE->load->view('memory_history', array(), true));
 		$panels['memory_history']->add_js('https://www.google.com/jsapi', true);
 		$panels['memory_history']->add_js(URL_THIRD_THEMES . 'eedt_memory_history/js/memory_history.js', true);
 		$panels['memory_history']->add_css(URL_THIRD_THEMES . 'eedt_memory_history/css/memory_history.css', true);

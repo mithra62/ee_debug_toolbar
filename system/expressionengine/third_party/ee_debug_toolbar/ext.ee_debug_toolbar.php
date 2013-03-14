@@ -134,7 +134,7 @@ class Ee_debug_toolbar_ext
 		}
 
 		//we don't want to compile Toolbar data on certain requests
-		$ignore_controllers = array('javascript', 'css');
+		$ignore_controllers = array('javascript', 'css', 'content_files_modal');
 		if (in_array($this->EE->input->get("C"), $ignore_controllers)) 
 		{
 			return $session;
@@ -200,14 +200,32 @@ class Ee_debug_toolbar_ext
 		$html = $this->EE->output->final_output;
 
 		//If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
-		if (AJAX_REQUEST || (property_exists($this->EE, "TMPL") && $this->EE->TMPL->template_type == 'js')) {
+		$ignore_tmpl_types = array('js', 'css');
+		if (AJAX_REQUEST || (property_exists($this->EE, "TMPL") && in_array($this->EE->TMPL->template_type, $ignore_tmpl_types))) {
 			return $this->EE->output->_display();
 		}
 
-		$this->EE->load->library('Toolbar');
-
 		//starting a benchmark to make sure we're not a problem
 		$this->EE->benchmark->mark('ee_debug_benchmark_start');
+
+		$this->EE->load->library('Toolbar');
+		$this->settings = $this->EE->toolbar->get_settings();
+		
+		//on 404 errors this can cause the data to get munged
+		//to get around this, we only want to run the toolbar on certain pages
+		///see $this->settings['profile_exts'] for details
+		$url = parse_url($_SERVER['REQUEST_URI']);
+		if(!empty($url['path']))
+		{
+			$parts = explode(".", $url['path'], 2);
+			if(!empty($parts['1']))
+			{
+				if(!in_array($parts['1'], $this->settings['profile_exts']))
+				{
+					return $this->EE->output->_display();
+				}
+			}
+		}
 		
 		//Toolbar UI Vars
 		$vars                                  = array();

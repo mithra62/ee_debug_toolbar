@@ -34,8 +34,13 @@ class Ee_debug_settings_model extends CI_Model
 	 * @var array
 	 */
 	public $_defaults = array(
-						'theme' => 'default',
-						'toolbar_position' => 'bottom-left'
+				'theme' => 'default',
+				'toolbar_position' => 'bottom-left',
+				'profile_exts' => array(
+					'.php',
+					'.html',
+					'.htm'
+				)
 	);
 	
 	/**

@@ -34,8 +34,13 @@ class Ee_debug_settings_model extends CI_Model
 	 * @var array
 	 */
 	public $_defaults = array(
-						'theme' => 'default',
-						'toolbar_position' => 'bottom-left'
+				'theme' => 'default',
+				'toolbar_position' => 'bottom-left',
+				'profile_exts' => array(
+					'php',
+					'html',
+					'htm'
+				)
 	);
 	
 	/**
@@ -83,6 +88,7 @@ class Ee_debug_settings_model extends CI_Model
 	
 	public function get_settings()
 	{
+		$this->db->flush_cache();
 		$this->db->select('setting_key, setting_value, `serialized`');
 		$query = $this->db->get($this->_table);	
 		$_settings = $query->result_array();

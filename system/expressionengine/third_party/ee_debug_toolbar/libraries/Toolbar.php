@@ -204,6 +204,12 @@ class Toolbar
 	 */
 	public function format_tmpl_chart_json($data)
 	{
+		//a little sanity for UTF-8
+		foreach($data AS $key => $value)
+		{
+			$data[$key]['desc']	= utf8_encode($data[$key]['desc']);
+		}
+		
 		return json_encode($data);
 	}
 
@@ -353,7 +359,13 @@ class Toolbar
 		$xml = $this->EE->xml_writer->getXml(false);
 				
 		$filename = $path.$this->make_cache_filename();
-		write_file($filename, utf8_encode($xml));
+		
+		$string = utf8_encode($xml);
+		$gz = gzopen($filename.'.gz','w9');
+		gzwrite($gz, $string);
+		gzclose($gz);
+				
+		//write_file($filename, utf8_encode($xml));
 	}
 	
 	public function make_cache_filename()

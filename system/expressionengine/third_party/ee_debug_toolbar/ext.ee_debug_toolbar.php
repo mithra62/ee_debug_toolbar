@@ -221,7 +221,7 @@ class Ee_debug_toolbar_ext
 			if(!empty($parts['1']))
 			{
 				if(!in_array($parts['1'], $this->settings['profile_exts']))
-				{
+				{				
 					return $this->EE->output->_display();
 				}
 			}

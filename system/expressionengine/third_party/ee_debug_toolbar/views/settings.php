@@ -31,7 +31,7 @@ $this->table->set_empty("&nbsp;");
 	$this->table->add_row('<label for="toolbar_position">'.lang('toolbar_position').'</label><div class="subtext">'.lang('toolbar_position_instructions').'</div>', form_dropdown('toolbar_position', $toolbar_positions, $settings['toolbar_position'], 'id="toolbar_position"'. $settings_disable));
 	if ($this->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE)
 	{
-		$vars = $this->extensions->call('ee_debug_toolbar_settings_form');
+		$this->extensions->call('ee_debug_toolbar_settings_form');
 	}
 		
 	echo $this->table->generate();

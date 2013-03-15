@@ -139,7 +139,8 @@ class Eedt_perf_alerts_ext
 
 	public function activate_extension()
 	{			
-		$data = array(
+		$data = array();
+		$data[] = array(
 				'class'     => __CLASS__,
 				'method'    => 'ee_debug_toolbar_add_panel',
 				'hook'      => 'ee_debug_toolbar_add_panel',
@@ -149,9 +150,7 @@ class Eedt_perf_alerts_ext
 				'enabled'   => 'y'
 		);
 		
-		$this->EE->db->insert('extensions', $data);	
-
-		$data = array(
+		$data[] = array(
 				'class'     => __CLASS__,
 				'method'    => 'ee_debug_toolbar_settings_form',
 				'hook'      => 'ee_debug_toolbar_settings_form',
@@ -160,12 +159,8 @@ class Eedt_perf_alerts_ext
 				'version'   => $this->version,
 				'enabled'   => 'y'
 		);
-		
-		$this->EE->db->insert('extensions', $data);	
-		
-		$this->EE->db->insert('extensions', $data);
-		
-		$data = array(
+						
+		$data[] = array(
 				'class'     => __CLASS__,
 				'method'    => 'ee_debug_toolbar_init_settings',
 				'hook'      => 'ee_debug_toolbar_init_settings',
@@ -175,7 +170,11 @@ class Eedt_perf_alerts_ext
 				'enabled'   => 'y'
 		);
 		
-		$this->EE->db->insert('extensions', $data);		
+		foreach($data AS $ext)
+		{
+			$this->EE->db->insert('extensions', $ext);
+		}
+				
 		return TRUE;
 	}
 	

@@ -8,7 +8,7 @@
  * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/nagger/
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
  */
 
 /**
@@ -78,6 +78,10 @@ class Ee_debug_settings_model extends CI_Model
 		return $this->db->insert($this->_table, $data); 
 	}	
 	
+	/**
+	 * Allows for dynamic additions to the default settings
+	 * @param array $new_defaults
+	 */
 	public function set_defaults(array $new_defaults = array())
 	{
 		foreach($new_defaults AS $key => $value)
@@ -112,10 +116,7 @@ class Ee_debug_settings_model extends CI_Model
 			{
 				$settings[$key] = $value;
 			}
-		}	
-
-		//print_r($settings);
-		//exit;
+		}
 
 		return $settings;
 	}
@@ -129,6 +130,11 @@ class Ee_debug_settings_model extends CI_Model
 		return $this->db->get_where($this->_table, array('setting_key' => $setting))->result_array();
 	}	
 	
+	/**
+	 * Updates EEDT settings
+	 * @param array $data
+	 * @return boolean
+	 */
 	public function update_settings(array $data)
 	{
 		$this->load->library('encrypt');

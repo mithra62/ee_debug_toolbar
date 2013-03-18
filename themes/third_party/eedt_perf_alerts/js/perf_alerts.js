@@ -5,12 +5,11 @@
 
 (function () {
 
-	jQuery("#EEDebug_slow_queries").click(function () {
-		//EEDebugSlideBar();
+	jQuery("#Eedt_debug_database_panel").on('click', "#EEDebug_slow_queries", function () {
 		jQuery(".EEDebug_normal_queries").hide();
 	});
 	
-	jQuery("#EEDebug_all_queries").click(function () {
+	jQuery("#Eedt_debug_database_panel").on('click', "#EEDebug_all_queries", function () {
 		jQuery(".EEDebug_normal_queries").show();
 	});	
 	

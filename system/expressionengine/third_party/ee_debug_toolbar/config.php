@@ -17,5 +17,5 @@ $config['description'] = lang('ee_debug_toolbar_module_description');
 $config['mod_url_name'] = strtolower($config['class_name']);
 $config['ext_class_name'] = $config['class_name'].'_ext';
 
-$config['version'] = '0.9.1';
+$config['version'] = '1.0';
 $config['docs_url'] = 'https://github.com/mithra62/ee_debug_toolbar/wiki';

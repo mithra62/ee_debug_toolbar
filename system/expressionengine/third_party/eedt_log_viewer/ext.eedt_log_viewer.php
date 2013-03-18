@@ -8,7 +8,7 @@
  * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/eedt_memory_history/
+ * @filesource     ./system/expressionengine/third_party/eedt_log_viewer/
  */
 
 /**
@@ -18,7 +18,7 @@
  *
  * @package        mithra62:EE_debug_toolbar
  * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/eedt_memory_history/ext.eedt_memory_history.php
+ * @filesource     ./system/expressionengine/third_party/eedt_log_viewer/ext.eedt_log_viewer.php
  */
 class Eedt_log_viewer_ext
 {
@@ -34,7 +34,7 @@ class Eedt_log_viewer_ext
 	 *
 	 * @var float
 	 */
-	public $version = '0.1';
+	public $version = '1.0';
 	
 	/**
 	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)

@@ -107,6 +107,10 @@ class Toolbar
 		return $return;
 	}
 
+	/**
+	 * Wrapper to setup the Database panel SQL queries
+	 * @return multitype:|multitype:string
+	 */
 	public function setup_queries()
 	{
 		$dbs = array();
@@ -145,14 +149,21 @@ class Toolbar
 		return $output;
 	}
 
+	/**
+	 * Wrapper to setup the benchmark data
+	 * @return array
+	 */
 	public function setup_benchmarks()
 	{
 		$profile = array();
-		foreach ($this->EE->benchmark->marker as $key => $val) {
+		foreach ($this->EE->benchmark->marker as $key => $val) 
+		{
 			// We match the "end" marker so that the list ends
 			// up in the order that it was defined
-			if (preg_match("/(.+?)_end/i", $key, $match)) {
-				if (isset($this->EE->benchmark->marker[$match[1] . '_end']) AND isset($this->EE->benchmark->marker[$match[1] . '_start'])) {
+			if (preg_match("/(.+?)_end/i", $key, $match)) 
+			{
+				if (isset($this->EE->benchmark->marker[$match[1] . '_end']) AND isset($this->EE->benchmark->marker[$match[1] . '_start'])) 
+				{
 					$profile[$match[1]] = $this->EE->benchmark->elapsed_time($match[1] . '_start', $key);
 				}
 			}
@@ -202,7 +213,7 @@ class Toolbar
 	 * @param $log array
 	 * @return string
 	 */
-	public function format_tmpl_chart_json($data)
+	public function format_tmpl_chart_json(array $data)
 	{
 		//a little sanity for UTF-8
 		foreach($data AS $key => $value)
@@ -262,6 +273,10 @@ class Toolbar
 		return round($val, $digits) . " " . $symbols[$i] . $bB;
 	}	
 	
+	/**
+	 * Checks the system for the available themes and sets up as $key => $value array
+	 * @return array
+	 */
 	public function get_themes()
 	{
 		$path = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->item('theme_folder_path'), '/')).'/ee_debug_toolbar/themes/';
@@ -281,7 +296,7 @@ class Toolbar
 	}
 	
 	/**
-	 * Create Theme CSS URL
+	 * Create Theme Asset URLs
 	 *
 	 * @param string $theme
 	 * @return string
@@ -302,7 +317,7 @@ class Toolbar
 	 * @param string $class
 	 * @param string $method
 	 */
-	public function fetch_action_id($class, $method)
+	public function fetch_action_id($method, $class)
 	{
 		$this->EE->load->dbforge();
 		$this->EE->db->select('action_id');
@@ -318,7 +333,7 @@ class Toolbar
 	public function get_action_url($method, $class = 'Ee_debug_toolbar')
 	{
 		$url = $this->EE->config->config['site_url'];
-		return $url.'?ACT='.$this->fetch_action_id($class, $method);
+		return $url.'?ACT='.$this->fetch_action_id($method, $class);
 	}
 	
 	/**
@@ -368,6 +383,10 @@ class Toolbar
 		//write_file($filename, utf8_encode($xml));
 	}
 	
+	/**
+	 * Creates the Toolbar panel cache filename
+	 * @return string
+	 */
 	public function make_cache_filename()
 	{
 		return '.'.$this->EE->session->userdata['session_id'].'.eedt';

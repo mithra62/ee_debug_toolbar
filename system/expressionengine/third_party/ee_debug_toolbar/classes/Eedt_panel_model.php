@@ -1,8 +1,24 @@
-<?php
+<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
+ * mithra62 - EE Debug Toolbar
  *
+ * @package        mithra62:EE_debug_toolbar
+ * @author         Christopher Imrie
+ * @copyright      Copyright (c) 2013, Christopher Imrie.
+ * @link           http://mithra62.com/
+ * @updated        1.0
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
+ */
+
+/**
+ * Panel Model
  *
- * @author Christopher Imrie
+ * Panel API Model
+ *
+ * @package        mithra62:EE_debug_toolbar
+ * @author         Christopher Imrie
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/classes/Eedt_panel_model.php
  */
 class Eedt_panel_model
 {

@@ -34,7 +34,7 @@ class Eedt_memory_history_ext
 	 *
 	 * @var float
 	 */
-	public $version = '0.1';
+	public $version = '1.0';
 	
 	/**
 	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)

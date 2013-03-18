@@ -51,7 +51,7 @@ class Ee_debug_toolbar_ext
 	 *
 	 * @var float
 	 */
-	public $version = '0.9.1';
+	public $version = '';
 	
 	/**
 	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)
@@ -112,6 +112,9 @@ class Ee_debug_toolbar_ext
 	{
 		$this->EE       =& get_instance();
 		$this->EE->lang->loadfile('ee_debug_toolbar');
+		$path = dirname(realpath(__FILE__));
+		include $path.'/config'.EXT;
+		$this->version = $config['version'];
 		$this->name        = lang('ee_debug_toolbar_module_name');
 		$this->description = lang('ee_debug_toolbar_module_description');
 		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');

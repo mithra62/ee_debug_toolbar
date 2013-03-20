@@ -21,7 +21,12 @@
  * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/ext.ee_debug_toolbar.php
  */
 class Ee_debug_toolbar_ext
-{		
+{
+	/**
+	 * @var Object EE Super Global
+	 */
+	protected $EE;
+
 	/**
 	 * The extensions default settings
 	 *
@@ -122,7 +127,7 @@ class Ee_debug_toolbar_ext
 		$this->cache_dir = APPPATH.'cache/eedt/';
 		if(!is_dir($this->cache_dir))
 		{
-			mkdir($this->cache_dir, 0777, TRUE);
+			mkdir($this->cache_dir, 0777, true);
 		}
 	}
 
@@ -275,7 +280,7 @@ class Ee_debug_toolbar_ext
 		//Load third party panels and custom mods
 		//yes, you can technically create panels in mod_panel but using 
 		//add_panel will help future proof things
-		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === TRUE)
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === true)
 		{
 			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $panel_data, $vars);
 		}
@@ -284,7 +289,7 @@ class Ee_debug_toolbar_ext
 		
 		//apply custom modifications to toolbar
 		//again, yes, you could create panels using mod_panel but you probably shouldn't ;)
-		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_panel') === TRUE)
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_panel') === true)
 		{
 			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_mod_panel', $panel_data, $vars);
 		}
@@ -307,7 +312,7 @@ class Ee_debug_toolbar_ext
 		$vars['js_config'] = $this->EE->toolbar->js_config($vars);
 		
 		//apply any customizations to the global view data 
-		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_view') === TRUE)
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_view') === true)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_mod_view', $vars);
 		}		
@@ -318,7 +323,7 @@ class Ee_debug_toolbar_ext
 		$vars['benchmark_data'] = $this->EE->toolbar->setup_benchmarks();
 		if(!empty($vars['panels']['time']))
 		{
-			$vars['panels']['time']->set_panel_contents($this->EE->load->view("partials/time", $vars, TRUE));
+			$vars['panels']['time']->set_panel_contents($this->EE->load->view("partials/time", $vars, true));
 		}
 
 		//Break up the panels into the various injection points
@@ -348,7 +353,7 @@ class Ee_debug_toolbar_ext
 		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);
 
 		//Allow modification of final toolbar HTML output
-		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === TRUE)
+		if ($this->EE->extensions->active_hook('ee_debug_toolbar_modify_output') === true)
 		{
 			$toolbar_html = $this->EE->extensions->call('ee_debug_toolbar_modify_output', $toolbar_html);
 		}
@@ -356,7 +361,7 @@ class Ee_debug_toolbar_ext
 		//Rare, but the closing body tag may not exist. So if it doesnt, append the template instead
 		//of inserting. We may be able to get away with simply always appending, but this seems cleaner
 		//even if more expensive.
-		if (strpos($html, "</body>") === false) 
+		if (strpos($html, "</body>") === false)
 		{
 			$html .= $toolbar_html;
 		}
@@ -371,11 +376,11 @@ class Ee_debug_toolbar_ext
 		$this->EE->output->final_output = $html;
 		if (isset($this->EE->TMPL)) 
 		{
-			$this->EE->TMPL->debugging = FALSE;
-			$this->EE->TMPL->log       = FALSE;
+			$this->EE->TMPL->debugging = false;
+			$this->EE->TMPL->log       = false;
 		}
 		
-		$this->EE->output->enable_profiler = FALSE;
+		$this->EE->output->enable_profiler = false;
 
 		//Fist pump.
 		$this->EE->output->_display();
@@ -387,11 +392,11 @@ class Ee_debug_toolbar_ext
 	 */
 	public function get_panel_data()
 	{
-		$this->EE->TMPL->debugging = FALSE;
-		$this->EE->TMPL->log       = FALSE;
-		$this->EE->output->enable_profiler = FALSE;	
+		$this->EE->TMPL->debugging = false;
+		$this->EE->TMPL->log       = false;
+		$this->EE->output->enable_profiler = false;
 		
-		$panel = $this->EE->input->get('panel', FALSE);
+		$panel = $this->EE->input->get('panel', false);
 		if(!$panel)
 		{
 			return;
@@ -420,8 +425,8 @@ class Ee_debug_toolbar_ext
 	public function panel_ajax()
 	{
 		$data = array();
-		$panel = $this->EE->input->get("panel", FALSE);
-		$method = $this->EE->input->get("method", FALSE);
+		$panel = $this->EE->input->get("panel", false);
+		$method = $this->EE->input->get("method", false);
 
 		if(!$panel || $method)
 		{
@@ -531,17 +536,17 @@ class Ee_debug_toolbar_ext
 	
 	public function activate_extension()
 	{
-		return TRUE;
+		return true;
 	}
 	
 	public function update_extension($current = '')
 	{
-		return TRUE;
+		return true;
 	}
 	
 	public function disable_extension()
 	{
-		return TRUE;
+		return true;
 	}	
 
 }

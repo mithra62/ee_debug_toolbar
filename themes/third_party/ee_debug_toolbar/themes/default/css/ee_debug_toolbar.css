@@ -87,6 +87,7 @@
 	float:left;
 	position: relative;
 	z-index: 2000;
+	min-height: 17px;
 }
 #Eedt_debug_toolbar.right .Eedt_debug_toolbar_button {
 	float: right;

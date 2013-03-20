@@ -21,9 +21,11 @@ endforeach; ?>
 			<?php foreach($panels_in_toolbar AS $key => $panel): ?>
 				<?php if(!$panel->show_button()) continue;  ?>
 				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->get_panel_css_class(); ?>" data-target="<?php echo $panel->get_target(); ?>"  id="Eedt_debug_<?php echo $panel->get_name(); ?>_btn">
+					<?php if($panel->get_button_icon()): ?>
 					<img src="<?php echo $panel->get_button_icon(); ?>" style="vertical-align:middle"
 						 alt="<?php echo $panel->get_button_icon_alt_text(); ?>" title="<?php echo $panel->get_button_label(); ?>">
-						<?php echo $panel->get_button_label(); ?>
+					<?php endif; ?>
+					<?php echo $panel->get_button_label(); ?>
 				</span>
 			<?php endforeach; ?>
 		</span>

@@ -180,6 +180,7 @@
 	float:left;
 	position: relative;
 	z-index: 2000;
+	min-height:16px;
 }
 
 #Eedt_debug_toolbar.left #Eedt_debug_toolbar_toggle_btn {

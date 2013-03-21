@@ -23,7 +23,7 @@
 	}
 
 	//jQuery loaded? If not, load it and start again when it has finished
-	if (!window.jQuery) {
+	if (!window.jQuery || !minimumJQueryVersionPresent()) {
 		loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js', function () {
 			//Preserve eedt.ready() callbacks for next method call
 			window._eedtConfig.readyQueue = readyQueue;
@@ -59,12 +59,6 @@
 	}
 
 
-	//After 300 ms add the animation class so we get sliding animation
-	setTimeout(function(){
-		toolbar.addClass("animate");
-	}, 300);
-
-
 	//Bind toolbar slide toggle
 	toolbarToggleBtn.click(function () {
 		toggleToolbar();
@@ -74,6 +68,12 @@
 	//And lastly show the toolbar!
 	toolbar.show();
 
+
+	/**
+	 |--------------------------------------------------------------------------
+	 | Methods
+	 |--------------------------------------------------------------------------
+	 */
 
 	/**
 	 * Register callback for when eedt.js is ready
@@ -152,7 +152,7 @@
 		var tb = toolbar,
 			def = new jQuery.Deferred();
 
-		toolbar.on(event, function () {
+		toolbar.bind(event, function () {
 			if (callback) {
 				callback(tb);
 			}
@@ -308,19 +308,33 @@
 		return config[key];
 	}
 
-	function ajax(className, methodName, callback){
+	/**
+	 * Ajax request with Class::method
+	 *
+	 * @param {string} className PHP Class name
+	 * @param {string} methodName PHP Method name
+	 * @param {object} [data] Query string arguments (ie: GET variables)
+	 * @param {function} [callback] Callback function
+	 * @returns {jQuery.Deferred}
+	 */
+	function ajax() {
 		var here = this,
+			className = arguments[0],
+			methodName = arguments[1],
+			data = typeof arguments[2] === 'object' ? arguments[2] : {},
+			callback = typeof arguments[3] === 'function' ? arguments[3] : typeof arguments[2] === 'function' ? arguments[2] : undefined,
 			url = config.panel_ajax_url + "class=" + className + "&method=" + methodName + "&LANG=ENG",
 			def = new jQuery.Deferred();
 
 		jQuery.ajax({
-			type:'GET',
-			url:url,
-			success:function (data, textStatus) {
+			type: 'GET',
+			url: url,
+			data: data,
+			success: function (data, textStatus) {
 				def.resolve(data);
 			},
-			error:function (xhr, err, e) {
-				console.error("Error encountered while fetching data for '" + panelName+ "::" + methodName + "' panel", xhr, err, e);
+			error: function (xhr, err, e) {
+				console.error("Error encountered while fetching data for '" + panelName + "::" + methodName + "' panel", xhr, err, e);
 				def.reject();
 			}
 		});
@@ -448,6 +462,33 @@
 	}
 
 
+	/**
+	 * Compare version of jQuery on the page to the minimum required
+	 * @returns {boolean}
+	 */
+	function minimumJQueryVersionPresent() {
+		var minimum = 150,
+			current;
+
+		//No jQuery? Heck no...
+		if(!window.jQuery) {
+			return false;
+		}
+
+		current = Number(String(window.jQuery.fn.jquery).split('.').join(''));
+
+		//Invalid parsing of number? Better load jQuery just in case
+		if(current === NaN) {
+			return false;
+		}
+
+
+		if(current >= minimum) {
+			return true;
+		}
+		return false;
+	}
+
 
 	/**
 	|--------------------------------------------------------------------------
@@ -572,7 +613,7 @@
 				});
 			} else {
 				//All other events can fire multiple times, so use custom events on the panel node
-				this.panelNode.on(event, function () {
+				this.panelNode.bind(event, function () {
 					if (typeof callback === "function") {
 						callback(here.panelNode[0], here);
 					}
@@ -664,7 +705,7 @@
 		/**
 		 * Setup Panel on button click
 		 */
-		this.buttonNode.on('click', function () {
+		this.buttonNode.bind('click', function () {
 			var da = [],
 				def = new jQuery.Deferred();
 

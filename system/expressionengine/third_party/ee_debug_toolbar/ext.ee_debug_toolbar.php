@@ -73,11 +73,11 @@ class Ee_debug_toolbar_ext
 	public $settings_exist = 'y';
 	
 	/**
-	 * Where to get help (nowhere for now)
+	 * Where to get help
 	 * 
 	 * @var string
 	 */
-	public $docs_url = '';
+	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki';
 	
 	/**
 	 * The full path to store the cached debug output

@@ -13,12 +13,12 @@
 <h4>$_COOKIE</h4>
 
 <div id="EEDebug_cookie">
-	<pre><?php echo eedt_output_array($_POST, 'no_cookie_vars'); ?></pre>
+	<pre><?php echo eedt_output_array($_COOKIE, 'no_cookie_vars'); ?></pre>
 </div>
 <h4>$_GET</h4>
 
 <div id="EEDebug_get">
-	<pre><?php echo eedt_output_array($_POST, 'no_get_vars'); ?></pre>
+	<pre><?php echo eedt_output_array($_GET, 'no_get_vars'); ?></pre>
 </div>
 
 <h4>$_POST</h4>

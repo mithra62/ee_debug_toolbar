@@ -20,7 +20,7 @@ function eedt_output_array($arr, $default = 'nothing_found', $pair_delim = ' =&g
 	{
 		if(is_array($value))
 		{
-			$return .= $key.$pair_delim.print_r($value, TRUE);
+			$return .= $key.$pair_delim.'<pre>'.print_r($value, TRUE).'</pre>';
 		}
 		else
 		{

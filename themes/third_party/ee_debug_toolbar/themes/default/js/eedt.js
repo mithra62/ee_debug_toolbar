@@ -44,7 +44,7 @@
 	bindButtons();
 	prepOnReadyQueue();
 
-	if(toolbar.hasClass("right")) {
+	if (toolbar.hasClass("right")) {
 		rightToggleArrow = "&#187;";
 		leftToggleArrow = "&#171;";
 	}
@@ -84,7 +84,7 @@
 	 * @param cb Callback function
 	 */
 	function preDeferredReady(cb) {
-		if(typeof cb === 'function'){
+		if (typeof cb === 'function') {
 			readyQueue.push(cb);
 		}
 	}
@@ -98,7 +98,7 @@
 	 * @param cb Callback function
 	 */
 	function postDeferredReady(cb) {
-		if(typeof cb === 'function'){
+		if (typeof cb === 'function') {
 			readyDeferred.done(cb);
 		}
 	}
@@ -106,10 +106,10 @@
 	/**
 	 * Takes all eedt.ready() calls and registers them against a Deferred object
 	 */
-	function prepOnReadyQueue(){
+	function prepOnReadyQueue() {
 		readyDeferred = new jQuery.Deferred();
 
-		for(var i = 0; i < readyQueue.length; i++) {
+		for (var i = 0; i < readyQueue.length; i++) {
 			readyDeferred.done(readyQueue[i]);
 		}
 	}
@@ -140,7 +140,6 @@
 	}
 
 
-
 	/**
 	 * Bind to toolbar event
 	 *
@@ -163,14 +162,12 @@
 	}
 
 
-
 	/**
 	 * Bind Toolbar Node
 	 */
 	function bindToolbar() {
 		toolbar = jQuery("#Eedt_debug_toolbar");
 	}
-
 
 
 	/**
@@ -184,7 +181,7 @@
 	}
 
 
-	function bindButtons(){
+	function bindButtons() {
 		toolbarToggleBtn = jQuery("#Eedt_debug_toolbar_toggle_btn");
 	}
 
@@ -192,18 +189,17 @@
 	/**
 	 * Open Toolbar
 	 */
-	function openToolbar(){
+	function openToolbar() {
 		document.cookie = "EEDebugCollapsed=0;expires=;path=/";
 		toolbarToggleBtn.html(rightToggleArrow);
 		toolbar.addClass("toolbar-open");
 	}
 
 
-
 	/**
 	 * Close toolbar
 	 */
-	function closeToolbar(){
+	function closeToolbar() {
 		document.cookie = "EEDebugCollapsed=1;expires=;path=/";
 		toolbarToggleBtn.html(leftToggleArrow)
 		toolbar.removeClass("toolbar-open");
@@ -212,11 +208,10 @@
 	}
 
 
-
 	/**
 	 * Toggle toolbar visibility
 	 */
-	function toggleToolbar(){
+	function toggleToolbar() {
 		if (toolbar.hasClass("toolbar-open")) {
 			closeToolbar();
 		}
@@ -226,16 +221,14 @@
 	}
 
 
-
 	/**
 	 * Close all Panels
 	 */
-	function closeAllPanels(){
-		jQuery.each(panels, function(i, panel){
+	function closeAllPanels() {
+		jQuery.each(panels, function (i, panel) {
 			panel.close();
 		})
 	}
-
 
 
 	/**
@@ -251,7 +244,6 @@
 
 		return panels[panelName];
 	}
-
 
 
 	/**
@@ -275,22 +267,22 @@
 		}
 	}
 
-	function deferredCollection(deferreds){
+	function deferredCollection(deferreds) {
 		var def = new jQuery.Deferred(),
 			completed = 0,
 			total = deferreds.length;
 
-		for(var i = 0; i < total; i++){
-			deferreds[i].done(function(){
+		for (var i = 0; i < total; i++) {
+			deferreds[i].done(function () {
 				completed++;
 
-				if(completed === total){
+				if (completed === total) {
 					def.resolve();
 				}
 			});
 		}
 
-		if(total === 0) {
+		if (total === 0) {
 			def.resolve();
 		}
 
@@ -340,15 +332,14 @@
 		});
 
 		//Trigger callback if specified
-		if(typeof callback === 'function') {
-			def.done(function(data){
+		if (typeof callback === 'function') {
+			def.done(function (data) {
 				callback(data);
 			})
 		}
 
 		return def;
 	}
-
 
 
 	/**
@@ -389,18 +380,17 @@
 			if (typeof cb === "function") {
 				cb();
 			}
-			if(def) {
+			if (def) {
 				def.resolve();
 			}
 		};
 		document.getElementsByTagName('head')[0].appendChild(eed);
 
-		if(window.jQuery) {
+		if (window.jQuery) {
 			def = new jQuery.Deferred();
 			return def;
 		}
 	}
-
 
 
 	/**
@@ -454,7 +444,7 @@
 	function urlIsLocal(uri) {
 		var local = true;
 
-		if(String(uri).match(/^(https?:)?\/\//gi)) {
+		if (String(uri).match(/^(https?:)?\/\//gi)) {
 			local = false;
 		}
 
@@ -471,19 +461,19 @@
 			current;
 
 		//No jQuery? Heck no...
-		if(!window.jQuery) {
-			return false;
+		if (!window.jQuery) {
+			return true;
 		}
 
 		current = Number(String(window.jQuery.fn.jquery).split('.').join(''));
 
 		//Invalid parsing of number? Better load jQuery just in case
-		if(current === NaN) {
+		if (current === NaN) {
 			return false;
 		}
 
 
-		if(current >= minimum) {
+		if (current >= minimum) {
 			return true;
 		}
 		return false;
@@ -491,10 +481,10 @@
 
 
 	/**
-	|--------------------------------------------------------------------------
-	| EEDT PANEL
-	|--------------------------------------------------------------------------
-	*/
+	 |--------------------------------------------------------------------------
+	 | EEDT PANEL
+	 |--------------------------------------------------------------------------
+	 */
 
 
 	/**
@@ -521,7 +511,7 @@
 		 *
 		 * This is fired on toolbar button click, after resources have been loaded
 		 */
-		this.init = function() {
+		this.init = function () {
 			here.loading(false);
 
 			deferreds.init.resolve(this.panelNode, this);
@@ -531,12 +521,11 @@
 		}
 
 
-
 		/**
 		 * Open Panel
 		 */
-		this.open = function() {
-			if(panelOpen) return;
+		this.open = function () {
+			if (panelOpen) return;
 
 			eedt.closePanels();
 			this.panelNode.addClass("active");
@@ -548,12 +537,11 @@
 		}
 
 
-
 		/**
 		 * Close Panel
 		 */
-		this.close = function(){
-			if(!panelOpen) return;
+		this.close = function () {
+			if (!panelOpen) return;
 
 			this.panelNode.removeClass("active");
 			this.panelNode.trigger("close");
@@ -561,13 +549,12 @@
 		}
 
 
-
 		/**
 		 * Toggle Panel
 		 */
-		this.toggle = function(){
+		this.toggle = function () {
 			//Toggle panel open
-			if(this.panelNode.hasClass("active")){
+			if (this.panelNode.hasClass("active")) {
 				this.close();
 			} else {
 				this.open();
@@ -579,18 +566,17 @@
 		 * Show panel loading indicator
 		 * @param showLoading
 		 */
-		this.loading = function(showLoading) {
-			if(showLoading === undefined) {
+		this.loading = function (showLoading) {
+			if (showLoading === undefined) {
 				showLoading = true;
 			}
 
-			if(showLoading) {
+			if (showLoading) {
 				this.panelNode.addClass("Eedt_debug_panel_loading");
 			} else {
 				this.panelNode.removeClass("Eedt_debug_panel_loading");
 			}
 		}
-
 
 
 		/**
@@ -605,8 +591,8 @@
 
 			//Init only fires once, so we use a deferred object to ensure any late bound event listeners
 			//are always triggered
-			if(event === "init") {
-				deferreds.init.done(function(){
+			if (event === "init") {
+				deferreds.init.done(function () {
 					if (typeof callback === "function") {
 						callback(here.panelNode[0], here);
 					}
@@ -622,7 +608,6 @@
 		}
 
 
-
 		/**
 		 * Load Panel HTML
 		 * @return {jQuery.Deferred}
@@ -632,17 +617,17 @@
 				def = new jQuery.Deferred();
 
 			jQuery.ajax({
-				type:'GET',
-				url:this.config.panel_fetch_url,
-				data:{
-					LANG:"ENG"
+				type: 'GET',
+				url: this.config.panel_fetch_url,
+				data: {
+					LANG: "ENG"
 				},
-				dataType:'html',
-				success:function (data, textStatus) {
+				dataType: 'html',
+				success: function (data, textStatus) {
 					here.panelNode.html(data);
 					def.resolve();
 				},
-				error:function (xhr, err, e) {
+				error: function (xhr, err, e) {
 					console.error("Error encountered while fetching HTML contents for '" + here.name + "' panel", xhr, err, e);
 					here.panelNode.removeClass('EEDebug-loading');
 					def.reject();
@@ -651,7 +636,6 @@
 
 			return def;
 		}
-
 
 
 		/**
@@ -677,7 +661,6 @@
 		}
 
 
-
 		/**
 		 * Load Panel CSS
 		 * @return {jQuery.Deferred}
@@ -701,7 +684,6 @@
 		}
 
 
-
 		/**
 		 * Setup Panel on button click
 		 */
@@ -709,7 +691,7 @@
 			var da = [],
 				def = new jQuery.Deferred();
 
-			if(initialLoad){
+			if (initialLoad) {
 				here.loading(true);
 				da.push(here.loadPanelHtml());
 				da.push(here.loadPanelJs());
@@ -724,7 +706,6 @@
 	}
 
 
-
 	/**
 	 * EEDT API
 	 *
@@ -732,10 +713,10 @@
 	 */
 	window.eedt = {
 		data: {},
-		loadScript:loadScript,
-		loadCss:loadCss,
-		on:onPanelEvent,
-		panel:getPanel,
+		loadScript: loadScript,
+		loadCss: loadCss,
+		on: onPanelEvent,
+		panel: getPanel,
 		ajax: ajax,
 		closePanels: closeAllPanels,
 		config: configuration,

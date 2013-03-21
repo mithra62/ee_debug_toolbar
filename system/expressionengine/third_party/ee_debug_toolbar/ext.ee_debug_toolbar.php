@@ -220,6 +220,7 @@ class Ee_debug_toolbar_ext
 		$this->EE->benchmark->mark('ee_debug_benchmark_start');
 
 		$this->EE->load->library('Toolbar');
+		$this->EE->load->helpers('Output');
 		$this->settings = $this->EE->toolbar->get_settings();
 		
 		//on 404 errors this can cause the data to get munged

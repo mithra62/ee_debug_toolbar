@@ -391,11 +391,7 @@ class Ee_debug_toolbar_ext
 	 * Fetches cached panel HTML output
 	 */
 	public function get_panel_data()
-	{
-		$this->EE->TMPL->debugging = false;
-		$this->EE->TMPL->log       = false;
-		$this->EE->output->enable_profiler = false;
-		
+	{	
 		$panel = $this->EE->input->get('panel', false);
 		if(!$panel)
 		{

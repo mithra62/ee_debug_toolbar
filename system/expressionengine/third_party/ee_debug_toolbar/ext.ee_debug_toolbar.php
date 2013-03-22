@@ -73,11 +73,11 @@ class Ee_debug_toolbar_ext
 	public $settings_exist = 'y';
 	
 	/**
-	 * Where to get help (nowhere for now)
+	 * Where to get help
 	 * 
 	 * @var string
 	 */
-	public $docs_url = '';
+	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki';
 	
 	/**
 	 * The full path to store the cached debug output
@@ -220,6 +220,7 @@ class Ee_debug_toolbar_ext
 		$this->EE->benchmark->mark('ee_debug_benchmark_start');
 
 		$this->EE->load->library('Toolbar');
+		$this->EE->load->helpers('Output');
 		$this->settings = $this->EE->toolbar->get_settings();
 		
 		//on 404 errors this can cause the data to get munged
@@ -391,11 +392,7 @@ class Ee_debug_toolbar_ext
 	 * Fetches cached panel HTML output
 	 */
 	public function get_panel_data()
-	{
-		$this->EE->TMPL->debugging = false;
-		$this->EE->TMPL->log       = false;
-		$this->EE->output->enable_profiler = false;
-		
+	{	
 		$panel = $this->EE->input->get('panel', false);
 		if(!$panel)
 		{

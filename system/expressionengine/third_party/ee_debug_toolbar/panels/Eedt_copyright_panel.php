@@ -13,13 +13,14 @@ class Eedt_copyright_panel extends Eedt_base_panel
 	public function __construct()
 	{
 		parent::__construct();
+		$this->EE =& get_instance();
 		$this->button_label = 'v'.APP_VER.' / '.phpversion();
 	}
 
 	public function ee_debug_toolbar_add_panel($view)
 	{
 		$view = parent::ee_debug_toolbar_add_panel($view);
-		$view->add_css( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_copyright.css');
+		$view->add_css( $this->EE->toolbar->create_theme_url('default', 'css').'/ee_debug_panel_copyright.css');
 
 		return $view;
 	}

@@ -23,8 +23,8 @@ class Eedt_memory_panel extends Eedt_base_panel
 		$view->set_button_label($this->button_label);
 		$view->set_button_icon($this->button_icon_uri);
 		$view->set_panel_contents($this->EE->load->view('partials/memory', array(), TRUE));
-		$view->add_css( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/css/ee_debug_panel_memory.css');
-		$view->add_js( URL_THIRD_THEMES.'ee_debug_toolbar/themes/default/js/ee_debug_panel_memory.js');
+		$view->add_css( $this->EE->toolbar->create_theme_url('default', 'css').'/ee_debug_panel_memory.css');
+		$view->add_js( $this->EE->toolbar->create_theme_url('default', 'js').'/ee_debug_panel_memory.js');
 	
 		return $view;
 	}	

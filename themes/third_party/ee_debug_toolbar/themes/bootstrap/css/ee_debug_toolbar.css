@@ -193,6 +193,10 @@
 	border-right: none;
 }
 
+#Eedt_debug_toolbar.right #Eedt_debug_toolbar_toggle_btn {
+	float:right;
+	border-right:none;
+}
 
 #Eedt_debug_toolbar  .EEDebug_last {
 	border: 1px solid #999;

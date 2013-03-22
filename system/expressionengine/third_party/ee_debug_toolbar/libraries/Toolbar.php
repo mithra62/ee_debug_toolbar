@@ -405,6 +405,7 @@ class Toolbar
 
 		//Panels
 		$config['panels'] = array();
+		$config['cp'] = $this->EE->input->get('D') == 'cp' ? true : false;
 		$config['base_css_url'] = $vars['theme_css_url'];
 		$config['base_js_url'] = $vars['theme_js_url'];
 		$config['panel_ajax_url'] = str_replace("&amp;", "&", $this->get_action_url('act').AMP);

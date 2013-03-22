@@ -1,0 +1,13 @@
+#Eedt_debug_toolbar {
+	left: -252px;
+}
+
+@-moz-document url-prefix() {
+    #EEDebug_debug {
+       left: -245px;
+    }
+}
+
+#Eedt_debug_toolbar .clickable {
+	width:20px;
+}

@@ -8,7 +8,7 @@
  * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
  * @link           http://mithra62.com/
  * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/nagger/
+ * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
  */
 
 /**
@@ -34,7 +34,13 @@ class Ee_debug_settings_model extends CI_Model
 	 * @var array
 	 */
 	public $_defaults = array(
-						'theme' => 'default'
+				'theme' => 'default',
+				'toolbar_position' => 'bottom-left',
+				'profile_exts' => array(
+					'php',
+					'html',
+					'htm'
+				)
 	);
 	
 	/**
@@ -72,8 +78,21 @@ class Ee_debug_settings_model extends CI_Model
 		return $this->db->insert($this->_table, $data); 
 	}	
 	
+	/**
+	 * Allows for dynamic additions to the default settings
+	 * @param array $new_defaults
+	 */
+	public function set_defaults(array $new_defaults = array())
+	{
+		foreach($new_defaults AS $key => $value)
+		{
+			$this->_defaults[$key] = $value;
+		}
+	}
+	
 	public function get_settings()
 	{
+		$this->db->flush_cache();
 		$this->db->select('setting_key, setting_value, `serialized`');
 		$query = $this->db->get($this->_table);	
 		$_settings = $query->result_array();
@@ -81,7 +100,7 @@ class Ee_debug_settings_model extends CI_Model
 		foreach($_settings AS $setting)
 		{
 			$settings[$setting['setting_key']] = ($setting['serialized'] == '1' ? unserialize($setting['setting_value']) : $setting['setting_value']);
-		}
+		}	
 		
 		//now check to make sure they're all there and set default values if not
 		foreach ($this->_defaults as $key => $value)
@@ -97,7 +116,7 @@ class Ee_debug_settings_model extends CI_Model
 			{
 				$settings[$key] = $value;
 			}
-		}		
+		}
 
 		return $settings;
 	}
@@ -111,6 +130,11 @@ class Ee_debug_settings_model extends CI_Model
 		return $this->db->get_where($this->_table, array('setting_key' => $setting))->result_array();
 	}	
 	
+	/**
+	 * Updates EEDT settings
+	 * @param array $data
+	 * @return boolean
+	 */
 	public function update_settings(array $data)
 	{
 		$this->load->library('encrypt');

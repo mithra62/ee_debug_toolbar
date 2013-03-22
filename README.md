@@ -10,6 +10,9 @@ Graph:
 
 ![](http://mithra62.com/images/ee_debug_toolbar_graph.png)
 
+Bundled Extensions:
+
+![](http://eeinsider.com/static/images/ee_debug_toolbar_extension_1.png)
 
 Contributors
 ====================

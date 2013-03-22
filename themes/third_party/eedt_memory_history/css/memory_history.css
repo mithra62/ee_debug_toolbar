@@ -7,6 +7,14 @@
 	background: #032f4f;
 	border:1px solid #000;
 }
+#Eedt_memory_history.left {
+	right: auto;
+	left: 5px;
+}
+#Eedt_memory_history.bottom {
+	top: auto;
+	bottom: 5px;
+}
 #Eedt_memory_history #Eedt_memory_history_chart {
 	position: absolute;
 	top:5px;

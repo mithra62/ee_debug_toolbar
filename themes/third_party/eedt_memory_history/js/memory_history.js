@@ -10,7 +10,9 @@ function EedtMemoryHistoryJSAPIReady(){
 
 	//Fetch data and load visualisation lib in parallel
 	var deferreds = [
-		eedt.ajax('Eedt_memory_history_ext', 'fetch_memory_and_sql_usage'),
+		eedt.ajax('Eedt_memory_history_ext', 'fetch_memory_and_sql_usage', {
+			'cp': eedt.config('cp') ? 'y' : 'n'
+		}),
 		new jQuery.Deferred()
 	];
 
@@ -33,11 +35,12 @@ function EedtMemoryHistoryJSAPIReady(){
 		data.addColumn('string', 'URL');
 		data.addColumn('number', 'Memory Usage');
 		data.addColumn('number', 'SQL Query Count');
+		data.addColumn('number', 'Total Execution Time');
 		data.addRows(series);
 
 
 		var options = {
-			title: "Peak Memory & SQL Query Count",
+			title: "Memory, Query Count & Execution Time",
 			titlePosition: 'out',
 			titleTextStyle : {
 				color:'#fff'
@@ -52,7 +55,7 @@ function EedtMemoryHistoryJSAPIReady(){
 				height:200
 			},
 			vAxis : {
-				baselineColor: '#032f4f',
+				baselineColor: '#0e4a85',
 				gridlines : {
 					count: 10,
 					color:'#0e4a85'
@@ -71,19 +74,24 @@ function EedtMemoryHistoryJSAPIReady(){
 	function parseData(data) {
 		var parsedData = [],
 			memMax = false,
-			sqlMax = false;
+			sqlMax = false,
+			execMax = false;
 
 		//Calculate max so we can normalise
 		for(var i = 0; i < data.length; i++){
 
 			data[i].peak_memory = Number(data[i].peak_memory);
 			data[i].sql_count = Number(data[i].sql_count);
+			data[i].execution_time = Number(data[i].execution_time);
 
 			if(memMax === false) {
 				memMax = data[i].peak_memory;
 			}
 			if(sqlMax === false) {
 				sqlMax = data[i].sql_count;
+			}
+			if(execMax === false) {
+				execMax = data[i].execution_time;
 			}
 
 			if(data[i].peak_memory > memMax) {
@@ -93,6 +101,10 @@ function EedtMemoryHistoryJSAPIReady(){
 			if(data[i].sql_count > sqlMax) {
 				sqlMax = data[i].sql_count;
 			}
+
+			if(data[i].execution_time > execMax) {
+				execMax = data[i].execution_time;
+			}
 		}
 
 		for(var i = 0; i < data.length; i++){
@@ -100,12 +112,16 @@ function EedtMemoryHistoryJSAPIReady(){
 				[
 					data[i].url,
 					{
-						v: (data[i].peak_memory / memMax) + 0.3,
+						v: (data[i].peak_memory / memMax) + 0.6,
 						f: String(data[i].peak_memory) + "MB"
 					},
 					{
-						v: data[i].sql_count / sqlMax,
+						v: (data[i].sql_count / sqlMax) + 0.3,
 						f: String(data[i].sql_count) + " queries"
+					},
+					{
+						v: data[i].execution_time / execMax,
+						f: String(data[i].execution_time) + "s"
 					}
 				]
 			);

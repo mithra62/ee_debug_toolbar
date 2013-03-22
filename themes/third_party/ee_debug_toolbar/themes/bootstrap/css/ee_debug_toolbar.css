@@ -5,7 +5,7 @@
 	box-sizing: content-box !important;
 	margin: 0;
 	padding:0;
-	font: 11px/1.4em, Lucida Grande, Lucida Sans Unicode, sans-serif;
+	font: 11px/1.4em 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
 }
 #Eedt_debug_toolbar img {
 	width: auto;
@@ -17,7 +17,7 @@
  * EEDT Bootstrap Theme
  */
 #Eedt_debug_toolbar {
-	font: 11px/1.4em "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 11px;
 	position: fixed;
 	left: 0;
 	bottom:5px;

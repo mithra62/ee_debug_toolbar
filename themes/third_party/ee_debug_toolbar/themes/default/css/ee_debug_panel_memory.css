@@ -1,0 +1,40 @@
+/* EEDebug_memory */
+
+
+#Eedt_debug_toolbar #EEDebug_graph {
+	width: 700px;
+}
+#Eedt_debug_toolbar #EEDebug_graph,
+#Eedt_debug_toolbar #EEDebug_template_list{
+	display: none;
+}
+
+#Eedt_debug_toolbar .show_graph #EEDebug_graph,
+#Eedt_debug_toolbar .show_template_list #EEDebug_template_list {
+	display: block;
+}
+
+
+#Eedt_debug_toolbar a.EEDebug_actions {
+	color: #000000;
+}
+
+#Eedt_debug_toolbar .show_graph #EEDebug_graph_display,
+#Eedt_debug_toolbar .show_template_list #EEDebug_graph_list,
+#Eedt_debug_toolbar .EEDebug_tmpl_log_active,
+#Eedt_debug_toolbar .flash {
+	color: #FF0000;
+}
+#Eedt_debug_toolbar #Eedt_debug_memory_panel {
+	width: 660px;
+}
+#Eedt_debug_toolbar #Eedt_debug_memory_panel.active {
+	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 240px;
+}
+
+#Eedt_debug_toolbar #EEDebug_memory_cp.active {
+	overflow: hidden;
+}

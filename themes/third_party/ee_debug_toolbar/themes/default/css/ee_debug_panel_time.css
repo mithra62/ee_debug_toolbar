@@ -1,0 +1,8 @@
+#Eedt_debug_toolbar #Eedt_debug_time_panel {
+	overflow:auto;
+	overflow-x:hidden;
+	overflow-z:scroll;
+}
+#Eedt_debug_toolbar #Eedt_debug_time_panel.active {
+	height:100px;
+}

@@ -1,0 +1,6 @@
+#Eedt_debug_toolbar #Eedt_debug_copyright_panel {
+	overflow:hidden;
+}
+#Eedt_debug_toolbar #Eedt_debug_copyright_panel.active {
+	height: 80px;
+}

@@ -1,0 +1,25 @@
+#Eedt_memory_history {
+	position: fixed;
+	top:5px;
+	right:5px;
+	height:110px;
+	width:260px;
+	background: #032f4f;
+	border:1px solid #000;
+}
+#Eedt_memory_history.left {
+	right: auto;
+	left: 5px;
+}
+#Eedt_memory_history.bottom {
+	top: auto;
+	bottom: 5px;
+}
+#Eedt_memory_history #Eedt_memory_history_chart {
+	position: absolute;
+	top:5px;
+	bottom:5px;
+	right:5px;
+	left:5px;
+	background: #032f4f;
+}

@@ -7,24 +7,22 @@
 })();
 
 function EedtMemoryHistoryJSAPIReady(){
+	var def = new jQuery.Deferred();
 
-	//Fetch data and load visualisation lib in parallel
-	var deferreds = [
-		eedt.ajax('Eedt_memory_history_ext', 'fetch_memory_and_sql_usage', {
-			'cp': eedt.config('cp') ? 'y' : 'n'
-		}),
-		new jQuery.Deferred()
-	];
-
+	//Load visualisation lib and fetch data
 	google.load("visualization", "1", {
 		packages:["corechart"],
 		callback: function(){
-			deferreds[1].resolve();
+			var d = def;
+			eedt.ajax('Eedt_memory_history_ext', 'fetch_memory_and_sql_usage', {
+				'cp': eedt.config('cp') ? 'y' : 'n'
+			}).then(function(data){
+				d.resolve(data);
+			});
 		}
 	});
 
-	jQuery.when.apply(jQuery, deferreds).then(drawChart);
-
+	def.then(drawChart);
 
 	//Draw chart
 	function drawChart(ajaxData) {

@@ -232,7 +232,7 @@ class Ee_debug_toolbar_ext
 			$parts = explode(".", $url['path'], 2);
 			if(!empty($parts['1']))
 			{
-				if(!in_array($parts['1'], $this->settings['profile_exts']))
+				if(in_array($parts['1'], $this->settings['profile_exts']))
 				{				
 					return $this->EE->output->_display();
 				}

@@ -37,9 +37,22 @@ class Ee_debug_settings_model extends CI_Model
 				'theme' => 'default',
 				'toolbar_position' => 'bottom-left',
 				'profile_exts' => array(
-					'php',
+					'js',
+					'css',
+					'jpg',
+					'jpeg',
+					'gif',
+					'png',
+					'bmp',
+					'pdf',
+					'svg',
+					'htm',
 					'html',
-					'htm'
+					'xhtml',
+					'csv',
+					'rss',
+					'atom',
+					'xml'
 				)
 	);
 	

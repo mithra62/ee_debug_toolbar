@@ -55,7 +55,7 @@ class Eedt_memory_history_ext
 	 *
 	 * @var string
 	 */
-	public $docs_url = '';
+	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki/Memory-History';
 
 	/**
 	 * Allowed methods that can be called via eedt.ajax()

@@ -55,8 +55,12 @@ class Eedt_perf_alerts_ext
 	 * 
 	 * @var string
 	 */
-	public $docs_url = '';
+	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki/Performance-Alerts';
 	
+	/**
+	 * The extensions settings if none exist
+	 * @var array
+	 */
 	public $default_settings = array(
 			'max_exec_time' => 0.5,
 			'max_memory' => 10,

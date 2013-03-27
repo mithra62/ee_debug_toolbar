@@ -55,7 +55,7 @@ class Eedt_minimal_ext
 	 *
 	 * @var string
 	 */
-	public $docs_url = '';	
+	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki/Minimal';	
 
 	public function __construct($settings = '')
 	{

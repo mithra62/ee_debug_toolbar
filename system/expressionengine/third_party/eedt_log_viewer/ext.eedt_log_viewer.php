@@ -55,7 +55,7 @@ class Eedt_log_viewer_ext
 	 * 
 	 * @var string
 	 */
-	public $docs_url = '';
+	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki/Log-Viewer';
 	
 	public $eedt_act = array('get_panel_logs');
 

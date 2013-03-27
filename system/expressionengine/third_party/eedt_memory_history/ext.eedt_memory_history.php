@@ -175,9 +175,7 @@ class Eedt_memory_history_ext
 							 ->result_array();
 
 		//Garbage collect
-		$this->EE->db->where("timestamp < ", $this->EE->localize->now - 14400); //4 hours
-
-
+		$this->EE->db->where("timestamp < ", $this->EE->localize->now - 14400)->delete("eedt_memory_history"); //4 hours
 		$this->EE->output->send_ajax_response($data);
 	}
 

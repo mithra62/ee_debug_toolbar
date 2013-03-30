@@ -110,9 +110,9 @@ class Eedt_perf_alerts_ext
 			$panels['memory']->set_panel_css_class('flash');
 		}
 		
-		$view['perf_theme_img_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/images/';
-		$view['perf_theme_js_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/js/';
-		$view['perf_theme_css_url'] = URL_THIRD_THEMES.'eedt_perf_alerts/css/';		
+		$view['perf_theme_img_url'] = eedt_theme_url().'eedt_perf_alerts/images/';
+		$view['perf_theme_js_url'] = eedt_theme_url().'eedt_perf_alerts/js/';
+		$view['perf_theme_css_url'] = eedt_theme_url().'eedt_perf_alerts/css/';		
 		
 		$panels['database']->set_panel_contents( $this->EE->load->view('db', $view, TRUE) ) ;
 		$panels['database']->add_js($view['perf_theme_js_url'] . 'perf_alerts.js');

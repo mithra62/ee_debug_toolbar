@@ -43,6 +43,7 @@ class Toolbar
 	public function __construct()
 	{
 		$this->EE = & get_instance();
+		$this->EE->load->helpers('eedt_output');
 	}
 	
 	/**
@@ -74,7 +75,7 @@ class Toolbar
 	{
 		sort($files);
 
-		$path_third         = realpath(PATH_THIRD);
+		$path_third         = realpath(eedt_third_party_path());
 		$path_ee            = realpath(APPPATH);
 		$path_first_modules = realpath(PATH_MOD);
 		$bootstrap_file     = FCPATH . SELF;
@@ -200,7 +201,7 @@ class Toolbar
 			$return[] = array(
 				'time'   => $parts['0'],
 				'memory' => (float)$parts['1'],
-				'desc'   => $tooltip
+				'desc'   => utf8_encode($tooltip) //a little sanity for UTF-8
 			);
 		}
 
@@ -215,12 +216,6 @@ class Toolbar
 	 */
 	public function format_tmpl_chart_json(array $data)
 	{
-		//a little sanity for UTF-8
-		foreach($data AS $key => $value)
-		{
-			$data[$key]['desc']	= utf8_encode($data[$key]['desc']);
-		}
-		
 		return json_encode($data);
 	}
 
@@ -279,7 +274,7 @@ class Toolbar
 	 */
 	public function get_themes()
 	{
-		$path = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->item('theme_folder_path'), '/')).'/ee_debug_toolbar/themes/';
+		$path = eedt_theme_path().'/ee_debug_toolbar/themes/';
 		$d = dir($path);
 		$themes = array();
 		$bad = array('.', '..');
@@ -303,12 +298,13 @@ class Toolbar
 	 */
 	public function create_theme_url($theme, $sub_dir = '')
 	{
-		$path = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_path'], '/') .'/third_party/');
-		$url = (defined('URL_THIRD_THEMES') ? URL_THIRD_THEMES : rtrim($this->EE->config->config['theme_folder_url'], '/') .'/third_party/');
+		$path = eedt_theme_path();
+		$url = eedt_theme_url();
 		if (is_dir($path . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/")) 
 		{
 			return $url . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
 		}
+		
 		return $url . "ee_debug_toolbar/themes/" . $this->default_theme . "/$sub_dir/";
 	}
 

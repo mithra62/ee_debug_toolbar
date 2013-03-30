@@ -100,8 +100,8 @@ class Eedt_memory_history_ext
 		$panels['memory_history']->set_name("memory_history");
 		$panels['memory_history']->set_panel_contents($this->EE->load->view('memory_history', array('position' => $settings['memory_history_position']), true));
 		$panels['memory_history']->add_js('https://www.google.com/jsapi', true);
-		$panels['memory_history']->add_js(URL_THIRD_THEMES . 'eedt_memory_history/js/memory_history.js', true);
-		$panels['memory_history']->add_css(URL_THIRD_THEMES . 'eedt_memory_history/css/memory_history.css', true);
+		$panels['memory_history']->add_js(eedt_theme_url() . 'eedt_memory_history/js/memory_history.js', true);
+		$panels['memory_history']->add_css(eedt_theme_url() . 'eedt_memory_history/css/memory_history.css', true);
 		$panels['memory_history']->set_injection_point(Eedt_panel_model::PANEL_AFTER_TOOLBAR);
 
 		$this->track_memory_and_sql_usage($vars);

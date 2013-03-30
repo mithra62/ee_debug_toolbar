@@ -75,9 +75,9 @@ class Eedt_log_viewer_ext
 		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
 		
 		$vars['panel_fetch_url'] = $this->EE->toolbar->create_act_url('get_panel_logs', __CLASS__);
-		$vars['theme_img_url'] = URL_THIRD_THEMES.'eedt_log_viewer/images/';
-		$vars['theme_js_url'] = URL_THIRD_THEMES.'eedt_log_viewer/js/';
-		$vars['theme_css_url'] = URL_THIRD_THEMES.'eedt_log_viewer/css/';
+		$vars['theme_img_url'] = eedt_theme_url().'eedt_log_viewer/images/';
+		$vars['theme_js_url'] = eedt_theme_url().'eedt_log_viewer/js/';
+		$vars['theme_css_url'] = eedt_theme_url().'eedt_log_viewer/css/';
 		
 		$panels['log_viewer'] = new Eedt_panel_model();
 		$panels['log_viewer']->set_name('log_viewer');

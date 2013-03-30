@@ -84,8 +84,8 @@ class Eedt_minimal_ext
 			$panels[$key]->set_button_label('');
 		}
 
-		$theme_css_url = URL_THIRD_THEMES.'eedt_minimal/css/';
-		$panels[$key]->add_css($theme_css_url.'minimal.css');
+		$theme_css_url = eedt_theme_url().'eedt_minimal/css/';
+		$panels[$key]->add_css($theme_css_url.'minimal.css', TRUE);
 		
 		$this->EE->benchmark->mark('eedt_minimal_end');
 		return $panels;

@@ -49,7 +49,8 @@ if(!function_exists('eedt_theme_url'))
 		}
 		else 
 		{
-			$url = rtrim($this->EE->config->config['theme_folder_url'], '/') .'/third_party/';
+			$ee =& get_instance();
+			$url = rtrim($ee->config->config['theme_folder_url'], '/') .'/third_party/';
 		}
 		
 		return $url;
@@ -71,7 +72,8 @@ if(!function_exists('eedt_theme_path'))
 		}
 		else
 		{
-			$path = rtrim($this->EE->config->config['theme_folder_path'], '/') .'/third_party/';
+			$ee =& get_instance();
+			$path = rtrim($ee->config->config['theme_folder_path'], '/') .'/third_party/';
 		}
 
 		return $path;

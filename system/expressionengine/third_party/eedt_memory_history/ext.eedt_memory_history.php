@@ -147,7 +147,7 @@ class Eedt_memory_history_ext
 		$data = array(
 			'session_id'  => $this->EE->session->userdata['session_id'],
 			'url'         => $_SERVER["REQUEST_URI"] . $_SERVER["QUERY_STRING"],
-			'peak_memory' => $vars['memory_usage'],
+			'peak_memory' => (float)$vars['memory_usage'],
 			'sql_count'   => $vars['query_count'],
 			'execution_time'   => $vars['elapsed_time'],
 			'timestamp'   => $this->EE->localize->now,

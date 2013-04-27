@@ -10,9 +10,9 @@
  * @updated        1.0
  * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
  */
-$config['name'] = lang('ee_debug_toolbar_module_name');
+$config['name'] = 'EE Debug Toolbar';
 $config['class_name'] = 'Ee_debug_toolbar';
-$config['description'] = lang('ee_debug_toolbar_module_description'); 
+$config['description'] = 'Adds an unobtrusive interface for debugging output'; 
 
 $config['mod_url_name'] = strtolower($config['class_name']);
 $config['ext_class_name'] = $config['class_name'].'_ext';

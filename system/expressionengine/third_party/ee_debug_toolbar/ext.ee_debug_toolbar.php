@@ -409,7 +409,7 @@ class Ee_debug_toolbar_ext
 			$panel_node = $panel.'_panel';
 			if(isset($xml->panels->$panel_node->output) && $xml->panels->$panel_node->output != '')
 			{
-				echo $xml->panels->$panel_node->output;
+				echo base64_decode($xml->panels->$panel_node->output);
 			}
 			exit;
 		}

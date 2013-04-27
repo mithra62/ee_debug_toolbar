@@ -131,9 +131,8 @@ class Eedt_memory_history_ext
 			'top right' => 'top-right',
 			'bottom right' => 'bottom-right'
 		);
+		
 		$this->EE->table->add_row('<label for="memory_history_position">'.lang('memory_history_position')."</label><div class='subtext'>".lang('memory_history_position_instructions')."</div>", form_dropdown('memory_history_position',  $options, $settings['memory_history_position'], 'id="memory_history_position"'. $settings_disable));
-
-
 	}
 
 
@@ -283,6 +282,9 @@ class Eedt_memory_history_ext
 	{
 	    $this->EE->db->where('class', __CLASS__);
 	    $this->EE->db->delete('extensions');
+	    
+	    $this->EE->load->dbforge();
+	    $this->EE->dbforge->drop_table('eedt_memory_history');
 	}
 
 }

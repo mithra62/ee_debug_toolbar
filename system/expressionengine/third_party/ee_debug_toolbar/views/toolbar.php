@@ -25,7 +25,9 @@ endforeach; ?>
 					<img src="<?php echo $panel->get_button_icon(); ?>" style="vertical-align:middle"
 						 alt="<?php echo $panel->get_button_icon_alt_text(); ?>" title="<?php echo $panel->get_button_label(); ?>">
 					<?php endif; ?>
-					<?php echo $panel->get_button_label(); ?>
+					<span id="Eedt_debug_<?php echo $panel->get_name(); ?>_copy">
+						<?php echo $panel->get_button_label(); ?>
+					</span>
 				</span>
 			<?php endforeach; ?>
 		</span>

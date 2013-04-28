@@ -241,6 +241,7 @@ class Ee_debug_toolbar_ext
 		//Toolbar UI Vars
 		$vars                                  = array();
 		$vars['query_count']                   = $this->EE->db->query_count;
+		$vars['mysql_query_cache']             = $this->EE->toolbar->verify_mysql_query_cache();
 		$vars['elapsed_time']                  = $this->EE->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
 		$vars['config_data']                   = $this->EE->config->config;
 		$vars['session_data']                  = $this->EE->session->all_userdata();

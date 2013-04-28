@@ -421,4 +421,17 @@ class Toolbar
 
 		return $config;
 	}
+	
+	/**
+	 * Checks to verify the MySQL Query Cache is enabled or not
+	 * @return string
+	 */
+	public function verify_mysql_query_cache()
+	{
+		$data = $this->EE->db->query("SHOW VARIABLES LIKE 'have_query_cache'")->row_array();
+		if(!empty($data['Value']) && $data['Value'] == 'YES')
+		{
+			return 'y';
+		}
+	}
 }

@@ -375,6 +375,8 @@ class Toolbar
 		$gz = gzopen($filename.'.gz','w9');
 		gzwrite($gz, $string);
 		gzclose($gz);
+		
+		chmod($filename.'.gz', 0777);
 				
 		//write_file($filename, utf8_encode($xml));
 	}

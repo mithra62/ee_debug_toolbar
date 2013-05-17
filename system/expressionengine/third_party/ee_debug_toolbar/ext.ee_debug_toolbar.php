@@ -225,15 +225,19 @@ class Ee_debug_toolbar_ext
 		//on 404 errors this can cause the data to get munged
 		//to get around this, we only want to run the toolbar on certain pages
 		///see $this->settings['profile_exts'] for details
-		$url = parse_url($_SERVER['REQUEST_URI']);
-		if(!empty($url['path']))
+		//NOTE: bookmarklets create an error for parse_url() so if it's a request for that we know we're good anyway so we disable check
+		if($this->EE->input->get("tb_url") == '')
 		{
-			$parts = explode(".", $url['path'], 2);
-			if(!empty($parts['1']))
+			$url = parse_url($_SERVER['REQUEST_URI']);
+			if(!empty($url['path']))
 			{
-				if(in_array($parts['1'], $this->settings['profile_exts']))
-				{				
-					return $this->EE->output->_display();
+				$parts = explode(".", $url['path'], 2);
+				if(!empty($parts['1']))
+				{
+					if(in_array($parts['1'], $this->settings['profile_exts']))
+					{				
+						return $this->EE->output->_display();
+					}
 				}
 			}
 		}

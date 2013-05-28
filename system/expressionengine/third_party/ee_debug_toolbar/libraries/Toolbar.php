@@ -362,7 +362,7 @@ class Toolbar
 			$this->EE->xml_writer->addNode('button_icon', $panel->get_button_icon(), array(), TRUE);
 			$this->EE->xml_writer->addNode('button_icon_alt_text', $panel->get_button_icon_alt_text(), array(), TRUE);
 			$this->EE->xml_writer->addNode('button_label', $panel->get_button_label(), array(), TRUE);
-			$this->EE->xml_writer->addNode('output', $panel->get_panel_contents(), array(), TRUE);
+			$this->EE->xml_writer->addNode('output', base64_encode($panel->get_panel_contents()), array(), TRUE);
 			$this->EE->xml_writer->endBranch();
 		}
 		
@@ -375,6 +375,8 @@ class Toolbar
 		$gz = gzopen($filename.'.gz','w9');
 		gzwrite($gz, $string);
 		gzclose($gz);
+		
+		chmod($filename.'.gz', 0777);
 				
 		//write_file($filename, utf8_encode($xml));
 	}
@@ -420,5 +422,18 @@ class Toolbar
 		}
 
 		return $config;
+	}
+	
+	/**
+	 * Checks to verify the MySQL Query Cache is enabled or not
+	 * @return string
+	 */
+	public function verify_mysql_query_cache()
+	{
+		$data = $this->EE->db->query("SHOW VARIABLES LIKE 'have_query_cache'")->row_array();
+		if(!empty($data['Value']) && $data['Value'] == 'YES')
+		{
+			return 'y';
+		}
 	}
 }

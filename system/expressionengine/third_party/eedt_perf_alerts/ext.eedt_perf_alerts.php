@@ -68,6 +68,13 @@ class Eedt_perf_alerts_ext
 			'max_sql_time' => 0.1,
 			'max_query_time' => 0.01
 	);
+	
+	/**
+	 * Allowed methods that can be called via eedt.ajax()
+	 *
+	 * @var array
+	 */
+	public $eedt_act = array('fetch_duplicate_tags');	
 
 	public function __construct($settings = '')
 	{

@@ -6,6 +6,7 @@
 	width:260px;
 	background: #032f4f;
 	border:1px solid #000;
+	z-index:999999999;
 }
 #Eedt_memory_history.left {
 	right: auto;

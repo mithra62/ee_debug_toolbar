@@ -37,7 +37,7 @@ class Ee_toolbar_gc
 	public function __construct()
 	{
 		$this->EE =& get_instance();
-		$this->cache_dir = APPPATH.'cache/eedt/';
+		$this->cache_dir = $this->EE->config->item('cache_path') ? $this->EE->config->item('cache_path').'eedt/' : APPPATH.'cache/eedt/';
 	}
 	
 	/**

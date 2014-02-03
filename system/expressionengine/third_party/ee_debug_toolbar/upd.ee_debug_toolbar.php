@@ -98,7 +98,7 @@ class Ee_debug_toolbar_upd
 		$this->disable_extension();
 		$this->EE->dbforge->drop_table($this->EE->debug_settings->settings_table);
 		
-		$cache_dir = APPPATH.'cache/eedt/';
+		$cache_dir = $this->EE->config->item('cache_path') ? $this->EE->config->item('cache_path').'eedt/' : APPPATH.'cache/eedt/';
 		if(is_dir($cache_dir))
 		{
 			$this->EE->load->helpers('file');

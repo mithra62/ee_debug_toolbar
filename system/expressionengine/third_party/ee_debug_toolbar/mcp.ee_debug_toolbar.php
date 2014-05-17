@@ -92,9 +92,8 @@ class Ee_debug_toolbar_mcp
 				exit;
 			}
 		}
-				
 		
-		$this->EE->cp->set_variable('cp_page_title', $this->EE->lang->line('settings'));
+		$this->EE->view->cp_page_title = $this->EE->lang->line('settings');
 	
 		$vars = array();
 		$vars['settings'] = $this->settings;

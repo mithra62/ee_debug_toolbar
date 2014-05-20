@@ -36,6 +36,7 @@ class Ee_debug_settings_model extends CI_Model
 	public $_defaults = array(
 				'theme' => 'default',
 				'toolbar_position' => 'bottom-left',
+				'cache_path' => '',
 				'profile_exts' => array(
 					'js',
 					'css',
@@ -76,6 +77,7 @@ class Ee_debug_settings_model extends CI_Model
 	{
 		parent::__construct();
 		$this->_table = $this->settings_table;
+		$this->_defaults['cache_path'] = APPPATH.'cache/eedt/';
 	}
 	
 	/**

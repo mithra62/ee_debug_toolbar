@@ -33,7 +33,7 @@ class Ee_debug_toolbar_ext
 	 * @var array
 	 */
 	public $settings = array(
-			'theme' => 'default'
+		'theme' => 'default'
 	);
 
 	/**
@@ -206,6 +206,13 @@ class Ee_debug_toolbar_ext
 	{
 		//Attempt to patch the weird unfinished Active record chain (issue #18)
 		$this->EE->db->limit(1)->get("channel_titles");
+		
+		//we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
+		//see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
+		if ($this->EE->config->config['show_profiler'] != 'y' || $this->EE->output->enable_profiler != '1')
+		{
+			return;
+		}		
 
 		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_panel_model.php");
 		$html = $this->EE->output->final_output;

@@ -39,7 +39,7 @@ class Ee_debug_toolbar_ext
 	/**
 	 * Persistent storage to hold settings across the
 	 * multiple class initialisations by EE and then CI
-	 * 
+	 *
 	 * @var array
 	 */
 	static $persistent_settings = array();
@@ -49,7 +49,7 @@ class Ee_debug_toolbar_ext
 	 *
 	 * @var string
 	 */
-	public $name = '';	
+	public $name = '';
 
 	/**
 	 * The extension version
@@ -57,55 +57,55 @@ class Ee_debug_toolbar_ext
 	 * @var float
 	 */
 	public $version = '';
-	
+
 	/**
 	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)
-	 * 
+	 *
 	 * @var string
 	 */
 	public $description = '';
-	
+
 	/**
 	 * We're doing our own settings now so set this to off.
-	 * 
+	 *
 	 * @var string
 	 */
 	public $settings_exist = 'y';
-	
+
 	/**
 	 * Where to get help
-	 * 
+	 *
 	 * @var string
 	 */
 	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki';
-	
+
 	/**
 	 * The full path to store the cached debug output
 	 * @var string
 	 */
 	public $cache_dir = '';
-	
+
 	/**
 	 * The order the default panels appear in.
 	 * Also used to differentiate the native panels from third party panels
 	 * @var array
 	 */
 	public $panel_order = array(
-			'copyright', 
-			'variables', 
-			'files', 
-			'memory', 
-			'time', 
+			'copyright',
+			'variables',
+			'files',
+			'memory',
+			'time',
 			'config',
 			'database'
 	);
-	
+
 	/**
 	 * Flag to have module files handle updatting
 	 * @var unknown_type
 	 */
 	public $required_by = array('module');
-	
+
 	/**
 	 * List of methods available for use with EEDT ACT
 	 * @var array
@@ -123,8 +123,13 @@ class Ee_debug_toolbar_ext
 		$this->name        = lang('ee_debug_toolbar_module_name');
 		$this->description = lang('ee_debug_toolbar_module_description');
 		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		
-		$this->cache_dir = APPPATH.'cache/eedt/';
+
+		// Check for a cache_path config override
+		$this->cache_dir = $this->EE->config->item('cache_path');
+
+		// If no cache_path override is set, place the cache in the standard location.
+		if ( $this->cache_dir == '' ) $this->cache_dir = APPPATH.'cache/eedt/';
+
 		if(!is_dir($this->cache_dir))
 		{
 			mkdir($this->cache_dir, 0777, true);
@@ -136,28 +141,28 @@ class Ee_debug_toolbar_ext
 		$session = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $session);
 
 		//OK, this is kind of stupid, but CI only compiles debug data if both the profiler is on and the user is Super Admin.
-		if ($this->EE->config->config['show_profiler'] != 'y' || $session->userdata('group_id') != '1') 
+		if ($this->EE->config->config['show_profiler'] != 'y' || $session->userdata('group_id') != '1')
 		{
 			return $session;
 		}
 
 		//we don't want to compile Toolbar data on certain requests
 		$ignore_controllers = array('javascript', 'css', 'content_files_modal');
-		if (in_array($this->EE->input->get("C"), $ignore_controllers)) 
+		if (in_array($this->EE->input->get("C"), $ignore_controllers))
 		{
 			return $session;
 		}
-		
+
 		//override to disable the toolbar from even starting
 		if($this->EE->input->get('disable_toolbar') == 'yes')
-		{		
+		{
 			return $session;
 		}
 
 		global $EXT;
 
 		//BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
-		if (!class_exists('Ee_toolbar_hook')) 
+		if (!class_exists('Ee_toolbar_hook'))
 		{
 			$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
 		}
@@ -206,13 +211,13 @@ class Ee_debug_toolbar_ext
 	{
 		//Attempt to patch the weird unfinished Active record chain (issue #18)
 		$this->EE->db->limit(1)->get("channel_titles");
-		
+
 		//we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
 		//see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
 		if ($this->EE->config->config['show_profiler'] != 'y' || $this->EE->output->enable_profiler != '1')
 		{
 			return;
-		}		
+		}
 
 		$this->EE->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_panel_model.php");
 		$html = $this->EE->output->final_output;
@@ -228,7 +233,7 @@ class Ee_debug_toolbar_ext
 
 		$this->EE->load->library('Toolbar');
 		$this->settings = $this->EE->toolbar->get_settings();
-		
+
 		//on 404 errors this can cause the data to get munged
 		//to get around this, we only want to run the toolbar on certain pages
 		///see $this->settings['profile_exts'] for details
@@ -242,13 +247,13 @@ class Ee_debug_toolbar_ext
 				if(!empty($parts['1']))
 				{
 					if(in_array($parts['1'], $this->settings['profile_exts']))
-					{				
+					{
 						return $this->EE->output->_display();
 					}
 				}
 			}
 		}
-		
+
 		//Toolbar UI Vars
 		$vars                                  = array();
 		$vars['query_count']                   = $this->EE->db->query_count;
@@ -281,31 +286,31 @@ class Ee_debug_toolbar_ext
 		$this->EE->load->vars($vars);
 
 		//Load Internal Panels & load view model data
-		$panels = $this->load_panels();	
-		$panel_data = array();	
-		foreach($panels as $panel) 
+		$panels = $this->load_panels();
+		$panel_data = array();
+		foreach($panels as $panel)
 		{
 			$p = $panel->ee_debug_toolbar_add_panel(new Eedt_panel_model());
 			$panel_data[$p->get_name()] = $p;
 		}
 
 		//Load third party panels and custom mods
-		//yes, you can technically create panels in mod_panel but using 
+		//yes, you can technically create panels in mod_panel but using
 		//add_panel will help future proof things
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_add_panel') === true)
 		{
 			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_add_panel', $panel_data, $vars);
 		}
-		
+
 		//do... stuff... to panels... eventually...
-		
+
 		//apply custom modifications to toolbar
 		//again, yes, you could create panels using mod_panel but you probably shouldn't ;)
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_panel') === true)
 		{
 			$panel_data = $this->EE->extensions->call('ee_debug_toolbar_mod_panel', $panel_data, $vars);
 		}
-		
+
 		//have to verify the panels are good after letting the users have a go...
 		foreach($panel_data AS $key => $panel)
 		{
@@ -319,15 +324,15 @@ class Ee_debug_toolbar_ext
 			$vars['css'] = array_merge($vars['css'], $panel->get_page_load_css());
 			$vars['js'] = array_merge($vars['js'], $panel->get_page_load_js());
 		}
-		
+
 		$vars['panels'] = $panel_data;
 		$vars['js_config'] = $this->EE->toolbar->js_config($vars);
-		
-		//apply any customizations to the global view data 
+
+		//apply any customizations to the global view data
 		if ($this->EE->extensions->active_hook('ee_debug_toolbar_mod_view') === true)
 		{
 			$vars = $this->EE->extensions->call('ee_debug_toolbar_mod_view', $vars);
-		}		
+		}
 
 		//we have to "redo" the benchmark panel so we have all the internal benchmarks
 		//COULD WREAK HAVOC ON BENCHMARK OVERRIDES!!!
@@ -360,7 +365,7 @@ class Ee_debug_toolbar_ext
 
 		//setup the XML storage data for use by the panels on open
 		$this->EE->toolbar->cache_panels($vars['panels_in_toolbar'], $this->cache_dir);
-		
+
 		//Render toolbar
 		$toolbar_html = $this->EE->load->view($vars['master_view_script'], $vars, true);
 
@@ -377,7 +382,7 @@ class Ee_debug_toolbar_ext
 		{
 			$html .= $toolbar_html;
 		}
-		else 
+		else
 		{
 			$html = str_replace('</body>', $toolbar_html . '</body>', $html);
 		}
@@ -386,12 +391,12 @@ class Ee_debug_toolbar_ext
 		//since we have already added the debug data to the body output. Doing it this way means
 		//we should retain 100% compatibility (I'm looking at you Stash...)
 		$this->EE->output->final_output = $html;
-		if (isset($this->EE->TMPL)) 
+		if (isset($this->EE->TMPL))
 		{
 			$this->EE->TMPL->debugging = false;
 			$this->EE->TMPL->log       = false;
 		}
-		
+
 		$this->EE->output->enable_profiler = false;
 
 		//Fist pump.
@@ -403,7 +408,7 @@ class Ee_debug_toolbar_ext
 	 * Fetches cached panel HTML output
 	 */
 	public function get_panel_data()
-	{	
+	{
 		$panel = $this->EE->input->get('panel', false);
 		if(!$panel)
 		{
@@ -483,7 +488,7 @@ class Ee_debug_toolbar_ext
 
 		$this->EE->load->helper("file");
 		$files = get_filenames(PATH_THIRD."ee_debug_toolbar/panels/");
-		
+
 		//setup the array in the order we want the panels to appear
 		$sorted_files = array();
 		foreach($this->panel_order AS $panel)
@@ -494,8 +499,8 @@ class Ee_debug_toolbar_ext
 				$sorted_files[] = $name;
 			}
 		}
-		
-		//each panel is an object so set them up 
+
+		//each panel is an object so set them up
 		foreach($sorted_files as $file){
 			$this->EE->load->file(PATH_THIRD."ee_debug_toolbar/panels/" . $file);
 
@@ -536,25 +541,25 @@ class Ee_debug_toolbar_ext
 
 		return $position;
 	}
-	
+
 	public function settings()
 	{
 		$this->EE->functions->redirect(BASE.AMP.'C=addons_modules&M=show_module_cp&module=ee_debug_toolbar&method=settings');
 	}
-	
+
 	public function activate_extension()
 	{
 		return true;
 	}
-	
+
 	public function update_extension($current = '')
 	{
 		return true;
 	}
-	
+
 	public function disable_extension()
 	{
 		return true;
-	}	
+	}
 
 }

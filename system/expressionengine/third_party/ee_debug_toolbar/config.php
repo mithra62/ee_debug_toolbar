@@ -17,5 +17,5 @@ $config['description'] = 'Adds an unobtrusive interface for debugging output';
 $config['mod_url_name'] = strtolower($config['class_name']);
 $config['ext_class_name'] = $config['class_name'].'_ext';
 
-$config['version'] = '1.0.1';
+$config['version'] = '1.0.2';
 $config['docs_url'] = 'https://github.com/mithra62/ee_debug_toolbar/wiki';

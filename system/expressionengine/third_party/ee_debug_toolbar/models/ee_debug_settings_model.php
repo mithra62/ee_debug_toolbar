@@ -76,8 +76,13 @@ class Ee_debug_settings_model extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
+		
+        $this->EE = get_instance();
+		
 		$this->_table = $this->settings_table;
-		$this->_defaults['cache_path'] = APPPATH.'cache/eedt/';
+		
+        $this->_defaults['cache_path'] = trim($this->EE->config->item('cache_path'));
+        $this->_defaults['cache_path'] = empty($this->_defaults['cache_path']) ? APPPATH.'cache/eedt/' : rtrim( $this->_defaults['cache_path'], '/' ) . '/eedt/';
 	}
 	
 	/**

@@ -124,7 +124,9 @@ class Ee_debug_toolbar_ext
 		$this->description = lang('ee_debug_toolbar_module_description');
 		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
 		
-		$this->cache_dir = APPPATH.'cache/eedt/';
+        $this->cache_dir = trim($this->EE->config->item('cache_path'));
+        $this->cache_dir = empty($this->cache_dir) ? APPPATH.'cache/eedt/' : rtrim( $this->cache_dir, '/' ) . '/eedt/';
+		
 		if(!is_dir($this->cache_dir))
 		{
 			mkdir($this->cache_dir, 0777, true);

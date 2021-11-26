@@ -14,104 +14,66 @@ class Ee_debug_toolbar_upd extends Installer
     public $class = '';
 
     public $settings_table = '';
-     
+
+    public $actions = [
+        [
+            'class' => 'Ee_debug_toolbar',
+            'method' => 'act', // required
+            'csrf_exempt' => true
+        ]
+    ];
+
+    public $methods = [
+        [
+            'method' => 'toolbar',
+            'hook' => 'sessions_end',
+            'priority' => 9999999,
+            'enabled' => 'y'
+        ]
+    ];
+
     public function __construct() 
     {
-		$this->class = 'Ee_debug_toolbar';
-		$this->version = DEBUG_TOOLBAR_VERSION;
-		$this->ext_class_name = 'Ee_debug_toolbar_ext';
-
-		ee()->lang->loadfile('ee_debug_toolbar');
-		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		ee()->load->model('ee_debug_settings_model', 'debug_settings');
+        parent::__construct();
     } 
     
 	public function install() 
 	{
-		ee()->load->dbforge();
-	
-		$data = array(
-			'module_name' => $this->class,
-			'module_version' => $this->version,
-			'has_cp_backend' => 'y',
-			'has_publish_fields' => 'n'
-		);
-	
-		ee()->db->insert('modules', $data);
-		
-		$sql = "INSERT INTO exp_actions (class, method) VALUES ('".$this->class."', 'act')";
-		ee()->db->query($sql);
-		
-		$this->add_settings_table();
-		$this->activate_extension();
-		
-		return TRUE;
-	} 
-	
-	public function activate_extension()
-	{
-		$data = array(
-				'class'    => $this->ext_class_name,
-				'method'   => 'toolbar',
-				'hook'     => 'sessions_end',
-				'settings' => serialize(array()),
-				'priority' => 9999999,
-				'version'  => $this->version,
-				'enabled'  => 'y'
-		);
-	
-		ee()->db->insert('extensions', $data);
+	    if(parent::install()) {
+	        $this->addSettingsTable();
+	        $this->activate_extension();
+	        return true;
+        }
 	}
 
 	public function uninstall()
 	{
-		ee()->load->dbforge();
-	
-		ee()->db->select('module_id');
-		$query = ee()->db->get_where('modules', array('module_name' => $this->class));
-	
-		ee()->db->where('module_id', $query->row('module_id'));
-		ee()->db->delete('module_member_groups');
-	
-		ee()->db->where('module_name', $this->class);
-		ee()->db->delete('modules');
-	
-		ee()->db->where('class', $this->class);
-		ee()->db->delete('actions');
-		
-		$this->disable_extension();
-		ee()->dbforge->drop_table(ee()->debug_settings->settings_table);
-		
-		$cache_dir = APPPATH.'cache/eedt/';
-		if(is_dir($cache_dir))
-		{
-			ee()->load->helpers('file');
-			delete_files($cache_dir, TRUE);
-			if(is_dir($cache_dir))
-			{
-				rmdir($cache_dir);
-			}
-		}
-	
-		return TRUE;
-	}
-	
-	public function disable_extension()
-	{
-		ee()->load->dbforge();
-		ee()->db->where('class', $this->ext_class_name);
-		ee()->db->delete('extensions');			
+	    if(parent::uninstall()) {
+	        $this->disable_extension();
+            ee()->load->dbforge();
+            ee()->dbforge->drop_table('ee_debug_toolbar_settings');
+
+            $cache_dir = APPPATH.'cache/eedt/';
+            if(is_dir($cache_dir)) {
+                ee()->load->helpers('file');
+                delete_files($cache_dir, true);
+                if(is_dir($cache_dir)) {
+                    rmdir($cache_dir);
+                }
+            }
+
+            return true;
+        }
 	}
 
 	public function update($current = '')
 	{
-		if ($current == $this->version)
-		{
+		if ($current == $this->version) {
 			return FALSE;
 		}
 	}
 
-	private function add_settings_table()
+	private function addSettingsTable()
 	{
 		ee()->load->dbforge();
 		$fields = array(
@@ -142,6 +104,6 @@ class Ee_debug_toolbar_upd extends Installer
 	
 		ee()->dbforge->add_field($fields);
 		ee()->dbforge->add_key('id', TRUE);
-		ee()->dbforge->create_table(ee()->debug_settings->settings_table, TRUE);
+		ee()->dbforge->create_table('ee_debug_toolbar_settings', TRUE);
 	}	
 }

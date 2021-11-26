@@ -21,8 +21,90 @@
  * @author         Eric Lamb
  * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/libraries/Ee_toolbar_hook.php
  */
-class Ee_toolbar_hook extends CI_Hooks
+class Ee_toolbar_hook
 {
+    public $enabled = FALSE;
+    public $hooks = array();
+    public $in_progress	= FALSE;
+
+    /**
+     * Constructor
+     *
+     */
+    function __construct()
+    {
+        $this->_initialize();
+        log_message('debug', "Hooks Class Initialized");
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Initialize the Hooks Preferences
+     *
+     * @access	private
+     * @return	void
+     */
+    function _initialize()
+    {
+        $CFG = load_class('Config', 'core');
+
+        // If hooks are not enabled in the config file
+        // there is nothing else to do
+
+        if ($CFG->item('enable_hooks') == FALSE)
+        {
+            return;
+        }
+
+        // Grab the "hooks" definition file.
+        // If there are no hooks, we're done.
+
+        @include(APPPATH.'config/hooks.php');
+
+        if ( ! isset($hook) OR ! is_array($hook))
+        {
+            return;
+        }
+
+        $this->hooks =& $hook;
+        $this->enabled = TRUE;
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Call Hook
+     *
+     * Calls a particular hook
+     *
+     * @access	private
+     * @param	string	the hook name
+     * @return	mixed
+     */
+    function _call_hook($which = '')
+    {
+        if ( ! $this->enabled OR ! isset($this->hooks[$which]))
+        {
+            return FALSE;
+        }
+
+        if (isset($this->hooks[$which][0]) AND is_array($this->hooks[$which][0]))
+        {
+            foreach ($this->hooks[$which] as $val)
+            {
+                $this->_run_hook($val);
+            }
+        }
+        else
+        {
+            $this->_run_hook($this->hooks[$which]);
+        }
+
+        return TRUE;
+    }
+
+    // --------------------------------------------------------------------
 
 	function _run_hook($data)
 	{

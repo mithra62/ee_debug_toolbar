@@ -189,8 +189,6 @@ class Ee_debug_toolbar_ext
      */
     public function modify_output()
     {
-
-        return;
         //Attempt to patch the weird unfinished Active record chain (issue #18)
         ee()->db->limit(1)->get("channel_titles");
 

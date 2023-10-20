@@ -1,10 +1,15 @@
-<h4><?php //echo count($query_data['queries']).' '.lang('database_queries'); ?></h4>
-<?php echo lang('query_cache_is'); ?> <?php echo($config_data['enable_db_caching'] == 'y' ? lang('enabled') : lang('disabled')); ?>
+<h4><?php
+    $log = ee('Database')->getLog();
+    echo $log->getQueryCount() . ' ' . lang('database_queries'); ?></h4>
 <br/>
 <?php echo lang('mysql_query_cache_is'); ?> <?php echo($mysql_query_cache == 'y' ? lang('enabled') : lang('disabled')); ?>
 <h4><?php echo lang('adapter'); ?> 0</h4>
 <ol>
-    <?php foreach ($query_data['queries'] as $query): ?>
-        <li><strong>[<?php echo $query['time']; ?> s]</strong> <?php echo $query['query']; ?></li>
+    <?php foreach ($log->getQueries() as $query): ?>
+        <?php list($sql, $location, $time, $memory) = $query; ?>
+        <li><strong>[<?php echo number_format($time, 4); ?>s / <?php echo ee()->toolbar->filesize_format($memory); ?>
+                ]</strong>
+            <?php echo $sql; ?>
+        </li>
     <?php endforeach; ?>
 </ol>

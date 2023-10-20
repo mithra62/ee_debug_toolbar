@@ -13,8 +13,8 @@ class Eedt_database_panel extends Eedt_base_panel
     public function __construct()
     {
         parent::__construct();
-        $query_data = ee()->toolbar->setup_queries();
-        $this->button_label = ee()->db->query_count . ' ' . lang('eedt_in') . ' ' . $query_data['total_time'] . 's';
+        $log = ee('Database')->getLog();
+        $this->button_label = $log->getQueryCount() . ' ' . lang('eedt_in') . ' ' . number_format(ee('Database')->currentExecutionTime(), 4) . 's';
     }
 
     public function ee_debug_toolbar_add_panel($view)

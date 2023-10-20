@@ -190,9 +190,7 @@ class Ee_debug_toolbar_ext
         //we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
         //see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
         if (ee()->config->config['show_profiler'] != 'y' || ee()->output->enable_profiler != '1') {
-//            echo 'gg';
-//            exit;
-//            return;
+            return;
         }
 
         ee()->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_panel_model.php");
@@ -200,8 +198,12 @@ class Ee_debug_toolbar_ext
 
         //If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
         $ignore_tmpl_types = array('js', 'css');
-        if (AJAX_REQUEST || (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))) {
-            return ee()->output->_display();
+        if (AJAX_REQUEST ||
+            (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types)) ||
+            (isset(ee()->TMPL->template_type) && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))
+        ) {
+            return;
+            //return ee()->output->_display();
         }
 
         //starting a benchmark to make sure we're not a problem
@@ -353,11 +355,11 @@ class Ee_debug_toolbar_ext
         //we should retain 100% compatibility (I'm looking at you Stash...)
         ee()->output->final_output = $html;
         if (isset(ee()->TMPL)) {
-            ee()->TMPL->debugging = false;
-            ee()->TMPL->log = false;
+            //ee()->TMPL->debugging = false;
+            //ee()->TMPL->log = false;
         }
 
-        ee()->output->enable_profiler = false;
+        //ee()->output->enable_profiler = false;
 
         //Fist pump.
         //ee()->output->_display();

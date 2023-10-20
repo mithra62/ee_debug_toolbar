@@ -23,11 +23,6 @@
 class Ee_debug_toolbar_ext
 {
     /**
-     * @var Object EE Super Global
-     */
-    protected $EE;
-
-    /**
      * The extensions default settings
      *
      * @var array
@@ -206,8 +201,6 @@ class Ee_debug_toolbar_ext
         //If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
         $ignore_tmpl_types = array('js', 'css');
         if (AJAX_REQUEST || (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))) {
-            echo 'f';
-            exit;
             return ee()->output->_display();
         }
 
@@ -367,7 +360,7 @@ class Ee_debug_toolbar_ext
         ee()->output->enable_profiler = false;
 
         //Fist pump.
-        ee()->output->_display();
+        //ee()->output->_display();
     }
 
 

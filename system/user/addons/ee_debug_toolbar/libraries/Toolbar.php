@@ -321,7 +321,7 @@ class Toolbar
      */
     public function get_action_url($method, $class = 'Ee_debug_toolbar')
     {
-        $url = ee()->config->config['site_url'];
+        $url = site_url();
         return $url . '?ACT=' . $this->fetch_action_id($method, $class);
     }
 

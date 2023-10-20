@@ -180,7 +180,7 @@ class Ee_debug_toolbar_ext
      *
      * This method will be called after the EE Controller has finished.
      *
-     * @return null
+     * @return void
      */
     public function modify_output()
     {
@@ -354,14 +354,11 @@ class Ee_debug_toolbar_ext
         //we should retain 100% compatibility (I'm looking at you Stash...)
         ee()->output->final_output = $html;
         if (isset(ee()->TMPL)) {
-            //ee()->TMPL->debugging = false;
-            //ee()->TMPL->log = false;
+            ee()->TMPL->debugging = false;
+            ee()->TMPL->log = false;
         }
 
-        //ee()->output->enable_profiler = false;
-
-        //Fist pump.
-        //ee()->output->_display();
+        ee()->output->enable_profiler = false;
     }
 
 

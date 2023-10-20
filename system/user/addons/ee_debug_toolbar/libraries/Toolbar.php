@@ -171,33 +171,16 @@ class Toolbar
      * Breaks up the template log data to create the chart
      *
      * @param array $log
-     * @return multitype:
+     * @return array
      */
     public function format_tmpl_log(array $log)
     {
-        return [];
         $return = array();
         foreach ($log as $item) {
-
-            $parts = explode(') ', $item, 2);
-            if (!isset($parts['0']) || !isset($parts['1'])) {
-                continue;
-            }
-
-            array_map('trim', $parts);
-            $perf = str_replace('(', '', $parts['0']);
-            $tooltip = strip_tags(htmlentities($parts['1']));
-
-            //now we have to fix some munged up values
-            $replace = array("&amp;nbsp;", "-&gt;", "&quot;");
-            $with = array("-", "->", "\"");
-            $tooltip = str_replace($replace, $with, $tooltip);
-
-            $parts = explode(' / ', $perf);
             $return[] = array(
-                'time' => $parts['0'],
-                'memory' => (float)$parts['1'],
-                'desc' => utf8_encode($tooltip) //a little sanity for UTF-8
+                'time' => $item['time'],
+                'memory' => (float)$item['memory'],
+                'desc' => utf8_encode($item['message']) //a little sanity for UTF-8
             );
         }
 

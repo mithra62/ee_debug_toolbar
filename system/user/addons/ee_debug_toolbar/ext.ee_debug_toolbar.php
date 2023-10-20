@@ -203,7 +203,6 @@ class Ee_debug_toolbar_ext
             (isset(ee()->TMPL->template_type) && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))
         ) {
             return;
-            //return ee()->output->_display();
         }
 
         //starting a benchmark to make sure we're not a problem
@@ -222,7 +221,7 @@ class Ee_debug_toolbar_ext
                 $parts = explode(".", $url['path'], 2);
                 if (!empty($parts['1'])) {
                     if (in_array($parts['1'], $this->settings['profile_exts'])) {
-                        return ee()->output->_display();
+                        return;
                     }
                 }
             }

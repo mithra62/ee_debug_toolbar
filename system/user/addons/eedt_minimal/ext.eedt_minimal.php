@@ -59,12 +59,11 @@ class Eedt_minimal_ext
 
 	public function __construct($settings = '')
 	{
-		$this->EE       =& get_instance();
-		$this->EE->lang->loadfile('eedt_minimal');
+		ee()->lang->loadfile('eedt_minimal');
 		$this->name        = lang('eedt_minimal_module_name');
 		$this->description = lang('eedt_minimal_module_description');
-		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_minimal/');
+		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+		ee()->load->add_package_path(PATH_THIRD . 'eedt_minimal/');
 	}
 	
 	/**
@@ -74,9 +73,9 @@ class Eedt_minimal_ext
 	 */
 	public function ee_debug_toolbar_mod_panel(array $panels, array $view = array())
 	{
-		$this->EE->benchmark->mark('eedt_minimal_start');
+		ee()->benchmark->mark('eedt_minimal_start');
 		
-		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
+		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
 
 		foreach($panels AS $key => $value)
 		{
@@ -87,7 +86,7 @@ class Eedt_minimal_ext
 		$theme_css_url = eedt_theme_url().'eedt_minimal/css/';
 		$panels[$key]->add_css($theme_css_url.'minimal.css', TRUE);
 		
-		$this->EE->benchmark->mark('eedt_minimal_end');
+		ee()->benchmark->mark('eedt_minimal_end');
 		return $panels;
 	}
 
@@ -103,7 +102,7 @@ class Eedt_minimal_ext
 				'enabled'   => 'y'
 		);
 		
-		$this->EE->db->insert('extensions', $data);	
+		ee()->db->insert('extensions', $data);	
 			
 		return TRUE;
 	}
@@ -115,8 +114,8 @@ class Eedt_minimal_ext
 	        return FALSE;
 	    }
 	
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->update(
+	    ee()->db->where('class', __CLASS__);
+	    ee()->db->update(
 	                'extensions',
 	                array('version' => $this->version)
 	    );
@@ -124,8 +123,8 @@ class Eedt_minimal_ext
 	
 	public function disable_extension()
 	{
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->delete('extensions');
+	    ee()->db->where('class', __CLASS__);
+	    ee()->db->delete('extensions');
 	}
 
 }

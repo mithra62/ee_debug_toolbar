@@ -75,12 +75,11 @@ class Eedt_memory_history_ext
 
 	public function __construct($settings = '')
 	{
-		$this->EE       =& get_instance();
-		$this->EE->lang->loadfile('eedt_memory_history');
+		ee()->lang->loadfile('eedt_memory_history');
 		$this->name        = lang('eedt_memory_history_module_name');
 		$this->description = lang('eedt_memory_history_module_description');
-		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_memory_history/');
+		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+		ee()->load->add_package_path(PATH_THIRD . 'eedt_memory_history/');
 	}
 
 	/**
@@ -92,13 +91,13 @@ class Eedt_memory_history_ext
 	 */
 	public function ee_debug_toolbar_add_panel($panels = array(), $vars = array())
 	{
-		$this->EE->benchmark->mark('eedt_memory_history_start');
-		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
-		$settings = $this->EE->toolbar->get_settings();
+		ee()->benchmark->mark('eedt_memory_history_start');
+		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
+		$settings = ee()->toolbar->get_settings();
 
 		$panels['memory_history'] = new Eedt_panel_model();
 		$panels['memory_history']->set_name("memory_history");
-		$panels['memory_history']->set_panel_contents($this->EE->load->view('memory_history', array('position' => $settings['memory_history_position']), true));
+		$panels['memory_history']->set_panel_contents(ee()->load->view('memory_history', array('position' => $settings['memory_history_position']), true));
 		$panels['memory_history']->add_js('https://www.google.com/jsapi', true);
 		$panels['memory_history']->add_js(eedt_theme_url() . 'eedt_memory_history/js/memory_history.js', true);
 		$panels['memory_history']->add_css(eedt_theme_url() . 'eedt_memory_history/css/memory_history.css', true);
@@ -106,21 +105,21 @@ class Eedt_memory_history_ext
 
 		$this->track_memory_and_sql_usage($vars);
 
-		$this->EE->benchmark->mark('eedt_memory_history_end');
+		ee()->benchmark->mark('eedt_memory_history_end');
 		return $panels;
 	}
 
 	public function ee_debug_toolbar_init_settings($default_settings)
 	{
-		$default_settings = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $default_settings);
+		$default_settings = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $default_settings);
 		return array_merge($default_settings, $this->default_settings);
 	}
 
 	public function ee_debug_toolbar_settings_form()
 	{
-		$settings = $this->EE->toolbar->get_settings();
+		$settings = ee()->toolbar->get_settings();
 		$settings_disable = false;
-		if(isset($this->EE->config->config['ee_debug_toolbar']))
+		if(isset(ee()->config->config['ee_debug_toolbar']))
 		{
 			$settings_disable = 'disabled="disabled"';
 		}
@@ -132,7 +131,7 @@ class Eedt_memory_history_ext
 			'bottom right' => 'bottom-right'
 		);
 		
-		$this->EE->table->add_row('<label for="memory_history_position">'.lang('memory_history_position')."</label><div class='subtext'>".lang('memory_history_position_instructions')."</div>", form_dropdown('memory_history_position',  $options, $settings['memory_history_position'], 'id="memory_history_position"'. $settings_disable));
+		ee()->table->add_row('<label for="memory_history_position">'.lang('memory_history_position')."</label><div class='subtext'>".lang('memory_history_position_instructions')."</div>", form_dropdown('memory_history_position',  $options, $settings['memory_history_position'], 'id="memory_history_position"'. $settings_disable));
 	}
 
 
@@ -145,15 +144,15 @@ class Eedt_memory_history_ext
 	public function track_memory_and_sql_usage($vars)
 	{
 		$data = array(
-			'session_id'  => $this->EE->session->userdata['session_id'],
+			'session_id'  => ee()->session->userdata['session_id'],
 			'url'         => $_SERVER["REQUEST_URI"] . $_SERVER["QUERY_STRING"],
 			'peak_memory' => (float)$vars['memory_usage'],
 			'sql_count'   => $vars['query_count'],
 			'execution_time'   => $vars['elapsed_time'],
-			'timestamp'   => $this->EE->localize->now,
-			'cp'		  => $this->EE->input->get('D') == 'cp' ? 'y' : 'n'
+			'timestamp'   => ee()->localize->now,
+			'cp'		  => ee()->input->get('D') == 'cp' ? 'y' : 'n'
 		);
-		$this->EE->db->insert('eedt_memory_history', $data);
+		ee()->db->insert('eedt_memory_history', $data);
 	}
 
 	/**
@@ -164,9 +163,9 @@ class Eedt_memory_history_ext
 	 */
 	public function fetch_memory_and_sql_usage()
 	{
-		$session_id = $this->EE->session->userdata['session_id'];
-		$is_cp = $this->EE->input->get('cp') == 'y' ? 'y' : 'n';
-		$data = $this->EE->db->where("session_id", $session_id)
+		$session_id = ee()->session->userdata['session_id'];
+		$is_cp = ee()->input->get('cp') == 'y' ? 'y' : 'n';
+		$data = ee()->db->where("session_id", $session_id)
 							 ->where('cp', $is_cp)
 							 ->limit(20)
 							 ->order_by("timestamp", "desc")
@@ -174,14 +173,14 @@ class Eedt_memory_history_ext
 							 ->result_array();
 
 		//Garbage collect
-		$this->EE->db->where("timestamp < ", $this->EE->localize->now - 14400)->delete("eedt_memory_history"); //4 hours
-		$this->EE->output->send_ajax_response($data);
+		ee()->db->where("timestamp < ", ee()->localize->now - 14400)->delete("eedt_memory_history"); //4 hours
+		ee()->output->send_ajax_response($data);
 	}
 
 	public function activate_extension()
 	{
-		$this->EE->load->dbforge();
-		$this->EE->dbforge->drop_table('eedt_memory_history');
+		ee()->load->dbforge();
+		ee()->dbforge->drop_table('eedt_memory_history');
 
 		$fields = array(
 			'id'          => array(
@@ -222,9 +221,9 @@ class Eedt_memory_history_ext
 				'null' => false
 			)
 		);
-		$this->EE->dbforge->add_field($fields);
-		$this->EE->dbforge->add_key('id', true);
-		$this->EE->dbforge->create_table('eedt_memory_history');
+		ee()->dbforge->add_field($fields);
+		ee()->dbforge->add_key('id', true);
+		ee()->dbforge->create_table('eedt_memory_history');
 
 		$data = array();
 		$data[] = array(
@@ -259,7 +258,7 @@ class Eedt_memory_history_ext
 
 		foreach($data AS $ext)
 		{
-			$this->EE->db->insert('extensions', $ext);
+			ee()->db->insert('extensions', $ext);
 		}
 		return true;
 	}
@@ -271,8 +270,8 @@ class Eedt_memory_history_ext
 	        return false;
 	    }
 
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->update(
+	    ee()->db->where('class', __CLASS__);
+	    ee()->db->update(
 	                'extensions',
 	                array('version' => $this->version)
 	    );
@@ -280,11 +279,11 @@ class Eedt_memory_history_ext
 
 	public function disable_extension()
 	{
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->delete('extensions');
+	    ee()->db->where('class', __CLASS__);
+	    ee()->db->delete('extensions');
 	    
-	    $this->EE->load->dbforge();
-	    $this->EE->dbforge->drop_table('eedt_memory_history');
+	    ee()->load->dbforge();
+	    ee()->dbforge->drop_table('eedt_memory_history');
 	}
 
 }

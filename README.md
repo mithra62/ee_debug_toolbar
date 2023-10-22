@@ -1,18 +1,42 @@
 EE Debug Toolbar
 ====================
-Adds an unobtrusive interface for debugging output on an [ExpressionEngine](http://expressionengine.com "ExpressionEngine") 2.0 site. Replaces default Profiler and Template Debugger provided with ExpressionEngine.
+Adds an unobtrusive interface for debugging output on an [ExpressionEngine](http://expressionengine.com "ExpressionEngine") 7.0 site. Replaces default Profiler and Template Debugger provided with ExpressionEngine.
 
-Adds ExpressionEngine/CodeIgniter version info, available variables, included files, template debugger, all benchmarks, the config data, and all database queries.
+Installation 
+=============
 
-![](http://mithra62.com/images/ee_debug_toolbar_default.png)
+For this build, you'll have to manually add the below hook call to ExpressionEngine:
 
-Graph:
+`system/ee/ExpressionEngine/Core/Response.php:96` within the `send()` method. 
 
-![](http://mithra62.com/images/ee_debug_toolbar_graph.png)
+```php
+if (ee()->extensions->active_hook('response_send_output') === true) {
+    $this->body = ee()->extensions->call('response_send_output', $this->body);
+}
+```
 
-Bundled Extensions:
+It should look like:
 
-![](http://eeinsider.com/static/images/ee_debug_toolbar_extension_1.png)
+```php
+public function send()
+{
+    if (ee()->extensions->active_hook('response_send_output') === true) {
+        $this->body = ee()->extensions->call('response_send_output', $this->body);
+    }
+
+    if (! $this->body) {
+        foreach ($this->headers as $name => $value) {
+            $GLOBALS['OUT']->headers[] = array($name . ': ' . $value, true);
+        }
+
+        // smoke and mirrors to support the old style
+        return $GLOBALS['OUT']->_display('', $this->status);
+    }
+
+    $this->sendHeaders();
+    $this->sendBody();
+}
+```
 
 Contributors
 ====================

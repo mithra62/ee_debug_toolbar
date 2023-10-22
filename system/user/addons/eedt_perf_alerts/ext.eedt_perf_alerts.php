@@ -78,42 +78,37 @@ class Eedt_perf_alerts_ext
 
 	public function __construct($settings = '')
 	{
-		$this->EE       =& get_instance();
-		$this->EE->lang->loadfile('eedt_perf_alerts');
+		ee()->lang->loadfile('eedt_perf_alerts');
 		$this->name        = lang('eedt_perf_alerts_module_name');
 		$this->description = lang('eedt_perf_alerts_module_description');
-		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_perf_alerts/');
+		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+		ee()->load->add_package_path(PATH_THIRD . 'eedt_perf_alerts/');
 	}
 	
 	public function ee_debug_toolbar_mod_panel(array $panels, array $view = array())
 	{		
-		$this->EE->benchmark->mark('eedt_performance_alerts_start');
-		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
-		$settings = $this->EE->toolbar->get_settings();
+		ee()->benchmark->mark('eedt_performance_alerts_start');
+		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
+		$settings = ee()->toolbar->get_settings();
 		$view['settings'] = $settings;
 		
 		//check total time
-		if($view['elapsed_time'] > $settings['max_exec_time'])
-		{
+		if($view['elapsed_time'] > $settings['max_exec_time']) {
 			$panels['time']->set_panel_css_class('flash');
 		}
 		
 		//make sure we're not running too many queries
-		if($view['query_count'] > $settings['max_queries'])
-		{
+		if($view['query_count'] > $settings['max_queries']) {
 			$panels['database']->set_panel_css_class('flash');
 		}
 		
 		//and how long did those queries take?
-		if($view['query_data']['total_time'] > $settings['max_sql_time'])
-		{
+		if(ee('Database')->currentExecutionTime() > $settings['max_sql_time']) {
 			$panels['database']->set_panel_css_class('flash');
 		}
 		
 		//is memory usage bad?
-		if($view['memory_usage'] > $settings['max_memory'])
-		{
+		if($view['memory_usage'] > $settings['max_memory']) {
 			$panels['memory']->set_panel_css_class('flash');
 		}
 		
@@ -121,33 +116,33 @@ class Eedt_perf_alerts_ext
 		$view['perf_theme_js_url'] = eedt_theme_url().'eedt_perf_alerts/js/';
 		$view['perf_theme_css_url'] = eedt_theme_url().'eedt_perf_alerts/css/';		
 		
-		$panels['database']->set_panel_contents( $this->EE->load->view('db', $view, TRUE) ) ;
+		$panels['database']->set_panel_contents( ee()->load->view('db', $view, TRUE) ) ;
 		$panels['database']->add_js($view['perf_theme_js_url'] . 'perf_alerts.js');
 
-		$this->EE->benchmark->mark('eedt_performance_alerts_end');
+		ee()->benchmark->mark('eedt_performance_alerts_end');
 		
 		return $panels;
 	}
 	
 	public function ee_debug_toolbar_init_settings($default_settings)
 	{
-		$default_settings = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $default_settings);
+		$default_settings = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $default_settings);
 		return array_merge($default_settings, $this->default_settings);
 	}
 	
 	public function ee_debug_toolbar_settings_form()
 	{
-		$settings = $this->EE->toolbar->get_settings();
+		$settings = ee()->toolbar->get_settings();
 		$settings_disable = FALSE;
-		if(isset($this->EE->config->config['ee_debug_toolbar']))
+		if(isset(ee()->config->config['ee_debug_toolbar']))
 		{
 			$settings_disable = 'disabled="disabled"';
 		}		
-		$this->EE->table->add_row('<label for="max_exec_time">'.lang('max_exec_time').'</label><div class="subtext">'.lang('max_exec_time_instructions').'</div>', form_input('max_exec_time',  $settings['max_exec_time'], 'id="max_exec_time"'. $settings_disable));
-		$this->EE->table->add_row('<label for="max_memory">'.lang('max_memory').'</label><div class="subtext">'.lang('max_memory_instructions').'</div>', form_input('max_memory',  $settings['max_memory'], 'id="max_memory"'. $settings_disable));
-		$this->EE->table->add_row('<label for="max_queries">'.lang('max_queries').'</label><div class="subtext">'.lang('max_queries_instructions').'</div>', form_input('max_queries',  $settings['max_queries'], 'id="max_queries"'. $settings_disable));
-		$this->EE->table->add_row('<label for="max_sql_time">'.lang('max_sql_time').'</label><div class="subtext">'.lang('max_sql_time_instructions').'</div>', form_input('max_sql_time',  $settings['max_sql_time'], 'id="max_sql_time"'. $settings_disable));
-		$this->EE->table->add_row('<label for="max_query_time">'.lang('max_query_time').'</label><div class="subtext">'.lang('max_query_time_instructions').'</div>', form_input('max_query_time',  $settings['max_query_time'], 'id="max_query_time"'. $settings_disable));
+		ee()->table->add_row('<label for="max_exec_time">'.lang('max_exec_time').'</label><div class="subtext">'.lang('max_exec_time_instructions').'</div>', form_input('max_exec_time',  $settings['max_exec_time'], 'id="max_exec_time"'. $settings_disable));
+		ee()->table->add_row('<label for="max_memory">'.lang('max_memory').'</label><div class="subtext">'.lang('max_memory_instructions').'</div>', form_input('max_memory',  $settings['max_memory'], 'id="max_memory"'. $settings_disable));
+		ee()->table->add_row('<label for="max_queries">'.lang('max_queries').'</label><div class="subtext">'.lang('max_queries_instructions').'</div>', form_input('max_queries',  $settings['max_queries'], 'id="max_queries"'. $settings_disable));
+		ee()->table->add_row('<label for="max_sql_time">'.lang('max_sql_time').'</label><div class="subtext">'.lang('max_sql_time_instructions').'</div>', form_input('max_sql_time',  $settings['max_sql_time'], 'id="max_sql_time"'. $settings_disable));
+		ee()->table->add_row('<label for="max_query_time">'.lang('max_query_time').'</label><div class="subtext">'.lang('max_query_time_instructions').'</div>', form_input('max_query_time',  $settings['max_query_time'], 'id="max_query_time"'. $settings_disable));
 		
 	}
 
@@ -186,7 +181,7 @@ class Eedt_perf_alerts_ext
 		
 		foreach($data AS $ext)
 		{
-			$this->EE->db->insert('extensions', $ext);
+			ee()->db->insert('extensions', $ext);
 		}
 				
 		return TRUE;
@@ -199,8 +194,8 @@ class Eedt_perf_alerts_ext
 	        return FALSE;
 	    }
 	
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->update(
+	    ee()->db->where('class', __CLASS__);
+	    ee()->db->update(
 	                'extensions',
 	                array('version' => $this->version)
 	    );
@@ -208,8 +203,8 @@ class Eedt_perf_alerts_ext
 	
 	public function disable_extension()
 	{
-	    $this->EE->db->where('class', __CLASS__);
-	    $this->EE->db->delete('extensions');
+	    ee()->db->where('class', __CLASS__);
+	    ee()->db->delete('extensions');
 	}
 
 }

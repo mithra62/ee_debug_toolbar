@@ -61,20 +61,19 @@ class Eedt_log_viewer_ext
 
 	public function __construct($settings = '')
 	{
-		$this->EE       =& get_instance();
-		$this->EE->lang->loadfile('eedt_log_viewer');
+		ee()->lang->loadfile('eedt_log_viewer');
 		$this->name        = lang('eedt_log_viewer_module_name');
 		$this->description = lang('eedt_log_viewer_module_description');
-		$this->EE->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		$this->EE->load->add_package_path(PATH_THIRD . 'eedt_log_viewer/');
+		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+		ee()->load->add_package_path(PATH_THIRD . 'eedt_log_viewer/');
 	}
 	
 	public function ee_debug_toolbar_add_panel(array $panels, array $view)
 	{
-		$this->EE->benchmark->mark('eedt_log_viewer_start');
-		$panels = ($this->EE->extensions->last_call != '' ? $this->EE->extensions->last_call : $panels);
+		ee()->benchmark->mark('eedt_log_viewer_start');
+		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
 		
-		$vars['panel_fetch_url'] = $this->EE->toolbar->create_act_url('get_panel_logs', __CLASS__);
+		$vars['panel_fetch_url'] = ee()->toolbar->create_act_url('get_panel_logs', __CLASS__);
 		$vars['theme_img_url'] = eedt_theme_url().'eedt_log_viewer/images/';
 		$vars['theme_js_url'] = eedt_theme_url().'eedt_log_viewer/js/';
 		$vars['theme_css_url'] = eedt_theme_url().'eedt_log_viewer/css/';
@@ -83,26 +82,24 @@ class Eedt_log_viewer_ext
 		$panels['log_viewer']->set_name('log_viewer');
 		$panels['log_viewer']->set_button_icon($vars['theme_img_url'].'logs.png');
 		$panels['log_viewer']->set_button_label(lang('log_viewer'));
-		$panels['log_viewer']->set_panel_contents($this->EE->load->view('log_viewer', $vars, TRUE));
+		$panels['log_viewer']->set_panel_contents(ee()->load->view('log_viewer', $vars, TRUE));
 		$panels['log_viewer']->set_panel_fetch_url($vars['panel_fetch_url']);
 		
-		$this->EE->benchmark->mark('eedt_log_viewer_end');
+		ee()->benchmark->mark('eedt_log_viewer_end');
 		return $panels;
 	}
 	
 	public function get_panel_logs()
 	{
-		$log_path = $this->EE->config->item('log_path') ? $this->EE->config->item('log_path') : APPPATH . "logs/";
+		$log_path = ee()->config->item('log_path') ? ee()->config->item('log_path') : APPPATH . "logs/";
 		
 		$vars['logs_enabled'] = FALSE;
-		if($this->EE->config->config['log_threshold'] >= 1)
-		{
+		if(ee()->config->config['log_threshold'] >= 1) {
 			$vars['logs_enabled'] = TRUE;
 		}
 		
 		$vars['log_dir_writable'] = FALSE;
-		if(is_writable($this->EE->config->config['log_path']))
-		{
+		if(is_writable(ee()->config->config['log_path'])) {
 			$vars['log_dir_writable'] = TRUE;
 		}
 				
@@ -134,7 +131,7 @@ class Eedt_log_viewer_ext
 		
 		$vars['latest_log'] = $log_path.end($log_files);
 		$vars['log_files'] = $log_files;
-		echo $this->EE->load->view('log_viewer', $vars, TRUE);
+		echo ee()->load->view('log_viewer', $vars, TRUE);
 		exit;
 	}	
 
@@ -154,14 +151,14 @@ class Eedt_log_viewer_ext
 	
 		foreach($data AS $ex)
 		{
-			$this->EE->db->insert('extensions', $ex);	
+			ee()->db->insert('extensions', $ex);	
 		}		
 	}
 	
 	public function disable_extension()
 	{
-		$this->EE->db->where('class', __CLASS__);
-		$this->EE->db->delete('extensions');
+		ee()->db->where('class', __CLASS__);
+		ee()->db->delete('extensions');
 	}
 		
 	public function update_extension($current = '')

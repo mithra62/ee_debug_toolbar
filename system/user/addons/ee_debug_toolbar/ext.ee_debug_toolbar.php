@@ -1,25 +1,9 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2013, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
- */
+use Mithra62\DebugToolbar\Toolbar\Hook;
+use Mithra62\DebugToolbar\Services\ToolbarService;
+use Mithra62\DebugToolbar\Panels\Model;
 
-/**
- * EE Debug Toolbar - Extension
- *
- * Extension class
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/ext.ee_debug_toolbar.php
- */
 class Ee_debug_toolbar_ext
 {
     /**
@@ -37,7 +21,7 @@ class Ee_debug_toolbar_ext
      *
      * @var array
      */
-    static $persistent_settings = array();
+    static $persistent_settings = [];
 
     /**
      * The extension name
@@ -78,22 +62,22 @@ class Ee_debug_toolbar_ext
      * The full path to store the cached debug output
      * @var string
      */
-    public $cache_dir = '';
+    protected string $cache_dir = '';
 
     /**
      * The order the default panels appear in.
      * Also used to differentiate the native panels from third party panels
      * @var array
      */
-    public $panel_order = array(
-        'copyright',
-        'variables',
-        'files',
-        'memory',
-        'time',
-        'config',
-        'database'
-    );
+    protected array $panel_order = [
+        'Copyright',
+        'Variables',
+        'Files',
+        'Memory',
+        'Time',
+        'Config',
+        'Database'
+    ];
 
     /**
      * List of methods available for use with EEDT ACT
@@ -101,6 +85,7 @@ class Ee_debug_toolbar_ext
      */
     public $eedt_act = array('get_panel_data', 'panel_ajax');
 
+    protected ToolbarService $toolbar;
 
     public function __construct($settings = '')
     {
@@ -110,6 +95,7 @@ class Ee_debug_toolbar_ext
         $this->description = lang('ee_debug_toolbar_module_description');
         ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
         $this->cache_dir = APPPATH . 'cache/eedt/';
+        $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
         if (!is_dir($this->cache_dir)) {
             mkdir($this->cache_dir, 0777, true);
         }
@@ -119,7 +105,6 @@ class Ee_debug_toolbar_ext
     {
         $session = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $session);
 
-        //OK, this is kind of stupid, but CI only compiles debug data if both the profiler is on and the user is Super Admin.
         if (ee()->config->config['show_profiler'] != 'y' || $session->userdata('role_id') != '1') {
             return $session;
         }
@@ -137,16 +122,11 @@ class Ee_debug_toolbar_ext
 
         global $EXT;
 
-        //BELOW IS STOLEN FROM CHRIS IMRIE AND REQUIREJS WITH PERMISSION
-        if (!class_exists('\Ee_toolbar_hook')) {
-            ee()->load->file(PATH_THIRD . "ee_debug_toolbar/libraries/Ee_toolbar_hook.php");
-        }
-
         //We overwrite the CI_Hooks class with our own since the CI_Hooks class will always load
         //hooks class files relative to APPPATH, when what we really need is to load RequireJS hook from the
         //third_party folder, which we KNOW can always be found with PATH_THIRD. Hence we extend the class and
         //simply redefine the _run_hook method to load relative to PATH_THIRD. Simples.
-        $EET_EXT = new \Ee_toolbar_hook();
+        $EET_EXT = new Hook();
 
         //Capture existing hooks just in case (although this is EE - it's unlikely)
         $EET_EXT->hooks = isset($EXT->hooks) ? $EXT->hooks : [];
@@ -193,11 +173,10 @@ class Ee_debug_toolbar_ext
             return;
         }
 
-        ee()->load->file(PATH_THIRD . "ee_debug_toolbar/classes/Eedt_panel_model.php");
         $html = ee()->output->final_output;
 
         //If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
-        $ignore_tmpl_types = array('js', 'css');
+        $ignore_tmpl_types = ['js', 'css'];
         if (AJAX_REQUEST ||
             (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types)) ||
             (isset(ee()->TMPL->template_type) && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))
@@ -208,8 +187,7 @@ class Ee_debug_toolbar_ext
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');
 
-        ee()->load->library('Toolbar');
-        $this->settings = ee()->toolbar->get_settings();
+        $this->settings = $this->toolbar->get_settings();
 
         //on 404 errors this can cause the data to get munged
         //to get around this, we only want to run the toolbar on certain pages
@@ -230,22 +208,22 @@ class Ee_debug_toolbar_ext
         //Toolbar UI Vars
         $vars = array();
         $vars['query_count'] = ee()->db->query_count;
-        $vars['mysql_query_cache'] = ee()->toolbar->verify_mysql_query_cache();
+        $vars['mysql_query_cache'] = $this->toolbar->verify_mysql_query_cache();
         $vars['elapsed_time'] = ee()->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
         $vars['config_data'] = ee()->config->config;
         $vars['session_data'] = ee()->session->all_userdata();
-        $vars['query_data'] = ee()->toolbar->setup_queries();
-        $vars['memory_usage'] = ee()->toolbar->filesize_format(memory_get_peak_usage());
+        $vars['query_data'] = $this->toolbar->setup_queries();
+        $vars['memory_usage'] = $this->toolbar->filesize_format(memory_get_peak_usage());
         $vars['template_debugging_enabled'] = isset(ee()->TMPL->log) && is_array(ee()->TMPL->log) && count(ee()->TMPL->log) > 0;
-        $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? ee()->toolbar->format_tmpl_log(ee()->TMPL->log) : array());
-        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? ee()->toolbar->format_tmpl_chart_json($vars['template_debugging']) : array());
-        $vars['included_file_data'] = ee()->toolbar->setup_files(get_included_files());
+        $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->format_tmpl_log(ee()->TMPL->log) : array());
+        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->format_tmpl_chart_json($vars['template_debugging']) : array());
+        $vars['included_file_data'] = $this->toolbar->setup_files(get_included_files());
 
         $vars['ext_version'] = $this->version;
-        $this->settings = ee()->toolbar->get_settings();
-        $vars['theme_img_url'] = ee()->toolbar->create_theme_url($this->settings['theme'], 'images');
-        $vars['theme_js_url'] = ee()->toolbar->create_theme_url($this->settings['theme'], 'js');
-        $vars['theme_css_url'] = ee()->toolbar->create_theme_url($this->settings['theme'], 'css');
+        $this->settings = $this->toolbar->get_settings();
+        $vars['theme_img_url'] = $this->toolbar->create_theme_url($this->settings['theme'], 'images');
+        $vars['theme_js_url'] = $this->toolbar->create_theme_url($this->settings['theme'], 'js');
+        $vars['theme_css_url'] = $this->toolbar->create_theme_url($this->settings['theme'], 'css');
         $vars['extra_html'] = ''; //used by extension to add extra script/css files
         $vars['eedt_theme_path'] = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim(ee()->config->config['theme_folder_path'], '/third_party/') . '/') . 'ee_debug_toolbar/themes/' . $this->settings['theme'];
         $vars['master_view_script'] = "toolbar";
@@ -260,9 +238,9 @@ class Ee_debug_toolbar_ext
 
         //Load Internal Panels & load view model data
         $panels = $this->load_panels();
-        $panel_data = array();
+        $panel_data = [];
         foreach ($panels as $panel) {
-            $p = $panel->ee_debug_toolbar_add_panel(new Eedt_panel_model());
+            $p = $panel->ee_debug_toolbar_add_panel(new Model());
             $panel_data[$p->get_name()] = $p;
         }
 
@@ -283,7 +261,7 @@ class Ee_debug_toolbar_ext
 
         //have to verify the panels are good after letting the users have a go...
         foreach ($panel_data as $key => $panel) {
-            if (!($panel instanceof Eedt_panel_model)) {
+            if (!($panel instanceof Model)) {
                 unset($panel_data[$key]);
                 continue;
             }
@@ -294,7 +272,7 @@ class Ee_debug_toolbar_ext
         }
 
         $vars['panels'] = $panel_data;
-        $vars['js_config'] = ee()->toolbar->js_config($vars);
+        $vars['js_config'] = $this->toolbar->js_config($vars);
 
         //apply any customizations to the global view data
         if (ee()->extensions->active_hook('ee_debug_toolbar_mod_view') === true) {
@@ -304,7 +282,7 @@ class Ee_debug_toolbar_ext
         //we have to "redo" the benchmark panel so we have all the internal benchmarks
         //COULD WREAK HAVOC ON BENCHMARK OVERRIDES!!!
         ee()->benchmark->mark('ee_debug_benchmark_end');
-        $vars['benchmark_data'] = ee()->toolbar->setup_benchmarks();
+        $vars['benchmark_data'] = $this->toolbar->setup_benchmarks();
         if (!empty($vars['panels']['time'])) {
             $vars['panels']['time']->set_panel_contents(ee()->load->view("partials/time", $vars, true));
         }
@@ -316,13 +294,13 @@ class Ee_debug_toolbar_ext
 
         foreach ($vars['panels'] as $panel) {
             switch ($panel->get_injection_point()) {
-                case Eedt_panel_model::PANEL_BEFORE_TOOLBAR:
+                case Model::PANEL_BEFORE_TOOLBAR:
                     $vars['panels_before_toolbar'][] = $panel;
                     break;
-                case Eedt_panel_model::PANEL_IN_TOOLBAR:
+                case Model::PANEL_IN_TOOLBAR:
                     $vars['panels_in_toolbar'][] = $panel;
                     break;
-                case Eedt_panel_model::PANEL_AFTER_TOOLBAR:
+                case Model::PANEL_AFTER_TOOLBAR:
                     $vars['panels_after_toolbar'][] = $panel;
                     break;
             }
@@ -330,7 +308,7 @@ class Ee_debug_toolbar_ext
         unset($vars['panels']);
 
         //setup the XML storage data for use by the panels on open
-        ee()->toolbar->cache_panels($vars['panels_in_toolbar'], $this->cache_dir);
+        $this->toolbar->cache_panels($vars['panels_in_toolbar'], $this->cache_dir);
 
         //Render toolbar
         $toolbar_html = ee()->load->view($vars['master_view_script'], $vars, true);
@@ -373,8 +351,7 @@ class Ee_debug_toolbar_ext
         }
 
         //the cache file is just an XML so we check for existance, node, and display. easy
-        ee()->load->library('toolbar');
-        $file = $this->cache_dir . ee()->toolbar->make_cache_filename() . '.gz';
+        $file = $this->cache_dir . $this->toolbar->make_cache_filename() . '.gz';
         if (file_exists($file) && is_readable($file)) {
             $gz = gzfile($file);
             $gz = implode("", $gz);
@@ -392,7 +369,7 @@ class Ee_debug_toolbar_ext
      */
     public function panel_ajax()
     {
-        $data = array();
+        $data = [];
         $panel = ee()->input->get("panel", false);
         $method = ee()->input->get("method", false);
 
@@ -443,21 +420,21 @@ class Ee_debug_toolbar_ext
         ee()->load->helper("file");
         $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/panels/");
 
+
         //setup the array in the order we want the panels to appear
         $sorted_files = array();
         foreach ($this->panel_order as $panel) {
-            $name = 'Eedt_' . $panel . '_panel.php';
+
+            $name = $panel . '.php';
             if (in_array($name, $files)) {
-                $sorted_files[] = $name;
+                $sorted_files[] = $panel;
             }
         }
 
         //each panel is an object so set them up
         foreach ($sorted_files as $file) {
-            ee()->load->file(PATH_THIRD . "ee_debug_toolbar/panels/" . $file);
 
-            $class = str_replace(".php", "", $file);
-
+            $class = '\\Mithra62\DebugToolbar\Panels\\' . str_replace(".php", "", $file);
             if (class_exists($class)) {
                 $instances[$class] = new $class();
             }

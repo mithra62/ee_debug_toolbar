@@ -1,32 +1,13 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+namespace Mithra62\DebugToolbar\Toolbar;
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2013, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
- */
-
-/**
- * Garbage Collection Library
- *
- * Library
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/libraries/Ee_toolbar_gc.php
- */
-class Ee_toolbar_gc
+class GarbageCollection
 {
     /**
      * How long the cache is allowed to live
      * @var int
      */
-    public $expires = 86400;
+    protected int $expires = 86400;
 
     /**
      * Where the files live we want to monitor

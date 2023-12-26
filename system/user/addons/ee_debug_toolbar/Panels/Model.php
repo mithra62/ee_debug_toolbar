@@ -1,26 +1,8 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Christopher Imrie
- * @copyright      Copyright (c) 2013, Christopher Imrie.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
- */
+namespace Mithra62\DebugToolbar\Panels;
 
-/**
- * Panel Model
- *
- * Panel API Model
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Christopher Imrie
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/classes/Eedt_panel_model.php
- */
-class Eedt_panel_model
+class Model
 {
 
 	/*
@@ -30,9 +12,9 @@ class Eedt_panel_model
 	*/
 
 	/**
-	 * @var Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR Panel view injection point relative to the toolbar
+	 * @var Model::PANEL_IN_TOOLBAR|Model::PANEL_BEFORE_TOOLBAR|Model::PANEL_AFTER_TOOLBAR Panel view injection point relative to the toolbar
 	 */
-	private $injection_point = Eedt_panel_model::PANEL_IN_TOOLBAR;
+	private $injection_point = Model::PANEL_IN_TOOLBAR;
 
 	/**
 	 * @var bool
@@ -290,7 +272,7 @@ class Eedt_panel_model
 	/**
 	 * @param Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR $injection_point
 	 */
-	function set_injection_point($injection_point = Eedt_panel_model::PANEL_IN_TOOLBAR)
+	function set_injection_point($injection_point = Model::PANEL_IN_TOOLBAR)
 	{
 		$this->injection_point = $injection_point;
 	}

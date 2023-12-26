@@ -1,24 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+namespace Mithra62\DebugToolbar\Toolbar;
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
- */
-
-/**
- * EE Debug Toolbar - Installation Library
- *
- * @package        mithra62:Ee_toolbar_install
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/libraries/Ee_toolbar_install.php
- */
-class Ee_toolbar_install
+class Install
 {
     public function __construct()
     {

@@ -1,25 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2013, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/
- */
+use Mithra62\DebugToolbar\Toolbar\GarbageCollection;
 
-/**
- * EE Debug Toolbar - Module Class
- *
- * Module class
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/ee_debug_toolbar/mod.ee_debug_toolbar.php
- */
 class Ee_debug_toolbar
 {
     /**
@@ -40,8 +22,8 @@ class Ee_debug_toolbar
         ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
 
         //run the garbage collection against the cache
-        ee()->load->library('ee_toolbar_gc', null, 'garbage_collection');
-        ee()->garbage_collection->run();
+        $gc = new GarbageCollection;
+        $gc->run();
     }
 
     public function act()

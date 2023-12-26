@@ -1,5 +1,7 @@
 <?php
 
+use Mithra62\DebugToolbar\Services\ToolbarService;
+
 define('DEBUG_TOOLBAR_ADDON_NAME', 'Custom Addon');
 define('DEBUG_TOOLBAR_VERSION', '2.0');
 
@@ -14,5 +16,10 @@ return [
     'settings_exist' => true,
     'tests' => [
         'path' => 'src/tests'
-    ]
+    ],
+    'services.singletons' => [
+        'ToolbarService' => function ($addon) {
+            return new ToolbarService();
+        },
+    ],
 ];

@@ -1,11 +1,9 @@
 <?php
+namespace Mithra62\DebugToolbar\Panels;
 
-/**
- * EEDT Base Panel
- *
- * @author Christopher Imrie
- */
-class Eedt_base_panel
+use Mithra62\DebugToolbar\Services\ToolbarService;
+
+class AbstractPanel
 {
     /*
     |--------------------------------------------------------------------------
@@ -49,6 +47,7 @@ class Eedt_base_panel
      */
     protected $button_icon_uri;
 
+    protected ToolbarService $toolbar;
 
     /*
     |--------------------------------------------------------------------------
@@ -62,14 +61,15 @@ class Eedt_base_panel
     public function __construct()
     {
         ee()->load->helper("url");
-        $this->settings = ee()->toolbar->get_settings();
+        $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
+        $this->settings = $this->toolbar->get_settings();
 
         if (!$this->button_label) {
             $this->button_label = ucfirst(str_replace(array("_", "-"), " ", $this->name));
         }
 
         if (!$this->button_icon_uri) {
-            $this->button_icon_uri = ee()->toolbar->create_theme_url($this->settings['theme'], 'images') . $this->name . $this->button_icon_extension;
+            $this->button_icon_uri = $this->toolbar->create_theme_url($this->settings['theme'], 'images') . $this->name . $this->button_icon_extension;
 
         }
     }

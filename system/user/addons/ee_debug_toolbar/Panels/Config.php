@@ -1,12 +1,7 @@
 <?php
-/**
- * Config Panel
- *
- * @author Christopher Imrie
- */
-require_once PATH_THIRD . "ee_debug_toolbar/classes/Eedt_base_panel.php";
+namespace Mithra62\DebugToolbar\Panels;
 
-class Eedt_config_panel extends Eedt_base_panel
+class Config extends AbstractPanel
 {
     protected $name = "config";
 

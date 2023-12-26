@@ -1,25 +1,7 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/eedt_perf_alerts/
- */
+use Mithra62\DebugToolbar\Services\ToolbarService;
 
-/**
- * EE Debug Toolbar - Performance Alerts Extension
- *
- * Extension class
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/eedt_perf_alerts/ext.eedt_perf_alerts.php
- */
 class Eedt_perf_alerts_ext
 {
 	/**
@@ -74,22 +56,26 @@ class Eedt_perf_alerts_ext
 	 *
 	 * @var array
 	 */
-	public $eedt_act = array('fetch_duplicate_tags');	
+	public $eedt_act = array('fetch_duplicate_tags');
+
+    protected ToolbarService $toolbar;
 
 	public function __construct($settings = '')
 	{
 		ee()->lang->loadfile('eedt_perf_alerts');
-		$this->name        = lang('eedt_perf_alerts_module_name');
+		$this->name = lang('eedt_perf_alerts_module_name');
 		$this->description = lang('eedt_perf_alerts_module_description');
+        $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
 		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
 		ee()->load->add_package_path(PATH_THIRD . 'eedt_perf_alerts/');
 	}
 	
 	public function ee_debug_toolbar_mod_panel(array $panels, array $view = array())
-	{		
+	{
 		ee()->benchmark->mark('eedt_performance_alerts_start');
 		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
-		$settings = ee()->toolbar->get_settings();
+		$settings = $this->toolbar->get_settings();
+
 		$view['settings'] = $settings;
 		
 		//check total time

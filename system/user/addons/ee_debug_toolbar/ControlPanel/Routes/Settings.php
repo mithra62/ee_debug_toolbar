@@ -23,17 +23,11 @@ class Settings extends AbstractRoute
 
         $form = new SettingsForm();
         $form->setData($this->settings);
-//        $alert = ee('Model')
-//            ->make('ee_debug_toolbar:Settings');
         if (ee()->input->server('REQUEST_METHOD') === 'POST') {
             $form->setData($_POST);
-
-            echo 'fdsa';
-            exit;
-            $alert->set($_POST);
-            $result = $alert->validate();
+            $result = $form->validate();
             if ($result->isValid()) {
-                $alert->save();
+                ee('ee_debug_toolbar:SettingsService')->updateSettings($_POST);
                 ee('CP/Alert')->makeInline('shared-form')
                     ->asSuccess()
                     ->withTitle(lang('eedt.settings_saved'))

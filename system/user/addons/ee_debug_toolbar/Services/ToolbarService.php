@@ -32,13 +32,12 @@ class ToolbarService
     public function getSettings()
     {
         if (!isset(ee()->session->cache['ee_debug_toolbar']['settings'])) {
-            ee()->load->model('ee_debug_settings_model', 'debug_settings');
             if (ee()->extensions->active_hook('ee_debug_toolbar_init_settings') === TRUE) {
-                $defaults = array();
+                $defaults = ee('ee_debug_toolbar:SettingsService')->getDefaults();
                 $defaults = ee()->extensions->call('ee_debug_toolbar_init_settings', $defaults);
-                ee()->debug_settings->set_defaults($defaults);
+                ee('ee_debug_toolbar:SettingsService')->setDefaults($defaults);
             }
-            ee()->session->cache['ee_debug_toolbar']['settings'] = ee()->debug_settings->get_settings();
+            ee()->session->cache['ee_debug_toolbar']['settings'] = ee('ee_debug_toolbar:SettingsService')->getSettings();
         }
 
         return ee()->session->cache['ee_debug_toolbar']['settings'];

@@ -64,4 +64,5 @@ $lang = [
     'eedt.form.desc.toolbar_position' => 'Where do you want the toolbar to appear on the page?',
     'eedt.form.header.settings' => 'Debug Toolbar Settings',
     'eedt.header.settings_save' => 'Debug Toolbar Settings',
+    'eedt.settings_saved' => 'Settings Saved',
 ];

@@ -11,7 +11,6 @@ class Memory extends AbstractPanel
         $this->button_label = $this->toolbar->filesizeFormat(memory_get_peak_usage()) . ' ' . ini_get('memory_limit');
     }
 
-
     public function addPanel(Model $view): Model
     {
         $view->setName($this->name);

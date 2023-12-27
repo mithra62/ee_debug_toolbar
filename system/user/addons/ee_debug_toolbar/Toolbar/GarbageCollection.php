@@ -1,6 +1,8 @@
 <?php
 namespace Mithra62\DebugToolbar\Toolbar;
 
+use ExpressionEngine\Library\Filesystem\Filesystem;
+
 class GarbageCollection
 {
     /**
@@ -48,7 +50,8 @@ class GarbageCollection
      */
     public function run()
     {
-        if (is_really_writable($this->cache_dir)) {
+        $system = new Filesystem();
+        if ($system->isWritable($this->cache_dir)) {
             $d = dir($this->cache_dir);
             while (false !== ($entry = $d->read())) {
                 if ($entry == '.' || $entry == '..') {
@@ -56,7 +59,7 @@ class GarbageCollection
                 }
 
                 $file = $this->cache_dir . $entry;
-                if (!is_really_writable($file)) {
+                if (!$system->isWritable($file)) {
                     continue; //can't write; don't care
                 }
 

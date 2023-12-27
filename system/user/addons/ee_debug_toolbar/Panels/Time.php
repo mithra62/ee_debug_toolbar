@@ -3,7 +3,7 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Time extends AbstractPanel
 {
-    protected $name = "time";
+    protected string $name = "time";
 
     public function __construct()
     {

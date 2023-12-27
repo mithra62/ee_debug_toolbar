@@ -3,7 +3,7 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Memory extends AbstractPanel
 {
-    protected $name = "memory";
+    protected string $name = "memory";
 
     public function __construct()
     {

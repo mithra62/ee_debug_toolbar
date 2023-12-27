@@ -3,7 +3,7 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Files extends AbstractPanel
 {
-	protected $name = "files";
+	protected string $name = "files";
 
 	public function __construct()
 	{

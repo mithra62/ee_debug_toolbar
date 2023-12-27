@@ -3,7 +3,7 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Config extends AbstractPanel
 {
-    protected $name = "config";
+    protected string $name = "config";
 
     public function __construct()
     {

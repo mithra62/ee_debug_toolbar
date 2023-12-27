@@ -8,35 +8,32 @@ class AbstractPanel
     /**
      * @var string Toolbar button icon file extension
      */
-    private $button_icon_extension = ".png";
+    protected string $button_icon_extension = ".png";
 
     /**
      * @var int Display order priority
      */
-    protected $priority = 0;
+    protected int $priority = 0;
 
     /**
      * @var string Panel Name
      */
-    protected $name;
+    protected string $name = '';
 
     /**
      * @var string Toolbar Button Label
      */
-    protected $button_label;
+    protected string $button_label = '';
 
     /**
      * @var string Toolbar Button Uri
      */
-    protected $button_icon_uri;
+    protected string $button_icon_uri = '';
 
+    /**
+     * @var ToolbarService|mixed
+     */
     protected ToolbarService $toolbar;
-
-    /*
-    |--------------------------------------------------------------------------
-    | Methods
-    |--------------------------------------------------------------------------
-    */
 
     /**
      * Constructor

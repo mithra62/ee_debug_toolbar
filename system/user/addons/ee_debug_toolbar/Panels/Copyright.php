@@ -3,7 +3,7 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Copyright extends AbstractPanel
 {
-    protected $name = "copyright";
+    protected string $name = "copyright";
 
     public function __construct()
     {

@@ -3,7 +3,7 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Database extends AbstractPanel
 {
-    protected $name = "database";
+    protected string $name = "database";
 
     public function __construct()
     {

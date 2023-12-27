@@ -7,7 +7,6 @@ use Mithra62\DebugToolbar\Services\ToolbarService;
 
 abstract class AbstractHook extends AbstractRoute
 {
-
     /**
      * The extensions default settings
      *

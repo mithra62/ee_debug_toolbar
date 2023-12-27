@@ -1,11 +1,20 @@
 <?php
 
+
+if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
+    define('DEBUG_TOOLBAR_MEMORY_HISTORY_ADDON_NAME', 'Debug Toolbar - Memory History');
+}
+
+if(!defined('DEBUG_TOOLBAR_VERSION')) {
+    define('DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION', '2.0.0');
+}
+
 return [
-    'name'              => 'EE Debug Toolbar - Memory History',
+    'name'              => DEBUG_TOOLBAR_MEMORY_HISTORY_ADDON_NAME,
     'description'       => 'Tracks memory usage across multiple pages.',
-    'version'           => '1.1.0',
+    'version'           => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
     'author'            => 'me',
     'author_url'        => 'me',
-    'namespace'         => 'Me\TestAddon',
+    'namespace'         => 'Mithra62\DebugToolbar\MemoryHistory',
     'settings_exist'    => false
 ];

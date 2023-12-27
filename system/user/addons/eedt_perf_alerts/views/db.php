@@ -16,7 +16,7 @@
     <?php foreach ($log->getQueries() as $query): ?>
         <?php list($sql, $location, $time, $memory) = $query; ?>
 	<li class="<?php echo ($time >= $settings['max_query_time'] ? 'EEDebug_slow_query' : 'EEDebug_normal_queries'); ?>">
-        <strong>[<?php echo number_format($time, 4); ?>s / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesize_format($memory); ?>]</strong> <?php echo $sql; ?>
+        <strong>[<?php echo number_format($time, 4); ?>s / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>]</strong> <?php echo $sql; ?>
     </li>
 	<?php endforeach; ?>
 </ol>

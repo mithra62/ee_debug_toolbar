@@ -23,6 +23,10 @@ class Settings extends AbstractForm
         $field->setValue($this->get('toolbar_position', 'bottom-left'))
             ->setChoices(ee('ee_debug_toolbar:ToolbarService')->toolbar_positions);
 
+        if (ee()->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE) {
+            $form = ee()->extensions->call('ee_debug_toolbar_settings_form', $form);
+        }
+
         return $form->toArray();
     }
 }

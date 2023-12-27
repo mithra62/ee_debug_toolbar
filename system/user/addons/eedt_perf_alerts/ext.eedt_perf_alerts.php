@@ -1,6 +1,7 @@
 <?php
 
 use Mithra62\DebugToolbar\Services\ToolbarService;
+use ExpressionEngine\Library\CP\Form;
 
 class Eedt_perf_alerts_ext
 {
@@ -74,13 +75,13 @@ class Eedt_perf_alerts_ext
 	{
 		ee()->benchmark->mark('eedt_performance_alerts_start');
 		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
-		$settings = $this->toolbar->get_settings();
+		$settings = $this->toolbar->getSettings();
 
 		$view['settings'] = $settings;
 		
 		//check total time
 		if($view['elapsed_time'] > $settings['max_exec_time']) {
-			$panels['time']->set_panel_css_class('flash');
+			$panels['time']->setPanelCssClass('flash');
 		}
 		
 		//make sure we're not running too many queries
@@ -95,15 +96,15 @@ class Eedt_perf_alerts_ext
 		
 		//is memory usage bad?
 		if($view['memory_usage'] > $settings['max_memory']) {
-			$panels['memory']->set_panel_css_class('flash');
+			$panels['memory']->setPanelCssClass('flash');
 		}
 		
 		$view['perf_theme_img_url'] = eedt_theme_url().'eedt_perf_alerts/images/';
 		$view['perf_theme_js_url'] = eedt_theme_url().'eedt_perf_alerts/js/';
 		$view['perf_theme_css_url'] = eedt_theme_url().'eedt_perf_alerts/css/';		
 		
-		$panels['database']->set_panel_contents( ee()->load->view('db', $view, TRUE) ) ;
-		$panels['database']->add_js($view['perf_theme_js_url'] . 'perf_alerts.js');
+		$panels['database']->setPanelContents( ee()->load->view('db', $view, TRUE) ) ;
+		$panels['database']->addJs($view['perf_theme_js_url'] . 'perf_alerts.js');
 
 		ee()->benchmark->mark('eedt_performance_alerts_end');
 		
@@ -118,6 +119,9 @@ class Eedt_perf_alerts_ext
 	
 	public function ee_debug_toolbar_settings_form()
 	{
+
+        echo 'fdsa';
+        exit;
 		$settings = ee()->toolbar->get_settings();
 		$settings_disable = FALSE;
 		if(isset(ee()->config->config['ee_debug_toolbar']))

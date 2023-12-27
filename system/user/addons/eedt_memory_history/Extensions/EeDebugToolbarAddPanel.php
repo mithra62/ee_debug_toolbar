@@ -29,13 +29,13 @@ class EeDebugToolbarAddPanel extends AbstractHook
     protected function trackMemoryAndSqlUsage($vars)
     {
         $data = [
-            'session_id'  => ee()->session->userdata['session_id'],
-            'url'         => $_SERVER["REQUEST_URI"] . $_SERVER["QUERY_STRING"],
+            'session_id' => ee()->session->userdata['session_id'],
+            'url' => $_SERVER["REQUEST_URI"] . $_SERVER["QUERY_STRING"],
             'peak_memory' => (float)$vars['memory_usage'],
-            'sql_count'   => $vars['query_count'],
-            'execution_time'   => $vars['elapsed_time'],
-            'timestamp'   => ee()->localize->now,
-            'cp'		  => ee()->input->get('D') == 'cp' ? 'y' : 'n'
+            'sql_count' => $vars['query_count'],
+            'execution_time' => $vars['elapsed_time'],
+            'timestamp' => ee()->localize->now,
+            'cp' => ee()->input->get('D') == 'cp' ? 'y' : 'n'
         ];
         ee()->db->insert('eedt_memory_history', $data);
     }

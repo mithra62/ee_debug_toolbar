@@ -2,6 +2,7 @@
 namespace Mithra62\DebugToolbar\Panels;
 
 use Mithra62\DebugToolbar\Services\ToolbarService;
+use Mithra62\DebugToolbar\Panels\Model;
 
 class AbstractPanel
 {
@@ -60,12 +61,18 @@ class AbstractPanel
      * @param Eedt_view_model $view EEDT view object representing our panel and button
      * @return Eedt_view_model
      */
-    public function ee_debug_toolbar_add_panel($view)
+
+
+    /**
+     * @param \Mithra62\DebugToolbar\Panels\Model $view
+     * @return \Mithra62\DebugToolbar\Panels\Model
+     */
+    public function addPanel(Model $view): Model
     {
-        $view->set_name($this->name);
-        $view->set_button_label($this->button_label);
-        $view->set_button_icon($this->button_icon_uri);
-        $view->set_panel_contents($this->view());
+        $view->setName($this->name);
+        $view->setButtonLabel($this->button_label);
+        $view->setButtonIcon($this->button_icon_uri);
+        $view->setPanelContents($this->view());
 
         return $view;
     }
@@ -78,7 +85,7 @@ class AbstractPanel
      * @param array $data
      * @return string
      */
-    protected function view($view_path = "", $data = array())
+    protected function view(string $view_path = '', array $data = [])
     {
         if (!$view_path) {
             $view_path = 'partials/' . $this->name;

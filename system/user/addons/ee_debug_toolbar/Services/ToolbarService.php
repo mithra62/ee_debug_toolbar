@@ -312,13 +312,13 @@ class ToolbarService
         ee()->xml_writer->initiate();
         ee()->xml_writer->startBranch('panels');
         foreach ($panels as $panel) {
-            ee()->xml_writer->startBranch($panel->get_name() . '_panel');
-            ee()->xml_writer->addNode('name', $panel->get_name(), array(), TRUE);
-            ee()->xml_writer->addNode('data_target', $panel->get_target(), array(), TRUE);
-            ee()->xml_writer->addNode('button_icon', $panel->get_button_icon(), array(), TRUE);
-            ee()->xml_writer->addNode('button_icon_alt_text', $panel->get_button_icon_alt_text(), array(), TRUE);
-            ee()->xml_writer->addNode('button_label', $panel->get_button_label(), array(), TRUE);
-            ee()->xml_writer->addNode('output', base64_encode($panel->get_panel_contents()), array(), TRUE);
+            ee()->xml_writer->startBranch($panel->getName() . '_panel');
+            ee()->xml_writer->addNode('name', $panel->getName(), array(), TRUE);
+            ee()->xml_writer->addNode('data_target', $panel->getTarget(), array(), TRUE);
+            ee()->xml_writer->addNode('button_icon', $panel->getButtonIcon(), array(), TRUE);
+            ee()->xml_writer->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), array(), TRUE);
+            ee()->xml_writer->addNode('button_label', $panel->getButtonLabel(), array(), TRUE);
+            ee()->xml_writer->addNode('output', base64_encode($panel->getPanelContents()), array(), TRUE);
             ee()->xml_writer->endBranch();
         }
 
@@ -365,15 +365,15 @@ class ToolbarService
         $config['panel_ajax_url'] = str_replace("&amp;", "&", $this->getActionUrl('act') . AMP);
 
         /**
-         * @var Eedt_panel_model $panel
+         * @var Model $panel
          */
         foreach ($vars['panels'] as $panel) {
             $config['panels'][] = array(
-                'name' => $panel->get_name(),
-                'js' => $panel->get_js(),
-                'css' => $panel->get_css(),
-                'panel_fetch_url' => $panel->get_panel_fetch_url() ? $panel->get_panel_fetch_url() :
-                    str_replace("&amp;", "&", $this->createActUrl("get_panel_data")) . "&panel=" . $panel->get_name()
+                'name' => $panel->getName(),
+                'js' => $panel->getJs(),
+                'css' => $panel->getCss(),
+                'panel_fetch_url' => $panel->getPanelFetchUrl() ? $panel->getPanelFetchUrl() :
+                    str_replace("&amp;", "&", $this->createActUrl("get_panel_data")) . "&panel=" . $panel->getName()
             );
         }
 

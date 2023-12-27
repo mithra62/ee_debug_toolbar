@@ -72,7 +72,7 @@ class ResponseSendOutput extends AbstractHook
         $vars['eedt_theme_path'] = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim(ee()->config->config['theme_folder_path'], '/third_party/') . '/') . 'ee_debug_toolbar/themes/' . $this->settings['theme'];
         $vars['master_view_script'] = "toolbar";
         $vars['panels'] = array();
-        $vars['toolbar_position'] = $this->determine_toolbar_position_class();
+        $vars['toolbar_position'] = $this->determineToolbarPositionClass();
         $vars['js'] = array($vars['theme_js_url'] . "eedt.js");
         $vars['css'] = array($vars['theme_css_url'] . "ee_debug_toolbar.css");
         $vars['benchmark_data'] = array(); //we have to fake this for now
@@ -81,11 +81,11 @@ class ResponseSendOutput extends AbstractHook
         ee()->load->vars($vars);
 
         //Load Internal Panels & load view model data
-        $panels = $this->load_panels();
+        $panels = $this->loadPanels();
         $panel_data = [];
         foreach ($panels as $panel) {
-            $p = $panel->ee_debug_toolbar_add_panel(new Model());
-            $panel_data[$p->get_name()] = $p;
+            $p = $panel->addPanel(new Model());
+            $panel_data[$p->getName()] = $p;
         }
 
         //Load third party panels and custom mods
@@ -111,8 +111,8 @@ class ResponseSendOutput extends AbstractHook
             }
 
             //If any panels have specified JS & CSS to be inserted on page load, collect them here
-            $vars['css'] = array_merge($vars['css'], $panel->get_page_load_css());
-            $vars['js'] = array_merge($vars['js'], $panel->get_page_load_js());
+            $vars['css'] = array_merge($vars['css'], $panel->getPageLoadCss());
+            $vars['js'] = array_merge($vars['js'], $panel->getPageLoadJs());
         }
 
         $vars['panels'] = $panel_data;
@@ -128,16 +128,16 @@ class ResponseSendOutput extends AbstractHook
         ee()->benchmark->mark('ee_debug_benchmark_end');
         $vars['benchmark_data'] = $this->toolbar->setupBenchmarks();
         if (!empty($vars['panels']['time'])) {
-            $vars['panels']['time']->set_panel_contents(ee()->load->view("partials/time", $vars, true));
+            $vars['panels']['time']->setPanelContents(ee()->load->view("partials/time", $vars, true));
         }
 
         //Break up the panels into the various injection points
-        $vars['panels_before_toolbar'] = array();
-        $vars['panels_in_toolbar'] = array();
-        $vars['panels_after_toolbar'] = array();
+        $vars['panels_before_toolbar'] = [];
+        $vars['panels_in_toolbar'] = [];
+        $vars['panels_after_toolbar'] = [];
 
         foreach ($vars['panels'] as $panel) {
-            switch ($panel->get_injection_point()) {
+            switch ($panel->getInjectionPoint()) {
                 case Model::PANEL_BEFORE_TOOLBAR:
                     $vars['panels_before_toolbar'][] = $panel;
                     break;
@@ -149,6 +149,7 @@ class ResponseSendOutput extends AbstractHook
                     break;
             }
         }
+
         unset($vars['panels']);
 
         //setup the XML storage data for use by the panels on open
@@ -190,7 +191,7 @@ class ResponseSendOutput extends AbstractHook
      *
      * @return Eedt_base_panel[] Array of panel extension instances
      */
-    private function load_panels()
+    private function loadPanels()
     {
         $instances = array();
 
@@ -224,7 +225,7 @@ class ResponseSendOutput extends AbstractHook
      * Determine the toolbar position classes to be added to the toolbar root node
      * @return string
      */
-    private function determine_toolbar_position_class()
+    private function determineToolbarPositionClass()
     {
         if (!array_key_exists("toolbar_position", $this->settings)) {
             $this->settings['toolbar_position'] = 0;

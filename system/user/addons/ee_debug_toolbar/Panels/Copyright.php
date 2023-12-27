@@ -1,6 +1,8 @@
 <?php
 namespace Mithra62\DebugToolbar\Panels;
 
+use Mithra62\DebugToolbar\Panels\Model;
+
 class Copyright extends AbstractPanel
 {
     protected string $name = "copyright";
@@ -11,11 +13,11 @@ class Copyright extends AbstractPanel
         $this->button_label = 'v' . APP_VER . ' / ' . phpversion();
     }
 
-    public function ee_debug_toolbar_add_panel($view)
+    public function addPanel(Model $view): Model
     {
-        $view = parent::ee_debug_toolbar_add_panel($view);
+        $view = parent::addPanel($view);
         $toolbar = ee('ee_debug_toolbar:ToolbarService');
-        $view->add_css($toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_copyright.css');
+        $view->addCss($toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_copyright.css');
 
         return $view;
     }

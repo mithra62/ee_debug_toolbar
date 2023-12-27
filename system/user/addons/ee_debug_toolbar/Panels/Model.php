@@ -4,29 +4,22 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Model
 {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Defaults
-	|--------------------------------------------------------------------------
-	*/
-
-	/**
-	 * @var Model::PANEL_IN_TOOLBAR|Model::PANEL_BEFORE_TOOLBAR|Model::PANEL_AFTER_TOOLBAR Panel view injection point relative to the toolbar
-	 */
-	private $injection_point = Model::PANEL_IN_TOOLBAR;
+    /**
+     * @var int
+     */
+	private int $injection_point = Model::PANEL_IN_TOOLBAR;
 
 	/**
 	 * @var bool
 	 */
-	private $show_button = true;
+	private bool $show_button = true;
 
 	/**
 	 * @var string
 	 */
-	private $target_prefix = "Eedt_debug_";
+	private string $target_prefix = "Eedt_debug_";
 
-	private $target_suffix = "_panel";
+	private string $target_suffix = "_panel";
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,17 +34,10 @@ class Model
 	const PANEL_BEFORE_TOOLBAR = 2;
 	const PANEL_AFTER_TOOLBAR = 3;
 
-
-	/*
-	|--------------------------------------------------------------------------
-	| Instance Variables
-	|--------------------------------------------------------------------------
-	*/
-
 	/**
 	 * @var string Toolbar short name (used in CSS and JS targetting)
 	 */
-	private $name;
+	private string $name;
 
 	/**
 	 * @var string Toolbar button label
@@ -106,7 +92,7 @@ class Model
 	/**
 	 * @param string $name
 	 */
-	public function set_name($name)
+	public function setName($name)
 	{
 		$this->name = $name;
 	}
@@ -114,7 +100,7 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_name()
+	public function getName()
 	{
 		return $this->name;
 	}
@@ -122,15 +108,15 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_target()
+	public function getTarget()
 	{
-		return $this->target_prefix . $this->get_name() . $this->target_suffix;
+		return $this->target_prefix . $this->getName() . $this->target_suffix;
 	}
 
 	/**
 	 * @param string $label
 	 */
-	function set_button_label($label)
+	function setButtonLabel($label)
 	{
 		$this->button_label = $label;
 	}
@@ -138,7 +124,7 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_button_label()
+	public function getButtonLabel()
 	{
 		return $this->button_label;
 	}
@@ -146,7 +132,7 @@ class Model
 	/**
 	 * @param string $filename
 	 */
-	function set_button_icon($filename)
+	function setButtonIcon($filename)
 	{
 		$this->button_icon = $filename;
 	}
@@ -154,7 +140,7 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_button_icon()
+	public function getButtonIcon()
 	{
 		return $this->button_icon;
 	}
@@ -162,7 +148,7 @@ class Model
 	/**
 	 * @param string $text
 	 */
-	public function set_button_icon_alt_text($text="")
+	public function setButtonIconAltText($text="")
 	{
 		$this->button_icon_alt_title = $text;
 	}
@@ -170,19 +156,19 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_button_icon_alt_text()
+	public function getButtonIconAltText()
 	{
 		if($this->button_icon_alt_title){
 			return $this->button_icon_alt_title;
 		}
 
-		return $this->get_button_label();
+		return $this->getButtonLabel();
 	}
 
 	/**
 	 * @param string $html
 	 */
-	function set_panel_contents($html = "")
+	public function setPanelContents(string $html = ''): void
 	{
 		$this->output = $html;
 	}
@@ -190,7 +176,7 @@ class Model
 	/**
 	 * @return string
 	 */
-	function get_panel_contents()
+	function getPanelContents(): string
 	{
 		return $this->output;
 	}
@@ -198,7 +184,7 @@ class Model
 	/**
 	 * @param string $css
 	 */
-	public function set_panel_css_class($css)
+	public function setPanelCssClass($css)
 	{
 		$this->panel_css_class = $css;
 	}
@@ -206,7 +192,7 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_panel_css_class()
+	public function getPanelCssClass()
 	{
 		return $this->panel_css_class;
 	}
@@ -215,7 +201,7 @@ class Model
 	 * @param string $filename
 	 * @param boolean $page_load
 	 */
-	function add_js($filename, $page_load = FALSE)
+	function addJs($filename, $page_load = FALSE)
 	{
 		if($page_load) {
 			$this->page_load_js[] = $filename;
@@ -227,7 +213,7 @@ class Model
 	/**
 	 * @return array
 	 */
-	public function get_js()
+	public function getJs()
 	{
 		return $this->js;
 	}
@@ -235,7 +221,7 @@ class Model
 	/**
 	 * @return array
 	 */
-	public function get_page_load_js()
+	public function getPageLoadJs()
 	{
 		return $this->page_load_js;
 	}
@@ -244,7 +230,7 @@ class Model
 	 * @param string $filename
 	 * @param boolean $page_load
 	 */
-	function add_css($filename, $page_load = FALSE)
+	function addCss($filename, $page_load = FALSE)
 	{
 		if($page_load) {
 			$this->page_load_css[] = $filename;
@@ -256,7 +242,7 @@ class Model
 	/**
 	 * @return array
 	 */
-	public function get_css()
+	public function getCss()
 	{
 		return $this->css;
 	}
@@ -264,7 +250,7 @@ class Model
 	/**
 	 * @return array
 	 */
-	public function get_page_load_css()
+	public function getPageLoadCss()
 	{
 		return $this->page_load_css;
 	}
@@ -272,7 +258,7 @@ class Model
 	/**
 	 * @param Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR $injection_point
 	 */
-	function set_injection_point($injection_point = Model::PANEL_IN_TOOLBAR)
+	function setInjectionPoint($injection_point = Model::PANEL_IN_TOOLBAR)
 	{
 		$this->injection_point = $injection_point;
 	}
@@ -280,7 +266,7 @@ class Model
 	/**
 	 * @return Eedt_panel_model::PANEL_IN_TOOLBAR|Eedt_panel_model::PANEL_BEFORE_TOOLBAR|Eedt_panel_model::PANEL_AFTER_TOOLBAR $injection_point
 	 */
-	function get_injection_point()
+	function getInjectionPoint()
 	{
 		return $this->injection_point;
 	}
@@ -288,7 +274,7 @@ class Model
 	/**
 	 * @param bool $enabled
 	 */
-	function set_show_button($enabled = true)
+	function setShowButton($enabled = true)
 	{
 		$this->show_button = $enabled;
 	}
@@ -296,7 +282,7 @@ class Model
 	/**
 	 * @return bool
 	 */
-	function show_button()
+	function showButton()
 	{
 		return $this->show_button;
 	}
@@ -304,7 +290,7 @@ class Model
 	/**
 	 * @return string
 	 */
-	public function get_panel_fetch_url()
+	public function getPanelFetchUrl()
 	{
 		return $this->panel_fetch_url;
 	}
@@ -312,7 +298,7 @@ class Model
 	/**
 	 * @param string $panel_fetch_url
 	 */
-	public function set_panel_fetch_url($panel_fetch_url)
+	public function setPanelFetch_url($panel_fetch_url)
 	{
 		$this->panel_fetch_url = str_replace("&amp;", "&", $panel_fetch_url);
 	}

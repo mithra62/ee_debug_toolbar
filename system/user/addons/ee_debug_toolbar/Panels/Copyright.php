@@ -5,6 +5,9 @@ use Mithra62\DebugToolbar\Panels\Model;
 
 class Copyright extends AbstractPanel
 {
+    /**
+     * @var string
+     */
     protected string $name = "copyright";
 
     public function __construct()
@@ -13,6 +16,10 @@ class Copyright extends AbstractPanel
         $this->button_label = 'v' . APP_VER . ' / ' . phpversion();
     }
 
+    /**
+     * @param \Mithra62\DebugToolbar\Panels\Model $view
+     * @return \Mithra62\DebugToolbar\Panels\Model
+     */
     public function addPanel(Model $view): Model
     {
         $view = parent::addPanel($view);

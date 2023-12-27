@@ -3,6 +3,9 @@ namespace Mithra62\DebugToolbar\Panels;
 
 class Config extends AbstractPanel
 {
+    /**
+     * @var string
+     */
     protected string $name = "config";
 
     public function __construct()

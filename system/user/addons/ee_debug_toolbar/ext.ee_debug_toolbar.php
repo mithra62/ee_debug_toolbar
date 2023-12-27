@@ -2,7 +2,6 @@
 
 use ExpressionEngine\Service\Addon\Extension;
 use Mithra62\DebugToolbar\Services\ToolbarService;
-
 class Ee_debug_toolbar_ext extends Extension
 {
     protected $addon_name = 'ee_debug_toolbar';

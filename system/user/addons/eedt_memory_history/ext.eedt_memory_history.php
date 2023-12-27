@@ -1,25 +1,8 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/eedt_memory_history/
- */
+use Mithra62\DebugToolbar\Services\ToolbarService;
+use Mithra62\DebugToolbar\Panels\Model;
 
-/**
- * EE Debug Toolbar - Memory History Extension
- *
- * Extension class
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/eedt_memory_history/ext.eedt_memory_history.php
- */
 class Eedt_memory_history_ext
 {
 	/**
@@ -73,12 +56,15 @@ class Eedt_memory_history_ext
 		'memory_history_position' => "top right",
 	);
 
+    protected ToolbarService $toolbar;
+
 	public function __construct($settings = '')
 	{
 		ee()->lang->loadfile('eedt_memory_history');
 		$this->name        = lang('eedt_memory_history_module_name');
 		$this->description = lang('eedt_memory_history_module_description');
 		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
+        $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
 		ee()->load->add_package_path(PATH_THIRD . 'eedt_memory_history/');
 	}
 
@@ -93,15 +79,15 @@ class Eedt_memory_history_ext
 	{
 		ee()->benchmark->mark('eedt_memory_history_start');
 		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
-		$settings = ee()->toolbar->get_settings();
+		$settings = $this->toolbar->getSettings();
 
-		$panels['memory_history'] = new Eedt_panel_model();
-		$panels['memory_history']->set_name("memory_history");
-		$panels['memory_history']->set_panel_contents(ee()->load->view('memory_history', array('position' => $settings['memory_history_position']), true));
-		$panels['memory_history']->add_js('https://www.google.com/jsapi', true);
-		$panels['memory_history']->add_js(eedt_theme_url() . 'eedt_memory_history/js/memory_history.js', true);
-		$panels['memory_history']->add_css(eedt_theme_url() . 'eedt_memory_history/css/memory_history.css', true);
-		$panels['memory_history']->set_injection_point(Eedt_panel_model::PANEL_AFTER_TOOLBAR);
+		$panels['memory_history'] = new Model();
+		$panels['memory_history']->setName("memory_history");
+		$panels['memory_history']->setPanelContents(ee()->load->view('memory_history', array('position' => $settings['memory_history_position']), true));
+		$panels['memory_history']->addJs('https://www.google.com/jsapi', true);
+		$panels['memory_history']->addJs(eedt_theme_url() . 'eedt_memory_history/js/memory_history.js', true);
+		$panels['memory_history']->addCss(eedt_theme_url() . 'eedt_memory_history/css/memory_history.css', true);
+		$panels['memory_history']->setInjectionPoint(Model::PANEL_AFTER_TOOLBAR);
 
 		$this->track_memory_and_sql_usage($vars);
 

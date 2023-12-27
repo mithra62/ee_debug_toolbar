@@ -2,7 +2,6 @@
 namespace Mithra62\DebugToolbar\Panels;
 
 use Mithra62\DebugToolbar\Services\ToolbarService;
-use Mithra62\DebugToolbar\Panels\Model;
 
 class AbstractPanel
 {
@@ -51,17 +50,8 @@ class AbstractPanel
 
         if (!$this->button_icon_uri) {
             $this->button_icon_uri = $this->toolbar->createThemeUrl($this->settings['theme'], 'images') . $this->name . $this->button_icon_extension;
-
         }
     }
-
-    /**
-     * Add Panel to Toolbar
-     *
-     * @param Eedt_view_model $view EEDT view object representing our panel and button
-     * @return Eedt_view_model
-     */
-
 
     /**
      * @param \Mithra62\DebugToolbar\Panels\Model $view
@@ -77,7 +67,6 @@ class AbstractPanel
         return $view;
     }
 
-
     /**
      * Returns rendered view fragment as a string
      *
@@ -90,6 +79,7 @@ class AbstractPanel
         if (!$view_path) {
             $view_path = 'partials/' . $this->name;
         }
+
         return ee()->load->view($view_path, $data, TRUE);
     }
 }

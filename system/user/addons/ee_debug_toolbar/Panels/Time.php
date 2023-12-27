@@ -15,14 +15,13 @@ class Time extends AbstractPanel
     }
 
     /**
-     * @param $view
-     * @return Eedt_view_model
+     * @param Model $view
+     * @return Model
      */
-    public function ee_debug_toolbar_add_panel($view)
+    public function addPanel(Model $view): Model
     {
-        $view = parent::ee_debug_toolbar_add_panel($view);
-        $view->add_css($this->toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_time.css');
-
+        $view = parent::addPanel($view);
+        $view->addCss($this->toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_time.css');
         return $view;
     }
 }

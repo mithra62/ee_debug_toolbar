@@ -3,18 +3,11 @@
 namespace Mithra62\DebugToolbar\ControlPanel\Routes;
 
 use ExpressionEngine\Service\Addon\Controllers\Mcp\AbstractRoute;
+use Mithra62\DebugToolbar\Forms\Settings as SettingsForm;
 
 class Settings extends AbstractRoute
 {
-    /**
-     * @var string
-     */
-    protected $route_path = 'settings';
-
-    /**
-     * @var string
-     */
-    protected $cp_page_title = 'Settings';
+    protected $addon_name = 'ee_debug_toolbar';
 
     /**
      * @param false $id
@@ -22,15 +15,46 @@ class Settings extends AbstractRoute
      */
     public function process($id = false)
     {
-        $this->addBreadcrumb('settings', 'Settings');
+        $this->settings = ee('ee_debug_toolbar:ToolbarService')->getSettings();
+        $vars['cp_page_title'] = lang('eedt.settings');
+        $vars['base_url'] = $this->url('settings');
+        $vars['save_btn_text'] = lang('eedt.save');
+        $vars['save_btn_text_working'] = lang('eedt.saving');
 
-        $variables = [
-            'name' => 'My Name',
-            'color' => 'Green'
-        ];
+        $form = new SettingsForm();
+        $form->setData($this->settings);
+//        $alert = ee('Model')
+//            ->make('ee_debug_toolbar:Settings');
+        if (ee()->input->server('REQUEST_METHOD') === 'POST') {
+            $form->setData($_POST);
 
-        $this->setBody('Settings', $variables);
+            echo 'fdsa';
+            exit;
+            $alert->set($_POST);
+            $result = $alert->validate();
+            if ($result->isValid()) {
+                $alert->save();
+                ee('CP/Alert')->makeInline('shared-form')
+                    ->asSuccess()
+                    ->withTitle(lang('eedt.settings_saved'))
+                    ->defer();
 
+                ee()->functions->redirect($this->url('settings'));
+                exit;
+            } else {
+                $vars['errors'] = $result;
+                ee('CP/Alert')->makeInline('shared-form')
+                    ->asIssue()
+                    ->withTitle(lang('eedt.error.settings_save'))
+                    ->now();
+            }
+        }
+
+        $vars += $form->generate();
+
+        $this->addBreadcrumb($this->url('edit'), 'eedt.settings');
+        $this->setBody('settings', $vars);
+        $this->setHeading('eedt.header.settings_save');
         return $this;
     }
 }

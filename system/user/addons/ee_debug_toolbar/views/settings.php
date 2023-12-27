@@ -1,5 +1,7 @@
-<?php 
+<?php
 
+$this->embed('ee:_shared/form');
+return;
 $tmpl = array (
 		'table_open'          => '<table class="mainTable" border="0" cellspacing="0" cellpadding="0">',
 

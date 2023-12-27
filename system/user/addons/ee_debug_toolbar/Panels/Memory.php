@@ -12,14 +12,14 @@ class Memory extends AbstractPanel
     }
 
 
-    public function ee_debug_toolbar_add_panel($view)
+    public function addPanel(Model $view): Model
     {
-        $view->set_name($this->name);
-        $view->set_button_label($this->button_label);
-        $view->set_button_icon($this->button_icon_uri);
-        $view->set_panel_contents(ee()->load->view('partials/memory', array(), TRUE));
-        $view->add_css($this->toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_memory.css');
-        $view->add_js($this->toolbar->createThemeUrl('default', 'js') . '/ee_debug_panel_memory.js');
+        $view->setName($this->name);
+        $view->setButtonLabel($this->button_label);
+        $view->setButtonIcon($this->button_icon_uri);
+        $view->setPanelContents(ee()->load->view('partials/memory', array(), TRUE));
+        $view->addCss($this->toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_memory.css');
+        $view->addJs($this->toolbar->createThemeUrl('default', 'js') . '/ee_debug_panel_memory.js');
 
         return $view;
     }

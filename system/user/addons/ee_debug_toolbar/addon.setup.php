@@ -1,9 +1,15 @@
 <?php
 
 use Mithra62\DebugToolbar\Services\ToolbarService;
+use Mithra62\DebugToolbar\Services\SettingsService;
 
-define('DEBUG_TOOLBAR_ADDON_NAME', 'Custom Addon');
-define('DEBUG_TOOLBAR_VERSION', '2.0');
+if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
+    define('DEBUG_TOOLBAR_ADDON_NAME', 'Custom Addon');
+}
+
+if(!defined('DEBUG_TOOLBAR_VERSION')) {
+    define('DEBUG_TOOLBAR_VERSION', '2.0');
+}
 
 return [
     'author' => 'Eric Lamb',
@@ -14,12 +20,12 @@ return [
     'version' => DEBUG_TOOLBAR_VERSION,
     'namespace' => 'Mithra62\DebugToolbar',
     'settings_exist' => true,
-    'tests' => [
-        'path' => 'src/tests'
-    ],
     'services.singletons' => [
         'ToolbarService' => function ($addon) {
             return new ToolbarService();
+        },
+        'SettingsService' => function ($addon) {
+            return new SettingsService();
         },
     ],
 ];

@@ -5,12 +5,6 @@ use Mithra62\DebugToolbar\Services\ToolbarService;
 
 class AbstractPanel
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Defaults
-    |--------------------------------------------------------------------------
-    */
-
     /**
      * @var string Toolbar button icon file extension
      */
@@ -20,17 +14,6 @@ class AbstractPanel
      * @var int Display order priority
      */
     protected $priority = 0;
-
-    /*
-    |--------------------------------------------------------------------------
-    | Instance variables
-    |--------------------------------------------------------------------------
-    */
-
-    /**
-     * @var object ExpressionEngine Superglobal
-     */
-    protected $EE;
 
     /**
      * @var string Panel Name

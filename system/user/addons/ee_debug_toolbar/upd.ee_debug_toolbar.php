@@ -13,31 +13,6 @@ class Ee_debug_toolbar_upd extends Installer
 
     public $class = '';
 
-    public $settings_table = '';
-
-    public $actions = [
-        [
-            'class' => 'Ee_debug_toolbar',
-            'method' => 'act', // required
-            'csrf_exempt' => true
-        ]
-    ];
-
-    public $methods = [
-        [
-            'method' => 'toolbar',
-            'hook' => 'sessions_end',
-            'priority' => 9999999,
-            'enabled' => 'y'
-        ],
-        [
-            'method' => 'modify_output',
-            'hook' => 'response_send_output',
-            'priority' => 9999999,
-            'enabled' => 'y'
-        ]
-    ];
-
     public function __construct()
     {
         parent::__construct();

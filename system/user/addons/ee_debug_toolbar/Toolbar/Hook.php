@@ -14,40 +14,7 @@ class Hook
      */
     public function __construct()
     {
-        $this->_initialize();
         log_message('debug', "Hooks Class Initialized");
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Initialize the Hooks Preferences
-     *
-     * @access    private
-     * @return    void
-     */
-    function _initialize()
-    {
-        $CFG = load_class('Config', 'core');
-
-        // If hooks are not enabled in the config file
-        // there is nothing else to do
-
-        if ($CFG->item('enable_hooks') == FALSE) {
-            return;
-        }
-
-        // Grab the "hooks" definition file.
-        // If there are no hooks, we're done.
-
-        @include(APPPATH . 'config/hooks.php');
-
-        if (!isset($hook) or !is_array($hook)) {
-            return;
-        }
-
-        $this->hooks =& $hook;
-        $this->enabled = TRUE;
     }
 
     // --------------------------------------------------------------------

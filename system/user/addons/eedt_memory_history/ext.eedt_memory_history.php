@@ -102,7 +102,7 @@ class Eedt_memory_history_ext extends Extension
 			'hook'      => 'ee_debug_toolbar_add_panel',
 			'settings'  => '',
 			'priority'  => 49,
-			'version'   => $this->version,
+			'version'   => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
 			'enabled'   => 'y'
 		);
 
@@ -112,7 +112,7 @@ class Eedt_memory_history_ext extends Extension
 			'hook'      => 'ee_debug_toolbar_settings_form',
 			'settings'  => '',
 			'priority'  => 1,
-			'version'   => $this->version,
+			'version'   => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
 			'enabled'   => 'y'
 		);
 
@@ -122,7 +122,7 @@ class Eedt_memory_history_ext extends Extension
 			'hook'      => 'ee_debug_toolbar_init_settings',
 			'settings'  => '',
 			'priority'  => 5,
-			'version'   => $this->version,
+			'version'   => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
 			'enabled'   => 'y'
 		);
 
@@ -135,7 +135,7 @@ class Eedt_memory_history_ext extends Extension
 
 	public function update_extension($current = '')
 	{
-	    if ($current == '' OR $current == $this->version)
+	    if ($current == '' OR $current == DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION)
 	    {
 	        return false;
 	    }
@@ -143,7 +143,7 @@ class Eedt_memory_history_ext extends Extension
 	    ee()->db->where('class', __CLASS__);
 	    ee()->db->update(
 	                'extensions',
-	                array('version' => $this->version)
+	                array('version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION)
 	    );
 	}
 

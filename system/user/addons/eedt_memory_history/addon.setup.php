@@ -1,11 +1,11 @@
 <?php
 
 
-if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
+if(!defined('DEBUG_TOOLBAR_MEMORY_HISTORY_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_MEMORY_HISTORY_ADDON_NAME', 'Debug Toolbar - Memory History');
 }
 
-if(!defined('DEBUG_TOOLBAR_VERSION')) {
+if(!defined('DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION')) {
     define('DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION', '2.0.0');
 }
 

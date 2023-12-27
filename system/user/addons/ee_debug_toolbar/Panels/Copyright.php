@@ -15,7 +15,7 @@ class Copyright extends AbstractPanel
     {
         $view = parent::ee_debug_toolbar_add_panel($view);
         $toolbar = ee('ee_debug_toolbar:ToolbarService');
-        $view->add_css($toolbar->create_theme_url('default', 'css') . '/ee_debug_panel_copyright.css');
+        $view->add_css($toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_copyright.css');
 
         return $view;
     }

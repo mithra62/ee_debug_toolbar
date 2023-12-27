@@ -37,7 +37,7 @@ class Ee_debug_toolbar_ext extends Extension
         $this->cache_dir =  SYSDIR. '/user/cache/eedt/';
         $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
         //the cache file is just an XML so we check for existance, node, and display. easy
-        $file = $this->cache_dir . $this->toolbar->make_cache_filename() . '.gz';
+        $file = $this->cache_dir . $this->toolbar->makeCacheFilename() . '.gz';
 
         if (file_exists($file) && is_readable($file)) {
             $gz = gzfile($file);

@@ -15,7 +15,7 @@ class Database extends AbstractPanel
     public function ee_debug_toolbar_add_panel($view)
     {
         $view = parent::ee_debug_toolbar_add_panel($view);
-        $view->add_css($this->toolbar->create_theme_url('default', 'css') . '/ee_debug_panel_database.css');
+        $view->add_css($this->toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_database.css');
 
         return $view;
     }

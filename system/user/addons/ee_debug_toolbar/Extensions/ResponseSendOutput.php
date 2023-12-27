@@ -31,7 +31,7 @@ class ResponseSendOutput extends AbstractHook
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');
 
-        $this->settings = $this->toolbar->get_settings();
+        $this->settings = $this->toolbar->getSettings();
 
         //on 404 errors this can cause the data to get munged
         //to get around this, we only want to run the toolbar on certain pages
@@ -52,22 +52,22 @@ class ResponseSendOutput extends AbstractHook
         //Toolbar UI Vars
         $vars = array();
         $vars['query_count'] = ee()->db->query_count;
-        $vars['mysql_query_cache'] = $this->toolbar->verify_mysql_query_cache();
+        $vars['mysql_query_cache'] = $this->toolbar->verifyMysqlQueryCache();
         $vars['elapsed_time'] = ee()->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
         $vars['config_data'] = ee()->config->config;
         $vars['session_data'] = ee()->session->all_userdata();
-        $vars['query_data'] = $this->toolbar->setup_queries();
-        $vars['memory_usage'] = $this->toolbar->filesize_format(memory_get_peak_usage());
+        $vars['query_data'] = $this->toolbar->setupQueries();
+        $vars['memory_usage'] = $this->toolbar->filesizeFormat(memory_get_peak_usage());
         $vars['template_debugging_enabled'] = isset(ee()->TMPL->log) && is_array(ee()->TMPL->log) && count(ee()->TMPL->log) > 0;
-        $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->format_tmpl_log(ee()->TMPL->log) : array());
-        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->format_tmpl_chart_json($vars['template_debugging']) : array());
-        $vars['included_file_data'] = $this->toolbar->setup_files(get_included_files());
+        $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplLog(ee()->TMPL->log) : array());
+        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : array());
+        $vars['included_file_data'] = $this->toolbar->setupFiles(get_included_files());
 
         $vars['ext_version'] = $this->version;
-        $this->settings = $this->toolbar->get_settings();
-        $vars['theme_img_url'] = $this->toolbar->create_theme_url($this->settings['theme'], 'images');
-        $vars['theme_js_url'] = $this->toolbar->create_theme_url($this->settings['theme'], 'js');
-        $vars['theme_css_url'] = $this->toolbar->create_theme_url($this->settings['theme'], 'css');
+        $this->settings = $this->toolbar->getSettings();
+        $vars['theme_img_url'] = $this->toolbar->createThemeUrl($this->settings['theme'], 'images');
+        $vars['theme_js_url'] = $this->toolbar->createThemeUrl($this->settings['theme'], 'js');
+        $vars['theme_css_url'] = $this->toolbar->createThemeUrl($this->settings['theme'], 'css');
         $vars['extra_html'] = ''; //used by extension to add extra script/css files
         $vars['eedt_theme_path'] = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim(ee()->config->config['theme_folder_path'], '/third_party/') . '/') . 'ee_debug_toolbar/themes/' . $this->settings['theme'];
         $vars['master_view_script'] = "toolbar";
@@ -116,7 +116,7 @@ class ResponseSendOutput extends AbstractHook
         }
 
         $vars['panels'] = $panel_data;
-        $vars['js_config'] = $this->toolbar->js_config($vars);
+        $vars['js_config'] = $this->toolbar->jsConfig($vars);
 
         //apply any customizations to the global view data
         if (ee()->extensions->active_hook('ee_debug_toolbar_mod_view') === true) {
@@ -126,7 +126,7 @@ class ResponseSendOutput extends AbstractHook
         //we have to "redo" the benchmark panel so we have all the internal benchmarks
         //COULD WREAK HAVOC ON BENCHMARK OVERRIDES!!!
         ee()->benchmark->mark('ee_debug_benchmark_end');
-        $vars['benchmark_data'] = $this->toolbar->setup_benchmarks();
+        $vars['benchmark_data'] = $this->toolbar->setupBenchmarks();
         if (!empty($vars['panels']['time'])) {
             $vars['panels']['time']->set_panel_contents(ee()->load->view("partials/time", $vars, true));
         }
@@ -152,7 +152,7 @@ class ResponseSendOutput extends AbstractHook
         unset($vars['panels']);
 
         //setup the XML storage data for use by the panels on open
-        $this->toolbar->cache_panels($vars['panels_in_toolbar'], $this->cache_dir);
+        $this->toolbar->cachePanels($vars['panels_in_toolbar'], $this->cache_dir);
 
         //Render toolbar
         $toolbar_html = ee()->load->view($vars['master_view_script'], $vars, true);

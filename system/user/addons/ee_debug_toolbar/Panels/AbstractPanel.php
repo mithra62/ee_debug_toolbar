@@ -45,14 +45,14 @@ class AbstractPanel
     {
         ee()->load->helper("url");
         $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
-        $this->settings = $this->toolbar->get_settings();
+        $this->settings = $this->toolbar->getSettings();
 
         if (!$this->button_label) {
             $this->button_label = ucfirst(str_replace(array("_", "-"), " ", $this->name));
         }
 
         if (!$this->button_icon_uri) {
-            $this->button_icon_uri = $this->toolbar->create_theme_url($this->settings['theme'], 'images') . $this->name . $this->button_icon_extension;
+            $this->button_icon_uri = $this->toolbar->createThemeUrl($this->settings['theme'], 'images') . $this->name . $this->button_icon_extension;
 
         }
     }

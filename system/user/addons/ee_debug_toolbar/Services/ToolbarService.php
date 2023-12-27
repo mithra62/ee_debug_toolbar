@@ -29,7 +29,7 @@ class ToolbarService
     /**
      * Wrapper to setup and return the toolbar settings
      */
-    public function get_settings()
+    public function getSettings()
     {
         if (!isset(ee()->session->cache['ee_debug_toolbar']['settings'])) {
             ee()->load->model('ee_debug_settings_model', 'debug_settings');
@@ -49,7 +49,7 @@ class ToolbarService
      * @param array $files
      * @return Ambigous <multitype:unknown , unknown>
      */
-    public function setup_files(array $files)
+    public function setupFiles(array $files)
     {
         sort($files);
 
@@ -90,7 +90,7 @@ class ToolbarService
      * Wrapper to setup the Database panel SQL queries
      * @return multitype:|multitype:string
      */
-    public function setup_queries()
+    public function setupQueries()
     {
         $dbs = array();
 
@@ -132,7 +132,7 @@ class ToolbarService
      * Wrapper to setup the benchmark data
      * @return array
      */
-    public function setup_benchmarks()
+    public function setupBenchmarks()
     {
         $profile = array();
         foreach (ee()->benchmark->marker as $key => $val) {
@@ -154,7 +154,7 @@ class ToolbarService
      * @param array $log
      * @return array
      */
-    public function format_tmpl_log(array $log)
+    public function formatTmplLog(array $log)
     {
         $return = array();
         foreach ($log as $item) {
@@ -174,7 +174,7 @@ class ToolbarService
      * @param $log array
      * @return string
      */
-    public function format_tmpl_chart_json(array $data)
+    public function formatTmplChartJson(array $data)
     {
         return json_encode($data);
     }
@@ -188,7 +188,7 @@ class ToolbarService
      * @param string $force Optional. Force a certain unit. B|KB|MB|GB|TB
      * @return  string              The formatted file size
      */
-    public function filesize_format($val, $digits = 3, $mode = "SI", $bB = "B")
+    public function filesizeFormat($val, $digits = 3, $mode = "SI", $bB = "B")
     { //$mode == "SI"|"IEC", $bB == "b"|"B"
 
         $si = array("", "k", "M", "G", "T", "P", "E", "Z", "Y");
@@ -232,7 +232,7 @@ class ToolbarService
      * Checks the system for the available themes and sets up as $key => $value array
      * @return array
      */
-    public function get_themes()
+    public function getThemes()
     {
         $path = eedt_theme_path() . '/ee_debug_toolbar/themes/';
         $d = dir($path);
@@ -254,7 +254,7 @@ class ToolbarService
      * @param string $theme
      * @return string
      */
-    public function create_theme_url($theme, $sub_dir = '')
+    public function createThemeUrl($theme, $sub_dir = '')
     {
         $path = eedt_theme_path();
         $url = eedt_theme_url();
@@ -270,7 +270,7 @@ class ToolbarService
      * @param string $class
      * @param string $method
      */
-    public function fetch_action_id($method, $class)
+    public function fetchActionId($method, $class)
     {
         ee()->load->dbforge();
         ee()->db->select('action_id');
@@ -283,10 +283,10 @@ class ToolbarService
      * @param string $method
      * @param string $class
      */
-    public function get_action_url($method, $class = 'Ee_debug_toolbar')
+    public function getActionUrl($method, $class = 'Ee_debug_toolbar')
     {
         $url = site_url();
-        return $url . '?ACT=' . $this->fetch_action_id($method, $class);
+        return $url . '?ACT=' . $this->fetchActionId($method, $class);
     }
 
     /**
@@ -295,9 +295,9 @@ class ToolbarService
      * @param string $act_class
      * @return string
      */
-    public function create_act_url($act_method, $act_class = 'Ee_debug_toolbar_ext')
+    public function createActUrl($act_method, $act_class = 'Ee_debug_toolbar_ext')
     {
-        return $url = $this->get_action_url('act') . AMP . 'class=' . $act_class . AMP . 'method=' . $act_method;
+        return $url = $this->getActionUrl('act') . AMP . 'class=' . $act_class . AMP . 'method=' . $act_method;
     }
 
     /**
@@ -305,7 +305,7 @@ class ToolbarService
      * @param array $panels
      * @param string $path
      */
-    public function cache_panels($panels, $path)
+    public function cachePanels($panels, $path)
     {
         ee()->load->library('xml_writer');
         ee()->xml_writer->setRootName('EEDT');
@@ -325,7 +325,7 @@ class ToolbarService
         ee()->xml_writer->endBranch();
         $xml = ee()->xml_writer->getXml(false);
 
-        $filename = $path . $this->make_cache_filename();
+        $filename = $path . $this->makeCacheFilename();
 
         $string = utf8_encode($xml);
         $gz = gzopen($filename . '.gz', 'w9');
@@ -341,7 +341,7 @@ class ToolbarService
      * Creates the Toolbar panel cache filename
      * @return string
      */
-    public function make_cache_filename()
+    public function makeCacheFilename()
     {
         return '.' . ee()->session->userdata['session_id'] . '.eedt';
     }
@@ -351,7 +351,7 @@ class ToolbarService
      *
      * @param array $vars
      */
-    public function js_config($vars = array())
+    public function jsConfig($vars = array())
     {
         $config = array();
 
@@ -362,7 +362,7 @@ class ToolbarService
         $config['cp'] = ee()->input->get('D') == 'cp' ? true : false;
         $config['base_css_url'] = $vars['theme_css_url'];
         $config['base_js_url'] = $vars['theme_js_url'];
-        $config['panel_ajax_url'] = str_replace("&amp;", "&", $this->get_action_url('act') . AMP);
+        $config['panel_ajax_url'] = str_replace("&amp;", "&", $this->getActionUrl('act') . AMP);
 
         /**
          * @var Eedt_panel_model $panel
@@ -373,7 +373,7 @@ class ToolbarService
                 'js' => $panel->get_js(),
                 'css' => $panel->get_css(),
                 'panel_fetch_url' => $panel->get_panel_fetch_url() ? $panel->get_panel_fetch_url() :
-                    str_replace("&amp;", "&", $this->create_act_url("get_panel_data")) . "&panel=" . $panel->get_name()
+                    str_replace("&amp;", "&", $this->createActUrl("get_panel_data")) . "&panel=" . $panel->get_name()
             );
         }
 
@@ -384,7 +384,7 @@ class ToolbarService
      * Checks to verify the MySQL Query Cache is enabled or not
      * @return string
      */
-    public function verify_mysql_query_cache()
+    public function verifyMysqlQueryCache()
     {
         $data = ee()->db->query("SHOW VARIABLES LIKE 'have_query_cache'")->row_array();
         if (!empty($data['Value']) && $data['Value'] == 'YES') {

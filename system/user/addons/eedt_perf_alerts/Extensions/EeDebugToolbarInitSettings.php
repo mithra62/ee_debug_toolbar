@@ -1,14 +1,19 @@
 <?php
 
-namespace Mithra62\DebugToolbar\MemoryHistory\Extensions;
+namespace Mithra62\DebugToolbar\PerfAlerts\Extensions;
 
 class EeDebugToolbarInitSettings extends AbstractHook
 {
     /**
-     * @var array|string[]
+     * The extensions settings if none exist
+     * @var array
      */
-    protected array $default_settings = [
-        'memory_history_position' => "top right",
+    public array $default_settings = [
+        'max_exec_time' => 0.5,
+        'max_memory' => 10,
+        'max_queries' => 100,
+        'max_sql_time' => 0.1,
+        'max_query_time' => 0.01
     ];
 
     /**

@@ -12,7 +12,7 @@ if(!defined('DEBUG_TOOLBAR_VERSION')) {
 }
 
 return [
-    'author' => 'Eric Lamb',
+    'author' => 'mithra62',
     'author_url' => 'https://github.com/mithra62/ee_debug_toolbar',
     'docs_url' => 'https://github.com/mithra62/ee_debug_toolbar/wiki',
     'name' => DEBUG_TOOLBAR_ADDON_NAME,

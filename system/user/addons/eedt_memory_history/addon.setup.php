@@ -10,11 +10,12 @@ if (!defined('DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION')) {
 }
 
 return [
+    'author' => 'mithra62',
+    'author_url' => 'https://github.com/mithra62/ee_debug_toolbar',
+    'docs_url' => 'https://github.com/mithra62/ee_debug_toolbar/wiki',
     'name' => DEBUG_TOOLBAR_MEMORY_HISTORY_ADDON_NAME,
     'description' => 'Tracks memory usage across multiple pages.',
     'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
-    'author' => 'me',
-    'author_url' => 'me',
     'namespace' => 'Mithra62\DebugToolbar\MemoryHistory',
     'settings_exist' => false
 ];

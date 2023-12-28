@@ -9,13 +9,6 @@ class Eedt_perf_alerts_ext extends Extension
      */
     protected $addon_name = 'eedt_perf_alerts';
 
-    /**
-     * Allowed methods that can be called via eedt.ajax()
-     *
-     * @var array
-     */
-    public $eedt_act = array('fetch_duplicate_tags');
-
     public function __construct($settings = '')
     {
         ee()->lang->loadfile('eedt_perf_alerts');

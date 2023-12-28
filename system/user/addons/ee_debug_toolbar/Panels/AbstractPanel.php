@@ -1,4 +1,5 @@
 <?php
+
 namespace Mithra62\DebugToolbar\Panels;
 
 use Mithra62\DebugToolbar\Services\ToolbarService;

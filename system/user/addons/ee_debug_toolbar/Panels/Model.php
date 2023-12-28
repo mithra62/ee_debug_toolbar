@@ -37,7 +37,7 @@ class Model
     /**
      * @var string Toolbar short name (used in CSS and JS targetting)
      */
-    private string $name;
+    private string $name = '';
 
     /**
      * @var string Toolbar button label

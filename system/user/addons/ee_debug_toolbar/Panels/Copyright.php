@@ -22,10 +22,26 @@ class Copyright extends AbstractPanel
      */
     public function addPanel(Model $view): Model
     {
+        $data['project_contributors'] = $this->getContributors();
+        $view->setPanelContents(ee()->load->view('partials/copyright', $data, true));
         $view = parent::addPanel($view);
         $toolbar = ee('ee_debug_toolbar:ToolbarService');
         $view->addCss($toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_copyright.css');
 
+
         return $view;
+    }
+
+    protected function getContributors(): array
+    {
+        $data = [];
+        $providers = ee('App')->getProviders();
+        foreach($providers AS $provider)
+        {
+            if($provider->get('author') && $provider->get('author_url')) {
+                $data[$provider->get('author')] = $provider->get('author_url');
+            }
+        }
+        return $data;
     }
 }

@@ -10,7 +10,7 @@ class EeDebugToolbarInitSettings extends AbstractHook
      */
     public array $default_settings = [
         'max_exec_time' => 0.5,
-        'max_memory' => 10,
+        'max_memory' => 30,
         'max_queries' => 100,
         'max_sql_time' => 0.1,
         'max_query_time' => 0.01

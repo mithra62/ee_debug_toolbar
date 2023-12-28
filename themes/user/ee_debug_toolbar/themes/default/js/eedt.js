@@ -24,7 +24,7 @@
 
 	//jQuery loaded? If not, load it and start again when it has finished
 	if (!window.jQuery || !minimumJQueryVersionPresent()) {
-		loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js', function () {
+		loadScript('//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js', function () {
 			//Preserve eedt.ready() callbacks for next method call
 			window._eedtConfig.readyQueue = readyQueue;
 			jQuery.noConflict();
@@ -457,7 +457,7 @@
 	 * @returns {boolean}
 	 */
 	function minimumJQueryVersionPresent() {
-		var minimum = 150,
+		var minimum = 350,
 			current;
 
 		//No jQuery? Heck no...
@@ -471,7 +471,6 @@
 		if (current === NaN) {
 			return false;
 		}
-
 
 		if (current >= minimum) {
 			return true;

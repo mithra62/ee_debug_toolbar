@@ -9,7 +9,7 @@
 </div>
 
 <br clear="all"/>
-<?php echo lang('mysql_query_cache_is'); ?> <?php echo($mysql_query_cache == 'y' ? lang('enabled') : lang('disabled')); ?>
+<?php echo lang('mysql_query_cache_is'); ?> <?php echo ($mysql_query_cache == 'y' ? lang('enabled') : lang('disabled')); ?>
 
 <h4><?php echo lang('adapter'); ?> 0</h4>
 <ol>
@@ -18,7 +18,7 @@
         <li class="<?php echo($time >= $settings['max_query_time'] ? 'EEDebug_slow_query' : 'EEDebug_normal_queries'); ?>">
             <strong>[<?php echo number_format($time, 4); ?>s
                 / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>
-                ]</strong> <?php echo $sql; ?>
+                ]</strong> <?php echo $sql; ?> <br><?php echo $location; ?>
         </li>
     <?php endforeach; ?>
 </ol>

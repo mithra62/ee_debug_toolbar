@@ -4,7 +4,7 @@ namespace Mithra62\DebugToolbar\PerfAlerts\Extensions;
 
 class EeDebugToolbarModPanel extends AbstractHook
 {
-    public function process(array $panels, array $view = array())
+    public function process(array $panels, array $view = [])
     {
         ee()->benchmark->mark('eedt_performance_alerts_start');
         $panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
@@ -36,7 +36,7 @@ class EeDebugToolbarModPanel extends AbstractHook
         $view['perf_theme_js_url'] = eedt_theme_url() . 'eedt_perf_alerts/js/';
         $view['perf_theme_css_url'] = eedt_theme_url() . 'eedt_perf_alerts/css/';
 
-        $panels['database']->setPanelContents(ee()->load->view('db', $view, TRUE));
+        $panels['database']->setPanelContents(ee()->load->view('db', $view, true));
         $panels['database']->addJs($view['perf_theme_js_url'] . 'perf_alerts.js');
 
         ee()->benchmark->mark('eedt_performance_alerts_end');

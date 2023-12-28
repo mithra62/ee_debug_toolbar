@@ -1,11 +1,6 @@
 <?php
 
-$lang = array(
-
-
-// -------------------------------------------
-//  Module CP
-// -------------------------------------------
+$lang = [
     'eedt_perf_alerts_module_name' => 'EE Debug Toolbar - Perfomance Alerts',
     'eedt_perf_alerts_module_description' => 'Adds notifications to toolbar on suspicous performance',
     'max_exec_time' => 'Maximum Execution Time',
@@ -20,4 +15,4 @@ $lang = array(
     'max_query_time_instructions' => 'What is the maximum about of time an individual SQL query should take to load?',
     'total' => 'Total',
     '' => ''
-);
+];

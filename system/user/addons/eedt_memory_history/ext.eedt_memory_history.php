@@ -1,289 +1,154 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-/**
- * mithra62 - EE Debug Toolbar
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @copyright      Copyright (c) 2012, mithra62, Eric Lamb.
- * @link           http://mithra62.com/
- * @updated        1.0
- * @filesource     ./system/expressionengine/third_party/eedt_memory_history/
- */
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
-/**
- * EE Debug Toolbar - Memory History Extension
- *
- * Extension class
- *
- * @package        mithra62:EE_debug_toolbar
- * @author         Eric Lamb
- * @filesource     ./system/expressionengine/third_party/eedt_memory_history/ext.eedt_memory_history.php
- */
-class Eedt_memory_history_ext
+use ExpressionEngine\Service\Addon\Extension;
+
+class Eedt_memory_history_ext extends Extension
 {
-	/**
-	 * The extension name
-	 *
-	 * @var string
-	 */
-	public $name = '';
+    /**
+     * @var string
+     */
+    protected $addon_name = 'eedt_memory_history';
 
-	/**
-	 * The extension version
-	 *
-	 * @var float
-	 */
-	public $version = '1.0';
+    /**
+     * Allowed methods that can be called via eedt.ajax()
+     *
+     * @var array
+     */
+    public array $eedt_act = [
+        'fetch_memory_and_sql_usage'
+    ];
 
-	/**
-	 * Used nowhere and not really needed (ya hear me ElisLab?!?!)
-	 *
-	 * @var string
-	 */
-	public $description = '';
+    /**
+     * AJAX Endpoint for JSON data
+     *
+     * Return array of performance data
+     *
+     */
+    public function fetch_memory_and_sql_usage()
+    {
+        $session_id = ee()->session->userdata['session_id'];
+        $is_cp = ee()->input->get('cp') == 'y' ? 'y' : 'n';
+        $data = ee()->db->where("session_id", $session_id)
+            ->where('cp', $is_cp)
+            ->limit(20)
+            ->order_by("timestamp", "desc")
+            ->get("eedt_memory_history")
+            ->result_array();
 
-	/**
-	 * We're doing our own settings now so set this to off.
-	 *
-	 * @var string
-	 */
-	public $settings_exist = 'n';
+        //Garbage collect
+        ee()->db->where("timestamp < ", ee()->localize->now - 14400)->delete("eedt_memory_history"); //4 hours
+        ee()->output->send_ajax_response($data);
+    }
 
-	/**
-	 * Where to get help (nowhere for now)
-	 *
-	 * @var string
-	 */
-	public $docs_url = 'https://github.com/mithra62/ee_debug_toolbar/wiki/Memory-History';
+    public function activate_extension()
+    {
+        ee()->load->dbforge();
+        ee()->dbforge->drop_table('eedt_memory_history');
 
-	/**
-	 * Allowed methods that can be called via eedt.ajax()
-	 *
-	 * @var array
-	 */
-	public $eedt_act = array('fetch_memory_and_sql_usage');
+        $fields = array(
+            'id' => array(
+                'type' => 'INT',
+                'auto_increment' => true,
+                'unsigned' => true
+            ),
+            'session_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '40',
+                'null' => true
+            ),
+            'url' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => true
+            ),
+            'peak_memory' => array(
+                'type' => 'FLOAT',
+                'null' => true
+            ),
+            'sql_count' => array(
+                'type' => 'INT',
+                'null' => true
+            ),
+            'execution_time' => array(
+                'type' => 'FLOAT',
+                'null' => true
+            ),
+            'timestamp' => array(
+                'type' => 'INT',
+                'null' => true
+            ),
+            'cp' => array(
+                'type' => 'ENUM',
+                'constraint' => '\'y\',\'n\'',
+                'default' => 'n',
+                'null' => false
+            )
+        );
+        ee()->dbforge->add_field($fields);
+        ee()->dbforge->add_key('id', true);
+        ee()->dbforge->create_table('eedt_memory_history');
 
-	/**
-	 * Default settings
-	 *
-	 * @var array
-	 */
-	public $default_settings = array(
-		'memory_history_position' => "top right",
-	);
+        $data = array();
+        $data[] = array(
+            'class' => __CLASS__,
+            'method' => 'ee_debug_toolbar_add_panel',
+            'hook' => 'ee_debug_toolbar_add_panel',
+            'settings' => '',
+            'priority' => 49,
+            'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
+            'enabled' => 'y'
+        );
 
-	public function __construct($settings = '')
-	{
-		ee()->lang->loadfile('eedt_memory_history');
-		$this->name        = lang('eedt_memory_history_module_name');
-		$this->description = lang('eedt_memory_history_module_description');
-		ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-		ee()->load->add_package_path(PATH_THIRD . 'eedt_memory_history/');
-	}
+        $data[] = array(
+            'class' => __CLASS__,
+            'method' => 'ee_debug_toolbar_settings_form',
+            'hook' => 'ee_debug_toolbar_settings_form',
+            'settings' => '',
+            'priority' => 1,
+            'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
+            'enabled' => 'y'
+        );
 
-	/**
-	 * Add panel to UI & track memory and SQL usage
-	 *
-	 * @param Eedt_panel_model[] $panels
-	 * @param array              $vars
-	 * @return Eedt_panel_model[]
-	 */
-	public function ee_debug_toolbar_add_panel($panels = array(), $vars = array())
-	{
-		ee()->benchmark->mark('eedt_memory_history_start');
-		$panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
-		$settings = ee()->toolbar->get_settings();
+        $data[] = array(
+            'class' => __CLASS__,
+            'method' => 'ee_debug_toolbar_init_settings',
+            'hook' => 'ee_debug_toolbar_init_settings',
+            'settings' => '',
+            'priority' => 5,
+            'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
+            'enabled' => 'y'
+        );
 
-		$panels['memory_history'] = new Eedt_panel_model();
-		$panels['memory_history']->set_name("memory_history");
-		$panels['memory_history']->set_panel_contents(ee()->load->view('memory_history', array('position' => $settings['memory_history_position']), true));
-		$panels['memory_history']->add_js('https://www.google.com/jsapi', true);
-		$panels['memory_history']->add_js(eedt_theme_url() . 'eedt_memory_history/js/memory_history.js', true);
-		$panels['memory_history']->add_css(eedt_theme_url() . 'eedt_memory_history/css/memory_history.css', true);
-		$panels['memory_history']->set_injection_point(Eedt_panel_model::PANEL_AFTER_TOOLBAR);
+        foreach ($data as $ext) {
+            ee()->db->insert('extensions', $ext);
+        }
+        return true;
+    }
 
-		$this->track_memory_and_sql_usage($vars);
+    public function update_extension($current = '')
+    {
+        if ($current == '' or $current == DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION) {
+            return false;
+        }
 
-		ee()->benchmark->mark('eedt_memory_history_end');
-		return $panels;
-	}
+        ee()->db->where('class', __CLASS__);
+        ee()->db->update(
+            'extensions',
+            array('version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION)
+        );
+    }
 
-	public function ee_debug_toolbar_init_settings($default_settings)
-	{
-		$default_settings = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $default_settings);
-		return array_merge($default_settings, $this->default_settings);
-	}
+    public function disable_extension()
+    {
+        ee()->db->where('class', __CLASS__);
+        ee()->db->delete('extensions');
 
-	public function ee_debug_toolbar_settings_form()
-	{
-		$settings = ee()->toolbar->get_settings();
-		$settings_disable = false;
-		if(isset(ee()->config->config['ee_debug_toolbar']))
-		{
-			$settings_disable = 'disabled="disabled"';
-		}
-
-		$options = array(
-			'bottom left' => 'bottom-left',
-			'top left' => 'top-left',
-			'top right' => 'top-right',
-			'bottom right' => 'bottom-right'
-		);
-		
-		ee()->table->add_row('<label for="memory_history_position">'.lang('memory_history_position')."</label><div class='subtext'>".lang('memory_history_position_instructions')."</div>", form_dropdown('memory_history_position',  $options, $settings['memory_history_position'], 'id="memory_history_position"'. $settings_disable));
-	}
-
-
-	/**
-	 * Track memory and SQL performance
-	 *
-	 * @param string $html
-	 * @return string mixed
-	 */
-	public function track_memory_and_sql_usage($vars)
-	{
-		$data = array(
-			'session_id'  => ee()->session->userdata['session_id'],
-			'url'         => $_SERVER["REQUEST_URI"] . $_SERVER["QUERY_STRING"],
-			'peak_memory' => (float)$vars['memory_usage'],
-			'sql_count'   => $vars['query_count'],
-			'execution_time'   => $vars['elapsed_time'],
-			'timestamp'   => ee()->localize->now,
-			'cp'		  => ee()->input->get('D') == 'cp' ? 'y' : 'n'
-		);
-		ee()->db->insert('eedt_memory_history', $data);
-	}
-
-	/**
-	 * AJAX Endpoint for JSON data
-	 *
-	 * Return array of performance data
-	 *
-	 */
-	public function fetch_memory_and_sql_usage()
-	{
-		$session_id = ee()->session->userdata['session_id'];
-		$is_cp = ee()->input->get('cp') == 'y' ? 'y' : 'n';
-		$data = ee()->db->where("session_id", $session_id)
-							 ->where('cp', $is_cp)
-							 ->limit(20)
-							 ->order_by("timestamp", "desc")
-							 ->get("eedt_memory_history")
-							 ->result_array();
-
-		//Garbage collect
-		ee()->db->where("timestamp < ", ee()->localize->now - 14400)->delete("eedt_memory_history"); //4 hours
-		ee()->output->send_ajax_response($data);
-	}
-
-	public function activate_extension()
-	{
-		ee()->load->dbforge();
-		ee()->dbforge->drop_table('eedt_memory_history');
-
-		$fields = array(
-			'id'          => array(
-				'type'           => 'INT',
-				'auto_increment' => true,
-				'unsigned'       => true
-			),
-			'session_id'  => array(
-				'type'       => 'VARCHAR',
-				'constraint' => '40',
-				'null'       => true
-			),
-			'url'         => array(
-				'type'       => 'VARCHAR',
-				'constraint' => '255',
-				'null'       => true
-			),
-			'peak_memory' => array(
-				'type' => 'FLOAT',
-				'null' => true
-			),
-			'sql_count'   => array(
-				'type' => 'INT',
-				'null' => true
-			),
-			'execution_time'   => array(
-				'type' => 'FLOAT',
-				'null' => true
-			),
-			'timestamp'   => array(
-				'type' => 'INT',
-				'null' => true
-			),
-			'cp' => array(
-				'type' => 'ENUM',
-				'constraint' => '\'y\',\'n\'',
-				'default' => 'n',
-				'null' => false
-			)
-		);
-		ee()->dbforge->add_field($fields);
-		ee()->dbforge->add_key('id', true);
-		ee()->dbforge->create_table('eedt_memory_history');
-
-		$data = array();
-		$data[] = array(
-			'class'     => __CLASS__,
-			'method'    => 'ee_debug_toolbar_add_panel',
-			'hook'      => 'ee_debug_toolbar_add_panel',
-			'settings'  => '',
-			'priority'  => 49,
-			'version'   => $this->version,
-			'enabled'   => 'y'
-		);
-
-		$data[] = array(
-			'class'     => __CLASS__,
-			'method'    => 'ee_debug_toolbar_settings_form',
-			'hook'      => 'ee_debug_toolbar_settings_form',
-			'settings'  => '',
-			'priority'  => 1,
-			'version'   => $this->version,
-			'enabled'   => 'y'
-		);
-
-		$data[] = array(
-			'class'     => __CLASS__,
-			'method'    => 'ee_debug_toolbar_init_settings',
-			'hook'      => 'ee_debug_toolbar_init_settings',
-			'settings'  => '',
-			'priority'  => 5,
-			'version'   => $this->version,
-			'enabled'   => 'y'
-		);
-
-		foreach($data AS $ext)
-		{
-			ee()->db->insert('extensions', $ext);
-		}
-		return true;
-	}
-
-	public function update_extension($current = '')
-	{
-	    if ($current == '' OR $current == $this->version)
-	    {
-	        return false;
-	    }
-
-	    ee()->db->where('class', __CLASS__);
-	    ee()->db->update(
-	                'extensions',
-	                array('version' => $this->version)
-	    );
-	}
-
-	public function disable_extension()
-	{
-	    ee()->db->where('class', __CLASS__);
-	    ee()->db->delete('extensions');
-	    
-	    ee()->load->dbforge();
-	    ee()->dbforge->drop_table('eedt_memory_history');
-	}
+        ee()->load->dbforge();
+        ee()->dbforge->drop_table('eedt_memory_history');
+    }
 
 }

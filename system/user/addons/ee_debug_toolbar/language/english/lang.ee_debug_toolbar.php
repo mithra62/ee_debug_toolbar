@@ -1,15 +1,10 @@
 <?php
 
-$lang = array(
-
-
-// -------------------------------------------
-//  Module CP
-// -------------------------------------------
-	'ee_debug_toolbar_module_name'        => 'EE Debug Toolbar',
+$lang = [
+	'ee_debug_toolbar_module_name'        => 'Debug Toolbar',
 	'ee_debug_toolbar_module_description' => 'Adds an unobtrusive interface for debugging output',
 	'extensions'                          => 'Extensions',
-	'ext_name'                            => 'EE Debug Toolbar',
+	'ext_name'                            => 'Debug Toolbar',
 	'no_get_vars'                         => 'No $_GET vars found.',
 	'no_cookie_vars'                      => 'No $_COOKIE vars found.',
 	'no_post_vars'                        => 'No $_POST vars found.',
@@ -59,5 +54,15 @@ $lang = array(
 	'eedt_in'                             => 'in',
 	'requested_url'                       => 'Requested URL',
 	'add_ons'                             => 'Add-ons',
-	''                                    => ''		
-);
+
+    'eedt.settings' => 'Settings',
+    'eedt.save' => 'Save',
+    'eedt.saving' => 'saving...',
+    'eedt.form.theme' => 'Theme',
+    'eedt.form.desc.theme' => 'Select the theme you want the Toolbar to use.',
+    'eedt.form.toolbar_position' => 'Toolbar Position',
+    'eedt.form.desc.toolbar_position' => 'Where do you want the toolbar to appear on the page?',
+    'eedt.form.header.settings' => 'Debug Toolbar Settings',
+    'eedt.header.settings_save' => 'Debug Toolbar Settings',
+    'eedt.settings_saved' => 'Settings Saved',
+];

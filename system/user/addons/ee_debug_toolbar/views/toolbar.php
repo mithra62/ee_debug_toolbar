@@ -5,7 +5,7 @@
 
 <!--PANELS BEFORE TOOLBAR -->
 <?php foreach($panels_before_toolbar AS $key => $panel):
-	echo $panel->get_panel_contents();
+	echo $panel->getPanelContents();
 endforeach; ?>
 
 <!--EE DEBUG TOOLBAR-->
@@ -13,20 +13,20 @@ endforeach; ?>
 
 	<!--PANELS IN TOOLBAR-->
 	<?php foreach($panels_in_toolbar AS $key => $panel): ?>
-		<div id="<?php echo $panel->get_target(); ?>" class="Eedt_debug_panel"></div>
+		<div id="<?php echo $panel->getTarget(); ?>" class="Eedt_debug_panel"></div>
 	<?php endforeach; ?>
 
 	<div id="Eedt_debug_toolbar_buttons">
 		<span class="Eedt_debug_toolbar_buttons_wrap">
 			<?php foreach($panels_in_toolbar AS $key => $panel): ?>
-				<?php if(!$panel->show_button()) continue;  ?>
-				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->get_panel_css_class(); ?>" data-target="<?php echo $panel->get_target(); ?>"  id="Eedt_debug_<?php echo $panel->get_name(); ?>_btn">
-					<?php if($panel->get_button_icon()): ?>
-					<img src="<?php echo $panel->get_button_icon(); ?>" style="vertical-align:middle"
-						 alt="<?php echo $panel->get_button_icon_alt_text(); ?>" title="<?php echo $panel->get_button_label(); ?>">
+				<?php if(!$panel->showButton()) continue;  ?>
+				<span class="Eedt_debug_toolbar_button clickable <?php echo $panel->getPanelCssClass(); ?>" data-target="<?php echo $panel->getTarget(); ?>"  id="Eedt_debug_<?php echo $panel->getName(); ?>_btn">
+					<?php if($panel->getButtonIcon()): ?>
+					<img src="<?php echo $panel->getButtonIcon(); ?>" style="vertical-align:middle"
+						 alt="<?php echo $panel->getButtonIconAltText(); ?>" title="<?php echo $panel->getButtonLabel(); ?>">
 					<?php endif; ?>
-					<span id="Eedt_debug_<?php echo $panel->get_name(); ?>_copy">
-						<?php echo $panel->get_button_label(); ?>
+					<span id="Eedt_debug_<?php echo $panel->getName(); ?>_copy">
+						<?php echo $panel->getButtonLabel(); ?>
 					</span>
 				</span>
 			<?php endforeach; ?>
@@ -37,7 +37,7 @@ endforeach; ?>
 
 <!--PANELS AFTER TOOLBAR-->
 <?php foreach($panels_after_toolbar AS $key => $panel):
-	echo $panel->get_panel_contents();
+	echo $panel->getPanelContents();
 endforeach; ?>
 
 <!--EEDT.JS CONFIG-->

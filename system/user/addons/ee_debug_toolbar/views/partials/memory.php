@@ -13,7 +13,7 @@
         $total = 0;
         foreach (ee()->TMPL->log as $log) {
             echo "\n<div id='EEDebug_hash_$total'>";
-            echo '(' . $log['time'] . '/' . $log['memory'] . 'MB) - ' . $log['message'] . '<br />';
+            echo '(' . number_format($log['time'], 4) . '/' . ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($log['memory']) . ') - ' . $log['message'] . '<br />';
             echo "</div>";
             $total++;
         }
@@ -24,5 +24,5 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-    eedt.data.tmpl_data = <?php echo $template_debugging_chart_json?>;
+    eedt.data.tmpl_data = <?php echo $template_debugging_chart_json; ?>;
 </script>

@@ -46,40 +46,47 @@ class ToolbarService
     /**
      * Takes the included files and breaks up into mutli arrays for use in the debugger
      * @param array $files
-     * @return Ambigous <multitype:unknown , unknown>
+     * @return array
      */
-    public function setupFiles(array $files)
+    public function setupFiles(array $files): array
     {
         sort($files);
 
         $path_third = realpath(eedt_third_party_path());
-        $path_ee = realpath(APPPATH);
+        $path_ee = realpath(SYSPATH);
         $path_first_modules = realpath(PATH_MOD);
         $bootstrap_file = FCPATH . SELF;
-        $return = array();
+        $return = [
+            'third_party_addon' => [],
+            'first_party_modules' => [],
+            'bootstrap_file' => [],
+            'expressionengine_core' => [],
+            'other_files' => [],
+        ];
+
         foreach ($files as $file) {
+            $output = str_replace($path_ee, '#system', $file);
             if (strpos($file, $path_third) === 0) {
-                $return['third_party_addon'][] = $file;
+                $return['third_party_addon'][] = $output;
                 continue;
             }
 
             if (strpos($file, $path_first_modules) === 0) {
-                $return['first_party_modules'][] = $file;
+                $return['first_party_modules'][] = $output;
                 continue;
             }
 
             if (strpos($file, $bootstrap_file) === 0) {
-                $return['bootstrap_file'] = $file;
+                $return['bootstrap_file'] = $output;
                 continue;
             }
 
             if (strpos($file, $path_ee) === 0) {
-                $return['expressionengine_core'][] = $file;
+                $return['expressionengine_core'][] = $output;
                 continue;
             }
 
-            $return['other_files'][] = $file;
-
+            $return['other_files'][] = $output;
         }
 
         return $return;

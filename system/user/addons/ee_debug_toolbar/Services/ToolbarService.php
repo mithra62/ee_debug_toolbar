@@ -14,12 +14,12 @@ class ToolbarService
      * The available positions for the toolbar to live
      * @var array
      */
-    public $toolbar_positions = array(
+    public $toolbar_positions = [
         'bottom-left',
         'top-left',
         'bottom-right',
-        'top-right'
-    );
+        'top-right',
+    ];
 
     public function __construct()
     {
@@ -32,7 +32,7 @@ class ToolbarService
     public function getSettings()
     {
         if (!isset(ee()->session->cache['ee_debug_toolbar']['settings'])) {
-            if (ee()->extensions->active_hook('ee_debug_toolbar_init_settings') === TRUE) {
+            if (ee()->extensions->active_hook('ee_debug_toolbar_init_settings') === true) {
                 $defaults = ee('ee_debug_toolbar:SettingsService')->getDefaults();
                 $defaults = ee()->extensions->call('ee_debug_toolbar_init_settings', $defaults);
                 ee('ee_debug_toolbar:SettingsService')->setDefaults($defaults);
@@ -98,7 +98,7 @@ class ToolbarService
      */
     public function setupQueries()
     {
-        $dbs = array();
+        $dbs = [];
 
         // Let's determine which databases are currently connected to
         foreach (get_object_vars(ee()) as $EE_object) {
@@ -107,7 +107,7 @@ class ToolbarService
             }
         }
 
-        $output = array();
+        $output = [];
         if (count($dbs) == 0) {
             return $output;
         }
@@ -123,7 +123,7 @@ class ToolbarService
                 foreach ($db->queries as $key => $val) {
                     $total_time = $total_time + $db->query_times[$key];
                     $time = number_format($db->query_times[$key], 4);
-                    $output['queries'][] = array('query' => highlight_code($val, ENT_QUOTES), 'time' => $time);
+                    $output['queries'][] = ['query' => highlight_code($val, ENT_QUOTES), 'time' => $time];
                 }
             }
 
@@ -140,7 +140,7 @@ class ToolbarService
      */
     public function setupBenchmarks()
     {
-        $profile = array();
+        $profile = [];
         foreach (ee()->benchmark->marker as $key => $val) {
             // We match the "end" marker so that the list ends
             // up in the order that it was defined
@@ -162,13 +162,13 @@ class ToolbarService
      */
     public function formatTmplLog(array $log)
     {
-        $return = array();
+        $return = [];
         foreach ($log as $item) {
-            $return[] = array(
+            $return[] = [
                 'time' => $item['time'],
                 'memory' => (float)$item['memory'],
-                'desc' => utf8_encode($item['message']) //a little sanity for UTF-8
-            );
+                'desc' => utf8_encode($item['message']), //a little sanity for UTF-8
+            ];
         }
 
         return $return;
@@ -180,8 +180,14 @@ class ToolbarService
      * @param $log array
      * @return string
      */
-    public function formatTmplChartJson(array $data)
+    public function formatTmplChartJson(array $data): string
     {
+        foreach($data AS $key => $value) {
+            $data[$key]['desc'] = preg_replace("/&#?[a-z0-9]{2,8};/i",'', $data[$key]['desc']);
+            $data[$key]['memory_display'] = ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($data[$key]['memory']);
+            $data[$key]['time'] = number_format($data[$key]['time'], 4);
+        }
+
         return json_encode($data);
     }
 
@@ -196,9 +202,8 @@ class ToolbarService
      */
     public function filesizeFormat($val, $digits = 3, $mode = "SI", $bB = "B")
     { //$mode == "SI"|"IEC", $bB == "b"|"B"
-
-        $si = array("", "k", "M", "G", "T", "P", "E", "Z", "Y");
-        $iec = array("", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi", "Yi");
+        $si = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
+        $iec = ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi", "Yi"];
         switch (strtoupper($mode)) {
             case "SI" :
                 $factor = 1000;
@@ -227,7 +232,7 @@ class ToolbarService
         $p = strpos($val, ".");
         if ($p !== false && $p > $digits) {
             $val = round($val);
-        } elseif ($p !== false) {
+        } else if ($p !== false) {
             $val = round($val, $digits - $p);
         }
 
@@ -242,8 +247,8 @@ class ToolbarService
     {
         $path = eedt_theme_path() . '/ee_debug_toolbar/themes/';
         $d = dir($path);
-        $themes = array();
-        $bad = array('.', '..');
+        $themes = [];
+        $bad = ['.', '..'];
         while (false !== ($entry = $d->read())) {
             if (is_dir($path . $entry) && !in_array($entry, $bad)) {
                 $name = ucwords(str_replace('_', ' ', $entry));
@@ -280,7 +285,7 @@ class ToolbarService
     {
         ee()->load->dbforge();
         ee()->db->select('action_id');
-        $query = ee()->db->get_where('actions', array('class' => $class, 'method' => $method));
+        $query = ee()->db->get_where('actions', ['class' => $class, 'method' => $method]);
         return $query->row('action_id');
     }
 
@@ -319,12 +324,12 @@ class ToolbarService
         ee()->xml_writer->startBranch('panels');
         foreach ($panels as $panel) {
             ee()->xml_writer->startBranch($panel->getName() . '_panel');
-            ee()->xml_writer->addNode('name', $panel->getName(), array(), TRUE);
-            ee()->xml_writer->addNode('data_target', $panel->getTarget(), array(), TRUE);
-            ee()->xml_writer->addNode('button_icon', $panel->getButtonIcon(), array(), TRUE);
-            ee()->xml_writer->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), array(), TRUE);
-            ee()->xml_writer->addNode('button_label', $panel->getButtonLabel(), array(), TRUE);
-            ee()->xml_writer->addNode('output', base64_encode($panel->getPanelContents()), array(), TRUE);
+            ee()->xml_writer->addNode('name', $panel->getName(), [], true);
+            ee()->xml_writer->addNode('data_target', $panel->getTarget(), [], true);
+            ee()->xml_writer->addNode('button_icon', $panel->getButtonIcon(), [], true);
+            ee()->xml_writer->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), [], true);
+            ee()->xml_writer->addNode('button_label', $panel->getButtonLabel(), [], true);
+            ee()->xml_writer->addNode('output', base64_encode($panel->getPanelContents()), [], true);
             ee()->xml_writer->endBranch();
         }
 
@@ -357,14 +362,14 @@ class ToolbarService
      *
      * @param array $vars
      */
-    public function jsConfig($vars = array())
+    public function jsConfig($vars = [])
     {
-        $config = array();
+        $config = [];
 
         $config['template_debugging_enabled'] = $vars['template_debugging_enabled'];
 
         //Panels
-        $config['panels'] = array();
+        $config['panels'] = [];
         $config['cp'] = ee()->input->get('D') == 'cp' ? true : false;
         $config['base_css_url'] = $vars['theme_css_url'];
         $config['base_js_url'] = $vars['theme_js_url'];
@@ -374,13 +379,13 @@ class ToolbarService
          * @var Model $panel
          */
         foreach ($vars['panels'] as $panel) {
-            $config['panels'][] = array(
+            $config['panels'][] = [
                 'name' => $panel->getName(),
                 'js' => $panel->getJs(),
                 'css' => $panel->getCss(),
                 'panel_fetch_url' => $panel->getPanelFetchUrl() ? $panel->getPanelFetchUrl() :
-                    str_replace("&amp;", "&", $this->createActUrl("get_panel_data")) . "&panel=" . $panel->getName()
-            );
+                    str_replace("&amp;", "&", $this->createActUrl("get_panel_data")) . "&panel=" . $panel->getName(),
+            ];
         }
 
         return $config;

@@ -9,7 +9,7 @@
         <?php list($sql, $location, $time, $memory) = $query; ?>
         <li><strong>[<?php echo number_format($time, 4); ?>s / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>
                 ]</strong>
-            <?php echo $sql; ?>
+            <?php echo $sql; ?> <br><?php echo $location; ?>
         </li>
     <?php endforeach; ?>
 </ol>

@@ -15,6 +15,6 @@ return [
     'name' => DEBUG_TOOLBAR_PERF_ALERTS_ADDON_NAME,
     'description' => 'Adds notifications to toolbar on suspicious performance',
     'version' => DEBUG_TOOLBAR_PERF_ALERTS_VERSION,
-    'namespace' => 'Mithra62\DebugToolbar\PerfAlerts',
+    'namespace' => 'DebugToolbar\PerfAlerts',
     'settings_exist' => false
 ];

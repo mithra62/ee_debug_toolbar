@@ -1,8 +1,8 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Extensions;
+namespace DebugToolbar\Extensions;
 
-use Mithra62\DebugToolbar\Toolbar\Hook;
+use DebugToolbar\Toolbar\Hook;
 
 class SessionsEnd extends AbstractHook
 {

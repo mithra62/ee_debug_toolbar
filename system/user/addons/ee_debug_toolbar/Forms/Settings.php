@@ -1,5 +1,5 @@
 <?php
-namespace Mithra62\DebugToolbar\Forms;
+namespace DebugToolbar\Forms;
 
 use ExpressionEngine\Library\CP\Form\AbstractForm;
 use ExpressionEngine\Library\CP\Form;

@@ -16,6 +16,6 @@ return [
     'name' => DEBUG_TOOLBAR_MEMORY_HISTORY_ADDON_NAME,
     'description' => 'Tracks memory usage across multiple pages.',
     'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
-    'namespace' => 'Mithra62\DebugToolbar\MemoryHistory',
+    'namespace' => 'DebugToolbar\MemoryHistory',
     'settings_exist' => false
 ];

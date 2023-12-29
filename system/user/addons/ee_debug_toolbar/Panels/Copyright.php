@@ -1,7 +1,7 @@
 <?php
-namespace Mithra62\DebugToolbar\Panels;
+namespace DebugToolbar\Panels;
 
-use Mithra62\DebugToolbar\Panels\Model;
+use DebugToolbar\Panels\Model;
 
 class Copyright extends AbstractPanel
 {

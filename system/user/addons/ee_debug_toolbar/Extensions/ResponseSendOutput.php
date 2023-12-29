@@ -1,8 +1,8 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Extensions;
+namespace DebugToolbar\Extensions;
 
-use Mithra62\DebugToolbar\Panels\Model;
+use DebugToolbar\Panels\Model;
 
 class ResponseSendOutput extends AbstractHook
 {
@@ -212,7 +212,7 @@ class ResponseSendOutput extends AbstractHook
         //each panel is an object so set them up
         foreach ($sorted_files as $file) {
 
-            $class = '\\Mithra62\DebugToolbar\Panels\\' . str_replace(".php", "", $file);
+            $class = '\\DebugToolbar\Panels\\' . str_replace(".php", "", $file);
             if (class_exists($class)) {
                 $instances[$class] = new $class();
             }

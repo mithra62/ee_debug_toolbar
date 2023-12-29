@@ -1,6 +1,6 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Toolbar;
+namespace DebugToolbar\Toolbar;
 
 class Hook
 {

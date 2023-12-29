@@ -1,6 +1,6 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Services;
+namespace DebugToolbar\Services;
 
 class ToolbarService
 {

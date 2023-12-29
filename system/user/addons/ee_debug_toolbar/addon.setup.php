@@ -1,7 +1,7 @@
 <?php
 
-use Mithra62\DebugToolbar\Services\ToolbarService;
-use Mithra62\DebugToolbar\Services\SettingsService;
+use DebugToolbar\Services\ToolbarService;
+use DebugToolbar\Services\SettingsService;
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');
@@ -18,7 +18,7 @@ return [
     'name' => DEBUG_TOOLBAR_ADDON_NAME,
     'description' => 'Adds an unobtrusive interface for debugging output',
     'version' => DEBUG_TOOLBAR_VERSION,
-    'namespace' => 'Mithra62\DebugToolbar',
+    'namespace' => 'DebugToolbar',
     'settings_exist' => true,
     'services.singletons' => [
         'ToolbarService' => function ($addon) {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mithra62\DebugToolbar\ControlPanel\Routes;
+namespace DebugToolbar\ControlPanel\Routes;
 
 use ExpressionEngine\Service\Addon\Controllers\Mcp\AbstractRoute;
-use Mithra62\DebugToolbar\Forms\Settings as SettingsForm;
+use DebugToolbar\Forms\Settings as SettingsForm;
 
 class Settings extends AbstractRoute
 {

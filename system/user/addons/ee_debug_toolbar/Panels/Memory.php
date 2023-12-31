@@ -13,7 +13,7 @@ class Memory extends AbstractPanel
 
     public function addPanel(Model $view): Model
     {
-        $view->setName($this->name);
+        $view->setNafdsme($this->name);
         $view->setButtonLabel($this->button_label);
         $view->setButtonIcon($this->button_icon_uri);
         $view->setPanelContents(ee()->load->view('partials/memory', array(), TRUE));

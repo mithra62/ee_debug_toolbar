@@ -96,7 +96,6 @@ class ErrorHandlerService
      */
     public function renderException($exception)
     {
-        // an other exception could be thrown while displaying the exception
         $msg = "An Error occurred:";
         $msg .= (string)$exception;
         if ($this->getDebugMode()) {
@@ -120,8 +119,7 @@ class ErrorHandlerService
 
                     default:
 
-                        $error = '<pre>' . htmlspecialchars($msg, ENT_QUOTES) . '</pre>';
-                        show_error($error);
+                        show_exception($exception);
                         break;
                 }
 

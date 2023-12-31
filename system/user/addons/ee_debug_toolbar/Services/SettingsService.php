@@ -12,6 +12,12 @@ class SettingsService
         'toolbar_position' => 'bottom-left',
         'cache_path' => '',
         'error_handler' => 'ee',
+        'display_error_codes' => [
+            E_WARNING,
+            E_NOTICE,
+            E_USER_ERROR,
+            E_DEPRECATED
+        ],
         'profile_exts' => [
             'js',
             'css',
@@ -82,7 +88,7 @@ class SettingsService
      * @param string $value
      * @return false|void
      */
-    public function updateSetting(string $key, string $value)
+    public function updateSetting(string $key, $value)
     {
         if(!$this->isSetting($key)) {
             $this->addSetting($key);

@@ -27,7 +27,15 @@ class Settings extends AbstractForm
         $field_set->setDesc('eedt.form.desc.error_handler');
         $field = $field_set->getField('error_handler', 'select');
         $field->setValue($this->get('error_handler', 'default'))
+            ->set('group_toggle', ['toolbar' => 'error_handler'])
             ->setChoices(['ee' => 'ExpressionEngine', 'toolbar' => 'Debug Toolbar']);
+
+        $field_set = $field_group->getFieldSet('eedt.form.display_error_codes');
+        $field_set
+            ->set('group', 'error_handler')->setDesc('eedt.form.desc.display_error_codes');
+        $field = $field_set->getField('display_error_codes', 'checkbox');
+        $field->setValue($this->get('display_error_codes', []))
+            ->setChoices(ee('ee_debug_toolbar:ToolbarService')->getDisplayErrorCodes());
 
         if (ee()->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE) {
             $form = ee()->extensions->call('ee_debug_toolbar_settings_form', $form);

@@ -39,6 +39,13 @@ class ErrorHandlerService
      */
     private $hhvm_exception;
 
+    protected $settings;
+
+    public function __construct()
+    {
+        $this->settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
+    }
+
     /**
      * Returns the output mode for the Error Handler
      * @return string
@@ -139,7 +146,6 @@ class ErrorHandlerService
      */
     public function handleException($exception)
     {
-
         $this->exception = $exception;
 
         // disable error capturing to avoid recursive errors while handling exceptions
@@ -239,7 +245,7 @@ class ErrorHandlerService
         if ($code == 2048 || ini_get('error_reporting') == 0) {
             return; //we don't care about strict errors since EE's not strict compliant
         }
-        $general_error_codes = [2, 8, 256, 8192];
+        $general_error_codes = $this->settings['display_error_codes'];
         $error = "\nCode: $code\n";
         $error .= "Message: $message\n";
         $error .= "File: $file:$line";
@@ -323,16 +329,5 @@ class ErrorHandlerService
     public function getDebugMode()
     {
         return DEBUG;
-    }
-
-    /**
-     * Enable debug mode
-     * @param boolean $debug_mode
-     * @return ErrorHandler
-     */
-    public function setDebugMode($debug_mode)
-    {
-        $this->debug_mode = $debug_mode;
-        return $this;
     }
 }

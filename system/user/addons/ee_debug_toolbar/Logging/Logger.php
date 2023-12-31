@@ -142,10 +142,16 @@ class Logger implements LoggerInterface
     {
         if (ee('ee_debug_toolbar:LoggerService')->shouldLog($level)) {
             $logger = ee('ee_debug_toolbar:LoggerService')->getLogger();
-
             $message = ee('ee_debug_toolbar:LoggerService')->format($level, $message, $context);
-            $logger->log($message . ' : ' . $this->getCalledClass());
-            //throw new InvalidArgumentException();
+            $logger->log($message . "\n" .$this->logDelimiter());
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function logDelimiter(): string
+    {
+        return str_repeat('+', 10);
     }
 }

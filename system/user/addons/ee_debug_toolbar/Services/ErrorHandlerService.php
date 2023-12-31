@@ -40,35 +40,20 @@ class ErrorHandlerService
     private $hhvm_exception;
 
     /**
-     * Is debug mode enabled
-     * @var bool
-     */
-    private $debug_mode = true;
-
-    /**
-     * How should output be handled
-     * @var string
-     */
-    private $output_mode = 'http';
-
-    /**
-     * Set the output mode for the Error Handler
-     * @param string $mode
-     * @return \Vity\ErrorHandler
-     */
-    public function setOutputMode( $mode )
-    {
-        $this->output_mode = $mode;
-        return $this;
-    }
-
-    /**
      * Returns the output mode for the Error Handler
      * @return string
      */
-    protected function getOutputMode()
+    protected function getOutputMode(): string
     {
-        return $this->output_mode;
+        if(ee()->input->is_ajax_request()) {
+            return 'json';
+        }
+
+        if(PHP_SAPI === 'cli') {
+            return 'cli';
+        }
+
+        return 'http';
     }
 
     /**
@@ -95,7 +80,7 @@ class ErrorHandlerService
 
     /**
      * Unregisters this error handler by restoring the PHP error and exception handlers.
-     * @return ErrorHandler
+     * @return ErrorHandlerService
      */
     public function unregister()
     {
@@ -107,24 +92,23 @@ class ErrorHandlerService
     /**
      * Outputs an Exception error
      * @codeCoverageIgnore
-     * @param unknown $exception
+     * @param $exception
      */
     public function renderException($exception)
     {
         // an other exception could be thrown while displaying the exception
         $msg = "An Error occurred:";
-        $msg .= (string) $exception;
+        $msg .= (string)$exception;
         if ($this->getDebugMode()) {
             if (PHP_SAPI === 'cli') {
                 echo $msg . "\n";
             } else {
 
-                switch( $this->getOutputMode() )
-                {
+                switch ($this->getOutputMode()) {
                     case 'json':
                         header('Content-Type: application/problem+json');
                         $options = JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
-                        $data = array('title' => 'Critical Error', 'status' => 500, 'detail' => htmlspecialchars($msg, ENT_QUOTES));
+                        $data = ['title' => 'Critical Error', 'status' => 500, 'detail' => htmlspecialchars($msg, ENT_QUOTES)];
                         echo json_encode($data, $options);
                         exit;
                         break;
@@ -135,6 +119,7 @@ class ErrorHandlerService
                         break;
 
                     default:
+
                         $error = '<pre>' . htmlspecialchars($msg, ENT_QUOTES) . '</pre>';
                         show_error($error);
                         break;
@@ -185,9 +170,9 @@ class ErrorHandlerService
         } catch (\Exception $e) {
             // an other exception could be thrown while displaying the exception
             $msg = "An Error occurred while handling another error:\n";
-            $msg .= (string) $e;
+            $msg .= (string)$e;
             $msg .= "\nPrevious exception:\n";
-            $msg .= (string) $exception;
+            $msg .= (string)$exception;
             if ($this->getDebugMode()) {
                 if (PHP_SAPI === 'cli') {
                     echo $msg . "\n";
@@ -197,7 +182,7 @@ class ErrorHandlerService
             } else {
                 echo 'An internal server error occurred.';
             }
-            $msg .= "\n\$_SERVER = " .print_r($_SERVER, true);
+            $msg .= "\n\$_SERVER = " . print_r($_SERVER, true);
             $this->logger()->error($msg);
             if (defined('HHVM_VERSION')) {
                 flush();
@@ -237,6 +222,7 @@ class ErrorHandlerService
         }
         return false;
     }
+
     /**
      * Handles PHP execution errors such as warnings and notices.
      *
@@ -252,15 +238,14 @@ class ErrorHandlerService
      */
     public function handleError($code, $message, $file, $line)
     {
-        if($code == 2048 || ini_get('error_reporting') == 0) {
+        if ($code == 2048 || ini_get('error_reporting') == 0) {
             return; //we don't care about strict errors since EE's not strict compliant
         }
-        $general_error_codes = array(8, 256, 8192);
-        $error = "Code: $code\n";
+        $general_error_codes = [2, 8, 256, 8192];
+        $error = "\nCode: $code\n";
         $error .= "Message: $message\n";
         $error .= "File: $file:$line";
-        if(in_array($code, $general_error_codes))
-        {
+        if (in_array($code, $general_error_codes)) {
             $this->logger()->error($error);
             $this->register(); //we reset the error handler just in case
             if ($this->getDebugMode()) {
@@ -355,10 +340,10 @@ class ErrorHandlerService
     {
         if ($exception instanceof Exception) {
             $message = "{$exception->getName()}: {$exception->getMessage()}";
-        } elseif ($this->getDebugMode()) {
+        } else if ($this->getDebugMode()) {
             if ($exception instanceof Exception) {
                 $message = "Exception ({$exception->getName()})";
-            } elseif ($exception instanceof ErrorException) {
+            } else if ($exception instanceof ErrorException) {
                 $message = "{$exception->getName()}";
             } else {
                 $message = 'Exception';
@@ -372,13 +357,12 @@ class ErrorHandlerService
         return $message;
     }
 
-
     /**
-     * @return the $debug_mode
+     * @return int
      */
     public function getDebugMode()
     {
-        return $this->debug_mode;
+        return DEBUG;
     }
 
     /**

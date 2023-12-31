@@ -11,6 +11,7 @@ class SettingsService
         'theme' => 'default',
         'toolbar_position' => 'bottom-left',
         'cache_path' => '',
+        'error_handler' => 'ee',
         'profile_exts' => [
             'js',
             'css',
@@ -124,8 +125,7 @@ class SettingsService
      */
     public function setDefaults(array $new_defaults = []): SettingsService
     {
-        foreach($new_defaults AS $key => $value)
-        {
+        foreach($new_defaults AS $key => $value) {
             $this->_defaults[$key] = $value;
         }
 
@@ -142,8 +142,7 @@ class SettingsService
         $query = ee()->db->get($this->settings_table);
         $_settings = $query->result_array();
         $settings = [];
-        foreach($_settings AS $setting)
-        {
+        foreach($_settings AS $setting) {
             $settings[$setting['setting_key']] = ($setting['serialized'] == '1' ? unserialize($setting['setting_value']) : $setting['setting_value']);
         }
 

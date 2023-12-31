@@ -12,11 +12,12 @@ class SettingsService
         'toolbar_position' => 'bottom-left',
         'cache_path' => '',
         'error_handler' => 'ee',
-        'display_error_codes' => [
+        'hide_error_codes' => [
             E_WARNING,
             E_NOTICE,
             E_USER_ERROR,
-            E_DEPRECATED
+            E_DEPRECATED,
+            E_STRICT
         ],
         'profile_exts' => [
             'js',

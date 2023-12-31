@@ -67,6 +67,6 @@ $lang = [
     'eedt.settings_saved' => 'Settings Saved',
     'eedt.form.error_handler' => 'Error Handler',
     'eedt.form.desc.error_handler' => 'Which Error Handler do you want to use?',
-    'eedt.form.display_error_codes' => 'Errors to Display',
-    'eedt.form.desc.display_error_codes' => 'Which PHP Errors do you want to display inline with your views? Note this only applies to Errors; uncaught Exceptions are always fatal.',
+    'eedt.form.hide_error_codes' => 'Errors to Hide',
+    'eedt.form.desc.hide_error_codes' => 'Which PHP Errors do you want to hide from your views? Note this only applies to Errors; uncaught Exceptions are always fatal.',
 ];

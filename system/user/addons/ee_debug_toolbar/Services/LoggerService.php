@@ -47,7 +47,7 @@ class LoggerService
      */
     public function shouldLog(string $level): bool
     {
-        $log_levels = ee()->config->config['login_alert_log_levels'] ?? [];
+        $log_levels = ee()->config->config['ee_debug_log_levels'] ?? [];
         if (!is_array($log_levels)) {
             $log_levels = [];
         }

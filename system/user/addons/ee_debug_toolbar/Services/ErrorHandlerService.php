@@ -242,23 +242,14 @@ class ErrorHandlerService
      */
     public function handleError($code, $message, $file, $line)
     {
-        if ($code == 2048 || ini_get('error_reporting') == 0) {
-            return; //we don't care about strict errors since EE's not strict compliant
-        }
-        $general_error_codes = $this->settings['display_error_codes'];
+        $general_error_codes = $this->settings['hide_error_codes'];
         $error = "\nCode: $code\n";
         $error .= "Message: $message\n";
         $error .= "File: $file:$line";
         if (in_array($code, $general_error_codes)) {
             $this->logger()->error($error);
             $this->register(); //we reset the error handler just in case
-            if ($this->getDebugMode()) {
-                if (PHP_SAPI !== 'cli') {
-                    $error = nl2br($error);
-                }
-                echo $error;
-            }
-            return;
+            return false;
         }
 
         if (error_reporting() & $code) {

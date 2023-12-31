@@ -30,11 +30,10 @@ class Settings extends AbstractForm
             ->set('group_toggle', ['toolbar' => 'error_handler'])
             ->setChoices(['ee' => 'ExpressionEngine', 'toolbar' => 'Debug Toolbar']);
 
-        $field_set = $field_group->getFieldSet('eedt.form.display_error_codes');
-        $field_set
-            ->set('group', 'error_handler')->setDesc('eedt.form.desc.display_error_codes');
-        $field = $field_set->getField('display_error_codes', 'checkbox');
-        $field->setValue($this->get('display_error_codes', []))
+        $field_set = $field_group->getFieldSet('eedt.form.hide_error_codes');
+        $field_set->set('group', 'error_handler')->setDesc('eedt.form.desc.hide_error_codes');
+        $field = $field_set->getField('hide_error_codes', 'checkbox');
+        $field->setValue($this->get('hide_error_codes', []))
             ->setChoices(ee('ee_debug_toolbar:ToolbarService')->getDisplayErrorCodes());
 
         if (ee()->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE) {

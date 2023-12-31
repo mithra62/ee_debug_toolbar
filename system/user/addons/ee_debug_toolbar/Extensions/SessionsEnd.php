@@ -7,6 +7,10 @@ class SessionsEnd extends AbstractHook
     public function process($session)
     {
 
+        $log_path = realpath(__DIR__.'../../../error-logs').'/'.date('Y-m-d').'-error.log';
+        $error_handler = ee('ee_debug_toolbar:ErrorHandlerService');
+        $error_handler->register();
+
         return $session;
 
         $session = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $session);

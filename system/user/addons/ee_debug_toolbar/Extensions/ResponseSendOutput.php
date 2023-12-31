@@ -1,8 +1,8 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Extensions;
+namespace DebugToolbar\Extensions;
 
-use Mithra62\DebugToolbar\Panels\Model;
+use DebugToolbar\Panels\Model;
 
 class ResponseSendOutput extends AbstractHook
 {
@@ -14,6 +14,11 @@ class ResponseSendOutput extends AbstractHook
         //we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
         //see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
         if (ee()->config->config['show_profiler'] != 'y' || ee()->output->enable_profiler != '1') {
+            return;
+        }
+
+        //override to disable the toolbar from even starting
+        if (ee()->input->get('disable_toolbar') == 'yes') {
             return;
         }
 
@@ -50,7 +55,7 @@ class ResponseSendOutput extends AbstractHook
         }
 
         //Toolbar UI Vars
-        $vars = array();
+        $vars = [];
         $vars['query_count'] = ee()->db->query_count;
         $vars['mysql_query_cache'] = $this->toolbar->verifyMysqlQueryCache();
         $vars['elapsed_time'] = ee()->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
@@ -59,8 +64,8 @@ class ResponseSendOutput extends AbstractHook
         $vars['query_data'] = $this->toolbar->setupQueries();
         $vars['memory_usage'] = $this->toolbar->filesizeFormat(memory_get_peak_usage());
         $vars['template_debugging_enabled'] = isset(ee()->TMPL->log) && is_array(ee()->TMPL->log) && count(ee()->TMPL->log) > 0;
-        $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplLog(ee()->TMPL->log) : array());
-        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : array());
+        $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplLog(ee()->TMPL->log) : []);
+        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : '');
         $vars['included_file_data'] = $this->toolbar->setupFiles(get_included_files());
 
         $vars['ext_version'] = $this->version;
@@ -71,11 +76,11 @@ class ResponseSendOutput extends AbstractHook
         $vars['extra_html'] = ''; //used by extension to add extra script/css files
         $vars['eedt_theme_path'] = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim(ee()->config->config['theme_folder_path'], '/third_party/') . '/') . 'ee_debug_toolbar/themes/' . $this->settings['theme'];
         $vars['master_view_script'] = "toolbar";
-        $vars['panels'] = array();
+        $vars['panels'] = [];
         $vars['toolbar_position'] = $this->determineToolbarPositionClass();
-        $vars['js'] = array($vars['theme_js_url'] . "eedt.js");
-        $vars['css'] = array($vars['theme_css_url'] . "ee_debug_toolbar.css");
-        $vars['benchmark_data'] = array(); //we have to fake this for now
+        $vars['js'] = [$vars['theme_js_url'] . "eedt.js"];
+        $vars['css'] = [$vars['theme_css_url'] . "ee_debug_toolbar.css"];
+        $vars['benchmark_data'] = []; //we have to fake this for now
 
         //Load variables so that they are present in all view partials
         ee()->load->vars($vars);
@@ -184,23 +189,20 @@ class ResponseSendOutput extends AbstractHook
         ee()->output->enable_profiler = false;
     }
 
-
-
     /**
      * Loads Native EEDT Panel Extensions
-     *
-     * @return Eedt_base_panel[] Array of panel extension instances
+     * @return array
      */
-    private function loadPanels()
+    private function loadPanels(): array
     {
-        $instances = array();
+        $instances = [];
 
         ee()->load->helper("file");
         $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/panels/");
 
 
         //setup the array in the order we want the panels to appear
-        $sorted_files = array();
+        $sorted_files = [];
         foreach ($this->panel_order as $panel) {
 
             $name = $panel . '.php';
@@ -212,7 +214,7 @@ class ResponseSendOutput extends AbstractHook
         //each panel is an object so set them up
         foreach ($sorted_files as $file) {
 
-            $class = '\\Mithra62\DebugToolbar\Panels\\' . str_replace(".php", "", $file);
+            $class = '\\DebugToolbar\Panels\\' . str_replace(".php", "", $file);
             if (class_exists($class)) {
                 $instances[$class] = new $class();
             }
@@ -225,7 +227,7 @@ class ResponseSendOutput extends AbstractHook
      * Determine the toolbar position classes to be added to the toolbar root node
      * @return string
      */
-    private function determineToolbarPositionClass()
+    private function determineToolbarPositionClass(): string
     {
         if (!array_key_exists("toolbar_position", $this->settings)) {
             $this->settings['toolbar_position'] = 0;

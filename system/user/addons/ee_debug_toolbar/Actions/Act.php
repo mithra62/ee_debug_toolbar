@@ -1,9 +1,9 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Actions;
+namespace DebugToolbar\Actions;
 
 use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
-use Mithra62\DebugToolbar\Toolbar\GarbageCollection;
+use DebugToolbar\Toolbar\GarbageCollection;
 
 class Act extends AbstractRoute
 {

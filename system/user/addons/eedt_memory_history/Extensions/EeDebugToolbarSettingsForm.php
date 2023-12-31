@@ -1,6 +1,6 @@
 <?php
 
-namespace Mithra62\DebugToolbar\MemoryHistory\Extensions;
+namespace DebugToolbar\MemoryHistory\Extensions;
 
 use ExpressionEngine\Library\CP\Form;
 

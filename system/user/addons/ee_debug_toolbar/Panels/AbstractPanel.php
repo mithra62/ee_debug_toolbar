@@ -1,8 +1,8 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Panels;
+namespace DebugToolbar\Panels;
 
-use Mithra62\DebugToolbar\Services\ToolbarService;
+use DebugToolbar\Services\ToolbarService;
 
 class AbstractPanel
 {

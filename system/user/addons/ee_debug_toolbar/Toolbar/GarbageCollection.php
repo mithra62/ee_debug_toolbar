@@ -1,5 +1,5 @@
 <?php
-namespace Mithra62\DebugToolbar\Toolbar;
+namespace DebugToolbar\Toolbar;
 
 use ExpressionEngine\Library\Filesystem\Filesystem;
 

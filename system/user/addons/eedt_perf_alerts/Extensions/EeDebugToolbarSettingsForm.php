@@ -1,6 +1,6 @@
 <?php
 
-namespace Mithra62\DebugToolbar\PerfAlerts\Extensions;
+namespace DebugToolbar\PerfAlerts\Extensions;
 
 use ExpressionEngine\Library\CP\Form;
 

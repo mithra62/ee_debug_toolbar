@@ -1,5 +1,5 @@
 <?php
-namespace Mithra62\DebugToolbar\Panels;
+namespace DebugToolbar\Panels;
 
 class Time extends AbstractPanel
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mithra62\DebugToolbar\Extensions;
+namespace DebugToolbar\Extensions;
 
 use ExpressionEngine\Service\Addon\Controllers\Extension\AbstractRoute;
-use Mithra62\DebugToolbar\Services\ToolbarService;
+use DebugToolbar\Services\ToolbarService;
 
 abstract class AbstractHook extends AbstractRoute
 {

@@ -72,7 +72,8 @@ function jsapi_ready() {
 		datatable.addRows(data.length);
 
 		for (var i = 0; i < data.length; i++) {
-			var tooltip = String(data[i].desc + "\nMemory:" + data[i].memory + "\nTime:" + data[i].time);
+			var tooltip = String(data[i].desc + "\nMemory:" + data[i].memory_display + "\nTime:" + data[i].time);
+
 			datatable.setValue(i, 0, data[i].time);
 			datatable.setValue(i, 1, data[i].memory);
 			datatable.setValue(i, 2, tooltip);

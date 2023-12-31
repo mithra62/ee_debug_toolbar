@@ -1,6 +1,6 @@
 <?php
 
-namespace Mithra62\DebugToolbar\MemoryHistory\Extensions;
+namespace DebugToolbar\MemoryHistory\Extensions;
 
 class EeDebugToolbarInitSettings extends AbstractHook
 {

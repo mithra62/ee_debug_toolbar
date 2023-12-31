@@ -1,8 +1,8 @@
 <?php
 
-namespace Mithra62\DebugToolbar\MemoryHistory\Extensions;
+namespace DebugToolbar\MemoryHistory\Extensions;
 
-use Mithra62\DebugToolbar\Panels\Model;
+use DebugToolbar\Panels\Model;
 
 class EeDebugToolbarAddPanel extends AbstractHook
 {

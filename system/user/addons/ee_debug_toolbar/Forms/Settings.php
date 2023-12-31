@@ -23,6 +23,12 @@ class Settings extends AbstractForm
         $field->setValue($this->get('toolbar_position', 'bottom-left'))
             ->setChoices(ee('ee_debug_toolbar:ToolbarService')->toolbar_positions);
 
+        $field_set = $field_group->getFieldSet('eedt.form.error_handler');
+        $field_set->setDesc('eedt.form.desc.error_handler');
+        $field = $field_set->getField('error_handler', 'select');
+        $field->setValue($this->get('error_handler', 'default'))
+            ->setChoices(['ee' => 'ExpressionEngine', 'toolbar' => 'Debug Toolbar']);
+
         if (ee()->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE) {
             $form = ee()->extensions->call('ee_debug_toolbar_settings_form', $form);
         }

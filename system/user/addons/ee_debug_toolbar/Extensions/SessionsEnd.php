@@ -2,12 +2,13 @@
 
 namespace DebugToolbar\Extensions;
 
-use DebugToolbar\Toolbar\Hook;
-
 class SessionsEnd extends AbstractHook
 {
     public function process($session)
     {
+
+        return $session;
+
         $session = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $session);
 
         if (ee()->config->config['show_profiler'] != 'y' || $session->userdata('role_id') != '1') {

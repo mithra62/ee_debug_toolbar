@@ -2,6 +2,8 @@
 
 use DebugToolbar\Services\ToolbarService;
 use DebugToolbar\Services\SettingsService;
+use DebugToolbar\Services\ErrorHandlerService;
+use DebugToolbar\Services\LoggerService;
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');
@@ -26,6 +28,12 @@ return [
         },
         'SettingsService' => function ($addon) {
             return new SettingsService();
+        },
+        'ErrorHandlerService' => function ($addon) {
+            return new ErrorHandlerService();
+        },
+        'LoggerService' => function ($addon) {
+            return new LoggerService();
         },
     ],
 ];

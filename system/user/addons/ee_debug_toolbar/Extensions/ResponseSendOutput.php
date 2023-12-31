@@ -65,7 +65,7 @@ class ResponseSendOutput extends AbstractHook
         $vars['memory_usage'] = $this->toolbar->filesizeFormat(memory_get_peak_usage());
         $vars['template_debugging_enabled'] = isset(ee()->TMPL->log) && is_array(ee()->TMPL->log) && count(ee()->TMPL->log) > 0;
         $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplLog(ee()->TMPL->log) : []);
-        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : '""');
+        $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : '');
         $vars['included_file_data'] = $this->toolbar->setupFiles(get_included_files());
 
         $vars['ext_version'] = $this->version;

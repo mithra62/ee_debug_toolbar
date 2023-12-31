@@ -24,5 +24,5 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-    eedt.data.tmpl_data = <?php echo $template_debugging_chart_json; ?>;
+    eedt.data.tmpl_data = <?php echo ($template_debugging_chart_json ? $template_debugging_chart_json : '""'); ?>;
 </script>

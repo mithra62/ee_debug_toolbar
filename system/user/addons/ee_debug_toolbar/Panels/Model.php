@@ -57,7 +57,7 @@ class Model
     /**
      * @var string Toolbar panel HTML output
      */
-    private $output;
+    private $output = '';
 
     /**
      * @var array JS resources needed by this toolbar view

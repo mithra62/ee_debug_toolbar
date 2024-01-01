@@ -5,7 +5,7 @@
 	box-sizing: content-box !important;
 	margin: 0;
 	padding:0;
-	font: 11px/1.4em 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+	font: 12px/1.4em 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
 }
 #Eedt_debug_toolbar img {
 	width: auto;
@@ -64,7 +64,7 @@
 
 #Eedt_debug_toolbar h4 {
 	margin: 0;
-	font-size: 11px;
+	font-size: 14px;
 	font-weight: bold;
 }
 
@@ -151,17 +151,17 @@
 	border: 0;
     display:inline-block;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 #Eedt_debug_toolbar .Eedt_debug_panel pre {
-	font: 11px/1.4em Monaco, Lucida Console, monospace;
+	font: 12px/1.4em Monaco, Lucida Console, monospace;
 	margin: 0 0 0 22px;
 	word-wrap: break-word;
 }
 
 #Eedt_debug_toolbar .Eedt_debug_panel h4 {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: bold;
     margin: 0;
 	color: #000;

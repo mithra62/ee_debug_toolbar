@@ -8,6 +8,8 @@ if (!defined('DEBUG_TOOLBAR_EMAIL_VERSION')) {
     define('DEBUG_TOOLBAR_EMAIL_VERSION', '2.0.0');
 }
 
+use DebugToolbar\Email\Services\EmailService;
+
 return [
     'author' => 'mithra62',
     'author_url' => 'https://github.com/mithra62/ee_debug_toolbar',
@@ -16,5 +18,10 @@ return [
     'description' => 'Allows control over email during development',
     'version' => DEBUG_TOOLBAR_EMAIL_VERSION,
     'namespace' => 'DebugToolbar\Email',
-    'settings_exist' => false
+    'settings_exist' => false,
+    'services' => [
+        'EmailService' => function ($addon) {
+            return new EmailService();
+        },
+    ]
 ];

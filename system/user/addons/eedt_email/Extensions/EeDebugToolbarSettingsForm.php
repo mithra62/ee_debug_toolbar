@@ -11,10 +11,17 @@ class EeDebugToolbarSettingsForm extends AbstractHook
         $settings = $this->toolbar->getSettings();
 
         $field_group = $form->getGroup('eedt_email.form.header.settings');
-        $field_set = $field_group->getFieldSet('eedt_email.form.max_exec_time');
-        $field_set->setDesc('eedt_email.form.desc.form.max_exec_time');
-        $field = $field_set->getField('max_exec_time', 'number');
-        $field->setValue($settings['max_exec_time']);
+        $field_set = $field_group->getFieldSet('eedt_email.form.email_action');
+        $field_set->setDesc('eedt_email.form.desc.email_action');
+        $field = $field_set->getField('email_action', 'select');
+        $field->setValue($settings['email_action'])
+            ->setChoices(ee('eedt_email:EmailService')->getActionOptions());
+
+
+        $field_set = $field_group->getFieldSet('eedt_email.form.email_log_dir');
+        $field_set->setDesc('eedt_email.form.desc.form.email_log_dir');
+        $field = $field_set->getField('email_log_dir', 'text');
+        $field->setValue($settings['email_log_dir']);
 
         return $form;
     }

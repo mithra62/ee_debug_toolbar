@@ -36,6 +36,11 @@ class Settings extends AbstractForm
         $field->setValue($this->get('hide_error_codes', []))
             ->setChoices(ee('ee_debug_toolbar:ToolbarService')->getDisplayErrorCodes());
 
+        $field_set = $field_group->getFieldSet('eedt.form.error_log_path');
+        $field_set->set('group', 'error_handler')->setDesc('eedt.form.desc.error_log_path');
+        $field = $field_set->getField('error_log_path', 'text');
+        $field->setValue($this->get('error_log_path', ''));
+
         if (ee()->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE) {
             $form = ee()->extensions->call('ee_debug_toolbar_settings_form', $form);
         }

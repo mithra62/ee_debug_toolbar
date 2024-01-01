@@ -11,6 +11,13 @@ class LoggerService
      */
     protected ?File $logger = null;
 
+    protected array $settings;
+
+    public function __construct()
+    {
+        $this->settings = ee('ee_debug_toolbar:ToolbarService')->getSettings();
+    }
+
     /**
      * @return File
      * @throws \Exception
@@ -18,7 +25,12 @@ class LoggerService
     public function getLogger(): File
     {
         if (is_null($this->logger)) {
-            $this->logger = new File(PATH_CACHE . 'debug.log', ee('Filesystem'));
+            $log_file = PATH_CACHE . 'error.log';
+            if(!empty($this->settings['error_log_path'])) {
+                $log_file = $this->settings['error_log_path'];
+            }
+
+            $this->logger = new File($log_file, ee('Filesystem'));
         }
 
         return $this->logger;

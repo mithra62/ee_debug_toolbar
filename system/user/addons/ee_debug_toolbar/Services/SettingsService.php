@@ -10,7 +10,7 @@ class SettingsService
     protected array $_defaults = [
         'theme' => 'default',
         'toolbar_position' => 'bottom-left',
-        'cache_path' => '',
+        'error_log_path' => '',
         'error_handler' => 'ee',
         'hide_error_codes' => [
             E_WARNING,

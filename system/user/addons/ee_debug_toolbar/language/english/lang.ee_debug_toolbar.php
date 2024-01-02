@@ -65,10 +65,4 @@ $lang = [
     'eedt.form.header.settings' => 'Debug Toolbar Settings',
     'eedt.header.settings_save' => 'Debug Toolbar Settings',
     'eedt.settings_saved' => 'Settings Saved',
-    'eedt.form.error_handler' => 'Error Handler',
-    'eedt.form.desc.error_handler' => 'Which Error Handler do you want to use?',
-    'eedt.form.hide_error_codes' => 'Errors to Hide',
-    'eedt.form.desc.hide_error_codes' => 'Which PHP Errors do you want to hide from your views? Note this only applies to Errors; uncaught Exceptions are always fatal.',
-    'eedt.form.error_log_path' => 'Error Log Path',
-    'eedt.form.desc.error_log_path' => 'The full system path to where you want to store your Error Logs. If none entered, your logs will be stored in the ExpressionEngine Cache directory',
 ];

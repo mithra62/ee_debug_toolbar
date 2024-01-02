@@ -23,6 +23,7 @@ class EeDebugToolbarModPanel extends AbstractHook
             $panels['database']->setPanelCssClass('flash');
         }
 
+
         //and how long did those queries take?
         if (ee('Database')->currentExecutionTime() > $settings['max_sql_time']) {
             $panels['database']->setPanelCssClass('flash');

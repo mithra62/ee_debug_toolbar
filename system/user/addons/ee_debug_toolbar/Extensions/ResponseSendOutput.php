@@ -57,7 +57,6 @@ class ResponseSendOutput extends AbstractHook
 
         //Toolbar UI Vars
         $vars = [];
-        $vars['query_count'] = ee()->db->query_count;
         $vars['mysql_query_cache'] = $this->toolbar->verifyMysqlQueryCache();
         $vars['elapsed_time'] = ee()->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
         $vars['config_data'] = ee()->config->config;
@@ -82,6 +81,7 @@ class ResponseSendOutput extends AbstractHook
         $vars['js'] = [$vars['theme_js_url'] . "eedt.js"];
         $vars['css'] = [$vars['theme_css_url'] . "ee_debug_toolbar.css"];
         $vars['benchmark_data'] = []; //we have to fake this for now
+        //$vars['query_count'] = ee()->db->query_count;
 
         //Load variables so that they are present in all view partials
         ee()->load->vars($vars);

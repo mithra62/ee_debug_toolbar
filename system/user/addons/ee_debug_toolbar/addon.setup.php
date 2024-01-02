@@ -28,9 +28,6 @@ return [
         'SettingsService' => function ($addon) {
             return new SettingsService();
         },
-        'ErrorHandlerService' => function ($addon) {
-            return new ErrorHandlerService();
-        },
         'LoggerService' => function ($addon) {
             return new LoggerService();
         },

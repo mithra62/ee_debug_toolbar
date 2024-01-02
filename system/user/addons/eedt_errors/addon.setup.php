@@ -8,6 +8,8 @@ if (!defined('DEBUG_TOOLBAR_ERRORS_VERSION')) {
     define('DEBUG_TOOLBAR_ERRORS_VERSION', '2.0.0');
 }
 
+use DebugToolbar\Errors\Services\ErrorHandlerService;
+
 return [
     'author' => 'mithra62',
     'author_url' => 'https://github.com/mithra62/ee_debug_toolbar',
@@ -18,6 +20,8 @@ return [
     'namespace' => 'DebugToolbar\Errors',
     'settings_exist' => false,
     'services' => [
-
+        'ErrorHandlerService' => function ($addon) {
+            return new ErrorHandlerService();
+        },
     ]
 ];

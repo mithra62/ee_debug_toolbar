@@ -20,7 +20,6 @@ class EeDebugToolbarAddPanel extends AbstractHook
         $panels['log_viewer']->setName('log_viewer');
         $panels['log_viewer']->setButtonIcon($vars['theme_img_url'] . 'logs.png');
         $panels['log_viewer']->setButtonLabel(lang('Logs'));
-        $panels['log_viewer']->setPanelContents(ee()->load->view('log_viewer', $vars, true));
         $panels['log_viewer']->setPanelFetchUrl($vars['panel_fetch_url']);
 
         ee()->benchmark->mark('eedt_log_viewer_end');

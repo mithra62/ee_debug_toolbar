@@ -32,7 +32,7 @@
         }
         fclose($f);
 
-        echo implode('<br />', array_reverse($lines));
+        echo implode('<br />', ($lines)) . '</div>';
 
         ?>
     </div>

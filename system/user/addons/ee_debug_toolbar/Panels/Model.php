@@ -299,7 +299,7 @@ class Model
     /**
      * @param string $panel_fetch_url
      */
-    public function setPanelFetch_url($panel_fetch_url)
+    public function setPanelFetchUrl($panel_fetch_url)
     {
         $this->panel_fetch_url = str_replace("&amp;", "&", $panel_fetch_url);
     }

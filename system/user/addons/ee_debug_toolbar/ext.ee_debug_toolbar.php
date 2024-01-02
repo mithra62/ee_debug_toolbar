@@ -23,6 +23,16 @@ class Ee_debug_toolbar_ext extends Extension
 
     protected ToolbarService $toolbar;
 
+    protected array $panel_order = [
+        'Copyright',
+        'Variables',
+        'Files',
+        'Memory',
+        'Time',
+        'Config',
+        'Database'
+    ];
+
     /**
      * Fetches cached panel HTML output
      */

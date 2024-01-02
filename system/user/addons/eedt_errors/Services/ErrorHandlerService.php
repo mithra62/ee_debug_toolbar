@@ -1,9 +1,8 @@
 <?php
 
-namespace DebugToolbar\Services;
 
-use DebugToolbar\Exceptions\ErrorException;
 use DebugToolbar\Traits\LoggerTrait;
+use DebugToolbar\Errors\Exceptions\ErrorException;
 
 class ErrorHandlerService
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DebugToolbar\Exceptions;
+namespace DebugToolbar\Errors\Exceptions;
 
 class ErrorException extends \ErrorException
 {

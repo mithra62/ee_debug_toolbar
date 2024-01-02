@@ -94,9 +94,9 @@ class ToolbarService
 
     /**
      * Wrapper to setup the Database panel SQL queries
-     * @return multitype:|multitype:string
+     * @return array
      */
-    public function setupQueries()
+    public function setupQueries(): array
     {
         $dbs = [];
 

@@ -1,9 +1,8 @@
 <?php
 
-use DebugToolbar\Services\ToolbarService;
-use DebugToolbar\Services\SettingsService;
-use DebugToolbar\Services\ErrorHandlerService;
 use DebugToolbar\Services\LoggerService;
+use DebugToolbar\Services\SettingsService;
+use DebugToolbar\Services\ToolbarService;
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');

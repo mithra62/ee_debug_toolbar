@@ -18,7 +18,8 @@ class EeDebugToolbarModPanel extends AbstractHook
         }
 
         //make sure we're not running too many queries
-        if ($view['query_count'] > $settings['max_queries']) {
+        $log = ee('Database')->getLog();
+        if ($log->getQueryCount() > $settings['max_queries']) {
             $panels['database']->setPanelCssClass('flash');
         }
 

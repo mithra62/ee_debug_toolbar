@@ -55,8 +55,8 @@ class AbstractPanel
     }
 
     /**
-     * @param \Mithra62\DebugToolbar\Panels\Model $view
-     * @return \Mithra62\DebugToolbar\Panels\Model
+     * @param Model $view
+     * @return Model
      */
     public function addPanel(Model $view): Model
     {
@@ -75,7 +75,7 @@ class AbstractPanel
      * @param array $data
      * @return string
      */
-    protected function view(string $view_path = '', array $data = [])
+    protected function view(string $view_path = '', array $data = []): string
     {
         if (!$view_path) {
             $view_path = 'partials/' . $this->name;

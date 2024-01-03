@@ -30,7 +30,9 @@ class EeDebugToolbarModPanel extends AbstractHook
         }
 
         //is memory usage bad?
-        if ($view['memory_usage'] > $settings['max_memory']) {
+        //note we assume the memory_usage value will be in MB format so we just strip it out
+        $parts = explode(' ', $view['memory_usage']);
+        if (!empty($parts['0']) && $parts['0'] > $settings['max_memory']) {
             $panels['memory']->setPanelCssClass('flash');
         }
 

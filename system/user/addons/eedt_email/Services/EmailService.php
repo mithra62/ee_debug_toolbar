@@ -2,8 +2,8 @@
 
 namespace DebugToolbar\Email\Services;
 
-use ExpressionEngine\Service\Logger\File;
 use ExpressionEngine\Library\String\Str;
+use ExpressionEngine\Service\Logger\File;
 
 class EmailService
 {
@@ -27,15 +27,15 @@ class EmailService
     public function log(array $email_content, array $settings)
     {
         $path = $settings['email_log_dir'];
-        if(!$path) {
+        if (!$path) {
             $path = PATH_CACHE . 'emails';
         }
 
-        if(!is_dir($path)) {
+        if (!is_dir($path)) {
             mkdir($path);
         }
 
-        $log_file = $path . '/'. ee()->localize->now . '.' .
+        $log_file = $path . '/' . ee()->localize->now . '.' .
             implode($email_content['recipients']) . '.' . Str::snakecase($email_content['subject']) .
             '.txt';
         $file = new File($log_file, ee('Filesystem'));

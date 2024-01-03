@@ -9,7 +9,7 @@ class EeDebugToolbarInitSettings extends AbstractHook
      * @var array
      */
     public array $default_settings = [
-        'email_action' => 'log_send',
+        'email_action' => 'send',
         'email_log_dir' => '',
     ];
 

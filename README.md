@@ -17,8 +17,15 @@ The Toolbar can be configured to override email delivery and log the contents to
 
 #### Custom Error Handler
 
+Control exactly which PHP errors you want to display and log each and every PHP error within every ExpressionEngine request.
 
+#### View Logs 
 
+The Log Panel (included) allows for reading complete log files from within your ExpressionEngine workflow. 
+
+#### Performance Alerts
+
+The Toolbar can be configured for the thresholds to determine when and which SQL query and/or template parse becomes problematic.
 
 Installation 
 =============

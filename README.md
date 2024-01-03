@@ -1,6 +1,24 @@
 Debug Toolbar
 ====================
-Adds an unobtrusive interface for debugging output on an [ExpressionEngine](http://expressionengine.com "ExpressionEngine") 7.0 site. Replaces default Profiler and Template Debugger provided with ExpressionEngine.
+
+The complete debugging platform for ExpressionEngine. Adds an unobtrusive interface for debugging output on an [ExpressionEngine](http://expressionengine.com "ExpressionEngine") 7.0 site. Replaces default Profiler and Template Debugger provided with ExpressionEngine.
+
+### Features
+
+In addition to what the ExpressionEngine Profiler offers, the Debug Toolbar also offers:
+
+#### Extensible interface for project debug tools
+
+Create custom extensions to expand on debugging capabilities. 
+
+#### Disable and/or Log Email 
+
+The Toolbar can be configured to override email delivery and log the contents to files for easy debugging and quality control. 
+
+#### Custom Error Handler
+
+
+
 
 Installation 
 =============

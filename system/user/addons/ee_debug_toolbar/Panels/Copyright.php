@@ -17,8 +17,8 @@ class Copyright extends AbstractPanel
     }
 
     /**
-     * @param \Mithra62\DebugToolbar\Panels\Model $view
-     * @return \Mithra62\DebugToolbar\Panels\Model
+     * @param \DebugToolbar\Panels\Model $view
+     * @return \DebugToolbar\Panels\Model
      */
     public function addPanel(Model $view): Model
     {
@@ -32,6 +32,9 @@ class Copyright extends AbstractPanel
         return $view;
     }
 
+    /**
+     * @return array
+     */
     protected function getContributors(): array
     {
         $data = [];

@@ -57,7 +57,7 @@ class Model
     /**
      * @var string Toolbar panel HTML output
      */
-    private $output;
+    private $output = '';
 
     /**
      * @var array JS resources needed by this toolbar view
@@ -299,7 +299,7 @@ class Model
     /**
      * @param string $panel_fetch_url
      */
-    public function setPanelFetch_url($panel_fetch_url)
+    public function setPanelFetchUrl($panel_fetch_url)
     {
         $this->panel_fetch_url = str_replace("&amp;", "&", $panel_fetch_url);
     }

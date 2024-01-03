@@ -1,9 +1,8 @@
 <?php
+namespace DebugToolbar\Errors\Services;
 
-namespace DebugToolbar\Services;
-
-use DebugToolbar\Exceptions\ErrorException;
 use DebugToolbar\Traits\LoggerTrait;
+use DebugToolbar\Errors\Exceptions\ErrorException;
 
 class ErrorHandlerService
 {
@@ -159,6 +158,7 @@ class ErrorHandlerService
 
         try {
             $this->logger()->error($exception);
+            log_message('error', $exception, true);
             if ($this->discard_existing_output) {
                 $this->clearOutput();
             }
@@ -188,6 +188,7 @@ class ErrorHandlerService
             }
             $msg .= "\n\$_SERVER = " . print_r($_SERVER, true);
             $this->logger()->error($msg);
+            log_message('error', $exception, true);
             if (defined('HHVM_VERSION')) {
                 flush();
             }
@@ -248,6 +249,7 @@ class ErrorHandlerService
         $error .= "File: $file:$line";
         if (in_array($code, $general_error_codes)) {
             $this->logger()->error($error);
+            log_message('error', $error, true);
             $this->register(); //we reset the error handler just in case
             return false;
         }
@@ -255,6 +257,7 @@ class ErrorHandlerService
         if (error_reporting() & $code) {
 
             $this->logger()->error($error);
+            log_message('error', $error, true);
             $exception = new ErrorException($message, $code, $code, $file, $line);
             // in case error appeared in __toString method we can't throw any exception
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
@@ -288,7 +291,8 @@ class ErrorHandlerService
                 $exception = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
             }
             $this->exception = $exception;
-            $this->logger->error($exception);
+            $this->logger->error($error);
+            log_message('error', $error, true);
             if ($this->discard_existing_output) {
                 $this->clearOutput();
             }

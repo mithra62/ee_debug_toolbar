@@ -25,13 +25,14 @@ class ResponseSendOutput extends AbstractHook
         $html = ee()->output->final_output;
 
         //If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
-        $ignore_tmpl_types = ['js', 'css'];
+        $ignore_tmpl_types = ['js', 'css', 'feed'];
         if (AJAX_REQUEST ||
             (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types)) ||
             (isset(ee()->TMPL->template_type) && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))
         ) {
             return;
         }
+
 
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');
@@ -56,7 +57,6 @@ class ResponseSendOutput extends AbstractHook
 
         //Toolbar UI Vars
         $vars = [];
-        $vars['query_count'] = ee()->db->query_count;
         $vars['mysql_query_cache'] = $this->toolbar->verifyMysqlQueryCache();
         $vars['elapsed_time'] = ee()->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
         $vars['config_data'] = ee()->config->config;
@@ -81,6 +81,7 @@ class ResponseSendOutput extends AbstractHook
         $vars['js'] = [$vars['theme_js_url'] . "eedt.js"];
         $vars['css'] = [$vars['theme_css_url'] . "ee_debug_toolbar.css"];
         $vars['benchmark_data'] = []; //we have to fake this for now
+        //$vars['query_count'] = ee()->db->query_count;
 
         //Load variables so that they are present in all view partials
         ee()->load->vars($vars);

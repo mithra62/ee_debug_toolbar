@@ -62,7 +62,7 @@ class Model
     /**
      * @var array JS resources needed by this toolbar view
      */
-    private $js = array();
+    private $js = [];
 
     /**
      * @var array JS resources needed by this toolbar view, to be loaded on page load
@@ -201,7 +201,7 @@ class Model
      * @param string $filename
      * @param boolean $page_load
      */
-    function addJs($filename, $page_load = FALSE)
+    function addJs($filename, $page_load = false)
     {
         if ($page_load) {
             $this->page_load_js[] = $filename;
@@ -230,7 +230,7 @@ class Model
      * @param string $filename
      * @param boolean $page_load
      */
-    function addCss($filename, $page_load = FALSE)
+    function addCss($filename, $page_load = false)
     {
         if ($page_load) {
             $this->page_load_css[] = $filename;

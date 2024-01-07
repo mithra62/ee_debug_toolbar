@@ -19,7 +19,7 @@ class Eedt_memory_history_ext extends Extension
      * @var array
      */
     public array $eedt_act = [
-        'fetch_memory_and_sql_usage'
+        'fetch_memory_and_sql_usage',
     ];
 
     /**
@@ -49,79 +49,79 @@ class Eedt_memory_history_ext extends Extension
         ee()->load->dbforge();
         ee()->dbforge->drop_table('eedt_memory_history');
 
-        $fields = array(
-            'id' => array(
+        $fields = [
+            'id' => [
                 'type' => 'INT',
                 'auto_increment' => true,
-                'unsigned' => true
-            ),
-            'session_id' => array(
+                'unsigned' => true,
+            ],
+            'session_id' => [
                 'type' => 'VARCHAR',
                 'constraint' => '40',
-                'null' => true
-            ),
-            'url' => array(
+                'null' => true,
+            ],
+            'url' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'null' => true
-            ),
-            'peak_memory' => array(
+                'null' => true,
+            ],
+            'peak_memory' => [
                 'type' => 'FLOAT',
-                'null' => true
-            ),
-            'sql_count' => array(
+                'null' => true,
+            ],
+            'sql_count' => [
                 'type' => 'INT',
-                'null' => true
-            ),
-            'execution_time' => array(
+                'null' => true,
+            ],
+            'execution_time' => [
                 'type' => 'FLOAT',
-                'null' => true
-            ),
-            'timestamp' => array(
+                'null' => true,
+            ],
+            'timestamp' => [
                 'type' => 'INT',
-                'null' => true
-            ),
-            'cp' => array(
+                'null' => true,
+            ],
+            'cp' => [
                 'type' => 'ENUM',
                 'constraint' => '\'y\',\'n\'',
                 'default' => 'n',
-                'null' => false
-            )
-        );
+                'null' => false,
+            ],
+        ];
         ee()->dbforge->add_field($fields);
         ee()->dbforge->add_key('id', true);
         ee()->dbforge->create_table('eedt_memory_history');
 
-        $data = array();
-        $data[] = array(
+        $data = [];
+        $data[] = [
             'class' => __CLASS__,
             'method' => 'ee_debug_toolbar_add_panel',
             'hook' => 'ee_debug_toolbar_add_panel',
             'settings' => '',
             'priority' => 49,
             'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
-            'enabled' => 'y'
-        );
+            'enabled' => 'y',
+        ];
 
-        $data[] = array(
+        $data[] = [
             'class' => __CLASS__,
             'method' => 'ee_debug_toolbar_settings_form',
             'hook' => 'ee_debug_toolbar_settings_form',
             'settings' => '',
             'priority' => 1,
             'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
-            'enabled' => 'y'
-        );
+            'enabled' => 'y',
+        ];
 
-        $data[] = array(
+        $data[] = [
             'class' => __CLASS__,
             'method' => 'ee_debug_toolbar_init_settings',
             'hook' => 'ee_debug_toolbar_init_settings',
             'settings' => '',
             'priority' => 5,
             'version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION,
-            'enabled' => 'y'
-        );
+            'enabled' => 'y',
+        ];
 
         foreach ($data as $ext) {
             ee()->db->insert('extensions', $ext);
@@ -138,7 +138,7 @@ class Eedt_memory_history_ext extends Extension
         ee()->db->where('class', __CLASS__);
         ee()->db->update(
             'extensions',
-            array('version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION)
+            ['version' => DEBUG_TOOLBAR_MEMORY_HISTORY_VERSION]
         );
     }
 

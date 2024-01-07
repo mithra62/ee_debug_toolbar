@@ -47,37 +47,37 @@ class Model
     /**
      * @var string Toolbar button icon filename
      */
-    private $button_icon;
+    private string $button_icon = '';
 
     /**
      * @var string
      */
-    private $button_icon_alt_title;
+    private string $button_icon_alt_title = '';
 
     /**
      * @var string Toolbar panel HTML output
      */
-    private $output = '';
+    private string $output = '';
 
     /**
      * @var array JS resources needed by this toolbar view
      */
-    private $js = [];
+    private array $js = [];
 
     /**
      * @var array JS resources needed by this toolbar view, to be loaded on page load
      */
-    private $page_load_js = [];
+    private array $page_load_js = [];
 
     /**
      * @var array CSS resources needed by this toolbar view
      */
-    private $css = [];
+    private array $css = [];
 
     /**
      * @var array CSS resources needed by this toolbar view, to be loaded on page load
      */
-    private $page_load_css = [];
+    private array $page_load_css = [];
 
     /**
      * @var string The URL endpoint for fetching panel HTML content when toolbar button is clicked
@@ -92,7 +92,7 @@ class Model
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -100,7 +100,7 @@ class Model
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -108,7 +108,7 @@ class Model
     /**
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return $this->target_prefix . $this->getName() . $this->target_suffix;
     }
@@ -116,7 +116,7 @@ class Model
     /**
      * @param string $label
      */
-    function setButtonLabel($label)
+    function setButtonLabel(string $label)
     {
         $this->button_label = $label;
     }
@@ -124,7 +124,7 @@ class Model
     /**
      * @return string
      */
-    public function getButtonLabel()
+    public function getButtonLabel(): string
     {
         return $this->button_label;
     }
@@ -132,7 +132,7 @@ class Model
     /**
      * @param string $filename
      */
-    function setButtonIcon($filename)
+    public function setButtonIcon(string $filename)
     {
         $this->button_icon = $filename;
     }
@@ -176,7 +176,7 @@ class Model
     /**
      * @return string
      */
-    function getPanelContents(): string
+    public function getPanelContents(): string
     {
         return $this->output;
     }
@@ -184,7 +184,7 @@ class Model
     /**
      * @param string $css
      */
-    public function setPanelCssClass($css)
+    public function setPanelCssClass(string $css)
     {
         $this->panel_css_class = $css;
     }
@@ -192,7 +192,7 @@ class Model
     /**
      * @return string
      */
-    public function getPanelCssClass()
+    public function getPanelCssClass(): string
     {
         return $this->panel_css_class;
     }
@@ -201,7 +201,7 @@ class Model
      * @param string $filename
      * @param boolean $page_load
      */
-    function addJs($filename, $page_load = false)
+    function addJs(string $filename, bool $page_load = false)
     {
         if ($page_load) {
             $this->page_load_js[] = $filename;
@@ -213,7 +213,7 @@ class Model
     /**
      * @return array
      */
-    public function getJs()
+    public function getJs(): array
     {
         return $this->js;
     }
@@ -221,7 +221,7 @@ class Model
     /**
      * @return array
      */
-    public function getPageLoadJs()
+    public function getPageLoadJs(): array
     {
         return $this->page_load_js;
     }
@@ -230,7 +230,7 @@ class Model
      * @param string $filename
      * @param boolean $page_load
      */
-    function addCss($filename, $page_load = false)
+    public function addCss(string $filename, bool $page_load = false)
     {
         if ($page_load) {
             $this->page_load_css[] = $filename;
@@ -267,7 +267,7 @@ class Model
     /**
      * @return int
      */
-    function getInjectionPoint()
+    public function getInjectionPoint(): int
     {
         return $this->injection_point;
     }
@@ -275,7 +275,7 @@ class Model
     /**
      * @param bool $enabled
      */
-    function setShowButton($enabled = true)
+    public function setShowButton(bool $enabled = true)
     {
         $this->show_button = $enabled;
     }
@@ -283,7 +283,7 @@ class Model
     /**
      * @return bool
      */
-    function showButton()
+    public function showButton(): bool
     {
         return $this->show_button;
     }
@@ -291,7 +291,7 @@ class Model
     /**
      * @return string
      */
-    public function getPanelFetchUrl()
+    public function getPanelFetchUrl(): string
     {
         return $this->panel_fetch_url;
     }

@@ -65,7 +65,7 @@ class Eedt_logs_ext extends Extension
             'method' => 'ee_debug_toolbar_add_panel',
             'hook' => 'ee_debug_toolbar_add_panel',
             'settings' => '',
-            'priority' => 1,
+            'priority' => 10,
             'version' => DEBUG_TOOLBAR_LOGS_VERSION,
             'enabled' => 'y',
         ];

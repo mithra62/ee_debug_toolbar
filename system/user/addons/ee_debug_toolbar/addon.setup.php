@@ -3,6 +3,7 @@
 use DebugToolbar\Services\LoggerService;
 use DebugToolbar\Services\SettingsService;
 use DebugToolbar\Services\ToolbarService;
+use DebugToolbar\Services\TrackerService;
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');
@@ -30,6 +31,9 @@ return [
         },
         'LoggerService' => function ($addon) {
             return new LoggerService();
+        },
+        'TrackerService' => function ($addon) {
+            return new TrackerService();
         },
     ],
 ];

@@ -3,7 +3,18 @@
 <br>
 <h4><?php echo lang('requested_url'); ?></h4>
 <?php echo $_SERVER['REQUEST_URI']; ?>
-<br>
+
+<?php
+$templates_used = ee('ee_debug_toolbar:TrackerService')->getAllTemplates();
+if($templates_used) {
+    echo '<h4>' . lang('eedt.templates_used') . '</h4>';
+    foreach($templates_used AS $template) {
+        if($template['template_name']) {
+            echo $template['template_group'] . '/' . $template['template_name'] . '<br>';
+        }
+    }
+}
+?>
 <h4><?php echo lang('system_paths'); ?></h4>
 
 <span class="label"><?php echo lang('app'); ?>:</span> <code><?php echo realpath(APPPATH); ?></code><br>

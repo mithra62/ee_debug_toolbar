@@ -9,5 +9,5 @@ class Files extends AbstractPanel
 	{
 		parent::__construct();
 		$this->button_label = count(get_included_files()).' '.lang('files');
-	}	
+	}
 }

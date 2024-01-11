@@ -21,11 +21,6 @@ class ToolbarService
         'top-right',
     ];
 
-    public function __construct()
-    {
-        ee()->load->helpers('eedt_output');
-    }
-
     /**
      * Wrapper to setup and return the toolbar settings
      */
@@ -52,7 +47,7 @@ class ToolbarService
     {
         sort($files);
 
-        $path_third = realpath(eedt_third_party_path());
+        $path_third = realpath(ee('ee_debug_toolbar:OutputService')->thirdPartyPath());
         $path_ee = realpath(SYSPATH);
         $path_first_modules = realpath(PATH_MOD);
         $bootstrap_file = FCPATH . SELF;
@@ -245,7 +240,7 @@ class ToolbarService
      */
     public function getThemes()
     {
-        $path = eedt_theme_path() . '/ee_debug_toolbar/themes/';
+        $path = ee('ee_debug_toolbar:OutputService')->themePath() . '/ee_debug_toolbar/themes/';
         $d = dir($path);
         $themes = [];
         $bad = ['.', '..'];
@@ -291,8 +286,8 @@ class ToolbarService
      */
     public function createThemeUrl($theme, $sub_dir = '')
     {
-        $path = eedt_theme_path();
-        $url = eedt_theme_url();
+        $path = ee('ee_debug_toolbar:OutputService')->themePath();
+        $url = ee('ee_debug_toolbar:OutputService')->themeUrl();
         if (is_dir($path . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/")) {
             return $url . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
         }

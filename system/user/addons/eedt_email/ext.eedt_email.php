@@ -11,7 +11,7 @@ class Eedt_email_ext extends Extension
 
     public function __construct($settings = '')
     {
-        ee()->lang->loadfile('eedt_perf_alerts');
+        ee()->lang->loadfile('eedt_email');
         ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
         ee()->load->add_package_path(PATH_THIRD . 'eedt_email/');
     }

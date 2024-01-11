@@ -1,12 +1,12 @@
 <h4>$_GET</h4>
 
 <div id="EEDebug_get">
-    <pre><?php echo eedt_output_array($_GET, 'no_get_vars'); ?></pre>
+    <pre><?php echo ee('ee_debug_toolbar:OutputService')->outputArray($_GET, 'no_get_vars'); ?></pre>
 </div>
 
 <h4>$_POST</h4>
 <div id="EEDebug_post">
-    <pre><?php echo eedt_output_array($_POST, 'no_post_vars'); ?></pre>
+    <pre><?php echo ee('ee_debug_toolbar:OutputService')->outputArray($_POST, 'no_post_vars'); ?></pre>
 </div>
 
 <h4><?php echo lang('headers'); ?></h4>
@@ -24,10 +24,10 @@ foreach (array('HTTP_ACCEPT', 'HTTP_USER_AGENT', 'HTTP_CONNECTION', 'SERVER_PORT
 <h4>$_COOKIE</h4>
 
 <div id="EEDebug_cookie">
-	<pre><?php echo eedt_output_array($_COOKIE, 'no_cookie_vars'); ?></pre>
+	<pre><?php echo ee('ee_debug_toolbar:OutputService')->outputArray($_COOKIE, 'no_cookie_vars'); ?></pre>
 </div>
 
 <h4><?php echo lang('ee_session'); ?></h4>
 <div id="EEDebug_ee_session">
-	<pre><?php echo eedt_output_array($session_data, 'no_session_vars'); ?></pre>
+	<pre><?php echo ee('ee_debug_toolbar:OutputService')->outputArray($session_data, 'no_session_vars'); ?></pre>
 </div>

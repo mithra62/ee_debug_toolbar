@@ -6,21 +6,30 @@
 (function () {
 
 	jQuery("#Eedt_debug_database_panel").on('click', "#EEDebug_slow_queries", function () {
+
+		jQuery(".Eedt_debug_database_panel_container").hide();
 		jQuery(".EEDebug_slow_query").show();
-		jQuery(".EEDebug_normal_queries").hide();
-		jQuery(".EEDebug_duplicate_queries").hide();
+
+		jQuery("#Eedt_debug_database_panel_nav_items a").removeClass("flash");
+		jQuery("#EEDebug_slow_queries").addClass("flash");
 	});
 	
 	jQuery("#Eedt_debug_database_panel").on('click', "#EEDebug_all_queries", function () {
+
+		jQuery(".Eedt_debug_database_panel_container").hide();
 		jQuery(".EEDebug_normal_queries").show();
-		jQuery(".EEDebug_duplicate_queries").hide();
-		jQuery(".EEDebug_slow_query").hide();
+
+		jQuery("#Eedt_debug_database_panel_nav_items a").removeClass("flash");
+		jQuery("#EEDebug_all_queries").addClass("flash");
 	});
 
 	jQuery("#Eedt_debug_database_panel").on('click', "#EEDebug_duplicate_queries", function () {
-		jQuery(".EEDebug_duplicate_queries").show();
-		jQuery(".EEDebug_normal_queries").hide();
-		jQuery(".EEDebug_slow_query").hide();
+
+		jQuery(".Eedt_debug_database_panel_container").hide();
+		jQuery(".EEDebug_duplicate_query").show();
+
+		jQuery("#Eedt_debug_database_panel_nav_items a").removeClass("flash");
+		jQuery("#EEDebug_duplicate_queries").addClass("flash");
 	});
 
 })();

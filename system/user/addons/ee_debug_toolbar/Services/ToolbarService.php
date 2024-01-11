@@ -56,11 +56,16 @@ class ToolbarService
             'first_party_modules' => [],
             'bootstrap_file' => [],
             'expressionengine_core' => [],
+            'composer' => [],
             'other_files' => [],
         ];
 
         foreach ($files as $file) {
             $output = str_replace($path_ee, '#system', $file);
+            if (strpos($file, 'autoload.php') !== false) {
+                $return['composer'][] = $output;
+            }
+
             if (strpos($file, $path_third) === 0) {
                 $return['third_party_addon'][] = $output;
                 continue;

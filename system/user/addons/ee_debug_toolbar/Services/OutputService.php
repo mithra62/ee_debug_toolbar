@@ -3,7 +3,7 @@ namespace DebugToolbar\Services;
 
 class OutputService
 {
-    function eedtHighlightCode($str)
+    public function highlightCode($str): string
     {
         // The highlight string function encodes and highlights
         // brackets so we need them to start raw
@@ -44,7 +44,7 @@ class OutputService
      * Sets up the third party add-ons path
      * @return string
      */
-    function thirdPartyPath()
+    public function thirdPartyPath(): string
     {
         $path = '';
         if (defined('PATH_THIRD')) {
@@ -60,7 +60,7 @@ class OutputService
      * Sets up the third party themes path
      * @return string
      */
-    function themePath()
+    public function themePath(): string
     {
         $path = '';
         if (defined('PATH_THIRD_THEMES')) {
@@ -76,7 +76,7 @@ class OutputService
      * Sets up the third party theme URL
      * @return string
      */
-    function themeUrl()
+    public function themeUrl(): string
     {
         if (defined('URL_THIRD_THEMES')) {
             $url = URL_THIRD_THEMES;

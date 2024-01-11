@@ -27,7 +27,7 @@ foreach ($log->getQueries() as $query): ?>
         <?php echo $count; ?>. <strong>[<span class="<?php echo $class; ?>">
                 <?php echo number_format($time, 4); ?>s
                 / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?></span>
-            ]</strong> <?php echo $sql; ?> <br><pre><?php echo $location; ?></pre>
+            ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre>
         <br>
 <?php
     $count++;
@@ -45,7 +45,7 @@ foreach ($log->getQueries() as $query): ?>
     <div class="">
         <?php echo $count; ?>. <strong>[<?php echo number_format($time, 4); ?>s
             / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>
-            ]</strong> <?php echo $sql; ?> <br><pre><?php echo $location; ?></pre><br>
+            ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre><br>
     </div>
 <?php
         $count++;
@@ -60,7 +60,7 @@ foreach ($log->getQueryMetrics() as $query): ?>
 
     <?php if($query['count'] >= 2): ?>
         <div class="">
-            <?php echo $count .'. ' . $query['query']; ?> <br>
+            <?php echo $count .'. <code>' . $query['query']; ?></code> <br>
             x<?php echo $query['count']; ?> <br>
             <div class="Eedt_perf_alerts_duplicate_query">
                 <?php foreach($query['locations'] AS $location): ?>

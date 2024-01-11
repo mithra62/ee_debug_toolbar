@@ -37,6 +37,7 @@ endforeach; ?>
 <div class="Eedt_debug_database_panel_container EEDebug_slow_query" style="display: none">
 <?php
 $count = 1;
+$found = false;
 foreach ($log->getQueries() as $query): ?>
     <?php
     list($sql, $location, $time, $memory) = $query;
@@ -48,14 +49,19 @@ foreach ($log->getQueries() as $query): ?>
             ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre><br>
     </div>
 <?php
+        $found = true;
         $count++;
 endif;
 endforeach; ?>
+    <?php if(!$found): ?>
+        <br>No Slow Queries
+    <?php endif; ?>
 </div>
 
 <div class="Eedt_debug_database_panel_container EEDebug_duplicate_query" style="display: none">
 <?php
 $count = 1;
+$found = false;
 foreach ($log->getQueryMetrics() as $query): ?>
 
     <?php if($query['count'] >= 2): ?>
@@ -70,7 +76,11 @@ foreach ($log->getQueryMetrics() as $query): ?>
         </div>
 
     <?php
+        $found = true;
         $count++;
     endif; ?>
 <?php endforeach; ?>
+    <?php if(!$found): ?>
+        <br>No Duplicate Queries
+    <?php endif; ?>
 </div>

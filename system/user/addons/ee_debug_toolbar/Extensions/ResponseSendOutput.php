@@ -138,6 +138,11 @@ class ResponseSendOutput extends AbstractHook
             $vars['panels']['time']->setPanelContents(ee()->load->view("partials/time", $vars, true));
         }
 
+        //check total time
+        if ($vars['elapsed_time'] > $this->settings['max_exec_time']) {
+            $vars['panels']['time']->setPanelCssClass('flash');
+        }
+
         //Break up the panels into the various injection points
         $vars['panels_before_toolbar'] = [];
         $vars['panels_in_toolbar'] = [];

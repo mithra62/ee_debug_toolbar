@@ -68,6 +68,7 @@ class ResponseSendOutput extends AbstractHook
         $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplLog(ee()->TMPL->log) : []);
         $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : '');
         $vars['included_file_data'] = $this->toolbar->setupFiles(get_included_files());
+        $vars['cookie_data'] = $this->toolbar->setupCookies();
 
         $vars['ext_version'] = $this->version;
         $this->settings = $this->toolbar->getSettings();

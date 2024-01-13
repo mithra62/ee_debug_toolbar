@@ -97,6 +97,47 @@ class ToolbarService
         return $return;
     }
 
+    public function setupCookies(): array
+    {
+        $providers = ee('App')->getProviders();
+        $consents = $cookies = [];
+
+        //echo ee('ee:CookieRegistry')->loadCookiesSettings();
+        foreach($_COOKIE AS $key => $value) {
+            if(str_starts_with($key, 'exp_')) {
+                $old_key = $key;
+                $key = substr($key, 4, strlen($key));
+                if(ee('ee:CookieRegistry')->isRegistered($key)) {
+                    $type = 'Necessary';
+                    if(ee('ee:CookieRegistry')->isTargeting($key)) {
+                        $type = 'Targeting';
+                    } else if(ee('ee:CookieRegistry')->isPerformance($key)) {
+                        $type = 'Performance';
+                    } else if(ee('ee:CookieRegistry')->isFunctionality($key)) {
+                        $type = 'Functionality';
+                    }
+
+                    $consents[$key] = array_merge([
+                        'key' => $old_key,
+                        'value' => $value,
+                        'type' => $type,
+                    ], ee('ee:CookieRegistry')->getCookieSettings($key));
+
+                } else {
+                    $cookies[$old_key] = $value;
+                }
+
+            } else {
+                $cookies[$key] = $value;
+            }
+        }
+
+        return [
+            'registered' => $consents,
+            'unregistered' => $cookies
+        ];
+    }
+
     /**
      * Wrapper to setup the Database panel SQL queries
      * @return array

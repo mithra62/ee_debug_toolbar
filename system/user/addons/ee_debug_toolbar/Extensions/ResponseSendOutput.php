@@ -83,6 +83,7 @@ class ResponseSendOutput extends AbstractHook
         $vars['css'] = [$vars['theme_css_url'] . "ee_debug_toolbar.css"];
         $vars['benchmark_data'] = []; //we have to fake this for now
         $vars['settings'] = $this->settings;
+        $vars['template_groups'] = $this->toolbar->getTemplateGroups();
         //$vars['query_count'] = ee()->db->query_count;
 
         //Load variables so that they are present in all view partials

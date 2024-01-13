@@ -5,16 +5,21 @@ namespace DebugToolbar\Services;
 class ToolbarService
 {
     /**
+     * @var array
+     */
+    protected array $template_groups = [];
+
+    /**
      * The theme to use if no other theme is set
      * @var string
      */
-    public $default_theme = "default";
+    public string $default_theme = "default";
 
     /**
      * The available positions for the toolbar to live
      * @var array
      */
-    public $toolbar_positions = [
+    public array $toolbar_positions = [
         'bottom-left',
         'top-left',
         'bottom-right',
@@ -425,5 +430,17 @@ class ToolbarService
         if (!empty($data['Value']) && $data['Value'] == 'YES') {
             return 'y';
         }
+    }
+
+    public function getTemplateGroups(): array
+    {
+        if(!$this->template_groups) {
+            $groups = ee()->db->select()->from('template_groups')->get()->result_array();
+            foreach($groups As $group) {
+                $this->template_groups[$group['group_id']] = $group['group_name'];
+            }
+        }
+
+        return $this->template_groups;
     }
 }

@@ -2,7 +2,7 @@
 
 use ExpressionEngine\Service\Migration\Migration;
 
-class CreateExtHookTemplatePostParseForAddonEeDebugToolbar extends Migration
+class CreateExtHookTemplateFetchTemplateForAddonEeDebugToolbar extends Migration
 {
     /**
      * Execute the migration
@@ -14,8 +14,8 @@ class CreateExtHookTemplatePostParseForAddonEeDebugToolbar extends Migration
 
         $ext = [
             'class' => $addon->getExtensionClass(),
-            'method' => 'template_post_parse',
-            'hook' => 'template_post_parse',
+            'method' => 'template_fetch_template',
+            'hook' => 'template_fetch_template',
             'settings' => serialize([]),
             'priority' => 10,
             'version' => $addon->getVersion(),

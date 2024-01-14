@@ -4,6 +4,7 @@ namespace DebugToolbar\Actions;
 
 use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
 use DebugToolbar\Toolbar\GarbageCollection;
+use ExpressionEngine\Core\Provider;
 
 class Act extends AbstractRoute
 {
@@ -48,9 +49,13 @@ class Act extends AbstractRoute
         if ($errors) {
 
             //use the new way
-            echo 'fdsa';
-
-            print_r($package);
+            $addon = ee('App')->get($package);
+            if($addon instanceof Provider) {
+                $namespace = $addon->getNamespace();
+                echo $method;
+                exit;
+            }
+            echo get_class($addon);
             exit;
             echo 'Ya dun goofed...';
             exit;

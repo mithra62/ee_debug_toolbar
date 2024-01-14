@@ -59,15 +59,7 @@ class Logger
         if (ee('eedt_errors:LoggerService')->shouldLog($msg)) {
             $logger = ee('eedt_errors:LoggerService')->getLogger();
             $message = ee('eedt_errors:LoggerService')->format($msg);
-            $logger->log($message . "\n" .$this->logDelimiter());
+            $logger->log($message . "\n" . ee('eedt_errors:LoggerService')->logDelimiter());
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function logDelimiter(): string
-    {
-        return str_repeat('+', 10);
     }
 }

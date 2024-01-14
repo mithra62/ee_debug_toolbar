@@ -38,8 +38,6 @@ class LoggerService
     public function getLogger(): File
     {
         if (is_null($this->logger)) {
-
-
             $this->logger = new File($this->getLogFilePath(), ee('Filesystem'));
         }
 
@@ -54,6 +52,7 @@ class LoggerService
      */
     public function format(array $message): string
     {
+        $message['datetime'] = ee()->localize->now;
         return trim(json_encode($message));
     }
 
@@ -65,5 +64,39 @@ class LoggerService
     {
         $settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
         return in_array($message['code'], $settings['log_error_codes']);
+    }
+
+    public function getLogContents()
+    {
+        $path = $this->getLogFilePath();
+        $return = [];
+        if(!file_exists($path)) {
+            return $return;
+        }
+
+        $contents = \ExpressionEngine\Dependency\Safe\file_get_contents($path);
+        if($contents) {
+            $errors = explode(ee('eedt_errors:LoggerService')->logDelimiter(), $contents);
+            if($errors) {
+                $errors = array_reverse($errors);
+                foreach($errors AS $error) {
+                    $error = json_decode($error, true);
+                    if($error) {
+                        $error['datetime'] = date('r', $error['datetime']);
+                        $return[] = $error;
+                    }
+                }
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return string
+     */
+    public function logDelimiter(): string
+    {
+        return str_repeat('+', 10);
     }
 }

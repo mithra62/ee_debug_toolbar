@@ -2,12 +2,10 @@
 namespace DebugToolbar\Errors\Services;
 
 use DebugToolbar\Errors\Exceptions\ErrorException;
-use DebugToolbar\Errors\Traits\LoggerTrait;
+use DebugToolbar\Errors\Logging\Logger;
 
 class ErrorHandlerService
 {
-    use LoggerTrait;
-
     /**
      * Whether to discard any existing page output before error display. Defaults to true.
      * @var bool
@@ -38,11 +36,34 @@ class ErrorHandlerService
      */
     private $hhvm_exception;
 
-    protected $settings;
+    /**
+     * @var array
+     */
+    protected array $settings = [];
+
+    /**
+     * @var Logger|null
+     */
+    protected ?Logger $logger = null;
 
     public function __construct()
     {
         $this->settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
+    }
+
+    /**
+     * @return Logger
+     */
+    public function logger(): Logger
+    {
+        if (is_null($this->logger)) {
+            $this->logger = new Logger();
+        }
+
+        $class = get_class($this);
+        $this->logger->setCalledClass($class);
+
+        return $this->logger;
     }
 
     /**

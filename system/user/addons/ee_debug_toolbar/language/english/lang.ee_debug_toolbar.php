@@ -62,7 +62,7 @@ $lang = [
     'eedt.form.desc.theme' => 'Select the theme you want the Toolbar to use.',
     'eedt.form.toolbar_position' => 'Toolbar Position',
     'eedt.form.desc.toolbar_position' => 'Where do you want the toolbar to appear on the page?',
-    'eedt.form.header.settings' => 'Debug Toolbar Settings',
+    'eedt.form.header.settings' => 'General',
     'eedt.header.settings_save' => 'Debug Toolbar Settings',
     'eedt.settings_saved' => 'Settings Saved',
     'eedt.templates_used' => 'Templates Used',
@@ -81,5 +81,5 @@ $lang = [
     'eedt_perf_alerts.form.desc.form.max_query_time' => 'What is the maximum about of time an individual SQL query should take to load?',
     'total' => 'Total',
 
-    'eedt_perf_alerts.form.header.settings' => 'Performance Alert Settings',
+    'eedt_perf_alerts.form.header.settings' => 'Performance Alerts',
 ];

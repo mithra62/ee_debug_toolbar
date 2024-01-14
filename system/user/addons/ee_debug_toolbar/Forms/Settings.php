@@ -53,6 +53,8 @@ class Settings extends AbstractForm
             $form = ee()->extensions->call('ee_debug_toolbar_settings_form', $form);
         }
 
+        $form->asTab();
+
         return $form->toArray();
     }
 }

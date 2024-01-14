@@ -32,6 +32,7 @@ class EeDebugToolbarAddPanel extends AbstractHook
         $panels['eedt_errors']->setButtonLabel(lang('Errors'));
         $panels['eedt_errors']->setPanelContents('');
         $panels['eedt_errors']->setPanelFetchUrl($vars['panel_fetch_url']);
+        $panels['eedt_errors']->addJs($vars['theme_js_url'] . 'eedt_errors.js');
 
         ee()->benchmark->mark('eedt_errors_end');
 

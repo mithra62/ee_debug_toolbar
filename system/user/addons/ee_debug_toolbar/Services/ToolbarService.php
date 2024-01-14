@@ -342,7 +342,7 @@ class ToolbarService
      */
     public function getActionUrl($method, $class = 'Ee_debug_toolbar')
     {
-        $url = site_url();
+        $url = \site_url();
         return $url . '?ACT=' . $this->fetchActionId($method, $class);
     }
 

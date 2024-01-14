@@ -34,7 +34,8 @@ class EeDebugToolbarInitSettings extends AbstractHook
             E_RECOVERABLE_ERROR,
             E_DEPRECATED,
             E_USER_DEPRECATED,
-        ]
+        ],
+        'ignored_errors' => [],
     ];
 
     /**

@@ -9,6 +9,11 @@ class EeDebugToolbarAddPanel extends AbstractHook
     public function process(array $panels = [], array $vars = []): array
     {
         ee()->benchmark->mark('eedt_errors_start');
+        $settings = $this->toolbar->getSettings();
+        if($settings['error_handler'] !== 'toolbar') {
+            return $panels;
+        }
+
         $panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
 
         $vars['panel_fetch_url'] = $this->toolbar->createActUrl('get_panel_logs', 'Eedt_errors_ext');

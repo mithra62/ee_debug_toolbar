@@ -4,6 +4,7 @@ namespace DebugToolbar\Actions;
 
 use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
 use DebugToolbar\Toolbar\GarbageCollection;
+use ExpressionEngine\Core\Provider;
 
 class Act extends AbstractRoute
 {
@@ -27,6 +28,7 @@ class Act extends AbstractRoute
 
         $errors = true; //let's just assume the worst to keep us honest
         $file_path = PATH_THIRD . $package . '/ext.' . $package . '.php';
+
         if (file_exists($file_path)) {
             if (!class_exists($class)) {
                 include $file_path;
@@ -45,7 +47,16 @@ class Act extends AbstractRoute
         }
 
         if ($errors) {
-            //what do we do with calls that aren't good?
+
+            //use the new way
+            $addon = ee('App')->get($package);
+            if($addon instanceof Provider) {
+                $namespace = $addon->getNamespace();
+                echo $method;
+                exit;
+            }
+            echo get_class($addon);
+            exit;
             echo 'Ya dun goofed...';
             exit;
         }

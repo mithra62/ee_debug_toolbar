@@ -11,4 +11,6 @@ $lang = [
     'eedt_errors.form.error_log_path' => 'Error Log Path',
     'eedt_errors.form.desc.error_log_path' => 'The full system path to where you want to store your Error Logs. If none entered, your logs will be stored in the ExpressionEngine Cache directory',
     'eedt_errors.form.header.settings' => 'Error Handling Settings',
+    'eedt_errors.form.log_error_codes' => 'Errors to Log',
+    'eedt_errors.form.desc.log_error_codes' => 'Which PHP Errors do you want to log?',
 ];

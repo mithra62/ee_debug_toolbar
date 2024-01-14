@@ -14,11 +14,11 @@ class ResponseSendOutput extends AbstractHook
         //we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
         //see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
         if (ee()->config->config['show_profiler'] != 'y' || ee()->output->enable_profiler != '1') {
-            return;
+            //return;
         }
 
         //override to disable the toolbar from even starting
-        if (ee()->input->get('disable_toolbar') == 'yes') {
+        if (ee()->input->get('disable_toolbar') == 'yes' || ee()->input->get('C') == 'javascript') {
             return;
         }
 

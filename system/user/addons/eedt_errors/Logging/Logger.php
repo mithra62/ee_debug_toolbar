@@ -1,6 +1,6 @@
 <?php
 
-namespace DebugToolbar\Logging;
+namespace DebugToolbar\Errors\Logging;
 
 class Logger implements LoggerInterface
 {
@@ -140,9 +140,9 @@ class Logger implements LoggerInterface
      */
     public function log($level, string $message, array $context = []): void
     {
-        if (ee('ee_debug_toolbar:LoggerService')->shouldLog($level)) {
-            $logger = ee('ee_debug_toolbar:LoggerService')->getLogger();
-            $message = ee('ee_debug_toolbar:LoggerService')->format($level, $message, $context);
+        if (ee('eedt_errors:LoggerService')->shouldLog($level)) {
+            $logger = ee('eedt_errors:LoggerService')->getLogger();
+            $message = ee('eedt_errors:LoggerService')->format($level, $message, $context);
             $logger->log($message . "\n" .$this->logDelimiter());
         }
     }

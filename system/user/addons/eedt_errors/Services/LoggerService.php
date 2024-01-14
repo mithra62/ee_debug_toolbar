@@ -1,6 +1,6 @@
 <?php
 
-namespace DebugToolbar\Services;
+namespace DebugToolbar\Errors\Services;
 
 use ExpressionEngine\Service\Logger\File;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace DebugToolbar\Traits;
+namespace DebugToolbar\Errors\Traits;
 
-use DebugToolbar\Logging\Logger;
+use DebugToolbar\Errors\Logging\Logger;
 
 trait LoggerTrait
 {

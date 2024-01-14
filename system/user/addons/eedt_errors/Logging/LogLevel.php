@@ -1,6 +1,6 @@
 <?php
 
-namespace DebugToolbar\Logging;
+namespace DebugToolbar\Errors\Logging;
 
 class LogLevel
 {

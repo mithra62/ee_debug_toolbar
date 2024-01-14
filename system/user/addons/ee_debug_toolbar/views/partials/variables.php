@@ -100,5 +100,8 @@
 <div class="Eedt_debug_variables_panel_container EEDebug_php_session" style="display: none">
     <h4>$_SESSION</h4>
     <pre><?php
-        echo ee('ee_debug_toolbar:OutputService')->outputArray($_SESSION, 'no_session_vars'); ?></pre>
+        if(isset($_SESSION)) {
+            echo ee('ee_debug_toolbar:OutputService')->outputArray($_SESSION, 'no_session_vars');
+        }
+         ?></pre>
 </div>

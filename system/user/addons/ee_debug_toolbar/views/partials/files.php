@@ -24,7 +24,7 @@ $total_addon_files = count($included_file_data['third_party_addon']) + count($in
         echo '<h4>' . lang('eedt.templates_used') . '</h4>';
         foreach($templates_used AS $template) {
             if($template['template_name']) {
-                echo '<a href="' . ee()->config->item('cp_url') . '?/cp/design/template/edit/' . $template['template_id'] . '">' .
+                echo '<a href="' . ee()->config->item('cp_url') . '?/cp/design/template/edit/' . $template['template_id'] . '" target="_blank">' .
                     $template_groups[$template['group_id']] . '/' . $template['template_name'] . '</a><br>';
             }
         }

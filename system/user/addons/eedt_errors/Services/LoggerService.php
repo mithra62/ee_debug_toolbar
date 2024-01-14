@@ -19,18 +19,28 @@ class LoggerService
     }
 
     /**
+     * @return string
+     */
+    public function getLogFilePath(): string
+    {
+        $log_file = PATH_CACHE . 'error.log';
+        if(!empty($this->settings['error_log_path']) && file_exists($this->settings['error_log_path'])) {
+            $log_file = $this->settings['error_log_path'];
+        }
+
+        return $log_file;
+    }
+
+    /**
      * @return File
      * @throws \Exception
      */
     public function getLogger(): File
     {
         if (is_null($this->logger)) {
-            $log_file = PATH_CACHE . 'error.log';
-            if(!empty($this->settings['error_log_path'])) {
-                $log_file = $this->settings['error_log_path'];
-            }
 
-            $this->logger = new File($log_file, ee('Filesystem'));
+
+            $this->logger = new File($this->getLogFilePath(), ee('Filesystem'));
         }
 
         return $this->logger;

@@ -27,6 +27,7 @@ class Act extends AbstractRoute
 
         $errors = true; //let's just assume the worst to keep us honest
         $file_path = PATH_THIRD . $package . '/ext.' . $package . '.php';
+
         if (file_exists($file_path)) {
             if (!class_exists($class)) {
                 include $file_path;
@@ -45,7 +46,10 @@ class Act extends AbstractRoute
         }
 
         if ($errors) {
-            //what do we do with calls that aren't good?
+
+            //use the new way
+            print_r($package);
+            exit;
             echo 'Ya dun goofed...';
             exit;
         }

@@ -22,7 +22,13 @@ class EeDebugToolbarSettingsForm extends AbstractHook
         $field_set->set('group', 'error_handler')->setDesc('eedt_errors.form.desc.hide_error_codes');
         $field = $field_set->getField('hide_error_codes', 'checkbox');
         $field->setValue($settings['hide_error_codes'])
-            ->setChoices(ee('ee_debug_toolbar:ToolbarService')->getDisplayErrorCodes());
+            ->setChoices($this->getDisplayErrorCodes());
+
+        $field_set = $field_group->getFieldSet('eedt_errors.form.log_error_codes');
+        $field_set->set('group', 'error_handler')->setDesc('eedt_errors.form.desc.log_error_codes');
+        $field = $field_set->getField('log_error_codes', 'checkbox');
+        $field->setValue($settings['log_error_codes'])
+            ->setChoices($this->getDisplayErrorCodes());
 
         $field_set = $field_group->getFieldSet('eedt_errors.form.error_log_path');
         $field_set->set('group', 'error_handler')->setDesc('eedt_errors.form.desc.error_log_path');
@@ -30,5 +36,31 @@ class EeDebugToolbarSettingsForm extends AbstractHook
         $field->setValue($settings['error_log_path']);
 
         return $form;
+    }
+
+
+
+    /**
+     * @return string[]
+     */
+    public function getDisplayErrorCodes(): array
+    {
+        return [
+            E_ERROR => 'E_ERROR',
+            E_WARNING => 'E_WARNING',
+            E_PARSE => 'E_PARSE',
+            E_NOTICE => 'E_NOTICE',
+            E_CORE_ERROR => 'E_CORE_ERROR',
+            E_CORE_WARNING => 'E_CORE_WARNING',
+            E_COMPILE_ERROR => 'E_COMPILE_ERROR',
+            E_COMPILE_WARNING => 'E_COMPILE_WARNING',
+            E_USER_ERROR => 'E_USER_ERROR',
+            E_USER_WARNING => 'E_USER_WARNING',
+            E_USER_NOTICE => 'E_USER_NOTICE',
+            E_STRICT => 'E_STRICT',
+            E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
+            E_DEPRECATED => 'E_DEPRECATED',
+            E_USER_DEPRECATED => 'E_USER_DEPRECATED',
+        ];
     }
 }

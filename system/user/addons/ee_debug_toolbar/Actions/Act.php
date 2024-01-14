@@ -48,6 +48,8 @@ class Act extends AbstractRoute
         if ($errors) {
 
             //use the new way
+            echo 'fdsa';
+
             print_r($package);
             exit;
             echo 'Ya dun goofed...';

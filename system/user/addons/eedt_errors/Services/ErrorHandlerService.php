@@ -145,6 +145,8 @@ class ErrorHandlerService
      */
     public function handleException($exception)
     {
+        echo 'g';
+        exit;
         $this->exception = $exception;
 
         // disable error capturing to avoid recursive errors while handling exceptions
@@ -157,6 +159,9 @@ class ErrorHandlerService
         }
 
         try {
+
+            echo 'fdsa';
+            exit;
             $this->logger()->error($exception);
             log_message('error', $exception, true);
             if ($this->discard_existing_output) {
@@ -248,20 +253,18 @@ class ErrorHandlerService
         $error .= "Message: $message\n";
         $error .= "File: $file:$line";
         if (in_array($code, $general_error_codes)) {
-            $this->logger()->error($error);
-            log_message('error', $error, true);
+            $this->logger()->error($message, $code, $file, $line);
             $this->register(); //we reset the error handler just in case
-            return false;
+            return true;
         }
 
         if (error_reporting() & $code) {
 
-            $this->logger()->error($error);
-            log_message('error', $error, true);
             $exception = new ErrorException($message, $code, $code, $file, $line);
             // in case error appeared in __toString method we can't throw any exception
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             array_shift($trace);
+            $this->logger()->error($message, $code, $file, $line, $trace);
             foreach ($trace as $frame) {
                 if ($frame['function'] === '__toString') {
                     $this->handleException($exception);
@@ -271,8 +274,10 @@ class ErrorHandlerService
                     exit(1);
                 }
             }
+
             throw $exception;
         }
+
         return false;
     }
 
@@ -290,9 +295,9 @@ class ErrorHandlerService
             } else {
                 $exception = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
             }
+
             $this->exception = $exception;
-            $this->logger->error($error);
-            log_message('error', $error, true);
+            $this->logger()->error($error['message'], $error['type'], $error['file'], $error['line']);
             if ($this->discard_existing_output) {
                 $this->clearOutput();
             }

@@ -2,7 +2,7 @@
 
 namespace DebugToolbar\Errors\Logging;
 
-class Logger implements LoggerInterface
+class Logger
 {
     /**
      * @var string
@@ -28,107 +28,23 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * System is unusable.
      * @param string $message
-     * @param array $context
+     * @param int $code
+     * @param string $file
+     * @param int $line
+     * @param array $trace
      * @return void
      */
-    public function emergency(string $message, array $context = []): void
+    public function error(string $message, int $code, string $file, int $line, array $trace = []): void
     {
-        $this->log(LogLevel::EMERGENCY, $message, $context);
-    }
-
-    /**
-     * Action must be taken immediately.
-     * @param string $message
-     * @param array $context
-     * @return void
-     */
-    public function alert(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::ALERT, $message, $context);
-    }
-
-    /**
-     * Critical conditions.
-     * @param string $message
-     * @param array $context
-     * @return void
-     */
-    public function critical(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::CRITICAL, $message, $context);
-    }
-
-    /**
-     * Runtime errors that do not require immediate action but should typically
-     * be logged and monitored.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function error(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::ERROR, $message, $context);
-    }
-
-    /**
-     * Exceptional occurrences that are not errors.
-     *
-     * Example: Use of deprecated APIs, poor use of an API, undesirable things
-     * that are not necessarily wrong.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function warning(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::WARNING, $message, $context);
-    }
-
-    /**
-     * Normal but significant events.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function notice(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::NOTICE, $message, $context);
-    }
-
-    /**
-     * Interesting events.
-     *
-     * Example: User logs in, SQL logs.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function info(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::INFO, $message, $context);
-    }
-
-    /**
-     * Detailed debug information.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function debug(string $message, array $context = []): void
-    {
-        $this->log(LogLevel::DEBUG, $message, $context);
+        $msg = [
+            'message' => $message,
+            'code' => $code,
+            'file' => $file,
+            'line' => $line,
+            'trace' => $trace,
+        ];
+        $this->log($msg);
     }
 
     /**
@@ -138,11 +54,11 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, string $message, array $context = []): void
+    public function log(array $msg): void
     {
-        if (ee('eedt_errors:LoggerService')->shouldLog($level)) {
+        if (ee('eedt_errors:LoggerService')->shouldLog($msg)) {
             $logger = ee('eedt_errors:LoggerService')->getLogger();
-            $message = ee('eedt_errors:LoggerService')->format($level, $message, $context);
+            $message = ee('eedt_errors:LoggerService')->format($msg);
             $logger->log($message . "\n" .$this->logDelimiter());
         }
     }

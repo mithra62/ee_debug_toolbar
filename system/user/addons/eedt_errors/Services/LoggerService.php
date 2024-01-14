@@ -52,37 +52,18 @@ class LoggerService
      * @param array $context
      * @return string
      */
-    public function format(string $level, string $message, array $context = []): string
+    public function format(array $message): string
     {
-        $return = ' [' . date('r') . '] (' . $level . ') Message: "' . $message . '" ';
-        if ($context) {
-            $return .= json_encode($context);
-
-        }
-
-        return trim($return);
+        return trim(json_encode($message));
     }
 
     /**
      * @param string $level
      * @return bool
      */
-    public function shouldLog(string $level): bool
+    public function shouldLog(array $message): bool
     {
-        $log_levels = ee()->config->config['ee_debug_log_levels'] ?? [];
-        if (!is_array($log_levels)) {
-            $log_levels = [];
-        }
-
-        $log_levels = array_merge([
-            'error',
-            'notice',
-            'warning',
-            'emergency',
-            'alert',
-            'critical'
-        ], $log_levels);
-
-        return in_array($level, $log_levels);
+        $settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
+        return in_array($message['code'], $settings['log_error_codes']);
     }
 }

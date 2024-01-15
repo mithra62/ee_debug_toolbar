@@ -27,5 +27,5 @@ return [
         'LoggerService' => function ($addon) {
             return new LoggerService();
         },
-    ]
+    ],
 ];

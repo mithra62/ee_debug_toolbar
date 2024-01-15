@@ -2,9 +2,8 @@
 
 namespace DebugToolbar\Actions;
 
-use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
 use DebugToolbar\Toolbar\GarbageCollection;
-use ExpressionEngine\Core\Provider;
+use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
 
 class Act extends AbstractRoute
 {
@@ -20,11 +19,15 @@ class Act extends AbstractRoute
 
     public function process()
     {
+        if (!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+            return;
+        }
+
         $class = ee()->input->get_post('class');
         $method = ee()->input->get_post('method');
 
         //clean up the file so we know what package we're to include
-        $package = strtolower(str_replace(array('_ext'), '', $class));
+        $package = strtolower(str_replace(['_ext'], '', $class));
 
         $errors = true; //let's just assume the worst to keep us honest
         $file_path = PATH_THIRD . $package . '/ext.' . $package . '.php';
@@ -36,7 +39,7 @@ class Act extends AbstractRoute
 
             if (class_exists($class)) {
                 $this->$class = new $class;
-                if (is_callable(array($this->$class, $method))) {
+                if (is_callable([$this->$class, $method])) {
                     //now let's make sure the passed method is allowed for use as an ACT
                     if (!empty($this->$class->eedt_act) && is_array($this->$class->eedt_act) && in_array($method, $this->$class->eedt_act)) {
                         $errors = false;
@@ -47,16 +50,6 @@ class Act extends AbstractRoute
         }
 
         if ($errors) {
-
-            //use the new way
-            $addon = ee('App')->get($package);
-            if($addon instanceof Provider) {
-                $namespace = $addon->getNamespace();
-                echo $method;
-                exit;
-            }
-            echo get_class($addon);
-            exit;
             echo 'Ya dun goofed...';
             exit;
         }

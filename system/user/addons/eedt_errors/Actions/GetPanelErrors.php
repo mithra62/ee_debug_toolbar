@@ -8,6 +8,10 @@ class GetPanelErrors extends AbstractRoute
 {
     public function process()
     {
+        if (!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+            return;
+        }
+
         $log_data = ee('eedt_errors:LoggerService')->getLogContents();
         $toolbar = ee('ee_debug_toolbar:ToolbarService');
         $vars = [

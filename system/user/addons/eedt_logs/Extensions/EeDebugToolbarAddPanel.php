@@ -11,7 +11,7 @@ class EeDebugToolbarAddPanel extends AbstractHook
         ee()->benchmark->mark('eedt_log_viewer_start');
         $panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
 
-        $vars['panel_fetch_url'] = $this->toolbar->createActUrl('get_panel_logs', 'Eedt_logs_ext');
+        $vars['panel_fetch_url'] = $this->toolbar->getActionUrl('GetPanelLogs', 'Eedt_logs');
         $vars['theme_img_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_logs/images/';
         $vars['theme_js_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_logs/js/';
         $vars['theme_css_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_logs/css/';

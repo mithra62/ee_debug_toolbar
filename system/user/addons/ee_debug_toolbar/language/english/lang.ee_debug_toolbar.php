@@ -78,7 +78,9 @@ $lang = [
     'eedt_perf_alerts.form.max_sql_time' => 'Maximum SQL Execution Time',
     'eedt_perf_alerts.form.desc.form.max_sql_time' => 'How much much time is too much for your expected SQL load?',
     'eedt_perf_alerts.form.max_query_time' => 'Maximum Query Time',
-    'eedt_perf_alerts.form.desc.form.max_query_time' => 'What is the maximum about of time an individual SQL query should take to load?',
+    'eedt_perf_alerts.form.desc.form.max_query_time' => 'What is the maximum amount of time an individual SQL query should take to load?',
+    'eedt_perf_alerts.form.max_query_memory' => 'Maximum Query Memory',
+    'eedt_perf_alerts.form.desc.form.max_query_memory' => 'What is the maximum amount of memory, in bytes, an individual SQL query should use?',
     'total' => 'Total',
 
     'eedt_perf_alerts.form.header.settings' => 'Performance Alerts',

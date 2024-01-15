@@ -23,6 +23,12 @@ class Settings extends AbstractForm
         $field->setValue($this->get('toolbar_position', 'bottom-left'))
             ->setChoices(ee('ee_debug_toolbar:ToolbarService')->toolbar_positions);
 
+        $field_set = $field_group->getFieldSet('eedt_errors.form.allowed_roles');
+        $field_set->set('group', 'error_handler')->setDesc('eedt_errors.form.desc.allowed_roles');
+        $field = $field_set->getField('allowed_roles', 'checkbox');
+        $field->setValue($this->get('allowed_roles'))
+            ->setChoices($this->roleOptions());
+
         $field_group = $form->getGroup('eedt_perf_alerts.form.header.settings');
         $field_set = $field_group->getFieldSet('eedt_perf_alerts.form.max_exec_time');
         $field_set->setDesc('eedt_perf_alerts.form.desc.form.max_exec_time');
@@ -61,5 +67,23 @@ class Settings extends AbstractForm
         $form->asTab();
 
         return $form->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    protected function roleOptions(): array
+    {
+        $groups = [];
+        $query = ee('Model')
+            ->get('Role')
+            ->order('name', 'asc')
+            ->all();
+
+        foreach ($query as $row) {
+            $groups[$row->role_id] = $row->name;
+        }
+
+        return $groups;
     }
 }

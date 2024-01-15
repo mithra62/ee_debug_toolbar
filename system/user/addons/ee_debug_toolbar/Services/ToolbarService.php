@@ -449,6 +449,9 @@ class ToolbarService
         }
     }
 
+    /**
+     * @return array
+     */
     public function getTemplateGroups(): array
     {
         if(!$this->template_groups) {
@@ -459,5 +462,15 @@ class ToolbarService
         }
 
         return $this->template_groups;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canViewToolbar(): bool
+    {
+        $settings = $this->getSettings();
+        $allowed_roles = $settings['allowed_roles'] ?? [1];
+        return in_array(ee()->session->userdata('role_id'), $allowed_roles);
     }
 }

@@ -10,6 +10,9 @@ class SettingsService
     protected array $_defaults = [
         'theme' => 'default',
         'toolbar_position' => 'bottom-left',
+        'allowed_roles' => [
+            1
+        ],
         'profile_exts' => [
             'js',
             'css',

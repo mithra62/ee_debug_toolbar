@@ -81,6 +81,8 @@ $lang = [
     'eedt_perf_alerts.form.desc.form.max_query_time' => 'What is the maximum amount of time an individual SQL query should take to load?',
     'eedt_perf_alerts.form.max_query_memory' => 'Maximum Query Memory',
     'eedt_perf_alerts.form.desc.form.max_query_memory' => 'What is the maximum amount of memory, in bytes, an individual SQL query should use?',
+    'eedt_errors.form.allowed_roles' => 'Allowed Roles',
+    'eedt_errors.form.desc.allowed_roles' => 'Which Member Roles are allowed to view the Toolbar. BE VERY CAREFUL WITH THIS SETTING.',
     'total' => 'Total',
 
     'eedt_perf_alerts.form.header.settings' => 'Performance Alerts',

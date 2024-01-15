@@ -24,7 +24,7 @@ class Settings extends AbstractForm
             ->setChoices(ee('ee_debug_toolbar:ToolbarService')->toolbar_positions);
 
         $field_set = $field_group->getFieldSet('eedt_errors.form.allowed_roles');
-        $field_set->set('group', 'error_handler')->setDesc('eedt_errors.form.desc.allowed_roles');
+        $field_set->set('caution', true)->setDesc('eedt_errors.form.desc.allowed_roles');
         $field = $field_set->getField('allowed_roles', 'checkbox');
         $field->setValue($this->get('allowed_roles'))
             ->setChoices($this->roleOptions());

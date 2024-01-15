@@ -32,7 +32,8 @@ class SettingsService
         'max_memory' => 30,
         'max_queries' => 100,
         'max_sql_time' => 0.1,
-        'max_query_time' => 0.01
+        'max_query_time' => 0.01,
+        'max_query_memory' => 100000,
     ];
 
     /**

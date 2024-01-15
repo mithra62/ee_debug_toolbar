@@ -17,12 +17,12 @@ class ResponseSendOutput extends AbstractHook
             //return;
         }
 
-        if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+        //override to disable the toolbar from even starting
+        if (ee()->input->get('disable_toolbar') == 'yes' || ee()->input->get('C') == 'javascript') {
             return;
         }
 
-        //override to disable the toolbar from even starting
-        if (ee()->input->get('disable_toolbar') == 'yes' || ee()->input->get('C') == 'javascript') {
+        if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
             return;
         }
 

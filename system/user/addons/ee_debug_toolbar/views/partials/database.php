@@ -4,9 +4,10 @@
         echo $log->getQueryCount() . ' ' . lang('database_queries') . ' ' . lang('total'); ?></h4>
 </div>
 <div style="float:right" id="Eedt_debug_database_panel_nav_items">
-    <a href="javascript:;" id="EEDebug_slow_queries" class="">Slow</a>
+    <a href="javascript:;" id="EEDebug_all_queries" class=" flash">All</a>
+    | <a href="javascript:;" id="EEDebug_memory_queries" class="">Memory</a>
+    | <a href="javascript:;" id="EEDebug_slow_queries" class="">Slow</a>
     | <a href="javascript:;" id="EEDebug_duplicate_queries" class="">Duplicate</a>
-    | <a href="javascript:;" id="EEDebug_all_queries" class=" flash">All</a>
 </div>
 
 <br clear="all"/>
@@ -21,6 +22,10 @@ foreach ($log->getQueries() as $query): ?>
     list($sql, $location, $time, $memory) = $query;
     $class = 'nice';
     if($time >= $settings['max_query_time']) {
+        $class = 'flash';
+    }
+
+    if($memory >= $settings['max_query_memory']) {
         $class = 'flash';
     }
     ?>
@@ -80,6 +85,30 @@ foreach ($log->getQueryMetrics() as $query): ?>
         $count++;
     endif; ?>
 <?php endforeach; ?>
+    <?php if(!$found): ?>
+        <br>No Duplicate Queries
+    <?php endif; ?>
+</div>
+
+<div class="Eedt_debug_database_panel_container EEDebug_memory_queries" style="display: none">
+    <?php
+    $count = 1;
+    $found = false;
+    foreach ($log->getQueries() as $query): ?>
+        <?php
+        list($sql, $location, $time, $memory) = $query;
+        if($memory >= $settings['max_query_memory']):
+            ?>
+            <div class="">
+                <?php echo $count; ?>. <strong>[<?php echo number_format($time, 4); ?>s
+                    / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>
+                    ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre><br>
+            </div>
+            <?php
+            $found = true;
+            $count++;
+        endif;
+    endforeach; ?>
     <?php if(!$found): ?>
         <br>No Duplicate Queries
     <?php endif; ?>

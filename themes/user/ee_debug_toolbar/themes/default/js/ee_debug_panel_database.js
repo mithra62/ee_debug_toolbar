@@ -32,4 +32,13 @@
 		jQuery("#EEDebug_duplicate_queries").addClass("flash");
 	});
 
+	jQuery("#Eedt_debug_database_panel").on('click', "#EEDebug_memory_queries", function () {
+
+		jQuery(".Eedt_debug_database_panel_container").hide();
+		jQuery(".EEDebug_memory_queries").show();
+
+		jQuery("#Eedt_debug_database_panel_nav_items a").removeClass("flash");
+		jQuery("#EEDebug_memory_queries").addClass("flash");
+	});
+
 })();

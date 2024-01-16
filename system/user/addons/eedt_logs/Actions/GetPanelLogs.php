@@ -8,6 +8,10 @@ class GetPanelLogs extends AbstractRoute
 {
     public function process()
     {
+        if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+            return;
+        }
+
         $log_path = SYSPATH . "user/logs/";
         $vars['logs_enabled'] = false;
         if (ee()->config->config['log_threshold'] >= 1) {

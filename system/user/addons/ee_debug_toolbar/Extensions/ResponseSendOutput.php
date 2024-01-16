@@ -37,7 +37,6 @@ class ResponseSendOutput extends AbstractHook
             return;
         }
 
-
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');
 
@@ -212,7 +211,7 @@ class ResponseSendOutput extends AbstractHook
         $instances = [];
 
         ee()->load->helper("file");
-        $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/panels/");
+        $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/Panels/");
 
 
         //setup the array in the order we want the panels to appear

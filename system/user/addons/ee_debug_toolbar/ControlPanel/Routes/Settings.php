@@ -10,6 +10,11 @@ class Settings extends AbstractRoute
     protected $addon_name = 'ee_debug_toolbar';
 
     /**
+     * @var array
+     */
+    protected array $settings = [];
+
+    /**
      * @param false $id
      * @return AbstractRoute
      */

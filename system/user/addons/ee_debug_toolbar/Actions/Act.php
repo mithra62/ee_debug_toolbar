@@ -38,12 +38,12 @@ class Act extends AbstractRoute
             }
 
             if (class_exists($class)) {
-                $this->$class = new $class;
-                if (is_callable([$this->$class, $method])) {
+                $obj = new $class;
+                if (is_callable([$obj, $method])) {
                     //now let's make sure the passed method is allowed for use as an ACT
-                    if (!empty($this->$class->eedt_act) && is_array($this->$class->eedt_act) && in_array($method, $this->$class->eedt_act)) {
+                    if (!empty($obj->eedt_act) && is_array($obj->eedt_act) && in_array($method, $obj->eedt_act)) {
                         $errors = false;
-                        $this->$class->$method(); //paranoid but at least shit won't break.
+                        $obj->$method(); //paranoid but at least shit won't break.
                     }
                 }
             }

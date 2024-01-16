@@ -36,6 +36,8 @@ class AbstractPanel
      */
     protected ToolbarService $toolbar;
 
+    protected array $settings = [];
+
     /**
      * Constructor
      */

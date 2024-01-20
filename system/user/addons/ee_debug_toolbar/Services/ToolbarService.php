@@ -2,6 +2,8 @@
 
 namespace DebugToolbar\Services;
 
+use ExpressionEngine\Service\Addon\Addon;
+
 class ToolbarService
 {
     /**
@@ -103,17 +105,17 @@ class ToolbarService
         $consents = $cookies = [];
 
         //echo ee('ee:CookieRegistry')->loadCookiesSettings();
-        foreach($_COOKIE AS $key => $value) {
-            if(str_starts_with($key, 'exp_')) {
+        foreach ($_COOKIE as $key => $value) {
+            if (str_starts_with($key, 'exp_')) {
                 $old_key = $key;
                 $key = substr($key, 4, strlen($key));
-                if(ee('ee:CookieRegistry')->isRegistered($key)) {
+                if (ee('ee:CookieRegistry')->isRegistered($key)) {
                     $type = 'Necessary';
-                    if(ee('ee:CookieRegistry')->isTargeting($key)) {
+                    if (ee('ee:CookieRegistry')->isTargeting($key)) {
                         $type = 'Targeting';
-                    } else if(ee('ee:CookieRegistry')->isPerformance($key)) {
+                    } else if (ee('ee:CookieRegistry')->isPerformance($key)) {
                         $type = 'Performance';
-                    } else if(ee('ee:CookieRegistry')->isFunctionality($key)) {
+                    } else if (ee('ee:CookieRegistry')->isFunctionality($key)) {
                         $type = 'Functionality';
                     }
 
@@ -134,7 +136,7 @@ class ToolbarService
 
         return [
             'registered' => $consents,
-            'unregistered' => $cookies
+            'unregistered' => $cookies,
         ];
     }
 
@@ -228,8 +230,8 @@ class ToolbarService
      */
     public function formatTmplChartJson(array $data): string
     {
-        foreach($data AS $key => $value) {
-            $data[$key]['desc'] = preg_replace("/&#?[a-z0-9]{2,8};/i",'', $data[$key]['desc']);
+        foreach ($data as $key => $value) {
+            $data[$key]['desc'] = preg_replace("/&#?[a-z0-9]{2,8};/i", '', $data[$key]['desc']);
             $data[$key]['memory_display'] = ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($data[$key]['memory']);
             $data[$key]['time'] = number_format($data[$key]['time'], 4);
         }
@@ -352,7 +354,7 @@ class ToolbarService
      * @param string $act_class
      * @return string
      */
-    public function createActUrl($act_method, $act_class = 'Ee_debug_toolbar_ext')
+    public function createActUrl($act_method, $act_class = 'Ee_debug_toolbar')
     {
         return $url = $this->getActionUrl('act') . AMP . 'class=' . $act_class . AMP . 'method=' . $act_method;
     }
@@ -454,9 +456,9 @@ class ToolbarService
      */
     public function getTemplateGroups(): array
     {
-        if(!$this->template_groups) {
+        if (!$this->template_groups) {
             $groups = ee()->db->select()->from('template_groups')->get()->result_array();
-            foreach($groups As $group) {
+            foreach ($groups as $group) {
                 $this->template_groups[$group['group_id']] = $group['group_name'];
             }
         }
@@ -472,5 +474,20 @@ class ToolbarService
         $settings = $this->getSettings();
         $allowed_roles = $settings['allowed_roles'] ?? [1];
         return in_array(ee()->session->userdata('role_id'), $allowed_roles);
+    }
+
+    /**
+     * @param string $add_on
+     * @return bool
+     */
+    public function isAddonInstalled(string $add_on): bool
+    {
+        $return = false;
+        $provider = ee('Addon')->get($add_on);
+        if ($provider instanceof Addon) {
+            $return = $provider->isInstalled();
+        }
+
+        return $return;
     }
 }

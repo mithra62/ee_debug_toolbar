@@ -10,6 +10,11 @@ class Settings extends AbstractRoute
     protected $addon_name = 'ee_debug_toolbar';
 
     /**
+     * @var array
+     */
+    protected array $settings = [];
+
+    /**
      * @param false $id
      * @return AbstractRoute
      */
@@ -42,6 +47,14 @@ class Settings extends AbstractRoute
                     ->withTitle(lang('eedt.error.settings_save'))
                     ->now();
             }
+        }
+
+        if(ee()->config->item('show_profiler') != 'y') {
+            ee('CP/Alert')->makeInline('shared-form')
+                ->asWarning()
+                ->withTitle(lang('eedt.profiler_not_enabled'))
+                ->cannotClose()
+                ->now();
         }
 
         $vars += $form->generate();

@@ -20,6 +20,11 @@ class Memory extends AbstractPanel
         $view->addCss($this->toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_memory.css');
         $view->addJs($this->toolbar->createThemeUrl('default', 'js') . '/ee_debug_panel_memory.js');
 
+        $parts = explode(' ', $this->toolbar->filesizeFormat(memory_get_peak_usage()));
+        $settings = $this->toolbar->getSettings();
+        if (!empty($parts['0']) && $parts['0'] > $settings['max_memory']) {
+            $view->setPanelCssClass('flash');
+        }
         return $view;
     }
 }

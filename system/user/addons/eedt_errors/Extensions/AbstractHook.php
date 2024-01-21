@@ -14,7 +14,7 @@ abstract class AbstractHook extends AbstractRoute
 
     public function __construct($settings = '')
     {
-        ee()->lang->loadfile('eedt_errors');
+        ee()->lang->load('eedt_errors', $idiom = '', $return = false, $add_suffix = true, $alt_path = __DIR__ . '/../');
         $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
     }
 }

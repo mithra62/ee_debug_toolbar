@@ -1,8 +1,12 @@
 <?php
 
-use DebugToolbar\Services\LoggerService;
+use DebugToolbar\Services\OutputService;
 use DebugToolbar\Services\SettingsService;
 use DebugToolbar\Services\ToolbarService;
+use DebugToolbar\Services\TrackerService;
+use DebugToolbar\Services\GarbageCollectionService;
+use DebugToolbar\Services\XmlService;
+
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');
@@ -28,8 +32,19 @@ return [
         'SettingsService' => function ($addon) {
             return new SettingsService();
         },
-        'LoggerService' => function ($addon) {
-            return new LoggerService();
+        'TrackerService' => function ($addon) {
+            return new TrackerService();
+        },
+        'OutputService' => function ($addon) {
+            return new OutputService();
+        },
+        'GarbageCollectionService' => function ($addon) {
+            return new GarbageCollectionService();
         },
     ],
+    'services' => [
+        'XmlService' => function ($addon) {
+            return new XmlService();
+        },
+    ]
 ];

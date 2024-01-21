@@ -14,11 +14,15 @@ class ResponseSendOutput extends AbstractHook
         //we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
         //see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
         if (ee()->config->config['show_profiler'] != 'y' || ee()->output->enable_profiler != '1') {
-            return;
+            //return;
         }
 
         //override to disable the toolbar from even starting
-        if (ee()->input->get('disable_toolbar') == 'yes') {
+        if (ee()->input->get('disable_toolbar') == 'yes' || ee()->input->get('C') == 'javascript') {
+            return;
+        }
+
+        if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
             return;
         }
 
@@ -32,7 +36,6 @@ class ResponseSendOutput extends AbstractHook
         ) {
             return;
         }
-
 
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');
@@ -63,10 +66,12 @@ class ResponseSendOutput extends AbstractHook
         $vars['session_data'] = ee()->session->all_userdata();
         $vars['query_data'] = $this->toolbar->setupQueries();
         $vars['memory_usage'] = $this->toolbar->filesizeFormat(memory_get_peak_usage());
+        $vars['memory_usage_raw'] = memory_get_peak_usage();
         $vars['template_debugging_enabled'] = isset(ee()->TMPL->log) && is_array(ee()->TMPL->log) && count(ee()->TMPL->log) > 0;
         $vars['template_debugging'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplLog(ee()->TMPL->log) : []);
         $vars['template_debugging_chart_json'] = ($vars['template_debugging_enabled'] ? $this->toolbar->formatTmplChartJson($vars['template_debugging']) : '');
         $vars['included_file_data'] = $this->toolbar->setupFiles(get_included_files());
+        $vars['cookie_data'] = $this->toolbar->setupCookies();
 
         $vars['ext_version'] = $this->version;
         $this->settings = $this->toolbar->getSettings();
@@ -81,6 +86,8 @@ class ResponseSendOutput extends AbstractHook
         $vars['js'] = [$vars['theme_js_url'] . "eedt.js"];
         $vars['css'] = [$vars['theme_css_url'] . "ee_debug_toolbar.css"];
         $vars['benchmark_data'] = []; //we have to fake this for now
+        $vars['settings'] = $this->settings;
+        $vars['template_groups'] = $this->toolbar->getTemplateGroups();
         //$vars['query_count'] = ee()->db->query_count;
 
         //Load variables so that they are present in all view partials
@@ -137,6 +144,11 @@ class ResponseSendOutput extends AbstractHook
             $vars['panels']['time']->setPanelContents(ee()->load->view("partials/time", $vars, true));
         }
 
+        //check total time
+        if ($vars['elapsed_time'] > $this->settings['max_exec_time']) {
+            $vars['panels']['time']->setPanelCssClass('flash');
+        }
+
         //Break up the panels into the various injection points
         $vars['panels_before_toolbar'] = [];
         $vars['panels_in_toolbar'] = [];
@@ -159,7 +171,7 @@ class ResponseSendOutput extends AbstractHook
         unset($vars['panels']);
 
         //setup the XML storage data for use by the panels on open
-        $this->toolbar->cachePanels($vars['panels_in_toolbar'], $this->cache_dir);
+        $this->toolbar->cachePanels(ee('ee_debug_toolbar:XmlService'), $vars['panels_in_toolbar'], $this->cache_dir);
 
         //Render toolbar
         $toolbar_html = ee()->load->view($vars['master_view_script'], $vars, true);
@@ -199,7 +211,7 @@ class ResponseSendOutput extends AbstractHook
         $instances = [];
 
         ee()->load->helper("file");
-        $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/panels/");
+        $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/Panels/");
 
 
         //setup the array in the order we want the panels to appear

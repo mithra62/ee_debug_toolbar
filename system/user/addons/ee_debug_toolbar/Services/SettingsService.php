@@ -10,6 +10,9 @@ class SettingsService
     protected array $_defaults = [
         'theme' => 'default',
         'toolbar_position' => 'bottom-left',
+        'allowed_roles' => [
+            1
+        ],
         'profile_exts' => [
             'js',
             'css',
@@ -27,7 +30,13 @@ class SettingsService
             'rss',
             'atom',
             'xml'
-        ]
+        ],
+        'max_exec_time' => 0.5,
+        'max_memory' => 30,
+        'max_queries' => 100,
+        'max_sql_time' => 0.1,
+        'max_query_time' => 0.01,
+        'max_query_memory' => 100000,
     ];
 
     /**

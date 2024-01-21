@@ -9,6 +9,7 @@ if (!defined('DEBUG_TOOLBAR_ERRORS_VERSION')) {
 }
 
 use DebugToolbar\Errors\Services\ErrorHandlerService;
+use DebugToolbar\Errors\Services\LoggerService;
 
 return [
     'author' => 'mithra62',
@@ -23,5 +24,8 @@ return [
         'ErrorHandlerService' => function ($addon) {
             return new ErrorHandlerService();
         },
-    ]
+        'LoggerService' => function ($addon) {
+            return new LoggerService();
+        },
+    ],
 ];

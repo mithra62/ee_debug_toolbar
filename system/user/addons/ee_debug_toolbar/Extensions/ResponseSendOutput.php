@@ -171,7 +171,7 @@ class ResponseSendOutput extends AbstractHook
         unset($vars['panels']);
 
         //setup the XML storage data for use by the panels on open
-        $this->toolbar->cachePanels($vars['panels_in_toolbar'], $this->cache_dir);
+        $this->toolbar->cachePanels(ee('ee_debug_toolbar:XmlService'), $vars['panels_in_toolbar'], $this->cache_dir);
 
         //Render toolbar
         $toolbar_html = ee()->load->view($vars['master_view_script'], $vars, true);

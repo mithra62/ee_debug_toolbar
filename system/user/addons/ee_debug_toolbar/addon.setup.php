@@ -5,6 +5,8 @@ use DebugToolbar\Services\SettingsService;
 use DebugToolbar\Services\ToolbarService;
 use DebugToolbar\Services\TrackerService;
 use DebugToolbar\Services\GarbageCollectionService;
+use DebugToolbar\Services\XmlService;
+
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');
@@ -40,4 +42,9 @@ return [
             return new GarbageCollectionService();
         },
     ],
+    'services' => [
+        'XmlService' => function ($addon) {
+            return new XmlService();
+        },
+    ]
 ];

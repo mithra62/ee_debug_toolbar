@@ -3,6 +3,7 @@
 namespace DebugToolbar\Services;
 
 use ExpressionEngine\Service\Addon\Addon;
+use DebugToolbar\Services\XmlService;
 
 class ToolbarService
 {
@@ -361,28 +362,29 @@ class ToolbarService
 
     /**
      * Takes the panel data and writes them to $path
+     * @param \DebugToolbar\Services\XmlService $xml
      * @param array $panels
      * @param string $path
+     * @return void
      */
-    public function cachePanels($panels, $path)
+    public function cachePanels(XmlService $xml, array $panels, string $path): void
     {
-        ee()->load->library('xml_writer');
-        ee()->xml_writer->setRootName('EEDT');
-        ee()->xml_writer->initiate();
-        ee()->xml_writer->startBranch('panels');
+        $xml->setRootName('EEDT');
+        $xml->initiate();
+        $xml->startBranch('panels');
         foreach ($panels as $panel) {
-            ee()->xml_writer->startBranch($panel->getName() . '_panel');
-            ee()->xml_writer->addNode('name', $panel->getName(), [], true);
-            ee()->xml_writer->addNode('data_target', $panel->getTarget(), [], true);
-            ee()->xml_writer->addNode('button_icon', $panel->getButtonIcon(), [], true);
-            ee()->xml_writer->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), [], true);
-            ee()->xml_writer->addNode('button_label', $panel->getButtonLabel(), [], true);
-            ee()->xml_writer->addNode('output', base64_encode($panel->getPanelContents()), [], true);
-            ee()->xml_writer->endBranch();
+            $xml->startBranch($panel->getName() . '_panel');
+            $xml->addNode('name', $panel->getName(), [], true);
+            $xml->addNode('data_target', $panel->getTarget(), [], true);
+            $xml->addNode('button_icon', $panel->getButtonIcon(), [], true);
+            $xml->addNode('button_icon_alt_text', $panel->getButtonIconAltText(), [], true);
+            $xml->addNode('button_label', $panel->getButtonLabel(), [], true);
+            $xml->addNode('output', base64_encode($panel->getPanelContents()), [], true);
+            $xml->endBranch();
         }
 
-        ee()->xml_writer->endBranch();
-        $xml = ee()->xml_writer->getXml(false);
+        $xml->endBranch();
+        $xml = $xml->getXml(false);
 
         $filename = $path . $this->makeCacheFilename();
 
@@ -392,8 +394,6 @@ class ToolbarService
         gzclose($gz);
 
         chmod($filename . '.gz', 0777);
-
-        //write_file($filename, utf8_encode($xml));
     }
 
     /**

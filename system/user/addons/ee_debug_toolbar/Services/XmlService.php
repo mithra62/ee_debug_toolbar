@@ -1,38 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+namespace DebugToolbar\Services;
 
-/**
- * Class used to write XMl document.
- * Extends XMLWriter (PHP5 only!)
- *
- * Initialize the class:
- * $this->load->library('MY_Xml_writer');
- * $xml = new MY_Xml_writer;
- * $xml->initiate();
- *
- * Start a branch with attributes:
- * $xml->startBranch('car', array('country' => 'usa', 'type' => 'racecar'));
- *
- * End (close) a branch
- * $xml->endBranch();
- *
- * Add a CDATA node with attributes:
- * $xml->addNode('model', 'Corolla', array('year' => '2002'), true);
- *
- * Print the XMl directly to screen:
- * $xml->getXml(true);
- *
- * Pass the XMl to a view file:
- * $data['xml'] = $xml->getXml();
- * $this->load->view('xml_template', $data);
- *
- * @name /library/Accent/Xml/Accent_Xml_Writer.php
- * @category Accent_application
- * @version 1.0
- * @author Joost van Veen
- * @copyright Accent Webdesign
- * @created: 10 mrt 2009
- */
-class Xml_writer extends XMLWriter
+class XmlService extends \XMLWriter
 {
 
     /**

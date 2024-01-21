@@ -6,33 +6,26 @@ class XmlService extends \XMLWriter
 {
 
     /**
-     * Name of the root element for this XMl. Defaults to root.
      * @var string
      */
     protected string $rootName = '';
 
     /**
-     * XML version. Defaults to 1.0
      * @var string
      */
     protected string $xmlVersion = '1.0';
 
     /**
-     * Character set. Defaukts to UTF-8.
      * @var string
      */
     protected string $charSet = 'UTF-8';
 
     /**
-     * Indent for every new tag. Defaults to spaces.
      * @var string
      */
     protected string $indentString = '    ';
 
     /**
-     *  Sets an xslt path for this XML. Defaults to ''.
-     *  Xslt will only be included in the XML if $_xsltFilePath is not an
-     *  empty string.
      * @var string
      */
     protected string $xsltFilePath = '';

@@ -66,6 +66,7 @@ $lang = [
     'eedt.header.settings_save' => 'Debug Toolbar Settings',
     'eedt.settings_saved' => 'Settings Saved',
     'eedt.templates_used' => 'Templates Used',
+    'eedt.profiler_not_enabled' => 'The Debug Profiles isnt\'t enabled; your debug output will be limited to what\'s available instead.',
 
     'eedt_perf_alerts_module_name' => 'Debug Toolbar - Perfomance Alerts',
     'eedt_perf_alerts_module_description' => 'Adds notifications to toolbar on suspicous performance',

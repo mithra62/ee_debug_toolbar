@@ -49,6 +49,14 @@ class Settings extends AbstractRoute
             }
         }
 
+        if(ee()->config->item('show_profiler') != 'y') {
+            ee('CP/Alert')->makeInline('shared-form')
+                ->asWarning()
+                ->withTitle(lang('eedt.profiler_not_enabled'))
+                ->cannotClose()
+                ->now();
+        }
+
         $vars += $form->generate();
 
         $this->addBreadcrumb($this->url('edit'), 'eedt.settings');

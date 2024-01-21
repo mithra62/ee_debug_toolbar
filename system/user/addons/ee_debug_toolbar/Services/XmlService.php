@@ -1,4 +1,5 @@
 <?php
+
 namespace DebugToolbar\Services;
 
 class XmlService extends \XMLWriter
@@ -6,105 +7,127 @@ class XmlService extends \XMLWriter
 
     /**
      * Name of the root element for this XMl. Defaults to root.
+     * @var string
      */
-    private $_rootName = '';
+    protected string $rootName = '';
 
     /**
      * XML version. Defaults to 1.0
+     * @var string
      */
-    private $_xmlVersion = '1.0';
+    protected string $xmlVersion = '1.0';
 
     /**
      * Character set. Defaukts to UTF-8.
+     * @var string
      */
-    private $_charSet = 'UTF-8';
+    protected string $charSet = 'UTF-8';
 
     /**
      * Indent for every new tag. Defaults to spaces.
+     * @var string
      */
-    private $_indentString = '    ';
+    protected string $indentString = '    ';
 
     /**
-     * Sets an xslt path for this XML. Defaults to ''.
-     * Xslt will only be included in the XML if $_xsltFilePath is not an
-     * empty string.
+     *  Sets an xslt path for this XML. Defaults to ''.
+     *  Xslt will only be included in the XML if $_xsltFilePath is not an
+     *  empty string.
+     * @var string
      */
-    private $_xsltFilePath = '';
+    protected string $xsltFilePath = '';
 
     public function __construct()
     {
     }
 
     /**
-     * Set the value of the root tag for this XML
+     * @param string $rootName
+     * @return $this
      */
-    public function setRootName($rootName)
+    public function setRootName(string $rootName): XmlService
     {
-        $this->_rootName = $rootName;
+        $this->rootName = $rootName;
+        return $this;
     }
 
     /**
-     * Set the value of the XMl version for this XML.
+     * @param string $version
+     * @return $this
      */
-    public function setXmlVersion($version)
+    public function setXmlVersion(string $version): XmlService
     {
-        $this->_xmlVersion = $version;
+        $this->xmlVersion = $version;
+        return $this;
     }
 
     /**
-     * Set the character set for this XML.
+     * @param string $charSet
+     * @return $this
      */
-    public function setCharSet($charSet)
+    public function setCharSet(string $charSet): XmlService
     {
-        $this->_charSet = $charSet;
+        $this->charSet = $charSet;
+        return $this;
     }
 
     /**
-     * Set indenting for every new node in this XML.
+     * @param $indentString
+     * @return $this
      */
-    public function setIndentStr($indentString)
+    public function setIndentStr($indentString): XmlService
     {
-        $this->_indentString = $indentString;
+        $this->indentString = $indentString;
+        return $this;
     }
 
     /**
-     * Set the XSLT filepath for this XML. This should be an absolute URL.
+     * @param string $xsltFilePath
+     * @return $this
      */
-    public function setXsltFilePath($xsltFilePath)
+    public function setXsltFilePath(string $xsltFilePath): XmlService
     {
-        $this->_xsltFilePath = $xsltFilePath;
+        $this->xsltFilePath = $xsltFilePath;
+        return $this;
     }
 
-    public function initiate()
+    /**
+     * @return $this
+     */
+    public function initiate(): XmlService
     {
         // Create new xmlwriter using memory for string output.
         $this->openMemory();
 
         // Set indenting, if any.
-        if ($this->_indentString) {
+        if ($this->indentString) {
             $this->setIndent(true);
-            $this->setIndentString($this->_indentString);
+            $this->setIndentString($this->indentString);
         }
 
         // Set DTD.
-        $this->startDocument($this->_xmlVersion, $this->_charSet);
+        $this->startDocument($this->xmlVersion, $this->charSet);
 
         // Set XSLT stylesheet path, if any.
-        if ($this->_xsltFilePath) {
-            $this->writePi('xml-stylesheet', 'type="text/xsl" href="' . $this->_xsltFilePath . '"');
+        if ($this->xsltFilePath) {
+            $this->writePi('xml-stylesheet', 'type="text/xsl" href="' . $this->xsltFilePath . '"');
         }
 
         // Set the root tag.
-        $this->startElement($this->_rootName);
+        $this->startElement($this->rootName);
+        return $this;
     }
 
     /**
-     * Start a new branch that will contain nodes.
+     * @param string $name
+     * @param array $attributes
+     * @return $this
      */
-    public function startBranch($name, $attributes = [])
+    public function startBranch(string $name, array $attributes = []): XmlService
     {
         $this->startElement($name);
-        $this->_addAttributes($attributes);
+        $this->addAttributes($attributes);
+        return $this;
     }
 
     /**
@@ -117,80 +140,53 @@ class XmlService extends \XMLWriter
     }
 
     /**
-     * Add a node, typically a child to a branch.
-     *
-     * If you wish to create a simple text node, just set $name and $value.
-     * If you wish to create a CDATA node, set $name, $value and $cdata.
-     * You can set attributes for every node, passing a key=>value $attributes array
-     *
      * @param string $name
      * @param string $value
-     * @param array attributes
-     * @param boolean $cdata
-     * @return void
+     * @param array $attributes
+     * @param bool $cdata
+     * @return $this
      */
-    public function addNode($name, $value, $attributes = [], $cdata = false)
+    public function addNode(string $name, string $value, array $attributes = [], bool $cdata = false): XmlService
     {
-        /**
-         * Set a CDATA element.
-         */
+        $this->startElement($name);
+        $this->addAttributes($attributes);
+
         if ($cdata) {
-            $this->startElement($name);
-            $this->_addAttributes($attributes);
             $this->writeCdata($value);
-            $this->endElement();
-        } /**
-         * Set a simple text element.
-         */
-        else {
-            $this->startElement($name);
-            $this->_addAttributes($attributes);
+        } else {
             $this->text($value);
-            $this->endElement();
         }
+
+        $this->endElement();
+        return $this;
     }
 
     /**
-     * Close the XML document, print to screen if $echo == true, and return a
-     * string containing the full XML.
-     *
-     * @param boolean echo - if true, print XML to screen.
-     * @return string - The full XML.
+     * @param bool $echo
+     * @return string
      */
-    public function getXml($echo = false)
+    public function getXml(bool $echo = false): string
     {
-
-        /**
-         * Set header.
-         */
-        if ($echo == true) {
+        if ($echo === true) {
             header('Content-type: text/xml');
         }
-
-        /**
-         * Close XMl document.
-         */
+        
         $this->endElement();
         $this->endDocument();
 
-        /**
-         * Return or echo output.
-         */
         $output = $this->outputMemory();
-        if ($echo == true) {
-            // Print XML to screen.
-            print $output;
+        if ($echo === true) {
+            echo $output;
         }
 
         return $output;
     }
 
     /**
-     * Add attributes to an element.
-     *
      * @param array $attributes
+     * @return $this
      */
-    private function _addAttributes($attributes)
+    protected function addAttributes(array $attributes): XmlService
     {
         if (count($attributes) > 0) {
             // We have attributes, let's set them
@@ -198,5 +194,7 @@ class XmlService extends \XMLWriter
                 $this->writeAttribute($key, $value);
             }
         }
+
+        return $this;
     }
 }  

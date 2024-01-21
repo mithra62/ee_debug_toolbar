@@ -1,9 +1,9 @@
 <?php
-namespace DebugToolbar\Toolbar;
+namespace DebugToolbar\Services;
 
 use ExpressionEngine\Library\Filesystem\Filesystem;
 
-class GarbageCollection
+class GarbageCollectionService
 {
     /**
      * How long the cache is allowed to live

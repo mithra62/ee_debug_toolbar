@@ -16,7 +16,7 @@ class EeDebugToolbarAddPanel extends AbstractHook
 
         $panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
 
-        $vars['panel_fetch_url'] = $this->toolbar->getActionUrl('getPanelErrors', 'Eedt_errors');
+        $vars['panel_fetch_url'] = $this->toolbar->createActUrl('getPanelErrors', 'Eedt_errors');
         $vars['theme_img_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/images/';
         $vars['theme_js_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/js/';
         $vars['theme_css_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/css/';

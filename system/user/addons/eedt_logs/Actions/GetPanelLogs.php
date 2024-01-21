@@ -2,11 +2,11 @@
 
 namespace DebugToolbar\Logs\Actions;
 
-use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
+use DebugToolbar\Actions\AbstractAction;
 
-class GetPanelLogs extends AbstractRoute
+class GetPanelLogs extends AbstractAction
 {
-    public function process()
+    public function processDebug()
     {
         if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
             return;

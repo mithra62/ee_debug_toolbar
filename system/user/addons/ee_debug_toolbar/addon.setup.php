@@ -4,6 +4,7 @@ use DebugToolbar\Services\OutputService;
 use DebugToolbar\Services\SettingsService;
 use DebugToolbar\Services\ToolbarService;
 use DebugToolbar\Services\TrackerService;
+use DebugToolbar\Services\GarbageCollectionService;
 
 if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
     define('DEBUG_TOOLBAR_ADDON_NAME', 'Debug Toolbar');
@@ -34,6 +35,9 @@ return [
         },
         'OutputService' => function ($addon) {
             return new OutputService();
+        },
+        'GarbageCollectionService' => function ($addon) {
+            return new GarbageCollectionService();
         },
     ],
 ];

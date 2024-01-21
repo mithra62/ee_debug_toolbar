@@ -432,7 +432,7 @@ class ToolbarService
                 'js' => $panel->getJs(),
                 'css' => $panel->getCss(),
                 'panel_fetch_url' => $panel->getPanelFetchUrl() ? $panel->getPanelFetchUrl() :
-                    str_replace("&amp;", "&", $this->createActUrl("get_panel_data")) . "&panel=" . $panel->getName(),
+                    str_replace("&amp;", "&", $this->createActUrl("GetPanelData")) . "&panel=" . $panel->getName(),
             ];
         }
 

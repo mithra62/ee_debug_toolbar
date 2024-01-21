@@ -8,13 +8,13 @@ class EeDebugToolbarAddPanel extends AbstractHook
 {
     public function process(array $panels = [], array $vars = []): array
     {
+        $panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
         ee()->benchmark->mark('eedt_errors_start');
         $settings = $this->toolbar->getSettings();
         if($settings['error_handler'] !== 'toolbar') {
             return $panels;
         }
 
-        $panels = (ee()->extensions->last_call != '' ? ee()->extensions->last_call : $panels);
 
         $vars['panel_fetch_url'] = $this->toolbar->createActUrl('getPanelErrors', 'Eedt_errors');
         $vars['theme_img_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/images/';

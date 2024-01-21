@@ -14,7 +14,7 @@ function EedtMemoryHistoryJSAPIReady(){
 		packages:["corechart"],
 		callback: function(){
 			var d = def;
-			eedt.ajax('Eedt_memory_history_ext', 'fetch_memory_and_sql_usage', {
+			eedt.ajax('Eedt_memory_history', 'FetchMemoryAndSqlUsage', {
 				'cp': eedt.config('cp') ? 'y' : 'n'
 			}).then(function(data){
 				d.resolve(data);

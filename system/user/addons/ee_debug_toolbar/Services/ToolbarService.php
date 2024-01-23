@@ -216,7 +216,7 @@ class ToolbarService
             $return[] = [
                 'time' => $item['time'],
                 'memory' => (float)$item['memory'],
-                'desc' => utf8_encode($item['message']), //a little sanity for UTF-8
+                'desc' => mb_convert_encoding($item['message'], 'UTF-8', 'ISO-8859-1'), //a little sanity for UTF-8
             ];
         }
 
@@ -388,7 +388,7 @@ class ToolbarService
 
         $filename = $path . $this->makeCacheFilename();
 
-        $string = utf8_encode($xml);
+        $string = mb_convert_encoding($xml, 'UTF-8', 'ISO-8859-1');
         $gz = gzopen($filename . '.gz', 'w9');
         gzwrite($gz, $string);
         gzclose($gz);

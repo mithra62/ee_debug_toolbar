@@ -62,6 +62,7 @@
 	height: 17px;
 	cursor: pointer;
 	float:left;
+	min-height: 17px;
 }
 
 .Eedt_debug_toolbar_button {

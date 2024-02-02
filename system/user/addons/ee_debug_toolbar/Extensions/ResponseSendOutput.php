@@ -18,11 +18,17 @@ class ResponseSendOutput extends AbstractHook
         }
 
         //override to disable the toolbar from even starting
-        if (ee()->input->get('disable_toolbar') == 'yes' || ee()->input->get('C') == 'javascript') {
+        if (ee()->input->get('disable_toolbar') == 'yes' ||
+            ee()->input->get('C') == 'javascript' ||
+            (ee()->input->get('ACT') && ee()->input->get('frontedit') == 'on') ||
+            (ee()->input->get('ACT') && ee()->input->get('prolet')) ||
+            (strpos(ee()->input->server('REQUEST_URI'), 'themes/ee/pro/js') !== false) || //Pro Edit
+            ee()->input->get('modal_form') == 'y'
+        ) {
             return;
         }
 
-        if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+        if (!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
             return;
         }
 

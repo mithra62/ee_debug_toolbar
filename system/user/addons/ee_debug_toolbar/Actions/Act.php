@@ -2,8 +2,8 @@
 
 namespace DebugToolbar\Actions;
 
-use ExpressionEngine\Service\Addon\Addon;
 use DebugToolbar\Exceptions\InvalidActionCallException;
+use ExpressionEngine\Service\Addon\Addon;
 
 class Act extends AbstractAction
 {
@@ -24,15 +24,15 @@ class Act extends AbstractAction
         $package = strtolower(str_replace(['_ext'], '', $class));
 
         $errors = true; //let's just assume the worst to keep us honest
-        if($this->toolbar->isAddonInstalled($package)) {
+        if ($this->toolbar->isAddonInstalled($package)) {
             $provider = ee('Addon')->get($package);
-            if($provider instanceof Addon) {
+            if ($provider instanceof Addon) {
                 ee()->load->add_package_path(PATH_THIRD . $package);
                 $namespace = $provider->getNamespace();
                 $class = $namespace . '\\Actions\\' . $method;
-                if(class_exists($class)) {
+                if (class_exists($class)) {
                     $obj = new $class;
-                    if($obj instanceof AbstractAction) {
+                    if ($obj instanceof AbstractAction) {
                         $obj->processDebug();
                         $errors = false;
                     }

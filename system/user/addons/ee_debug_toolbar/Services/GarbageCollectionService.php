@@ -1,4 +1,5 @@
 <?php
+
 namespace DebugToolbar\Services;
 
 use ExpressionEngine\Library\Filesystem\Filesystem;
@@ -31,7 +32,7 @@ class GarbageCollectionService
         $cache_created = filemtime($file);
         $max_time = time() - $this->expires;
         if ($max_time >= $cache_created) {
-            return TRUE;
+            return true;
         }
     }
 

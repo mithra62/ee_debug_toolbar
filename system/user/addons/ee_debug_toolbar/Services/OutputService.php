@@ -1,4 +1,5 @@
 <?php
+
 namespace DebugToolbar\Services;
 
 class OutputService
@@ -7,14 +8,14 @@ class OutputService
     {
         // The highlight string function encodes and highlights
         // brackets so we need them to start raw
-        $str = str_replace(array('&lt;', '&gt;'), array('<', '>'), $str);
+        $str = str_replace(['&lt;', '&gt;'], ['<', '>'], $str);
 
         // Replace any existing PHP tags to temporary markers so they don't accidentally
         // break the string out of PHP, and thus, thwart the highlighting.
 
         $str = str_replace(
-            array('<?', '?>', '<%', '%>', '\\', '</script>'),
-            array('phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'),
+            ['<?', '?>', '<%', '%>', '\\', '</script>'],
+            ['phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'],
             $str
         );
 
@@ -32,8 +33,8 @@ class OutputService
 
         // Replace our markers back to PHP tags.
         $str = str_replace(
-            array('phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'),
-            array('&lt;?', '?&gt;', '&lt;%', '%&gt;', '\\', '&lt;/script&gt;'),
+            ['phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'],
+            ['&lt;?', '?&gt;', '&lt;%', '%&gt;', '\\', '&lt;/script&gt;'],
             $str
         );
 
@@ -104,7 +105,7 @@ class OutputService
         $return = '';
         foreach ($arr as $key => $value) {
             if (is_array($value)) {
-                $return .= $key . $pair_delim . '<pre>' . print_r($value, TRUE) . '</pre>';
+                $return .= $key . $pair_delim . '<pre>' . print_r($value, true) . '</pre>';
             } else {
                 $return .= $key . $pair_delim . $value . $tail_delim;
             }

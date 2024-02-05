@@ -400,32 +400,31 @@ class ToolbarService
      * Creates the Toolbar panel cache filename
      * @return string
      */
-    public function makeCacheFilename()
+    public function makeCacheFilename(): string
     {
         return '.' . ee()->session->userdata['session_id'] . '.eedt';
     }
 
+    public function getCachePath(): string
+    {
+        return PATH_CACHE . '/eedt/';
+    }
+
     /**
      * Builds the JS Config to be output as JSON
-     *
      * @param array $vars
+     * @return array
      */
-    public function jsConfig($vars = [])
+    public function jsConfig(array $vars = []): array
     {
         $config = [];
-
         $config['template_debugging_enabled'] = $vars['template_debugging_enabled'];
-
-        //Panels
         $config['panels'] = [];
         $config['cp'] = ee()->input->get('D') == 'cp' ? true : false;
         $config['base_css_url'] = $vars['theme_css_url'];
         $config['base_js_url'] = $vars['theme_js_url'];
         $config['panel_ajax_url'] = str_replace("&amp;", "&", $this->getActionUrl('act') . AMP);
 
-        /**
-         * @var Model $panel
-         */
         foreach ($vars['panels'] as $panel) {
             $config['panels'][] = [
                 'name' => $panel->getName(),

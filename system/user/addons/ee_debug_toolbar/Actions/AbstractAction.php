@@ -39,7 +39,7 @@ abstract class AbstractAction extends AbstractRoute
 
         //run the garbage collection against the cache
         ee('ee_debug_toolbar:GarbageCollectionService')->run();
-        $this->cache_dir = SYSDIR . '/user/cache/eedt/';
+        $this->cache_dir =  $this->toolbar->getCachePath();
     }
 
     /**

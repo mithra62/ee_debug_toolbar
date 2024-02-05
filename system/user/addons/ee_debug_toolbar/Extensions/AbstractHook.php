@@ -89,8 +89,8 @@ abstract class AbstractHook extends AbstractRoute
         $this->name = lang('ee_debug_toolbar_module_name');
         $this->description = lang('ee_debug_toolbar_module_description');
         ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-        $this->cache_dir =  SYSDIR. '/user/cache/eedt/';
         $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
+        $this->cache_dir =  $this->toolbar->getCachePath();
         if (!is_dir($this->cache_dir)) {
             mkdir($this->cache_dir, 0777, true);
         }

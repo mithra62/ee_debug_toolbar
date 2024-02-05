@@ -19,7 +19,7 @@ class GarbageCollectionService
 
     public function __construct()
     {
-        $this->cache_dir = APPPATH . 'cache/eedt/';
+        $this->cache_dir = ee('ee_debug_toolbar:ToolbarService')->getCachePath();
     }
 
     /**

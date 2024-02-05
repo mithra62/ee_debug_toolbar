@@ -23,7 +23,9 @@ class ResponseSendOutput extends AbstractHook
             (ee()->input->get('ACT') && ee()->input->get('frontedit') == 'on') ||
             (ee()->input->get('ACT') && ee()->input->get('prolet')) ||
             (strpos(ee()->input->server('REQUEST_URI'), 'themes/ee/pro/js') !== false) || //Pro Edit
-            ee()->input->get('modal_form') == 'y'
+            ee()->input->get('modal_form') == 'y' ||
+            (ee()->input->get('ui') && ee()->input->get('plugin') == 'markitup') ||
+            (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps')
         ) {
             return;
         }

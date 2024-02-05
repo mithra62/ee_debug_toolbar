@@ -6,7 +6,7 @@ if (!defined('BASEPATH')) {
 
 use ExpressionEngine\Service\Addon\Installer;
 
-class Ee_debug_toolbar_upd extends Installer
+class Eedt_upd extends Installer
 {
 
 }

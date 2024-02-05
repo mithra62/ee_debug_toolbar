@@ -2,9 +2,9 @@
 
 use ExpressionEngine\Service\Addon\Mcp;
 
-class Ee_debug_toolbar_mcp extends Mcp
+class Eedt_mcp extends Mcp
 {
-    protected $addon_name = 'ee_debug_toolbar';
+    protected $addon_name = 'eedt';
 
     public function index()
     {

@@ -11,7 +11,7 @@ class CreateactiongetpaneldataforaddoneeDebugToolbar extends Migration
     public function up()
     {
         ee('Model')->make('Action', [
-            'class' => 'Ee_debug_toolbar',
+            'class' => 'Eedt',
             'method' => 'GetPanelData',
             'csrf_exempt' => false,
         ])->save();
@@ -24,7 +24,7 @@ class CreateactiongetpaneldataforaddoneeDebugToolbar extends Migration
     public function down()
     {
         ee('Model')->get('Action')
-            ->filter('class', 'Ee_debug_toolbar')
+            ->filter('class', 'Eedt')
             ->filter('method', 'GetPanelData')
             ->delete();
     }

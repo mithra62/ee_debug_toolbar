@@ -42,7 +42,7 @@ class SettingsService
     /**
      * @var string
      */
-    protected string $settings_table = 'ee_debug_toolbar_settings';
+    protected string $settings_table = 'eedt_settings';
 
     /**
      * Returns the value straight from the database

@@ -2,7 +2,7 @@
 
 use ExpressionEngine\Service\Migration\Migration;
 
-class CreateExtHookResponseSendOutputForAddonEeDebugToolbar extends Migration
+class CreateExtHookTemplateFetchTemplateForAddonEeDebugToolbar extends Migration
 {
     /**
      * Execute the migration
@@ -10,12 +10,12 @@ class CreateExtHookResponseSendOutputForAddonEeDebugToolbar extends Migration
      */
     public function up()
     {
-        $addon = ee('Addon')->get('ee_debug_toolbar');
+        $addon = ee('Addon')->get('eedt');
 
         $ext = [
             'class' => $addon->getExtensionClass(),
-            'method' => 'response_send_output',
-            'hook' => 'before_response_send_output',
+            'method' => 'template_fetch_template',
+            'hook' => 'template_fetch_template',
             'settings' => serialize([]),
             'priority' => 10,
             'version' => $addon->getVersion(),
@@ -32,7 +32,7 @@ class CreateExtHookResponseSendOutputForAddonEeDebugToolbar extends Migration
      */
     public function down()
     {
-        $addon = ee('Addon')->get('ee_debug_toolbar');
+        $addon = ee('Addon')->get('eedt');
 
         ee('Model')->get('Extension')
             ->filter('class', $addon->getExtensionClass())

@@ -20,7 +20,7 @@ class Settings extends AbstractRoute
      */
     public function process($id = false)
     {
-        $this->settings = ee('ee_debug_toolbar:ToolbarService')->getSettings();
+        $this->settings = ee('eedt:ToolbarService')->getSettings();
         $vars['cp_page_title'] = lang('eedt.settings');
         $vars['base_url'] = $this->url('settings');
         $vars['save_btn_text'] = lang('eedt.save');
@@ -32,7 +32,7 @@ class Settings extends AbstractRoute
             $form->setData($_POST);
             $result = $form->validate();
             if ($result->isValid()) {
-                ee('ee_debug_toolbar:SettingsService')->updateSettings($_POST);
+                ee('eedt:SettingsService')->updateSettings($_POST);
                 ee('CP/Alert')->makeInline('shared-form')
                     ->asSuccess()
                     ->withTitle(lang('eedt.settings_saved'))

@@ -20,7 +20,7 @@ class Createeedebugsettingstable extends Migration
 
         ee()->dbforge->add_field($fields);
         ee()->dbforge->add_key('id', true);
-        ee()->dbforge->create_table('ee_debug_toolbar_settings');
+        ee()->dbforge->create_table('eedt_settings');
     }
 
     /**
@@ -29,6 +29,6 @@ class Createeedebugsettingstable extends Migration
      */
     public function down()
     {
-        ee()->dbforge->drop_table('ee_debug_toolbar_settings');
+        ee()->dbforge->drop_table('eedt_settings');
     }
 }

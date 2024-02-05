@@ -33,12 +33,12 @@ abstract class AbstractAction extends AbstractRoute
 
     public function __construct()
     {
-        ee()->lang->loadfile('ee_debug_toolbar');
-        ee()->load->add_package_path(PATH_THIRD . 'ee_debug_toolbar/');
-        $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
+        ee()->lang->loadfile('eedt');
+        ee()->load->add_package_path(PATH_THIRD . 'eedt/');
+        $this->toolbar = ee('eedt:ToolbarService');
 
         //run the garbage collection against the cache
-        ee('ee_debug_toolbar:GarbageCollectionService')->run();
+        ee('eedt:GarbageCollectionService')->run();
         $this->cache_dir =  $this->toolbar->getCachePath();
     }
 

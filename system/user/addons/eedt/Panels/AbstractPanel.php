@@ -44,7 +44,7 @@ class AbstractPanel
     public function __construct()
     {
         ee()->load->helper("url");
-        $this->toolbar = ee('ee_debug_toolbar:ToolbarService');
+        $this->toolbar = ee('eedt:ToolbarService');
         $this->settings = $this->toolbar->getSettings();
 
         if (!$this->button_label) {

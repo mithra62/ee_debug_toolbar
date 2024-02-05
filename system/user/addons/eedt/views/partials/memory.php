@@ -13,7 +13,7 @@
         $total = 0;
         foreach (ee()->TMPL->log as $log) {
             echo "\n<div id='EEDebug_hash_$total'>";
-            echo '(' . number_format($log['time'], 4) . '/' . ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($log['memory']) . ') - ' . $log['message'] . '<br />';
+            echo '(' . number_format($log['time'], 4) . '/' . ee('eedt:ToolbarService')->filesizeFormat($log['memory']) . ') - ' . $log['message'] . '<br />';
             echo "</div>";
             $total++;
         }

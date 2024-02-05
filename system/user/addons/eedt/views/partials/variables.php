@@ -68,12 +68,12 @@
     <h4>Registered Cookies</h4>
 
     <pre><?php
-        echo ee('ee_debug_toolbar:OutputService')->outputArray($cookie_data['registered'], 'no_registered_cookies'); ?></pre>
+        echo ee('eedt:OutputService')->outputArray($cookie_data['registered'], 'no_registered_cookies'); ?></pre>
 
     <br>
     <h4>Unregistered Cookies</h4>
     <pre><?php
-        echo ee('ee_debug_toolbar:OutputService')->outputArray($cookie_data['unregistered'], 'no_unregistered_cookies'); ?></pre>
+        echo ee('eedt:OutputService')->outputArray($cookie_data['unregistered'], 'no_unregistered_cookies'); ?></pre>
 
 </div>
 
@@ -101,7 +101,7 @@
     <h4>$_SESSION</h4>
     <pre><?php
         if(isset($_SESSION)) {
-            echo ee('ee_debug_toolbar:OutputService')->outputArray($_SESSION, 'no_session_vars');
+            echo ee('eedt:OutputService')->outputArray($_SESSION, 'no_session_vars');
         }
          ?></pre>
 </div>

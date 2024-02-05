@@ -19,7 +19,7 @@ $total_addon_files = count($included_file_data['third_party_addon']) + count($in
     <pre><?php echo $_SERVER['REQUEST_URI']; ?></pre><br>
 
     <?php
-    $templates_used = ee('ee_debug_toolbar:TrackerService')->getAllTemplates();
+    $templates_used = ee('eedt:TrackerService')->getAllTemplates();
     if($templates_used) {
         echo '<h4>' . lang('eedt.templates_used') . '</h4>';
         foreach($templates_used AS $template) {

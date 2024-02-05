@@ -34,16 +34,16 @@ class ToolbarService
      */
     public function getSettings()
     {
-        if (!isset(ee()->session->cache['ee_debug_toolbar']['settings'])) {
+        if (!isset(ee()->session->cache['eedt']['settings'])) {
             if (ee()->extensions->active_hook('ee_debug_toolbar_init_settings') === true) {
-                $defaults = ee('ee_debug_toolbar:SettingsService')->getDefaults();
+                $defaults = ee('eedt:SettingsService')->getDefaults();
                 $defaults = ee()->extensions->call('ee_debug_toolbar_init_settings', $defaults);
-                ee('ee_debug_toolbar:SettingsService')->setDefaults($defaults);
+                ee('eedt:SettingsService')->setDefaults($defaults);
             }
-            ee()->session->cache['ee_debug_toolbar']['settings'] = ee('ee_debug_toolbar:SettingsService')->getSettings();
+            ee()->session->cache['eedt']['settings'] = ee('eedt:SettingsService')->getSettings();
         }
 
-        return ee()->session->cache['ee_debug_toolbar']['settings'];
+        return ee()->session->cache['eedt']['settings'];
     }
 
     /**
@@ -55,7 +55,7 @@ class ToolbarService
     {
         sort($files);
 
-        $path_third = realpath(ee('ee_debug_toolbar:OutputService')->thirdPartyPath());
+        $path_third = realpath(ee('eedt:OutputService')->thirdPartyPath());
         $path_ee = realpath(SYSPATH);
         $path_first_modules = realpath(PATH_MOD);
         $bootstrap_file = FCPATH . SELF;
@@ -233,7 +233,7 @@ class ToolbarService
     {
         foreach ($data as $key => $value) {
             $data[$key]['desc'] = preg_replace("/&#?[a-z0-9]{2,8};/i", '', $data[$key]['desc']);
-            $data[$key]['memory_display'] = ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($data[$key]['memory']);
+            $data[$key]['memory_display'] = ee('eedt:ToolbarService')->filesizeFormat($data[$key]['memory']);
             $data[$key]['time'] = number_format($data[$key]['time'], 4);
         }
 
@@ -294,7 +294,7 @@ class ToolbarService
      */
     public function getThemes()
     {
-        $path = ee('ee_debug_toolbar:OutputService')->themePath() . '/ee_debug_toolbar/themes/';
+        $path = ee('eedt:OutputService')->themePath() . '/eedt/themes/';
         $d = dir($path);
         $themes = [];
         $bad = ['.', '..'];
@@ -316,13 +316,13 @@ class ToolbarService
      */
     public function createThemeUrl($theme, $sub_dir = '')
     {
-        $path = ee('ee_debug_toolbar:OutputService')->themePath();
-        $url = ee('ee_debug_toolbar:OutputService')->themeUrl();
-        if (is_dir($path . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/")) {
-            return $url . "ee_debug_toolbar/themes/" . $theme . "/$sub_dir/";
+        $path = ee('eedt:OutputService')->themePath();
+        $url = ee('eedt:OutputService')->themeUrl();
+        if (is_dir($path . "eedt/themes/" . $theme . "/$sub_dir/")) {
+            return $url . "eedt/themes/" . $theme . "/$sub_dir/";
         }
 
-        return $url . "ee_debug_toolbar/themes/" . $this->default_theme . "/$sub_dir/";
+        return $url . "eedt/themes/" . $this->default_theme . "/$sub_dir/";
     }
 
     /**
@@ -343,7 +343,7 @@ class ToolbarService
      * @param string $method
      * @param string $class
      */
-    public function getActionUrl($method, $class = 'Ee_debug_toolbar')
+    public function getActionUrl($method, $class = 'Eedt')
     {
         $url = \site_url();
         return $url . '?ACT=' . $this->fetchActionId($method, $class);
@@ -355,7 +355,7 @@ class ToolbarService
      * @param string $act_class
      * @return string
      */
-    public function createActUrl($act_method, $act_class = 'Ee_debug_toolbar')
+    public function createActUrl($act_method, $act_class = 'Eedt')
     {
         return $url = $this->getActionUrl('act') . AMP . 'class=' . $act_class . AMP . 'method=' . $act_method;
     }

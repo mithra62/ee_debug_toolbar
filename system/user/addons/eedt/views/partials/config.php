@@ -1,1 +1,1 @@
-<pre><?php echo ee('ee_debug_toolbar:OutputService')->outputArray($config_data, 'no_config_vars'); ?></pre>
+<pre><?php echo ee('eedt:OutputService')->outputArray($config_data, 'no_config_vars'); ?></pre>

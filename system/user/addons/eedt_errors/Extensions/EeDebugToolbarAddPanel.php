@@ -17,9 +17,9 @@ class EeDebugToolbarAddPanel extends AbstractHook
 
 
         $vars['panel_fetch_url'] = $this->toolbar->createActUrl('getPanelErrors', 'Eedt_errors');
-        $vars['theme_img_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/images/';
-        $vars['theme_js_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/js/';
-        $vars['theme_css_url'] = ee('ee_debug_toolbar:OutputService')->themeUrl() . 'eedt_errors/css/';
+        $vars['theme_img_url'] = ee('eedt:OutputService')->themeUrl() . 'eedt_errors/images/';
+        $vars['theme_js_url'] = ee('eedt:OutputService')->themeUrl() . 'eedt_errors/js/';
+        $vars['theme_css_url'] = ee('eedt:OutputService')->themeUrl() . 'eedt_errors/css/';
 
         $icon_img = $vars['theme_img_url'] . 'good.png';
         if(file_exists(ee('eedt_errors:LoggerService')->getLogFilePath()) && filesize(ee('eedt_errors:LoggerService')->getLogFilePath()) > 0) {

@@ -15,13 +15,13 @@ class Settings extends AbstractForm
         $field_set->setDesc('eedt.form.desc.theme');
         $field = $field_set->getField('theme', 'select');
         $field->setValue($this->get('theme', 'default'))
-            ->setChoices(ee('ee_debug_toolbar:ToolbarService')->getThemes());
+            ->setChoices(ee('eedt:ToolbarService')->getThemes());
 
         $field_set = $field_group->getFieldSet('eedt.form.toolbar_position');
         $field_set->setDesc('eedt.form.desc.toolbar_position');
         $field = $field_set->getField('toolbar_position', 'select');
         $field->setValue($this->get('toolbar_position', 'bottom-left'))
-            ->setChoices(ee('ee_debug_toolbar:ToolbarService')->toolbar_positions);
+            ->setChoices(ee('eedt:ToolbarService')->toolbar_positions);
 
         $field_set = $field_group->getFieldSet('eedt_errors.form.allowed_roles');
         $field_set->set('caution', true)->setDesc('eedt_errors.form.desc.allowed_roles');

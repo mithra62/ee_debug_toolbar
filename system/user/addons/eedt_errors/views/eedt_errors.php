@@ -5,4 +5,4 @@
 </div>
 
 <?php
-echo ee('ee_debug_toolbar:OutputService')->outputArray($errors, 'no_errors'); ?>
+echo ee('eedt:OutputService')->outputArray($errors, 'no_errors'); ?>

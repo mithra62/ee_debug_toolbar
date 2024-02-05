@@ -31,7 +31,7 @@ foreach ($log->getQueries() as $query): ?>
     ?>
         <?php echo $count; ?>. <strong>[<span class="<?php echo $class; ?>">
                 <?php echo number_format($time, 4); ?>s
-                / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?></span>
+                / <?php echo ee('eedt:ToolbarService')->filesizeFormat($memory); ?></span>
             ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre>
         <br>
 <?php
@@ -50,7 +50,7 @@ foreach ($log->getQueries() as $query): ?>
     ?>
     <div class="">
         <?php echo $count; ?>. <strong>[<?php echo number_format($time, 4); ?>s
-            / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>
+            / <?php echo ee('eedt:ToolbarService')->filesizeFormat($memory); ?>
             ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre><br>
     </div>
 <?php
@@ -101,7 +101,7 @@ foreach ($log->getQueryMetrics() as $query): ?>
             ?>
             <div class="">
                 <?php echo $count; ?>. <strong>[<?php echo number_format($time, 4); ?>s
-                    / <?php echo ee('ee_debug_toolbar:ToolbarService')->filesizeFormat($memory); ?>
+                    / <?php echo ee('eedt:ToolbarService')->filesizeFormat($memory); ?>
                     ]</strong> <code><?php echo $sql; ?></code> <br><pre><?php echo $location; ?></pre><br>
             </div>
             <?php

@@ -7,7 +7,7 @@ use DebugToolbar\Forms\Settings as SettingsForm;
 
 class Settings extends AbstractRoute
 {
-    protected $addon_name = 'ee_debug_toolbar';
+    protected $addon_name = 'eedt';
 
     /**
      * @var array

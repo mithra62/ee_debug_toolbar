@@ -157,8 +157,8 @@ class SettingsService
         foreach ($this->_defaults AS $key => $value)
         {
             //setup the override check
-            if(isset($this->config->config['ee_debug_toolbar'][$key])) {
-                $settings[$key] = $this->config->config['ee_debug_toolbar'][$key];
+            if(isset($this->config->config['eedt'][$key])) {
+                $settings[$key] = $this->config->config['eedt'][$key];
             }
 
             //normal default check

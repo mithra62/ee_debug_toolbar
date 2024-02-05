@@ -30,7 +30,7 @@ class ResponseSendOutput extends AbstractHook
             return;
         }
 
-        if (!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+        if (!ee('eedt:ToolbarService')->canViewToolbar()) {
             return;
         }
 
@@ -87,12 +87,12 @@ class ResponseSendOutput extends AbstractHook
         $vars['theme_js_url'] = $this->toolbar->createThemeUrl($this->settings['theme'], 'js');
         $vars['theme_css_url'] = $this->toolbar->createThemeUrl($this->settings['theme'], 'css');
         $vars['extra_html'] = ''; //used by extension to add extra script/css files
-        $vars['eedt_theme_path'] = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim(ee()->config->config['theme_folder_path'], '/third_party/') . '/') . 'ee_debug_toolbar/themes/' . $this->settings['theme'];
+        $vars['eedt_theme_path'] = (defined('PATH_THIRD_THEMES') ? PATH_THIRD_THEMES : rtrim(ee()->config->config['theme_folder_path'], '/third_party/') . '/') . 'eedt/themes/' . $this->settings['theme'];
         $vars['master_view_script'] = "toolbar";
         $vars['panels'] = [];
         $vars['toolbar_position'] = $this->determineToolbarPositionClass();
         $vars['js'] = [$vars['theme_js_url'] . "eedt.js"];
-        $vars['css'] = [$vars['theme_css_url'] . "ee_debug_toolbar.css"];
+        $vars['css'] = [$vars['theme_css_url'] . "eedt.css"];
         $vars['benchmark_data'] = []; //we have to fake this for now
         $vars['settings'] = $this->settings;
         $vars['template_groups'] = $this->toolbar->getTemplateGroups();
@@ -179,7 +179,7 @@ class ResponseSendOutput extends AbstractHook
         unset($vars['panels']);
 
         //setup the XML storage data for use by the panels on open
-        $this->toolbar->cachePanels(ee('ee_debug_toolbar:XmlService'), $vars['panels_in_toolbar'], $this->cache_dir);
+        $this->toolbar->cachePanels(ee('eedt:XmlService'), $vars['panels_in_toolbar'], $this->cache_dir);
 
         //Render toolbar
         $toolbar_html = ee()->load->view($vars['master_view_script'], $vars, true);
@@ -219,7 +219,7 @@ class ResponseSendOutput extends AbstractHook
         $instances = [];
 
         ee()->load->helper("file");
-        $files = get_filenames(PATH_THIRD . "ee_debug_toolbar/Panels/");
+        $files = get_filenames(PATH_THIRD . "eedt/Panels/");
 
 
         //setup the array in the order we want the panels to appear

@@ -19,7 +19,7 @@ class PanelAjax extends AbstractAction
 
         if (in_array($panel, $this->panel_order)) {
             //Native Panel
-            ee()->load->file(PATH_THIRD . 'ee_debug_toolbar/panels/Eedt_' . $panel . '_panel.php');
+            ee()->load->file(PATH_THIRD . 'eedt/panels/Eedt_' . $panel . '_panel.php');
             $class = 'Eedt_' . $panel . '_panel';
 
             if (class_exists($class)) {

@@ -8,7 +8,7 @@ class GetPanelLogs extends AbstractAction
 {
     public function processDebug()
     {
-        if(!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+        if(!ee('eedt:ToolbarService')->canViewToolbar()) {
             return;
         }
 

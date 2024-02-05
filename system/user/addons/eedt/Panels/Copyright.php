@@ -25,7 +25,7 @@ class Copyright extends AbstractPanel
         $data['project_contributors'] = $this->getContributors();
         $view->setPanelContents(ee()->load->view('partials/copyright', $data, true));
         $view = parent::addPanel($view);
-        $toolbar = ee('ee_debug_toolbar:ToolbarService');
+        $toolbar = ee('eedt:ToolbarService');
         $view->addCss($toolbar->createThemeUrl('default', 'css') . '/ee_debug_panel_copyright.css');
 
 

@@ -13,7 +13,7 @@ class Act extends AbstractAction
      */
     public function process()
     {
-        if (!ee('ee_debug_toolbar:ToolbarService')->canViewToolbar()) {
+        if (!ee('eedt:ToolbarService')->canViewToolbar()) {
             return;
         }
 

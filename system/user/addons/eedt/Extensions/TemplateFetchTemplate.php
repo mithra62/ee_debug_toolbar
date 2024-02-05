@@ -8,6 +8,6 @@ class TemplateFetchTemplate extends AbstractRoute
 {
     public function process($row)
     {
-        ee('ee_debug_toolbar:TrackerService')->trackTemplate($row);
+        ee('eedt:TrackerService')->trackTemplate($row);
     }
 }

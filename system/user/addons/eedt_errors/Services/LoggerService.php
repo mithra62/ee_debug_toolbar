@@ -15,7 +15,7 @@ class LoggerService
 
     public function __construct()
     {
-        $this->settings = ee('ee_debug_toolbar:ToolbarService')->getSettings();
+        $this->settings = ee('eedt:ToolbarService')->getSettings();
     }
 
     /**
@@ -62,7 +62,7 @@ class LoggerService
      */
     public function shouldLog(array $message): bool
     {
-        $settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
+        $settings = ee('eedt:SettingsService')->getSettings();
         return in_array($message['code'], $settings['log_error_codes']);
     }
 

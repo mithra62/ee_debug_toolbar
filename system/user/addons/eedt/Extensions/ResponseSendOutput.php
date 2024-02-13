@@ -198,7 +198,7 @@ class ResponseSendOutput extends AbstractHook
             $html = str_replace('</body>', $toolbar_html . '</body>', $html);
         }
 
-        //Get CI to do its usual thing and build the final output, but we'll switch off the debugging
+        //Get EE to do its usual thing and build the final output, but we'll switch off the debugging
         //since we have already added the debug data to the body output. Doing it this way means
         //we should retain 100% compatibility (I'm looking at you Stash...)
         ee()->output->final_output = $html;

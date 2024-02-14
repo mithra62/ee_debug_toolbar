@@ -2,18 +2,17 @@
 
 namespace DebugToolbar\Errors\Actions;
 
-use ExpressionEngine\Service\Addon\Controllers\Action\AbstractRoute;
+use DebugToolbar\Actions\AbstractAction;
 
-class ClearErrorLog extends AbstractRoute
+class ClearErrorLog extends AbstractAction
 {
-    public function process()
+    public function processDebug()
     {
         if (!ee('eedt:ToolbarService')->canViewToolbar()) {
             return;
         }
 
-        echo 'fdsa';
+        ee('eedt_errors:LoggerService')->deleteLog();
         exit;
-        // Process action
     }
 }

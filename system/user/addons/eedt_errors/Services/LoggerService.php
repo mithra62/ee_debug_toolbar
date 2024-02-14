@@ -32,6 +32,18 @@ class LoggerService
     }
 
     /**
+     * @return bool
+     */
+    public function deleteLog(): bool
+    {
+        if(file_exists($this->getLogFilePath())) {
+            return unlink($this->getLogFilePath());
+        }
+
+        return false;
+    }
+
+    /**
      * @return File
      * @throws \Exception
      */
@@ -66,6 +78,10 @@ class LoggerService
         return in_array($message['code'], $settings['log_error_codes']);
     }
 
+    /**
+     * @return array
+     * @throws \ExpressionEngine\Dependency\Safe\Exceptions\FilesystemException
+     */
     public function getLogContents()
     {
         $path = $this->getLogFilePath();

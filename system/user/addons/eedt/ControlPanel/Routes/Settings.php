@@ -57,14 +57,6 @@ class Settings extends AbstractRoute
                 ->now();
         }
 
-        if(count($this->settings['allowed_roles']) >= 2 || !in_array(1, $this->settings['allowed_roles'])) {
-            ee('CP/Alert')->makeBanner('shared-form')
-                ->asIssue()
-                ->withTitle(lang('eedt.profiler_enabled_non_sa'))
-                ->canClose()
-                ->now();
-        }
-
         $vars += $form->generate();
 
         $this->addBreadcrumb($this->url('edit'), 'eedt.settings');

@@ -11,7 +11,7 @@ class SettingsService
         'theme' => 'default',
         'toolbar_position' => 'bottom-left',
         'allowed_roles' => [
-            1
+            1,
         ],
         'profile_exts' => [
             'js',
@@ -29,7 +29,7 @@ class SettingsService
             'csv',
             'rss',
             'atom',
-            'xml'
+            'xml',
         ],
         'max_exec_time' => 0.5,
         'max_memory' => 30,
@@ -61,7 +61,7 @@ class SettingsService
     {
         $data = [
             'setting_key' => $setting,
-            'setting_value' => ''
+            'setting_value' => '',
         ];
 
         return ee()->db->insert($this->settings_table, $data);
@@ -73,8 +73,8 @@ class SettingsService
      */
     protected function isSetting($key)
     {
-        if(array_key_exists($key, $this->_defaults)) {
-            if(!$this->getSetting($key)) {
+        if (array_key_exists($key, $this->_defaults)) {
+            if (!$this->getSetting($key)) {
                 return false;
             }
 
@@ -91,12 +91,12 @@ class SettingsService
      */
     public function updateSetting(string $key, $value)
     {
-        if(!$this->isSetting($key)) {
+        if (!$this->isSetting($key)) {
             $this->addSetting($key);
         }
 
         $data = [];
-        if(is_array($value)) {
+        if (is_array($value)) {
             $value = serialize($value);
             $data['serialized '] = '1';
         }
@@ -112,8 +112,7 @@ class SettingsService
      */
     public function updateSettings(array $data): void
     {
-        foreach($data AS $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $this->updateSetting($key, $value);
         }
     }
@@ -132,7 +131,7 @@ class SettingsService
      */
     public function setDefaults(array $new_defaults = []): SettingsService
     {
-        foreach($new_defaults AS $key => $value) {
+        foreach ($new_defaults as $key => $value) {
             $this->_defaults[$key] = $value;
         }
 
@@ -149,20 +148,19 @@ class SettingsService
         $query = ee()->db->get($this->settings_table);
         $_settings = $query->result_array();
         $settings = [];
-        foreach($_settings AS $setting) {
+        foreach ($_settings as $setting) {
             $settings[$setting['setting_key']] = ($setting['serialized'] == '1' ? unserialize($setting['setting_value']) : $setting['setting_value']);
         }
 
         //now check to make sure they're all there and set default values if not
-        foreach ($this->_defaults AS $key => $value)
-        {
+        foreach ($this->_defaults as $key => $value) {
             //setup the override check
-            if(isset($this->config->config['eedt'][$key])) {
+            if (isset($this->config->config['eedt'][$key])) {
                 $settings[$key] = $this->config->config['eedt'][$key];
             }
 
             //normal default check
-            if(!isset($settings[$key])) {
+            if (!isset($settings[$key])) {
                 $settings[$key] = $value;
             }
         }

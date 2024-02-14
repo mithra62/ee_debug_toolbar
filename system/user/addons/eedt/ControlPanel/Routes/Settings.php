@@ -29,6 +29,7 @@ class Settings extends AbstractRoute
         $form = new SettingsForm();
         $form->setData($this->settings);
         if (ee()->input->server('REQUEST_METHOD') === 'POST') {
+
             $form->setData($_POST);
             $result = $form->validate();
             if ($result->isValid()) {

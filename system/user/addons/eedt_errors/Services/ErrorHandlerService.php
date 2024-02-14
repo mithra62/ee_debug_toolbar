@@ -270,7 +270,9 @@ class ErrorHandlerService
         $error .= "Message: $message\n";
         $error .= "File: $file:$line";
         if (in_array($code, $general_error_codes)) {
-            $this->logger()->error($message, $code, $file, $line);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            array_shift($trace);
+            $this->logger()->error($message, $code, $file, $line, $trace);
             $this->register(); //we reset the error handler just in case
             return true;
         }

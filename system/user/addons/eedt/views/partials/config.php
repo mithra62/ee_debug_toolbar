@@ -1,0 +1,1 @@
+<pre><?php echo ee('eedt:OutputService')->outputArray($config_data, 'no_config_vars'); ?></pre>

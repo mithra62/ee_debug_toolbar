@@ -48,7 +48,7 @@ class ErrorHandlerService
 
     public function __construct()
     {
-        $this->settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
+        $this->settings = ee('eedt:SettingsService')->getSettings();
     }
 
     /**
@@ -164,10 +164,8 @@ class ErrorHandlerService
      *
      * @param \Exception $exception the exception that is not caught
      */
-    public function handleException($exception)
+    public function handleException( $exception)
     {
-        echo 'g';
-        exit;
         $this->exception = $exception;
 
         // disable error capturing to avoid recursive errors while handling exceptions
@@ -181,10 +179,8 @@ class ErrorHandlerService
 
         try {
 
-            echo 'fdsa';
-            exit;
-            $this->logger()->error($exception);
-            log_message('error', $exception, true);
+            $this->logger()->error($exception->getMessage() . "\n" . $exception->getTraceAsString(),
+                $exception->getCode(), $exception->getFile(), $exception->getLine());
             if ($this->discard_existing_output) {
                 $this->clearOutput();
             }
@@ -212,9 +208,9 @@ class ErrorHandlerService
             } else {
                 echo 'An internal server error occurred.';
             }
-            $msg .= "\n\$_SERVER = " . print_r($_SERVER, true);
-            $this->logger()->error($msg);
-            log_message('error', $exception, true);
+
+            $this->logger()->error($exception->getMessage() . "\n" . $exception->getTraceAsString(),
+                $exception->getCode(), $exception->getFile(), $exception->getLine());
             if (defined('HHVM_VERSION')) {
                 flush();
             }
@@ -274,7 +270,9 @@ class ErrorHandlerService
         $error .= "Message: $message\n";
         $error .= "File: $file:$line";
         if (in_array($code, $general_error_codes)) {
-            $this->logger()->error($message, $code, $file, $line);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            array_shift($trace);
+            $this->logger()->error($message, $code, $file, $line, $trace);
             $this->register(); //we reset the error handler just in case
             return true;
         }

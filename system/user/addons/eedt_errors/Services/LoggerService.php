@@ -15,7 +15,7 @@ class LoggerService
 
     public function __construct()
     {
-        $this->settings = ee('ee_debug_toolbar:ToolbarService')->getSettings();
+        $this->settings = ee('eedt:ToolbarService')->getSettings();
     }
 
     /**
@@ -29,6 +29,18 @@ class LoggerService
         }
 
         return $log_file;
+    }
+
+    /**
+     * @return bool
+     */
+    public function deleteLog(): bool
+    {
+        if(file_exists($this->getLogFilePath())) {
+            return unlink($this->getLogFilePath());
+        }
+
+        return false;
     }
 
     /**
@@ -62,10 +74,14 @@ class LoggerService
      */
     public function shouldLog(array $message): bool
     {
-        $settings = ee('ee_debug_toolbar:SettingsService')->getSettings();
+        $settings = ee('eedt:SettingsService')->getSettings();
         return in_array($message['code'], $settings['log_error_codes']);
     }
 
+    /**
+     * @return array
+     * @throws \ExpressionEngine\Dependency\Safe\Exceptions\FilesystemException
+     */
     public function getLogContents()
     {
         $path = $this->getLogFilePath();

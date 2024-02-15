@@ -15,7 +15,7 @@ class CreateExtHookEeDebugToolbarSettingsFormForAddonEedtErrors extends Migratio
         $ext = [
             'class' => $addon->getExtensionClass(),
             'method' => 'ee_debug_toolbar_settings_form',
-            'hook' => 'ee_debug_toolbar_settings_form',
+            'hook' => 'eedt_settings_form',
             'settings' => serialize([]),
             'priority' => 10,
             'version' => $addon->getVersion(),

@@ -11,7 +11,7 @@ class ResponseSendOutput extends AbstractHook
         //Attempt to patch the weird unfinished Active record chain (issue #18)
         ee()->db->limit(1)->get("channel_titles");
 
-        if (!ee('eedt:ToolbarService')->canViewToolbar() || !ee('eedt:ToolbarService')->shouldCompileToolbar()) {
+        if ( !ee('eedt:ToolbarService')->shouldCompileToolbar() || !ee('eedt:ToolbarService')->canViewToolbar()) {
             return;
         }
 
@@ -84,16 +84,16 @@ class ResponseSendOutput extends AbstractHook
         //Load third party panels and custom mods
         //yes, you can technically create panels in mod_panel but using
         //add_panel will help future proof things
-        if (ee()->extensions->active_hook('ee_debug_toolbar_add_panel') === true) {
-            $panel_data = ee()->extensions->call('ee_debug_toolbar_add_panel', $panel_data, $vars);
+        if (ee()->extensions->active_hook('eedt_add_panel') === true) {
+            $panel_data = ee()->extensions->call('eedt_add_panel', $panel_data, $vars);
         }
 
         //do... stuff... to panels... eventually...
 
         //apply custom modifications to toolbar
         //again, yes, you could create panels using mod_panel but you probably shouldn't ;)
-        if (ee()->extensions->active_hook('ee_debug_toolbar_mod_panel') === true) {
-            $panel_data = ee()->extensions->call('ee_debug_toolbar_mod_panel', $panel_data, $vars);
+        if (ee()->extensions->active_hook('eedt_mod_panel') === true) {
+            $panel_data = ee()->extensions->call('eedt_mod_panel', $panel_data, $vars);
         }
 
         //have to verify the panels are good after letting the users have a go...
@@ -112,8 +112,8 @@ class ResponseSendOutput extends AbstractHook
         $vars['js_config'] = $this->toolbar->jsConfig($vars);
 
         //apply any customizations to the global view data
-        if (ee()->extensions->active_hook('ee_debug_toolbar_mod_view') === true) {
-            $vars = ee()->extensions->call('ee_debug_toolbar_mod_view', $vars);
+        if (ee()->extensions->active_hook('eedt_mod_view') === true) {
+            $vars = ee()->extensions->call('eedt_mod_view', $vars);
         }
 
         //we have to "redo" the benchmark panel so we have all the internal benchmarks
@@ -157,8 +157,8 @@ class ResponseSendOutput extends AbstractHook
         $toolbar_html = ee()->load->view($vars['master_view_script'], $vars, true);
 
         //Allow modification of final toolbar HTML output
-        if (ee()->extensions->active_hook('ee_debug_toolbar_modify_output') === true) {
-            $toolbar_html = ee()->extensions->call('ee_debug_toolbar_modify_output', $toolbar_html);
+        if (ee()->extensions->active_hook('eedt_modify_output') === true) {
+            $toolbar_html = ee()->extensions->call('eedt_modify_output', $toolbar_html);
         }
 
         //Rare, but the closing body tag may not exist. So if it doesnt, append the template instead

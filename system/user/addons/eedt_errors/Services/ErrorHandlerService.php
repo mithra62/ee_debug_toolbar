@@ -164,7 +164,7 @@ class ErrorHandlerService
      *
      * @param \Exception $exception the exception that is not caught
      */
-    public function handleException(\Exception $exception)
+    public function handleException( $exception)
     {
         $this->exception = $exception;
 

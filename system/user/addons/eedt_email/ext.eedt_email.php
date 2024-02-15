@@ -32,7 +32,7 @@ class Eedt_email_ext extends Extension
         $data[] = [
             'class' => __CLASS__,
             'method' => 'ee_debug_toolbar_settings_form',
-            'hook' => 'ee_debug_toolbar_settings_form',
+            'hook' => 'eedt_settings_form',
             'settings' => '',
             'priority' => 1,
             'version' => DEBUG_TOOLBAR_EMAIL_VERSION,
@@ -42,7 +42,7 @@ class Eedt_email_ext extends Extension
         $data[] = [
             'class' => __CLASS__,
             'method' => 'ee_debug_toolbar_init_settings',
-            'hook' => 'ee_debug_toolbar_init_settings',
+            'hook' => 'eedt_init_settings',
             'settings' => '',
             'priority' => 5,
             'version' => DEBUG_TOOLBAR_EMAIL_VERSION,

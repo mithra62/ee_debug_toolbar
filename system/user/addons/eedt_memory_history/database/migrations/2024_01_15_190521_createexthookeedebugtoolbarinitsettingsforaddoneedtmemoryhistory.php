@@ -15,7 +15,7 @@ class CreateExtHookEeDebugToolbarInitSettingsForAddonEedtMemoryHistory extends M
         $ext = [
             'class' => $addon->getExtensionClass(),
             'method' => 'ee_debug_toolbar_init_settings',
-            'hook' => 'ee_debug_toolbar_init_settings',
+            'hook' => 'eedt_init_settings',
             'settings' => serialize([]),
             'priority' => 10,
             'version' => $addon->getVersion(),

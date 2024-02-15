@@ -32,11 +32,9 @@ The Toolbar can be configured for the thresholds to determine when and which SQL
 2. PHP >= 7.4
 3. Extensions Enabled
 
-## Installation for ExpressionEngine <= 7.3.15
+## Installation for ExpressionEngine <= 7.3.15 
 
-> Note that this is dependent on a pending [Pull Request](https://github.com/ExpressionEngine/ExpressionEngine/pull/3893) that'll implement the needed hook. For now, and previous versions of ExpressionEngine that don't have the hook, you'll have to modify your installation in a very minor manner. 
-
-For this build, you'll have to manually add the below hook call to ExpressionEngine:
+You'll have to manually add the below hook call to ExpressionEngine:
 
 `system/ee/legacy/core/Output.php:276` within the `_display()` method. 
 

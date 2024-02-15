@@ -12,7 +12,7 @@ Create custom extensions to expand on debugging capabilities.
 
 #### Disable and/or Log Email 
 
-The Toolbar can be configured to override email delivery and log the contents to files for easy debugging and quality control. 
+The Toolbar can be configured to override email delivery, so long as the native ExpressionEngine email service is used, and log the contents to files for easy debugging and quality control. 
 
 #### Custom Error Handler
 
@@ -25,6 +25,16 @@ The Log Panel (included) allows for reading complete log files from within your 
 #### Performance Alerts
 
 The Toolbar can be configured for the thresholds to determine when and which SQL query and/or template parse becomes problematic.
+
+#### Debug Mode for Guests
+
+The Toolbar can be configured to display Debug details to any Member Role(s) you want to. Super Admin no longer required.
+
+#### Performance Graph
+
+Get a visual heads up on where exactly performance is an issue on all Front End requests. 
+
+![image](https://github.com/mithra62/ee_debug_toolbar/assets/1008036/415b6748-b1ca-43af-95b5-6543574c7f65)
 
 ## Requirements
 

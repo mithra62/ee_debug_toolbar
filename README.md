@@ -26,6 +26,12 @@ The Log Panel (included) allows for reading complete log files from within your 
 
 The Toolbar can be configured for the thresholds to determine when and which SQL query and/or template parse becomes problematic.
 
+## Requirements
+
+1. ExpressionEngine >= 7.4
+2. PHP >= 7.4
+3. Extensions Enabled
+
 ## Installation for ExpressionEngine <= 7.3.15
 
 > Note that this is dependent on a pending [Pull Request](https://github.com/ExpressionEngine/ExpressionEngine/pull/3893) that'll implement the needed hook. For now, and previous versions of ExpressionEngine that don't have the hook, you'll have to modify your installation in a very minor manner. 

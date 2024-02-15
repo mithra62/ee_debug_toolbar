@@ -60,8 +60,8 @@ class Settings extends AbstractForm
         $field = $field_set->getField('max_query_memory', 'number');
         $field->setValue($this->get('max_query_memory'));
 
-        if (ee()->extensions->active_hook('ee_debug_toolbar_settings_form') === TRUE) {
-            $form = ee()->extensions->call('ee_debug_toolbar_settings_form', $form);
+        if (ee()->extensions->active_hook('eedt_settings_form') === TRUE) {
+            $form = ee()->extensions->call('eedt_settings_form', $form);
         }
 
         $form->asTab();

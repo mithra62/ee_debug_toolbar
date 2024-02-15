@@ -1,5 +1,4 @@
-Debug Toolbar
-====================
+# Debug Toolbar
 
 The complete debugging platform for ExpressionEngine. Adds an unobtrusive interface for debugging output on an [ExpressionEngine](http://expressionengine.com "ExpressionEngine") 7.0 site. Replaces default Profiler and Template Debugger provided with ExpressionEngine.
 
@@ -27,8 +26,7 @@ The Log Panel (included) allows for reading complete log files from within your 
 
 The Toolbar can be configured for the thresholds to determine when and which SQL query and/or template parse becomes problematic.
 
-Installation 
-=============
+## Installation for ExpressionEngine <= 7.3.15
 
 > Note that this is dependent on a pending [Pull Request](https://github.com/ExpressionEngine/ExpressionEngine/pull/3893) that'll implement the needed hook. For now, and previous versions of ExpressionEngine that don't have the hook, you'll have to modify your installation in a very minor manner. 
 

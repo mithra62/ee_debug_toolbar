@@ -11,39 +11,11 @@ class ResponseSendOutput extends AbstractHook
         //Attempt to patch the weird unfinished Active record chain (issue #18)
         ee()->db->limit(1)->get("channel_titles");
 
-        //we have to check if the profiler and debugging is enabled again so other add-ons and templates can disable things if they want to
-        //see Issue #48 for details (https://github.com/mithra62/ee_debug_toolbar/issues/48)
-        if (ee()->config->config['show_profiler'] != 'y' || ee()->output->enable_profiler != '1') {
-            //return;
-        }
-
-        //override to disable the toolbar from even starting
-        if (ee()->input->get('disable_toolbar') == 'yes' ||
-            ee()->input->get('C') == 'javascript' ||
-            (ee()->input->get('ACT') && ee()->input->get('frontedit') == 'on') ||
-            (ee()->input->get('ACT') && ee()->input->get('prolet')) ||
-            (strpos(ee()->input->server('REQUEST_URI'), 'themes/ee/pro/js') !== false) || //Pro Edit
-            ee()->input->get('modal_form') == 'y' ||
-            (ee()->input->get('ui') && ee()->input->get('plugin') == 'markitup') ||
-            (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps')
-        ) {
-            return;
-        }
-
-        if (!ee('eedt:ToolbarService')->canViewToolbar()) {
+        if (!ee('eedt:ToolbarService')->canViewToolbar() || !ee('eedt:ToolbarService')->shouldCompileToolbar()) {
             return;
         }
 
         $html = ee()->output->final_output;
-
-        //If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
-        $ignore_tmpl_types = ['js', 'css', 'feed'];
-        if (AJAX_REQUEST ||
-            (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types)) ||
-            (isset(ee()->TMPL->template_type) && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))
-        ) {
-            return;
-        }
 
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');

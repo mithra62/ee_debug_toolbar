@@ -475,6 +475,33 @@ class ToolbarService
         return in_array(ee()->session->userdata('role_id'), $allowed_roles);
     }
 
+    public function shouldCompileToolbar()
+    {
+        //override to disable the toolbar from even starting
+        if (ee()->input->get('disable_toolbar') == 'yes' ||
+            ee()->input->get('C') == 'javascript' ||
+            (ee()->input->get('ACT') && ee()->input->get('frontedit') == 'on') ||
+            (ee()->input->get('ACT') && ee()->input->get('prolet')) ||
+            (strpos(ee()->input->server('REQUEST_URI'), 'themes/ee/pro/js') !== false) || //Pro Edit
+            ee()->input->get('modal_form') == 'y' ||
+            (ee()->input->get('ui') && ee()->input->get('plugin') == 'markitup') ||
+            (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps')
+        ) {
+            return false;
+        }
+
+        //If its an AJAX request (eg: EE JS Combo loader or jQuery library load) then call it a day...
+        $ignore_tmpl_types = ['js', 'css', 'feed'];
+        if (AJAX_REQUEST ||
+            (property_exists(ee(), "TMPL") && in_array(ee()->TMPL->template_type, $ignore_tmpl_types)) ||
+            (isset(ee()->TMPL->template_type) && in_array(ee()->TMPL->template_type, $ignore_tmpl_types))
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @param string $add_on
      * @return bool

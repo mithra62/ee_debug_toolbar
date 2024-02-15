@@ -475,7 +475,7 @@ class ToolbarService
         return in_array(ee()->session->userdata('role_id'), $allowed_roles);
     }
 
-    public function shouldCompileToolbar()
+    public function shouldCompileToolbar(): bool
     {
         //override to disable the toolbar from even starting
         if (ee()->input->get('disable_toolbar') == 'yes' ||
@@ -485,7 +485,8 @@ class ToolbarService
             (strpos(ee()->input->server('REQUEST_URI'), 'themes/ee/pro/js') !== false) || //Pro Edit
             ee()->input->get('modal_form') == 'y' ||
             (ee()->input->get('ui') && ee()->input->get('plugin') == 'markitup') ||
-            (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps')
+            (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps') || //jump menu
+            (ee()->input->get('ACT') && ee()->input->get('addon') && ee()->input->get('file')) //cp add-on page
         ) {
             return false;
         }

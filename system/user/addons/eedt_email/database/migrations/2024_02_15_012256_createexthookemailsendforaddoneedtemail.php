@@ -10,15 +10,13 @@ class CreateExtHookEmailSendForAddonEedtEmail extends Migration
      */
     public function up()
     {
-        $addon = ee('Addon')->get('eedt_email');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_email_ext',
             'method' => 'email_send',
             'hook' => 'email_send',
             'settings' => serialize([]),
             'priority' => 1,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -32,10 +30,8 @@ class CreateExtHookEmailSendForAddonEedtEmail extends Migration
      */
     public function down()
     {
-        $addon = ee('Addon')->get('eedt_email');
-
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_email_ext')
             ->delete();
     }
 }

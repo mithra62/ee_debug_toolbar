@@ -10,15 +10,13 @@ class CreateExtHookCoreBootForAddonEedt extends Migration
      */
     public function up()
     {
-        $addon = ee('Addon')->get('eedt');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_ext',
             'method' => 'core_boot',
             'hook' => 'core_boot',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -32,10 +30,8 @@ class CreateExtHookCoreBootForAddonEedt extends Migration
      */
     public function down()
     {
-        $addon = ee('Addon')->get('eedt');
-
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_ext')
             ->delete();
     }
 }

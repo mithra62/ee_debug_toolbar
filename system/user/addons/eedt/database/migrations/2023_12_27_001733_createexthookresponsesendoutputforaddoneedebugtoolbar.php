@@ -10,15 +10,13 @@ class CreateExtHookResponseSendOutputForAddonEeDebugToolbar extends Migration
      */
     public function up()
     {
-        $addon = ee('Addon')->get('eedt');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_ext',
             'method' => 'response_send_output',
             'hook' => 'before_response_send_output',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -35,7 +33,7 @@ class CreateExtHookResponseSendOutputForAddonEeDebugToolbar extends Migration
         $addon = ee('Addon')->get('eedt');
 
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_ext')
             ->delete();
     }
 }

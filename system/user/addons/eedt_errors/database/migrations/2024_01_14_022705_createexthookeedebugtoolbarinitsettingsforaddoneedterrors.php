@@ -10,15 +10,13 @@ class CreateExtHookEeDebugToolbarInitSettingsForAddonEedtErrors extends Migratio
      */
     public function up()
     {
-        $addon = ee('Addon')->get('eedt_errors');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_errors_ext',
             'method' => 'ee_debug_toolbar_init_settings',
             'hook' => 'eedt_init_settings',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -32,10 +30,8 @@ class CreateExtHookEeDebugToolbarInitSettingsForAddonEedtErrors extends Migratio
      */
     public function down()
     {
-        $addon = ee('Addon')->get('eedt_errors');
-
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_errors_ext')
             ->delete();
     }
 }

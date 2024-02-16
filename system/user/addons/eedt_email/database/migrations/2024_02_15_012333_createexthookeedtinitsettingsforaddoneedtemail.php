@@ -13,12 +13,12 @@ class CreateExtHookEedtInitSettingsForAddonEedtEmail extends Migration
         $addon = ee('Addon')->get('eedt_email');
 
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_email_ext',
             'method' => 'eedt_init_settings',
             'hook' => 'eedt_init_settings',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -35,7 +35,7 @@ class CreateExtHookEedtInitSettingsForAddonEedtEmail extends Migration
         $addon = ee('Addon')->get('eedt_email');
 
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_email_ext')
             ->delete();
     }
 }

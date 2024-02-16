@@ -35,9 +35,9 @@ class ToolbarService
     public function getSettings()
     {
         if (!isset(ee()->session->cache['eedt']['settings'])) {
-            if (ee()->extensions->active_hook('ee_debug_toolbar_init_settings') === true) {
+            if (ee()->extensions->active_hook('eedt_init_settings') === true) {
                 $defaults = ee('eedt:SettingsService')->getDefaults();
-                $defaults = ee()->extensions->call('ee_debug_toolbar_init_settings', $defaults);
+                $defaults = ee()->extensions->call('eedt_init_settings', $defaults);
                 ee('eedt:SettingsService')->setDefaults($defaults);
             }
             ee()->session->cache['eedt']['settings'] = ee('eedt:SettingsService')->getSettings();

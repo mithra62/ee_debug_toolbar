@@ -10,15 +10,13 @@ class CreateExtHookTemplatePostParseForAddonEeDebugToolbar extends Migration
      */
     public function up()
     {
-        $addon = ee('Addon')->get('ee_debug_toolbar');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_ext',
             'method' => 'template_post_parse',
             'hook' => 'template_post_parse',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -32,10 +30,8 @@ class CreateExtHookTemplatePostParseForAddonEeDebugToolbar extends Migration
      */
     public function down()
     {
-        $addon = ee('Addon')->get('ee_debug_toolbar');
-
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_ext')
             ->delete();
     }
 }

@@ -10,15 +10,13 @@ class CreateExtHookEeDebugToolbarAddPanelForAddonEedtMemoryHistory extends Migra
      */
     public function up()
     {
-        $addon = ee('Addon')->get('eedt_memory_history');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_memory_history_ext',
             'method' => 'ee_debug_toolbar_add_panel',
             'hook' => 'eedt_add_panel',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -32,10 +30,8 @@ class CreateExtHookEeDebugToolbarAddPanelForAddonEedtMemoryHistory extends Migra
      */
     public function down()
     {
-        $addon = ee('Addon')->get('eedt_memory_history');
-
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_memory_history_ext')
             ->delete();
     }
 }

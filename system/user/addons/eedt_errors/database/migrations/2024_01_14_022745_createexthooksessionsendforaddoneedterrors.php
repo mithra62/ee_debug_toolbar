@@ -10,15 +10,13 @@ class CreateExtHookSessionsEndForAddonEedtErrors extends Migration
      */
     public function up()
     {
-        $addon = ee('Addon')->get('eedt_errors');
-
         $ext = [
-            'class' => $addon->getExtensionClass(),
+            'class' => 'Eedt_errors_ext',
             'method' => 'sessions_end',
             'hook' => 'sessions_end',
             'settings' => serialize([]),
             'priority' => 10,
-            'version' => $addon->getVersion(),
+            'version' => DEBUG_TOOLBAR_VERSION,
             'enabled' => 'y'
         ];
 
@@ -32,10 +30,8 @@ class CreateExtHookSessionsEndForAddonEedtErrors extends Migration
      */
     public function down()
     {
-        $addon = ee('Addon')->get('eedt_errors');
-
         ee('Model')->get('Extension')
-            ->filter('class', $addon->getExtensionClass())
+            ->filter('class', 'Eedt_errors_ext')
             ->delete();
     }
 }

@@ -13,7 +13,7 @@ if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
 }
 
 if(!defined('DEBUG_TOOLBAR_VERSION')) {
-    define('DEBUG_TOOLBAR_VERSION', '2.0.0');
+    define('DEBUG_TOOLBAR_VERSION', '2.0.1');
 }
 
 return [

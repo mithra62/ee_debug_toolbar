@@ -90,7 +90,7 @@ class LoggerService
             return $return;
         }
 
-        $contents = \ExpressionEngine\Dependency\Safe\file_get_contents($path);
+        $contents = file_get_contents($path);
         if($contents) {
             $errors = explode(ee('eedt_errors:LoggerService')->logDelimiter(), $contents);
             if($errors) {

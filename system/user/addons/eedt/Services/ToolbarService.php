@@ -114,9 +114,9 @@ class ToolbarService
                     $type = 'Necessary';
                     if (ee('ee:CookieRegistry')->isTargeting($key)) {
                         $type = 'Targeting';
-                    } else if (ee('ee:CookieRegistry')->isPerformance($key)) {
+                    } elseif (ee('ee:CookieRegistry')->isPerformance($key)) {
                         $type = 'Performance';
-                    } else if (ee('ee:CookieRegistry')->isFunctionality($key)) {
+                    } elseif (ee('ee:CookieRegistry')->isFunctionality($key)) {
                         $type = 'Functionality';
                     }
 
@@ -281,7 +281,7 @@ class ToolbarService
         $p = strpos($val, ".");
         if ($p !== false && $p > $digits) {
             $val = round($val);
-        } else if ($p !== false) {
+        } elseif ($p !== false) {
             $val = round($val, $digits - $p);
         }
 

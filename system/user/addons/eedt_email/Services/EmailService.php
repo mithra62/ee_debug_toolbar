@@ -39,13 +39,13 @@ class EmailService
         $log_file = $path . '/' . ee()->localize->now . '.' .
             implode($email_content['recipients']) . '.' . Str::snakecase($email_content['subject']);
         $file = new File($log_file . '.txt', ee('Filesystem'));
-        $file->log(print_r($email_content, true));
+        $file->log(json_encode($email_content, JSON_PRETTY_PRINT));
 
         $email = Parser::parse($email_content);
         $file = new File($log_file . '.html', ee('Filesystem'));
         $file->log($email['html']);
 
-        $file = new File($log_file . '.text.txt', ee('Filesystem'));
+        $file = new File($log_file . '.text', ee('Filesystem'));
         $file->log($email['text']);
     }
 }

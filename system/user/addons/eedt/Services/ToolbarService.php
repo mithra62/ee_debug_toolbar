@@ -308,6 +308,22 @@ class ToolbarService
         return $themes;
     }
 
+    public function setConfig()
+    {
+        $vars = ee()->config->config;
+        $settings = $this->getSettings();
+        if(isset($settings['hidden_config_items']) &&
+            is_array($settings['hidden_config_items'])) {
+            foreach($settings['hidden_config_items'] as $key => $value) {
+                if(isset($vars[$value])) {
+                    unset($vars[$value]);
+                }
+            }
+        }
+
+        return $vars;
+    }
+
     /**
      * Create Theme Asset URLs
      *

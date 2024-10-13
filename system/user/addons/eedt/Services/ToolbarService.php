@@ -3,7 +3,6 @@
 namespace DebugToolbar\Services;
 
 use ExpressionEngine\Service\Addon\Addon;
-use DebugToolbar\Services\XmlService;
 
 class ToolbarService
 {
@@ -308,14 +307,18 @@ class ToolbarService
         return $themes;
     }
 
-    public function setConfig()
+    /**
+     * Compiles the Config details and removes unwanted items
+     * @return array
+     */
+    public function setConfig(): array
     {
         $vars = ee()->config->config;
         $settings = $this->getSettings();
-        if(isset($settings['hidden_config_items']) &&
+        if (isset($settings['hidden_config_items']) &&
             is_array($settings['hidden_config_items'])) {
-            foreach($settings['hidden_config_items'] as $key => $value) {
-                if(isset($vars[$value])) {
+            foreach ($settings['hidden_config_items'] as $value) {
+                if (isset($vars[$value])) {
                     unset($vars[$value]);
                 }
             }

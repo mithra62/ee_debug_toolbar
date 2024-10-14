@@ -86,19 +86,15 @@
 
     <br>
     <h4>Unregistered Cookies</h4>
-    <table style='width:100%;'>
         <?php
         if(!empty($cookie_data['unregistered']) && is_array($cookie_data['unregistered'])):
             foreach($cookie_data['unregistered'] AS $key => $value): ?>
-                <tr>
-                    <td style="width:30%">Value: <?=$value['value'];?></td>
-                    <td>Lifetime: <?=$value['cookie_lifetime'];?></td>
-                </tr>
+                <span><?=$key;?> </span>
+                <hr><br />
             <?php endforeach; ?>
         <?php else: ?>
             <?=lang('eedt.no_unregistered_cookies'); ?>
         <?php endif; ?>
-    </table>
 
 </div>
 

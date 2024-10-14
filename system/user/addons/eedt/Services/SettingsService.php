@@ -160,8 +160,8 @@ class SettingsService
         //now check to make sure they're all there and set default values if not
         foreach ($this->_defaults as $key => $value) {
             //setup the override check
-            if (isset($this->config->config['eedt'][$key])) {
-                $settings[$key] = $this->config->config['eedt'][$key];
+            if (isset(ee()->config->config['eedt'][$key])) {
+                $settings[$key] = ee()->config->config['eedt'][$key];
             }
 
             //normal default check

@@ -89,7 +89,7 @@
         <?php
         if(!empty($cookie_data['unregistered']) && is_array($cookie_data['unregistered'])):
             foreach($cookie_data['unregistered'] AS $key => $value): ?>
-                <span><?=$key;?> </span>
+                <span><?=$key;?> -> <?=$value;?></span>
                 <hr><br />
             <?php endforeach; ?>
         <?php else: ?>

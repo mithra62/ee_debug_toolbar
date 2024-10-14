@@ -13,6 +13,11 @@ class SettingsService
         'allowed_roles' => [
             1,
         ],
+        'hidden_config_items' => [
+            'database',
+            'encryption_key',
+            'session_crypt_key'
+        ],
         'profile_exts' => [
             'js',
             'css',

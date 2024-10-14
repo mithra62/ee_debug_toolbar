@@ -3,7 +3,6 @@
 namespace DebugToolbar\Services;
 
 use ExpressionEngine\Service\Addon\Addon;
-use DebugToolbar\Services\XmlService;
 
 class ToolbarService
 {

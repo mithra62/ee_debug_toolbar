@@ -42,7 +42,8 @@ class ResponseSendOutput extends AbstractHook
         $vars = [];
         $vars['mysql_query_cache'] = $this->toolbar->verifyMysqlQueryCache();
         $vars['elapsed_time'] = ee()->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end');
-        $vars['config_data'] = ee()->config->config;
+        $vars['config_data'] = ee('eedt:ConfigService')->getConfig();
+        $vars['ee_overrides'] = ee('eedt:ConfigService')->getOverrides();
         $vars['session_data'] = ee()->session->all_userdata();
         $vars['query_data'] = $this->toolbar->setupQueries();
         $vars['memory_usage'] = $this->toolbar->filesizeFormat(memory_get_peak_usage());

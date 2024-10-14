@@ -1,0 +1,272 @@
+<?php
+
+namespace DebugToolbar\Services;
+
+class ConfigService
+{
+    protected $overrides = "allow_dictionary_pw
+allow_extensions
+allow_member_localization
+allow_member_registration
+allow_multi_logins
+allow_pending_login
+allow_php
+allow_signatures
+allow_textarea_tabs
+allow_url_redirects_from_site
+allow_username_change
+allowed_preview_domains
+app_version
+auto_assign_cat_parents
+autosave_interval_seconds
+autosave_prune_hours
+avatar_max_height
+avatar_max_kb
+avatar_max_width
+avatar_path
+avatar_url
+ban_action
+ban_destination
+ban_message
+banish_masked_ips
+banishment_message
+banishment_type
+banishment_url
+banned_emails
+banned_ips
+banned_screen_names
+banned_usernames
+base_path
+base_url
+cache_driver
+cache_driver_backup
+captcha_font
+captcha_path
+captcha_rand
+captcha_require_members
+captcha_url
+censor_replacement
+censored_words
+channel_form_overwrite
+charset
+cli_enabled
+code_block_pre
+code_block_post
+codemirror_height
+codemirror_fontsize
+comment_edit_time_limit
+comment_moderation_override
+comment_word_censoring
+cookie_domain
+cookie_httponly
+cookie_path
+cookie_prefix
+cookie_secure
+cookie_samesite
+cp_session_length
+cp_session_type
+cp_url
+date_format
+db_backup_row_limit
+debug
+default_member_group
+default_site_timezone
+deft_lang
+deny_duplicate_data
+disable_all_tracking
+disable_csrf_protection
+disable_emoji_shorthand
+disable_tag_caching
+dynamic_tracking_disabling
+email_batch_size
+email_batchmode
+email_charset
+email_console_timelock
+email_crlf
+email_newline
+email_smtp_crypto
+emoticon_url
+enable_censoring
+enable_entry_cloning
+enable_dock
+enable_emoticons
+enable_entry_view_tracking
+enable_frontedit
+enable_frontedit_links
+enable_hit_tracking
+enable_online_user_tracking
+enable_tracking_cookie
+enable_search_log
+enable_sql_caching
+enable_template_routes
+enable_throttling
+encode_removed_text
+encryption_key
+expire_session_on_browser_close
+favicon
+filename_increment
+force_query_string
+force_redirect
+forum_is_installed
+forum_trigger
+gmail_duplication_prevention
+gzip_output
+hidden_template_indicator
+hidden_template_404
+htaccess_path
+ignore_entry_stats
+ignore_member_stats
+image_library_path
+image_resize_protocol
+include_seconds
+ip2nation
+is_site_on
+is_system_on
+legacy_member_templates
+lockout_time
+log_date_format
+log_email_console_msgs
+log_referrers
+log_search_terms
+log_threshold
+login_logo
+mail_format
+mail_protocol
+max_logged_searches
+max_page_loads
+max_tmpl_revisions
+max_url_segments
+mbr_notification_emails
+memcached
+member_theme
+memberlist_order_by
+mime_whitelist_additions
+mime_whitelist_member_exception
+mime_whitelist_member_group_exception
+moblog_allow_nontextareas
+memberlist_row_limit
+memberlist_sort_order
+multi_login_sites
+multiple_sites_enabled
+name_of_dictionary_file
+new_member_notification
+new_posts_clear_caches
+new_version_check
+newrelic_app_name
+newrelic_include_version_number
+parse_variables_query_results_by_default
+password_lockout
+password_lockout_interval
+popup_link
+profile_trigger
+proxy_ips
+prv_msg_throttling_period
+prv_msg_upload_path
+prv_msg_waiting_period
+publish_page_title_focus
+pw_min_len
+recount_batch_total
+redirect_method
+redirect_submitted_links
+redis
+relaxed_track_views
+remove_close_all_button
+remove_unparsed_vars
+req_mbr_activation
+require_captcha
+require_ip_for_login
+require_ip_for_posting
+require_secure_passwords
+require_terms_of_service
+reserved_category_word
+save_tmpl_files
+save_tmpl_globals
+save_tmpl_revisions
+sc_certificate_id
+sc_encrypt_buttons
+sc_paypal_account
+sc_paypal_certificate
+sc_private_key
+sc_public_certificate
+sc_temp_path
+send_headers
+server_offset
+show_profiler
+sig_allow_img_hotlink
+sig_allow_img_upload
+sig_img_max_height
+sig_img_max_kb
+sig_img_max_width
+sig_img_path
+sig_img_url
+sig_maxlength
+site_404
+site_index
+site_name
+site_url
+smart_static_parsing
+smtp_password
+smtp_port
+smtp_server
+smtp_username
+spellcheck_language_code
+strict_urls
+template
+template_group
+theme_folder_path
+theme_folder_url
+time_format
+time_interval
+tls_crypto_method
+un_min_len
+updater_allow_advanced
+upload_blocked_file_names
+upload_preferences
+uri_protocol
+use_category_name
+use_forum_url
+use_newrelic
+webmaster_email
+webmaster_name
+website_session_length
+website_session_type
+week_start
+word_separator
+x_frame_options
+xml_lang
+xss_clean_member_exception
+xss_clean_member_group_exception";
+
+    /**
+     * @return array
+     */
+    public function getOverrides(): array
+    {
+        $pieces = explode("\n", $this->overrides);
+        foreach($pieces AS $key => $value) {
+            $pieces[$key] = trim($value);
+        }
+
+        return $pieces;
+    }
+
+    /**
+     * Compiles the Config details and removes unwanted items
+     * @return array
+     */
+    public function getConfig(): array
+    {
+        $vars = ee()->config->config;
+        $settings = ee('eedt:ToolbarService')->getSettings();
+        if (isset($settings['hidden_config_items']) &&
+            is_array($settings['hidden_config_items'])) {
+            foreach ($settings['hidden_config_items'] as $value) {
+                if (isset($vars[$value])) {
+                    unset($vars[$value]);
+                }
+            }
+        }
+
+        return $vars;
+    }
+}

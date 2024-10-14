@@ -111,7 +111,7 @@
                 <td style="width:30%"><?=$key;?></td>
                 <td><?php
                     if(is_array($value)) {
-                        echo print_r($value, true);
+                        echo ee('eedt:OutputService')->outputArray($value);
                     } else {
                         echo $value;
                     }

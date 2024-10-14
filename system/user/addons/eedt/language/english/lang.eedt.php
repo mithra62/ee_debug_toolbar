@@ -89,4 +89,6 @@ $lang = [
     'total' => 'Total',
 
     'eedt_perf_alerts.form.header.settings' => 'Performance Alerts',
+    'eedt.no_registered_cookies' => 'No Registered Cookies',
+    'eedt.no_unregistered_cookies' => 'No Unregistered Cookies',
 ];

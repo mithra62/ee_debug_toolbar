@@ -66,14 +66,39 @@
 
 <div id="EEDebug_cookie" class="Eedt_debug_variables_panel_container EEDebug_cookie" style="display: none">
     <h4>Registered Cookies</h4>
-
-    <pre><?php
-        echo ee('eedt:OutputService')->outputArray($cookie_data['registered'], 'no_registered_cookies'); ?></pre>
+        <?php
+        if(!empty($cookie_data['registered']) && is_array($cookie_data['registered'])):
+        foreach($cookie_data['registered'] AS $key => $value): ?>
+            <span style="font-weight: bold;"><?=$key;?> </span> <small>(<?=$value['type'] ?>) Lifetime: <?=$value['cookie_lifetime'];?></small>
+            <pre><?php
+            if(is_array($value['value'])) {
+                echo ee('eedt:OutputService')->outputArray($value['value']);
+            } else {
+                echo $value['value'];
+            }
+            ?>
+            </pre>
+            <hr><br />
+        <?php endforeach; ?>
+        <?php else: ?>
+        <?=lang('eedt.no_registered_cookies'); ?>
+        <?php endif; ?>
 
     <br>
     <h4>Unregistered Cookies</h4>
-    <pre><?php
-        echo ee('eedt:OutputService')->outputArray($cookie_data['unregistered'], 'no_unregistered_cookies'); ?></pre>
+    <table style='width:100%;'>
+        <?php
+        if(!empty($cookie_data['unregistered']) && is_array($cookie_data['unregistered'])):
+            foreach($cookie_data['unregistered'] AS $key => $value): ?>
+                <tr>
+                    <td style="width:30%">Value: <?=$value['value'];?></td>
+                    <td>Lifetime: <?=$value['cookie_lifetime'];?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?=lang('eedt.no_unregistered_cookies'); ?>
+        <?php endif; ?>
+    </table>
 
 </div>
 

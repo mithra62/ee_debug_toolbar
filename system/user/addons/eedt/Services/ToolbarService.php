@@ -3,7 +3,6 @@
 namespace DebugToolbar\Services;
 
 use ExpressionEngine\Service\Addon\Addon;
-use DebugToolbar\Services\XmlService;
 
 class ToolbarService
 {
@@ -516,5 +515,21 @@ class ToolbarService
         }
 
         return $return;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDebugSettingsUrl(): string
+    {
+        return $_SERVER['PHP_SELF'] . '?/cp/settings/debug-output';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEedtSettingsUrl(): string
+    {
+        return $_SERVER['PHP_SELF'] . '?/cp/addons/settings/eedt/settings';
     }
 }

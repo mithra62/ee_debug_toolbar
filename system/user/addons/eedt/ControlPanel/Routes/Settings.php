@@ -53,7 +53,7 @@ class Settings extends AbstractRoute
         if(ee()->config->item('show_profiler') != 'y') {
             ee('CP/Alert')->makeInline('shared-form')
                 ->asWarning()
-                ->withTitle(lang('eedt.profiler_not_enabled'))
+                ->withTitle(sprintf(lang('eedt.profiler_not_enabled'), ee('eedt:ToolbarService')->getDebugSettingsUrl()))
                 ->cannotClose()
                 ->now();
         }

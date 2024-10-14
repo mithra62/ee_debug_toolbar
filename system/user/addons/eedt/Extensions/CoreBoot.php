@@ -13,7 +13,7 @@ class CoreBoot extends AbstractHook
             if ($this->shouldDisplayError()) {
                 ee('CP/Alert')->makeBanner('shared-form')
                     ->asIssue()
-                    ->withTitle(lang('eedt.profiler_enabled_non_sa'))
+                    ->withTitle(sprintf(lang('eedt.profiler_enabled_non_sa'), ee('eedt:ToolbarService')->getEedtSettingsUrl()))
                     ->canClose()
                     ->now();
             }

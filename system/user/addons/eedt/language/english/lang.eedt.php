@@ -66,8 +66,8 @@ $lang = [
     'eedt.header.settings_save' => 'Debug Toolbar Settings',
     'eedt.settings_saved' => 'Settings Saved',
     'eedt.templates_used' => 'Templates Used',
-    'eedt.profiler_not_enabled' => 'The Debug Profiler isnt\'t enabled; your debug output will be limited to what\'s available instead.',
-    'eedt.profiler_enabled_non_sa' => 'Your debug details are available for non Super Admins! Be VERY careful in production!',
+    'eedt.profiler_not_enabled' => 'The <a href="%s">Debug Profiler</a> isn\'t enabled; your debug output will be limited to what\'s available instead.',
+    'eedt.profiler_enabled_non_sa' => 'Your debug details are available for <a href="%s">non Super Admins</a>! Be VERY careful in production!',
     'eedt.path_constants' => 'Path Constants',
 
     'eedt_perf_alerts_module_name' => 'Debug Toolbar - Perfomance Alerts',

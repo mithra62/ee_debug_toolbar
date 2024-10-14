@@ -11,7 +11,7 @@ class Config extends AbstractPanel
     public function __construct()
     {
         parent::__construct();
-        $vars = $this->toolbar->setConfig();
+        $vars = ee('eedt:ConfigService')->getConfig();
         $this->button_label = lang($this->name) . ' (' . count($vars) . ')';
     }
 }

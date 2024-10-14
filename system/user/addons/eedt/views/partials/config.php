@@ -6,6 +6,9 @@
 <div class="Eedt_debug_config_panel_container EEDebug_config_vars">
     <?php if(count($config_data) >= 1): ?>
             <?php foreach($config_data AS $key => $value): ?>
+            <?php if(in_array($key, $ee_overrides)): ?>
+            <?php $key = '<a href="https://docs.expressionengine.com/latest/general/system-configuration-overrides.html#' . $key .'" target="_blank">' . $key . '</a>'; ?>
+            <?php endif; ?>
             <span style="font-weight: bold;"><?=$key;?> -> </span>
             <?php
             if(is_array($value)) {

@@ -308,26 +308,6 @@ class ToolbarService
     }
 
     /**
-     * Compiles the Config details and removes unwanted items
-     * @return array
-     */
-    public function setConfig(): array
-    {
-        $vars = ee()->config->config;
-        $settings = $this->getSettings();
-        if (isset($settings['hidden_config_items']) &&
-            is_array($settings['hidden_config_items'])) {
-            foreach ($settings['hidden_config_items'] as $value) {
-                if (isset($vars[$value])) {
-                    unset($vars[$value]);
-                }
-            }
-        }
-
-        return $vars;
-    }
-
-    /**
      * Create Theme Asset URLs
      *
      * @param string $theme

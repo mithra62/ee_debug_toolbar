@@ -36,9 +36,16 @@ class EmailService
             mkdir($path);
         }
 
+        $subject = 'email';
+        if(trim($email_content['subject']) != '') {
+            $subject = Str::snakecase($email_content['subject']);
+        } elseif(trim($email_content['headers']['subject']) != '') {
+            $subject = Str::snakecase($email_content['headers']['subject']);
+        }
+
         $log_file = ee()->localize->now . '.' .
             implode('.', $email_content['recipients']) . '.' .
-            Str::snakecase($email_content['subject']);
+            $subject;
 
         $path .= '/' . $log_file;
         if (!is_dir($path)) {

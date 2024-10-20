@@ -41,6 +41,8 @@ class EmailService
             $subject = Str::snakecase($email_content['subject']);
         } elseif(trim($email_content['headers']['subject']) != '') {
             $subject = Str::snakecase($email_content['headers']['subject']);
+        } elseif(trim($email_content['headers']['Subject']) != '') {
+            $subject = Str::snakecase($email_content['headers']['Subject']);
         }
 
         $log_file = ee()->localize->now . '.' .

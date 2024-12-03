@@ -45,6 +45,8 @@ class EmailService
             $subject = Str::snakecase($email_content['headers']['Subject']);
         }
 
+        $subject = preg_replace("/[^a-zA-Z0-9]+/", "", $subject);
+
         $log_file = ee()->localize->now . '.' .
             implode('.', $email_content['recipients']) . '.' .
             $subject;

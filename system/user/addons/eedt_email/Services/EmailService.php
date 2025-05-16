@@ -36,14 +36,16 @@ class EmailService
             mkdir($path);
         }
 
+        //refactor this!!
         $subject = 'email';
-        if(trim($email_content['subject']) != '') {
+        if(!empty($email_content['subject']) && trim($email_content['subject']) != '') {
             $subject = Str::snakecase($email_content['subject']);
-        } elseif(trim($email_content['headers']['subject']) != '') {
+        } elseif(!empty($email_content['headers']['subject']) && trim($email_content['headers']['subject']) != '') {
             $subject = Str::snakecase($email_content['headers']['subject']);
-        } elseif(trim($email_content['headers']['Subject']) != '') {
+        } elseif(!empty($email_content['headers']['Subject']) && trim($email_content['headers']['Subject']) != '') {
             $subject = Str::snakecase($email_content['headers']['Subject']);
         }
+        //end refactor tears...
 
         $subject = preg_replace("/[^a-zA-Z0-9]+/", "", $subject);
 

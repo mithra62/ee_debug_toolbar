@@ -13,10 +13,17 @@ class SettingsService
         'allowed_roles' => [
             1,
         ],
+        'display_member_ids' => [],
+        'visibility' => [
+            'CP',
+            'PAGE',
+            'ACT',
+        ],
+        'disable_internal_debugger' => true,
         'hidden_config_items' => [
             'database',
             'encryption_key',
-            'session_crypt_key'
+            'session_crypt_key',
         ],
         'profile_exts' => [
             'js',

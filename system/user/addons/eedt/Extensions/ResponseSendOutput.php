@@ -11,7 +11,17 @@ class ResponseSendOutput extends AbstractHook
         //Attempt to patch the weird unfinished Active record chain (issue #18)
         ee()->db->limit(1)->get("channel_titles");
 
+        $this->settings = $this->toolbar->getSettings();
         if ( !ee('eedt:ToolbarService')->shouldCompileToolbar() || !ee('eedt:ToolbarService')->canViewToolbar()) {
+
+            if($this->settings['disable_internal_debugger']) {
+                if (isset(ee()->TMPL)) {
+                    ee()->TMPL->debugging = false;
+                    ee()->TMPL->log = false;
+                }
+
+                ee()->output->enable_profiler = false;
+            }
             return;
         }
 
@@ -19,8 +29,6 @@ class ResponseSendOutput extends AbstractHook
 
         //starting a benchmark to make sure we're not a problem
         ee()->benchmark->mark('ee_debug_benchmark_start');
-
-        $this->settings = $this->toolbar->getSettings();
 
         //on 404 errors this can cause the data to get munged
         //to get around this, we only want to run the toolbar on certain pages

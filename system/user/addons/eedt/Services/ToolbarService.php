@@ -476,6 +476,7 @@ class ToolbarService
 
     public function shouldCompileToolbar(): bool
     {
+        $settings = $this->getSettings();
         //override to disable the toolbar from even starting
         if (ee()->input->get('disable_toolbar') == 'yes' ||
             ee()->input->get('C') == 'javascript' ||
@@ -486,6 +487,8 @@ class ToolbarService
             (ee()->input->get('ui') && ee()->input->get('plugin') == 'markitup') ||
             (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps') || //jump menu
             empty(ee()->session) || //likely doing a CSS/CP request :/
+            !in_array(REQ, $settings['visibility']) || //configured to only display on certain REQ layers
+            ($settings['display_member_ids'] && !in_array(ee()->session->userdata('member_id'), $settings['display_member_ids'])) ||
             (ee()->input->get('ACT') && ee()->input->get('addon') && ee()->input->get('file')) //cp add-on page
         ) {
             return false;

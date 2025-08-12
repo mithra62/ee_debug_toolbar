@@ -485,6 +485,7 @@ class ToolbarService
             ee()->input->get('modal_form') == 'y' ||
             (ee()->input->get('ui') && ee()->input->get('plugin') == 'markitup') ||
             (ee()->input->get('D') == 'cp' && ee()->input->get('C') == 'jumps') || //jump menu
+            empty(ee()->session) || //likely doing a CSS/CP request :/
             (ee()->input->get('ACT') && ee()->input->get('addon') && ee()->input->get('file')) //cp add-on page
         ) {
             return false;

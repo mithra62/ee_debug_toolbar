@@ -14,7 +14,7 @@ if(!defined('DEBUG_TOOLBAR_ADDON_NAME')) {
 }
 
 if(!defined('DEBUG_TOOLBAR_VERSION')) {
-    define('DEBUG_TOOLBAR_VERSION', '2.1.0');
+    define('DEBUG_TOOLBAR_VERSION', '2.1.1');
 }
 
 return [

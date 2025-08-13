@@ -33,16 +33,25 @@ class ToolbarService
      */
     public function getSettings()
     {
-        if (!isset(ee()->session->cache['eedt']['settings'])) {
+        if(!empty(ee()->session)) {
+            if (!isset(ee()->session->cache['eedt']['settings'])) {
+                if (ee()->extensions->active_hook('eedt_init_settings') === true) {
+                    $defaults = ee('eedt:SettingsService')->getDefaults();
+                    $defaults = ee()->extensions->call('eedt_init_settings', $defaults);
+                    ee('eedt:SettingsService')->setDefaults($defaults);
+                }
+                ee()->session->cache['eedt']['settings'] = ee('eedt:SettingsService')->getSettings();
+            }
+
+            return ee()->session->cache['eedt']['settings'];
+        } else {
             if (ee()->extensions->active_hook('eedt_init_settings') === true) {
                 $defaults = ee('eedt:SettingsService')->getDefaults();
                 $defaults = ee()->extensions->call('eedt_init_settings', $defaults);
                 ee('eedt:SettingsService')->setDefaults($defaults);
+                return ee('eedt:SettingsService')->getSettings();
             }
-            ee()->session->cache['eedt']['settings'] = ee('eedt:SettingsService')->getSettings();
         }
-
-        return ee()->session->cache['eedt']['settings'];
     }
 
     /**

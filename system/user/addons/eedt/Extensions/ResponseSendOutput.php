@@ -13,8 +13,7 @@ class ResponseSendOutput extends AbstractHook
 
         $this->settings = $this->toolbar->getSettings();
         if ( !ee('eedt:ToolbarService')->shouldCompileToolbar() || !ee('eedt:ToolbarService')->canViewToolbar()) {
-
-            if($this->settings['disable_internal_debugger']) {
+            if(!isset($this->settings['disable_internal_debugger']) || $this->settings['disable_internal_debugger']) {
                 if (isset(ee()->TMPL)) {
                     ee()->TMPL->debugging = false;
                     ee()->TMPL->log = false;

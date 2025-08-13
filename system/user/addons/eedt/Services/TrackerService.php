@@ -15,7 +15,10 @@ class TrackerService
      */
     public function trackTemplate(array $template_info): TrackerService
     {
-        $this->templates[] = $template_info;
+        if(!in_array($template_info, $this->templates)) {
+            $this->templates[] = $template_info;
+        }
+
         return $this;
     }
 

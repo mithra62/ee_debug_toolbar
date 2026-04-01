@@ -6,11 +6,10 @@ use DebugToolbar\Panels\Model;
 
 class ResponseSendOutput extends AbstractHook
 {
-    public function process($output)
+    public function process()
     {
         //Attempt to patch the weird unfinished Active record chain (issue #18)
         ee()->db->limit(1)->get("channel_titles");
-        $html = $output; //ee()->output->final_output;
 
         $this->settings = $this->toolbar->getSettings();
         if ( !ee('eedt:ToolbarService')->shouldCompileToolbar() || !ee('eedt:ToolbarService')->canViewToolbar()) {
@@ -22,7 +21,7 @@ class ResponseSendOutput extends AbstractHook
 
                 ee()->output->enable_profiler = false;
             }
-            return $html;
+            return;
         }
 
         $html = ee()->output->final_output;
